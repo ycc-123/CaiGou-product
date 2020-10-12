@@ -4,8 +4,8 @@ import CacheRoute, { CacheSwitch } from 'react-router-cache-route'
 
 import Home from 'views/home/Home'
 import AddPurchaseOrder from 'views/AddPurchaseOrder/AddPurchaseOrder'
-// import My from 'views/my/My'
-// import SalesVolume from 'views/SalesVolume/SalesVolume'
+import PurchaseOrder from 'views/PurchaseOrder/PurchaseOrder'
+import PurchaseOrderDetailed from 'views/PurchaseOrderDetailed/PurchaseOrderDetailed'
 // import CategorySummary from 'views/CategorySummary/CategorySummary'
 // import MemberBusiness from 'views/MemberBusiness/MemberBusiness'
 // import timeManage from 'views/timeManage/timeManage'
@@ -25,9 +25,9 @@ const AppRouter = () => {
         {/* 精确匹配  总是 */}
         <CacheRoute path='/home' exact when='forward' component={Home} cacheKey='HomeComponent'></CacheRoute>
         <CacheRoute path="/AddPurchaseOrder" exact when='always' component={AddPurchaseOrder}></CacheRoute>
-        {/* <CacheRoute path='/My' when='always' component={My} ></CacheRoute>
-        <CacheRoute path='/SalesVolume' when='always' component={SalesVolume} ></CacheRoute>
-        <CacheRoute path='/CategorySummary' when='always' component={CategorySummary} ></CacheRoute>
+        <CacheRoute path='/PurchaseOrder' when='always' component={PurchaseOrder} ></CacheRoute>
+        <CacheRoute path='/PurchaseOrderDetailed' when='always' component={PurchaseOrderDetailed} ></CacheRoute>
+        {/* <CacheRoute path='/CategorySummary' when='always' component={CategorySummary} ></CacheRoute>
         <CacheRoute path='/timeManage' when='always' component={timeManage} ></CacheRoute>
         <CacheRoute path='/MemberBusiness' when='always' component={MemberBusiness} ></CacheRoute>
         <CacheRoute path='/CollectionCompose' when='always' component={CollectionCompose} ></CacheRoute>
