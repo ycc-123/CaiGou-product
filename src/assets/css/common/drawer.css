@@ -1,0 +1,23 @@
+.drawer {
+  position: absolute;
+  left: 0;
+  bottom: 1.3rem;
+  transition: bottom 1s;
+  background: #fff;
+}
+
+.drawer-btn {
+  height: 1rem;
+}
+
+.drawer-no, .drawer-ok {
+  float: left;
+  width: 2rem;
+  height: 100%;
+  border: none;
+  background: transparent;
+}
+
+.drawer-ok {
+  float: right;
+}

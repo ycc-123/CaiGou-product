@@ -1,0 +1,71 @@
+* {
+  /* 全局定制样式 */
+  --box-bg-color: white;
+  --theme-font-color: #ff762e;
+  --common-font-color: #474747;
+  --bg-color: #212735;
+  --box-border-radius: .13rem;
+  --main-padding: 0 .32rem;
+  --box-margin-top: .2rem;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+  list-style: none;
+  touch-action: none;
+  -webkit-overflow-scrolling: touch;
+  -webkit-user-select: text;
+  font-family: '黑体';
+}
+
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+ol, ul, dl {
+  margin-bottom: 0;
+}
+
+button {
+  border: none;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+body {
+  background: #f0f0f0 !important;
+  line-height: normal;
+}
+
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+  font-size: 0;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+
+[contenteditable="true"], input, textarea {
+  -webkit-user-select: auto!important;
+  -khtml-user-select: auto!important;
+  -moz-user-select: auto!important;
+  -ms-user-select: auto!important;
+  -o-user-select: auto!important;
+  user-select: auto!important;
+}
+
+
+/*此处只是去掉默认的小×*/
+input[type=search]::-webkit-search-cancel-button{
+  -webkit-appearance: none;
+}
