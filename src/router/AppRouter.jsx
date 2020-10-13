@@ -6,7 +6,8 @@ import Home from 'views/home/Home'
 import AddPurchaseOrder from 'views/AddPurchaseOrder/AddPurchaseOrder'
 import PurchaseOrder from 'views/PurchaseOrder/PurchaseOrder'
 import PurchaseOrderDetailed from 'views/PurchaseOrderDetailed/PurchaseOrderDetailed'
-// import CategorySummary from 'views/CategorySummary/CategorySummary'
+import Category from 'views/category/Category'
+// import Category from 'views/category/Category'
 // import MemberBusiness from 'views/MemberBusiness/MemberBusiness'
 // import timeManage from 'views/timeManage/timeManage'
 // import CollectionCompose from 'views/CollectionCompose/CollectionCompose'
@@ -27,8 +28,8 @@ const AppRouter = () => {
         <CacheRoute path="/AddPurchaseOrder" exact when='always' component={AddPurchaseOrder}></CacheRoute>
         <CacheRoute path='/PurchaseOrder' when='always' component={PurchaseOrder} ></CacheRoute>
         <CacheRoute path='/PurchaseOrderDetailed' when='always' component={PurchaseOrderDetailed} ></CacheRoute>
-        {/* <CacheRoute path='/CategorySummary' when='always' component={CategorySummary} ></CacheRoute>
-        <CacheRoute path='/timeManage' when='always' component={timeManage} ></CacheRoute>
+         <CacheRoute path='/Category' when='always' component={Category} ></CacheRoute>
+       {/* <CacheRoute path='/timeManage' when='always' component={timeManage} ></CacheRoute>
         <CacheRoute path='/MemberBusiness' when='always' component={MemberBusiness} ></CacheRoute>
         <CacheRoute path='/CollectionCompose' when='always' component={CollectionCompose} ></CacheRoute>
         <CacheRoute path='/ShoppingGuide' when='always' component={ShoppingGuide} ></CacheRoute>

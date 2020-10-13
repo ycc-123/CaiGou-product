@@ -10,7 +10,7 @@ class TabBar extends Component {
       tabArr: [
         { id: 1010, content: '营业概况', src: require('assets/img/home.png'), activeSrc: require('assets/img/home1.png'), path: '/home' },
         { id: 1011, content: '数据报表', src: require('assets/img/bao.png'), activeSrc: require('assets/img/bao1.png'), path: '/My' },
-        { id: 1012, content: '我的账号', src: require('assets/img/ren.png'), activeSrc: require('assets/img/ren1.png'), path: '/Baobiao' },
+        { id: 1012, content: '我的账号', src: require('assets/img/home.png'), activeSrc: require('assets/img/ren1.png'), path: '/Baobiao' },
       ]
     }
   }

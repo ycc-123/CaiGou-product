@@ -5,43 +5,116 @@ export default class PurchaseOrderDetailed extends Component {
     render() {
         return (
             <PurchaseOrderDetailedStyle>
-            <div>
-            <div className='search'>
-                    <input type="search" className='input' placeholder="请输入商品名称或商品编码"/>
-                    <div className='img'>
-                    <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search"/>
+                <div>
+                    <div className='search'>
+                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
+                        <div className='img'>
+                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+                        </div>
                     </div>
-            </div>
 
-            <div className='conten'>
-                <div className='conten-top'>
-                    <p>
-                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt=""/>
-                    </p>
-                    <div>24242342342</div>
+                    <div className='conten'>
+                        <div className='conten-top'>
+                            <p>
+                                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+                            </p>
+                            <div>24242342342</div>
+                        </div>
+
+                        <div className='conten-c'>
+                            <p>单据日期：2020-09-05</p>
+                            <p>单据仓库：火蝶云一号店</p>
+                            <p>单据状态：<span style={{ color: "#ed5f21" }}>待审核</span></p>
+                        </div>
+
+                    <div className='footer'>
+                            采购备注：
+                    </div>
                 </div>
 
-                <div className='conten-c'>
-                    <p>单据日期：2020-09-05</p>
-                    <p>单据仓库：火蝶云一号店</p>
-                    <p>单据状态：<span style={{color:"#ed5f21"}}>待审核</span></p>
+                    <div className='tiao'>
+                       
+                            <p className='t-img'>
+                                <img className='t-img-l' src="" alt=""/>
+                            </p>
+                            <ul className='wen-zi'>
+                                <li className='wen-zi-t'>
+                                    <div className='name'>北海盗白色恋人巧克力饼干</div>
+                                    <p>99.9公斤</p>
+                                </li>
+                                <li className='wen-zi-f'>
+                                    <div>￥：85元/盒</div>
+                                    <p>999.9</p>
+                                </li>
+                            </ul>
+                       
+                    </div>
                 </div>
-
-                <div className='footer'>
-                    采购备注：
-                </div>
-            </div>
-
-
-
-
-
-            </div>
             </PurchaseOrderDetailedStyle>
         )
     }
 }
 const PurchaseOrderDetailedStyle = styled.div`
+.wen-zi-t p{
+    color:#646464;
+    font-size:.35rem;
+}
+.wen-zi-f div{
+    font-size:.35rem;
+    color:#646464;
+}
+.wen-zi-f p{
+    font-size:.35rem;
+    color:#cf2424;
+}
+.name{
+    font-size:.35rem;
+    width: 3.2rem;
+    height: 100%;
+    color:#1a1a1a;
+    background-color: pink;
+}
+.wen-zi-f{
+    display:flex;
+    justify-content: space-between;
+}
+.wen-zi-t{
+    display:flex;
+    justify-content: space-between;
+    width: 7.5rem;
+    height: 1.1rem;
+    background-color: yellow;
+}
+.wen-zi{
+    
+    padding-top:.2rem;
+    margin-left: .2rem;
+    width: 7.5rem;
+    height: 1.7rem;
+    background-color: red;
+}
+.t-img-l{
+    margin-top:.2rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: green;
+}
+.t-img{
+    // padding-top: .2rem;
+    margin-left: .2rem;
+    width: 1.5rem;
+    height: 1.8rem;
+    // background-color: red;
+}
+.tiao{
+    display:flex;
+    width: 100%;
+    height: 2rem;
+    background-color: #fff;
+    border-bottom:2px solid #dadada;
+    
+
+}
 .footer{
     font-size:.4rem;
     margin-top: .15rem;
