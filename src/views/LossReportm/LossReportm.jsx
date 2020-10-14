@@ -1,39 +1,59 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-export default class PurchaseOrder extends Component {
+export default class LossReportm extends Component {
     render() {
         return (
-            <PurchaseOrderStyle>
+            <WarehousingOrderStyle>
             <div style={{width:"100%"}}>
                 <div className='search'>
-                    <input type="search" className='input' placeholder="请输入采购单号/仓库名称"/>
+                    <input type="search" className='input' placeholder="请输入采购申请单号"/>
                     <div className='img'>
                     <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search"/>
                     </div>
                 </div>
 
-                <div className='caigoudan' onClick={()=>{this.props.history.push('/PurchaseOrderDetailed')}}>
+                <div className='caigoudan' >
                     <div className='dan'>
                         <div className='dan-top'>
                             <p>
                             <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt=""/>
                             </p>
-                            <div className='caigoudanhao'>采购单号：CG20201009123456789</div>
+                            <div className='caigoudanhao'>报损单号：CG20201009123456789</div>
                             <div className='zuantai'>待审核</div>
                         </div>
                         <div className='dan-footer'>
+                            <div>   
                             <p>单据日期：2020-10-08</p>
-                            <p>采购仓库：火蝶云三号店</p>
+                            <p>报损仓库：火蝶云三号店</p>
+                            </div>
+                            <div className='btn_sh' onClick={()=>{this.props.history.push('/LossReportf')}}>审核</div>
                         </div>
                     </div>
                 </div>
             </div>
-            </PurchaseOrderStyle>
+            </WarehousingOrderStyle>
         )
     }
 }
-const PurchaseOrderStyle = styled.div`
+const WarehousingOrderStyle = styled.div`
+.btn_sh{
+    width: 1.5rem;  
+    height: .9rem;
+    color:#fff;
+    font-size:.35rem;
+    border-radius:.2rem;
+    line-height: .9rem;
+    text-align:center;
+    background-color: #ed5f21;
+    margin-top: 1rem;
+    margin-right:.2rem;
+}
+.dan-footer{
+    display:flex;
+    justify-content: space-between;
+
+}
 .dan-footer p{
     margin-top:.28rem;
     margin-left:.4rem;
@@ -117,11 +137,4 @@ input::-webkit-input-placeholder {
 
 }
 
-
-
-
-
 `
-
-
-

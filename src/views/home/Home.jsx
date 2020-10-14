@@ -21,17 +21,17 @@ export default class Home extends Component {
         <ul>
           <li style={{marginLeft:".5rem"}} onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shengqing.png" alt=""/></li>
           <li style={{marginLeft:".4rem"}} onClick={()=>{this.props.history.push('/AddPurchaseOrder')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/addcaigou.png" alt=""/></li>
-          <li style={{marginLeft:".3rem"}} onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigoudan.png" alt=""/></li>
+          <li style={{marginLeft:".3rem"}} onClick={()=>{this.props.history.push('/PurchaseOrder')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigoudan.png" alt=""/></li>
         </ul>
       </div>
 
       <div className='footer'>
         <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/ckgl.png" alt=""/></div>
         <ul>
-          <li style={{marginLeft:".5rem"}} onClick={()=>{this.props.history.push('/PurchaseOrder')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kucundan.png" alt=""/></li>
-          <li style={{height:"1.6rem",width:"1.95rem",marginLeft:".4rem"}} ><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/rkdan.png" alt=""/></li>
+          <li style={{marginLeft:".5rem"}} onClick={()=>{this.props.history.push('/stockList')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kucundan.png" alt=""/></li>
+          <li style={{height:"1.6rem",width:"1.95rem",marginLeft:".4rem"}} onClick={()=>{this.props.history.push('/WarehousingOrder')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/rkdan.png" alt=""/></li>
           <li onClick={()=>{alert("该功能未实现")}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/pandiandan.png" alt=""/></li>
-          <li onClick={()=>{alert("该功能未实现")}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/baosdan.png" alt=""/></li>
+          <li onClick={()=>{this.props.history.push('/LossReport')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/baosdan.png" alt=""/></li>
           <li onClick={()=>{alert("该功能未实现")}} style={{marginTop:".8rem",marginLeft:".5rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaobodan.png" alt=""/></li>
           {/* <li style={{marginTop:".8rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dabao.png" alt=""/></li> */}
         </ul>

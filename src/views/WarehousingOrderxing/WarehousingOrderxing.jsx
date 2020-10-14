@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-export default class PurchaseOrderDetailed extends Component {
+
+export default class WarehousingOrderxing extends Component {
     render() {
         return (
-            <PurchaseOrderDetailedStyle>
+            <WarehousingOrderxingStyle>
                 <div>
                     <div className='search'>
                         <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
@@ -23,8 +24,8 @@ export default class PurchaseOrderDetailed extends Component {
 
                         <div className='conten-c'>
                             <p>单据日期：2020-09-05</p>
-                            <p>单据仓库：火蝶云一号店</p>
-                            <p>单据状态：<span style={{ color: "#ed5f21" }}>待审核</span></p>
+                            <p>入库仓库：火蝶云一号店</p>
+                            <p>单据状态：<span style={{ color: "#ed5f21" }}>待提交</span></p>
                         </div>
 
                     <div className='footer'>
@@ -43,18 +44,21 @@ export default class PurchaseOrderDetailed extends Component {
                                     <p>99.9公斤</p>
                                 </li>
                                 <li className='wen-zi-f'>
-                                    <div>￥：85元/盒</div>
-                                    <p>999.9</p>
+                                    <div>采购数量：85</div>
+                                    <p>入库数量：<span>999</span></p>
                                 </li>
                             </ul>
                        
                     </div>
                 </div>
-            </PurchaseOrderDetailedStyle>
+            </WarehousingOrderxingStyle>
         )
     }
 }
-const PurchaseOrderDetailedStyle = styled.div`
+const WarehousingOrderxingStyle = styled.div`
+.wen-zi-f p span{
+    color:#cf2424;
+}
 .wen-zi-t p{
     color:#646464;
     font-size:.35rem;
@@ -65,7 +69,7 @@ const PurchaseOrderDetailedStyle = styled.div`
 }
 .wen-zi-f p{
     font-size:.35rem;
-    color:#cf2424;
+    color:#646464;
 }
 .name{
     font-size:.35rem;
@@ -199,7 +203,6 @@ input::-webkit-input-placeholder {
     background-color: #fff;
 
 }
-
 
 
 

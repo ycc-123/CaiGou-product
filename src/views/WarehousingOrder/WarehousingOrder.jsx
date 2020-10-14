@@ -1,39 +1,39 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-export default class PurchaseOrder extends Component {
+export default class WarehousingOrder extends Component {
     render() {
         return (
-            <PurchaseOrderStyle>
+            <WarehousingOrderStyle>
             <div style={{width:"100%"}}>
                 <div className='search'>
-                    <input type="search" className='input' placeholder="请输入采购单号/仓库名称"/>
+                    <input type="search" className='input' placeholder="请输入入库单号/仓库名称"/>
                     <div className='img'>
                     <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search"/>
                     </div>
                 </div>
 
-                <div className='caigoudan' onClick={()=>{this.props.history.push('/PurchaseOrderDetailed')}}>
+                <div className='caigoudan' onClick={()=>{this.props.history.push('/WarehousingOrderxing')}}>
                     <div className='dan'>
                         <div className='dan-top'>
                             <p>
                             <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt=""/>
                             </p>
-                            <div className='caigoudanhao'>采购单号：CG20201009123456789</div>
-                            <div className='zuantai'>待审核</div>
+                            <div className='caigoudanhao'>入库单号：CG20201009123456789</div>
+                            <div className='zuantai'>待提交</div>
                         </div>
                         <div className='dan-footer'>
                             <p>单据日期：2020-10-08</p>
-                            <p>采购仓库：火蝶云三号店</p>
+                            <p>入库仓库：火蝶云三号店</p>
                         </div>
                     </div>
                 </div>
             </div>
-            </PurchaseOrderStyle>
+            </WarehousingOrderStyle>
         )
     }
 }
-const PurchaseOrderStyle = styled.div`
+const WarehousingOrderStyle = styled.div`
 .dan-footer p{
     margin-top:.28rem;
     margin-left:.4rem;
@@ -117,11 +117,4 @@ input::-webkit-input-placeholder {
 
 }
 
-
-
-
-
 `
-
-
-

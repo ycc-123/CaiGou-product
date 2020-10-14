@@ -1,34 +1,33 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-
-export default class AddPurchaseOrder extends Component {
+export default class LossReport extends Component {
     render() {
         return (
-            <AddPurchaseOrderStyle>
+            <LossReportStyle>
                 <div>
                 <ul className='biao'>
-                    <li><span>*</span>采购仓库：</li>
-                    <li><span>*</span>供应商：</li>
+                    <li><span>*</span>报损仓库：</li>
+                    {/* <li><span>*</span>供应商：</li>
                     <li>预付款：<input type="text"/></li>
-                    <li>合同编号：<input type="text"/></li>
-                    <li style={{border:"none"}}>备注：<input type="text"/></li>
+                    <li>合同编号：<input type="text"/></li> */}
+                    <li >备注：<input type="text"/></li>
                 </ul>
 
                 <div className='foot'>
                     <div className='left'></div>
                     <div></div>
-                    <div className='right'>下一步</div>
+                    <div className='right' onClick={()=>{this.props.history.push('/LossReportm')}}>下一步</div>
 
                 </div>
 
 
                 </div>
-            </AddPurchaseOrderStyle>
+            </LossReportStyle>
         )
     }
 }
-const AddPurchaseOrderStyle = styled.div`
+const LossReportStyle = styled.div`
 .left{
     width: 35rem;
     height: 1.6rem;
@@ -56,7 +55,7 @@ const AddPurchaseOrderStyle = styled.div`
 
 .biao{
     width: 100%;
-    height: 7rem;
+    // height: 7rem;
     background-color: #fff;
 }
 .biao li input{
@@ -82,7 +81,4 @@ const AddPurchaseOrderStyle = styled.div`
     border-bottom: 1px solid #dbdbdb;
 
 }
-
-
-
 `
