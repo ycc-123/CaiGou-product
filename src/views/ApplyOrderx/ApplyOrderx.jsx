@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-export default class LossReportf extends Component {
+export default class ApplyOrderx extends Component {
     render() {
         return (
-            <LossReportfStyle>
+            <ApplyOrderxStyle>
                 <div>
                     <div className='search'>
                         <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
@@ -23,8 +23,8 @@ export default class LossReportf extends Component {
 
                         <div className='conten-c'>
                             <p>单据日期：2020-09-05</p>
-                            <p>报损数量：9999</p>
-                            <p>单据状态：<span style={{ color: "#ed5f21" }}>待审核</span></p>
+                            <p>申请数量：9999</p>
+                            <p>单据状态：<span style={{ color: "#ed5f21" }}>待提交</span></p>
                         </div>
 
                     <div className='footer'>
@@ -41,8 +41,8 @@ export default class LossReportf extends Component {
                                     <p></p>
                                 </li>
                                 <li className='wen-zi-f'>
-                                    <div>￥：85元/盒</div>
-                                    <p>报损数量：<span>999</span></p>
+                                    <div></div>
+                                    <p>申请数量：<span>999</span></p>
                                 </li>
                             </ul>
                        
@@ -50,26 +50,26 @@ export default class LossReportf extends Component {
 
                     <div className='foot'>
                     <div className='left'>
-                        <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/lajitong.png" alt=""/>
+                        <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt=""/>
                     </div>
                     <div className='yuan'>9</div>
-                    <div className='foot_conton'>总额：<span>999999</span></div>
-                    <div className='right'>审核</div>
+                    <div className='foot_conton'></div>
+                    <div className='right'>提交</div>
 
                 </div>
                 </div>
-            </LossReportfStyle>
+            </ApplyOrderxStyle>
         )
     }
 }
-const LossReportfStyle = styled.div`
+const ApplyOrderxStyle = styled.div`
 .yuan{
     // padding-top:.1rem;
     text-align:center;
     // margin:auto;
     position:absolute;
     top: .15rem;
-    left:1.1rem;
+    left:1.7rem;
     color:#fff;
     width:.5rem;
     height:.5rem;

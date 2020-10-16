@@ -12,7 +12,11 @@ import stockList from 'views/stockList/stockList'
 import LossReport from 'views/LossReport/LossReport'
 import LossReportm from 'views/LossReportm/LossReportm'
 import LossReportf from 'views/LossReportf/LossReportf'
-// import Hot from 'views/Hot/Hot'
+import ApplyOrder from 'views/ApplyOrder/ApplyOrder'
+import ApplyOrderx from 'views/ApplyOrderx/ApplyOrderx'
+import category from 'views/category/Category'
+
+
 
 
 
@@ -34,6 +38,12 @@ const AppRouter = () => {
         <CacheRoute path='/LossReport' when='always' component={LossReport} ></CacheRoute>
         <CacheRoute path='/LossReportm' when='always' component={LossReportm} ></CacheRoute>
          <CacheRoute path='/LossReportf' when='always' component={LossReportf} ></CacheRoute>
+        <CacheRoute path='/ApplyOrder' when='always' component={ApplyOrder} ></CacheRoute>
+        <CacheRoute path='/ApplyOrderx' when='always' component={ApplyOrderx} ></CacheRoute>
+        <CacheRoute path='/category' when='always' component={category} ></CacheRoute>
+
+
+
 
  
 

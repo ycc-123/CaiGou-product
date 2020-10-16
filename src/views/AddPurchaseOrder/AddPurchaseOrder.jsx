@@ -18,7 +18,7 @@ export default class AddPurchaseOrder extends Component {
                 <div className='foot'>
                     <div className='left'></div>
                     <div></div>
-                    <div className='right'>下一步</div>
+                    <div className='right' onClick={()=>{this.props.history.push('/category')}}>下一步</div>
 
                 </div>
 

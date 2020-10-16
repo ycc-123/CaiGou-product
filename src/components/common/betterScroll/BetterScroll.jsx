@@ -25,19 +25,20 @@ class BetterScroll extends Component {
       probeType,
       // better-sroll 默认不监听按钮点击
       click: true,
+      taps: true,
       // 监听上来加载更多
       pullUpLoad: true,
       // 监听下拉事件
       // pullDownRefresh: true,
       // 默认回弹动画
-      bounceTime: 1000,
+      // bounceTime: 1000,
       // 阻止冒泡事件
       // stopPropagation: true,
       // 开启鼠标滚轮
       mouseWheel: true,
       // 立即停止滑动
       // bindToWrapper: true,
-      useTransition:false,
+      useTransition: false,
       /* bounce: {
         top: true,
         bottom: false
@@ -46,14 +47,14 @@ class BetterScroll extends Component {
       // useTransition: false
     })
     // 监听滚动事件
-   /*  this.BScroll.on('scroll', position => {
-      console.log(position.y)
-    }) */
+    /*  this.BScroll.on('scroll', position => {
+       console.log(position.y)
+     }) */
     // 上拉事件
     this.BScroll.on('pullingUp', () => {
       if (this.props.loadMore && this.props.isLoadMore) {
         this.props.loadMore()
-      } 
+      }
     })
     // 手指离开屏幕事件
     this.BScroll.on('scrollEnd', position => {
@@ -77,8 +78,15 @@ class BetterScroll extends Component {
       this.BScroll.options.useTransition = false
     } */
     this.BScroll.on('scrollEnd', () => {
-      this.BScroll.isInTransition  = false
+      this.BScroll.isInTransition = false
     })
+
+    this.BScroll.scroller.hooks.on('resize', () => {
+      this.BScroll.refresh()
+    })
+
+    console.log(this.BScroll.scroller.hooks)
+
   }
   componentWillUnmount() {
     console.log('销毁了')

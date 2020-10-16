@@ -1,0 +1,660 @@
+import React, { Component, Fragment } from 'react'
+import styled from 'styled-components'
+
+import BetterScroll from 'common/betterScroll/BetterScroll'
+// import TabBar from 'common/tabBar/TabBar'
+
+import CategoryLeftItem from './childCom/CategoryLeftItem'
+import CategoryRight from './childCom/CategoryRight'
+// import CategoryTabBar from './childCom/CategoryTabBar'
+
+// import { getQueryString } from 'commons/AuthFunction'
+import { setTitle } from 'commons/utils'
+
+import { store } from 'store/index'
+
+import { _categoryLeft, _categoryRight } from 'network/category'
+
+// import './style/category.css'
+
+const scollConfig = {
+  probeType: 1
+}
+const scrollStyle = {
+  width: '2.46rem',
+  height: 'calc(100vh - 1.48rem)',
+  top: '0'
+}
+
+class Category extends Component {
+  constructor(props) {
+    super(props)
+    props.cacheLifecycles.didCache(this.componentDidCache)
+    props.cacheLifecycles.didRecover(this.componentDidRecover)
+    this.state = {
+      ys: '',
+      kc: '',
+      title: [],
+      goods:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}],
+      tie: [{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"}
+      ,{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"}],
+      defaultIndex: 0,
+      type: 'goods'
+    }
+  }
+  render() {
+    const { title, defaultIndex, goods, ys, kc, type } = this.state
+    const { cartGoods } = store.getState()
+
+    if (title.length !== 0 && title[defaultIndex].goods.length !== 0) {
+      title[defaultIndex].goods.forEach(item => {
+        // 查找购物车商品是否和state的某个goods相等
+        let newGoods = cartGoods.find(cartItem => {
+          return cartItem.sid === item.id
+        })
+        // console.log(newGoods)
+        if (newGoods) {
+          item.num = newGoods.num
+        } else {
+          item.num = 0
+        }
+      })
+    }
+    console.log(title)
+    return (
+      <CategoryStyle>
+      <Fragment>
+        {/* <div className='category-head-button'> */}
+          {/* {type === 'goods' ? <img src='https://res.lexiangpingou.cn/images/vip/left.png' alt="" onClick={this.changeImage} />
+            : <img src='https://res.lexiangpingou.cn/images/vip/right.png' alt="" onClick={this.changeImage} />} */}
+        {/* </div> */}
+        <div className='category-main'>
+          {type === 'goods' ? <Fragment><div className='categoryLeft'>
+            <ul>
+              {this.state.tie.length !== 0 && <BetterScroll config={scollConfig} style={scrollStyle} ref='scroll'>
+                <li className='category-left-head'></li>
+                {this.state.tie.map((item, index) => {
+                  return (
+                    <CategoryLeftItem key={item.id + index}
+                      item={item}
+                      index={index}
+                      active={this.state.defaultIndex === index ? true : false}
+                      onChangeActive={() => { this.onChangeActive(index) }} />
+                  )
+                })}
+              </BetterScroll>}
+            </ul>
+          </div>
+           <CategoryRight goodsList={this.state.goods} />
+          </Fragment> : <Fragment>
+              {/* {title.length !== 0 && <CategoryTabBar title={title} index={defaultIndex} changeActive={this.onChangeActive} goodsList={title[defaultIndex].goods} ys={ys} kc={kc} />} */}
+            </Fragment>}
+          {/* {
+            title.length !== 0 && title[defaultIndex].goods.length === 0 && <div className='wutu' style={{ color: 'white' }}>
+              <img style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '2rem', height: '' }} src='https://res.lexiangpingou.cn/images/vip/fengleiwu.png' alt="" />
+              <p style={{ position: 'absolute', fontSize: '.32rem', top: '60%', left: '50%', transform: 'translate(-50%, 0)', }}>商家正在努力上新中</p>
+            </div>
+          } */}
+        </div>
+        {/* <TabBar /> */}
+        <div className='foot'>
+                    <div className='left'>
+                        <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/lajitong.png" alt=""/>
+                    </div>
+                    <div className='yuan'>9</div>
+                    <div className='foot_conton'>总额：<span>999999</span></div>
+                    <div className='right'>提交</div>
+
+                </div>
+                
+      </Fragment>
+      </CategoryStyle>
+    )
+  }
+  changeImage = () => {
+    if (this.state.type === 'swiper') {
+      this.setState({
+        type: 'goods'
+      })
+    } else {
+      this.setState({
+        type: 'swiper'
+      })
+    }
+  }
+
+  componentDidCache = () => {
+    console.log('缓存了')
+  }
+
+  componentDidRecover = () => {
+    const { defaultIndex, title } = this.state
+    const { appConfig } = store.getState()
+    const right_config = {
+      action: 'getGoodsByCategory',
+      data: {
+        uniacid: appConfig.uniacid,
+        openid: appConfig.wxUserInfo.openid,
+        cid: title[defaultIndex].id,
+        pagesize: 100
+      }
+    }
+
+    _categoryRight(right_config).then(res => {
+      title[defaultIndex].goods = (res.data && res.data.data && res.data.data.list) || []
+      this.setState({
+        ys: res.data.data.issell,
+        kc: res.data.data.showPubStock,
+        title
+      })
+    })
+
+  }
+
+  componentDidMount = () => {
+    this.refs.scroll.BScroll.refresh()
+    setTitle('分类')
+    const { appConfig } = store.getState()
+    _categoryLeft().then(res => {
+      const right_config = {
+        action: 'getGoodsByCategory',
+        data: {
+          uniacid: appConfig.uniacid,
+          openid: appConfig.wxUserInfo.openid,
+          cid: 0,
+          pagesize: 100
+        }
+      }
+      _categoryRight(right_config).then(res1 => {
+        // let search = window.location.search
+        // let newUrl = window.location.href.replace(search, search + `&cid=${right_config.data.cid}`)
+        // window.history.pushState(null, null, newUrl)
+
+        let title = (res.data && res.data.data) || []
+        // title[0].goods = (res1.data && res1.data.data && res1.data.data.list) || []
+        this.setState({
+          title
+        }, () => {
+          console.log(title)
+          this.refs.scroll.BScroll.refresh()
+        })
+      })
+    })
+
+  }
+
+  onChangeActive = index => {
+    const { appConfig } = store.getState()
+    let { title } = this.state
+    if (!this.state.goods) {
+      const right_config = {
+        action: 'getGoodsByCategory',
+        data: {
+          uniacid: appConfig.uniacid,
+          openid: appConfig.wxUserInfo.openid,
+          cid: this.state.title[index].id,
+          pagesize: 100
+        }
+      }
+      _categoryRight(right_config).then(res => {
+        title[index].goods = (res.data && res.data.data && res.data.data.list) || []
+        this.setState({
+          ys: res.data.data.issell,
+          kc: res.data.data.showPubStock,
+          title,
+          defaultIndex: index
+        })
+      })
+    } else {
+      this.setState({
+        defaultIndex: index
+      })
+    }
+  }
+
+
+}
+const CategoryStyle = styled.div`
+.yuan{
+  // padding-top:.1rem;
+  text-align:center;
+  // margin:auto;
+  position:absolute;
+  top: .15rem;
+  left:1.1rem;
+  color:#fff;
+  width:.5rem;
+  height:.5rem;
+  line-height:.5rem;
+  border-radius:.5rem;
+  background-color: red;
+
+}
+.foot_conton span{
+  color:#cf2424;
+}
+.foot_conton{
+  width: 10rem;
+  // height: 100%rem;
+  line-height:1.6rem;
+  text-align:center;
+  font-size:.4rem;
+}
+.left img{
+  width: auto;  
+  height: auto;  
+  max-width: 100%;  
+  max-height: 100%;
+}
+.left{
+  padding-left:.3rem;
+  margin:auto;
+  width: 10rem;
+  height: 1.1rem;
+}
+.right{
+  font-size:.4rem;
+  color:#fff;
+  text-align:center;
+  width: 100%;
+  margin:auto;
+  height: 1.6rem;
+  line-height:1.6rem;
+  background-color: #ED7913;
+}
+.foot{
+  display:flex;
+  width: 100%;
+  height: 1.6rem;
+  background-color: #fff;
+  position:absolute;
+  bottom:0;
+}
+
+
+
+
+
+.category-head-button {
+  position: absolute;
+  z-index: 9999;
+  top: .13rem;
+  left: 1.23rem;
+  transform: translate(-50%, 0);
+}
+
+.category-head-button img {
+  width: 1.6rem;
+  height: auto;
+}
+
+.category-left, .category-right {
+  width: .8rem;
+  height: .53rem;
+  border: none;
+  background: skyblue;
+}
+
+.category-right {
+  left: 20%;
+}
+
+.category-active {
+  background: #ff833a;
+  color: #fff;
+}
+
+/* 按钮结束 */
+
+.category-main {
+  width: 100%;
+}
+
+.categoryLeft {
+  position: relative;
+  float: left;
+  width: 2.46rem;
+  height: calc(100vh - 1.28rem);
+  overflow: hidden;
+  background: white;
+}
+
+.wutu {
+  position: relative;
+  display: inline-block;
+  left: .16rem;
+  width: 7.26rem;
+  height: calc(100vh - 1.28rem);
+  overflow: hidden;
+}
+
+.categoryRight {
+  position: relative;
+  display: inline-block;
+  // left: .16rem;
+  width: 7.5rem;
+  height: calc(100vh - 1.28rem);
+  overflow: hidden;
+}
+
+.category-title {
+  text-align:center;
+  // display: flex;
+  // align-items: center;
+  // justify-content: flex-start;
+  font-weight: 500;
+  // padding-left: .1rem;
+  flex-wrap: wrap;
+  line-height: 1.17rem;
+  width: 100%;
+  height: 1.17rem;
+  font-size: .32rem;
+  background: #f5f5f5;
+  overflow: hidden;
+}
+
+.category-title-active {
+  // border-left: .13rem solid #ff833a;
+  background-color: #ff833a;
+  color: #fff;
+}
+
+.category-left-head {
+  width: 100%;
+  // height: .8rem;
+  background: #f5f5f5;
+}
+
+/* 左侧结束 */
+
+/* 右侧开始 */
+
+/* 轮播开始 */
+
+.category-tab-box {
+  position: absolute;
+  overflow: hidden;
+  bottom: 1.28rem;
+  width: 100%;
+}
+
+.category-tab {
+  position: relative;
+  overflow: hidden;
+  height: 1.33rem;
+  z-index: 9999;
+  transition: all 1s;
+}
+
+.category-tab-bar {
+  position: absolute;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 2rem;
+  height: 1.33rem;
+  word-wrap: break-word;
+  word-break: normal;
+  text-align: center;
+  font-size: .3rem;
+  color: #fff;
+}
+
+.bar-active {
+  font-size: .35rem;
+  color: #ff833a;
+}
+
+.tab-un {
+  position: absolute;
+  bottom: 0;
+  width: 2rem;
+  height: .05rem;
+  background-color: #ff833a;
+  transition: all 1s;
+}
+
+.category-swiper {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 2.61rem);
+}
+
+.category-swiper .swiper-container {
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.category-swiper .swiper-wrapper {
+  width: 100%;
+  padding-bottom: .1rem;
+}
+
+.category-swiper .swiper-slide {
+  position: relative;
+  background: #fff;
+  width: 77.33% !important;
+  height: 58%;
+  transform: scale(0.9);
+  transition: all 1s;
+  opacity: .5;
+  border-radius: .4rem;
+  overflow: hidden;
+}
+
+.category-swiper .swiper-slide:first-child {
+  opacity: 1;
+  transform: scale(.95);
+}
+
+.swiper-goods-info {
+  position: relative;
+  width: 6.9339rem;
+  height: calc(10.45rem - .8rem - 6.93rem - .4rem);
+  margin: 0 .4rem .4rem .4rem;
+}
+
+.swiper-slide .swiper-goods-img {
+  width: 6.9339rem;
+  height: 6.9339rem;
+  margin: .4rem .4rem 0 .4rem;
+}
+
+/* .category-swiper .swiper-slide-active {
+  opacity: 1;
+  transform: scale(.95);
+} */
+
+.category-swiper .swiper-slide p:nth-of-type(1) {
+  margin: .2rem 0;
+  text-align: justify;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: .4rem;
+}
+
+.category-swiper .swiper-slide p:nth-of-type(2) {
+  display: flex;
+  text-decoration: line-through;
+  margin-bottom: .15rem;
+  font-size: .3rem;
+  align-items: center;
+  color: #c1c1c1;
+}
+
+.category-swiper .swiper-slide p:nth-of-type(3) {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: .4rem;
+  color: #f5702a;
+  height: .55rem;
+}
+
+.category-swiper .swiper-slide p:nth-of-type(3) span {
+  font-size: .3rem;
+  margin-top: .09rem;
+}
+
+.category-swiper .swiper-slide p:nth-of-type(3) .category-button-left {
+  left: 2rem;
+}
+
+.category-swiper .swiper-slide p:nth-of-type(3) .category-button-right {
+  left: 2.825rem;
+}
+
+.category-swiper .swiper-slide p:nth-of-type(4) {
+  width: 100%;
+  position: absolute;
+  color: #ccc;
+  bottom: 0;
+  font-size: .2rem;
+}
+
+.category-swiper .swiper-slide p:nth-of-type(4) span {
+  margin-right: .4rem;
+}
+
+.swiper-goods-info .category-goods-img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  width: .56rem;
+  height: .56rem;
+}
+
+.category-swiper .swiper-scrollbar {
+  background: #fff;
+  width: 2rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.category-swiper .swiper-scrollbar-drag {
+  background: #ff762e;
+}
+
+.calculate_1 {
+  position: absolute;
+  box-sizing: content-box;
+  right: 0;
+  bottom: 0;
+  padding: .7rem .16rem .17rem .4rem;
+  height: .53rem;
+  line-height: .53rem;
+  text-align: center;
+  font-size: .32rem;
+  color: #f5702a;
+}
+
+.decrement_1, .increment_1 {
+  position: relative;
+  width: .53rem;
+  height: .53rem;
+  border-radius: 50%;
+}
+
+.decrement_1 {
+  float: left;
+  margin-right: .3rem;
+  color: #201d1d;
+  background: #dadada;
+}
+
+.decrement_1::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: .3rem;
+  height: .05rem;
+  background: #201d1d;
+}
+
+.increment_1::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: .3rem;
+  height: .05rem;
+  background: #fff;
+}
+
+.increment_1::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: .05rem;
+  height: .3rem;
+  background: #fff;
+}
+
+.increment_1 {
+  float: right;
+  margin-left: .3rem;
+  ;
+  color: #fff;
+  background: #ff762e;
+}
+
+.＋▂＋ {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 1.87rem;
+  height: auto;
+}
+
+.category-button {
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: #ff762e;
+  bottom: .335rem;
+  left: 5.5rem;
+  border: none;
+  width: 1.85rem;
+  height: .8rem !important;
+  padding-left: .41rem;
+  font-size: .35rem;
+  color: white;
+  border-top-left-radius: .4rem;
+  border-bottom-left-radius: .4rem;
+}
+
+.category-button::after {
+  content: '';
+    position: absolute;
+    display: inline-block;
+    right: 9%;
+    width: .12rem;
+    height: .12rem;
+    border-top: .03rem solid #fff;
+    border-right: .03rem solid #fff;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
+
+
+
+`
+
+
+
+
+
+export default Category

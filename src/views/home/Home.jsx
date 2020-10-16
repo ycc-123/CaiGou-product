@@ -19,7 +19,7 @@ export default class Home extends Component {
       <div className='conten'>
         <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigou.png" alt=""/></div>
         <ul>
-          <li style={{marginLeft:".5rem"}} onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shengqing.png" alt=""/></li>
+          <li style={{marginLeft:".5rem"}} onClick={()=>{this.props.history.push('/ApplyOrder')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shengqing.png" alt=""/></li>
           <li style={{marginLeft:".4rem"}} onClick={()=>{this.props.history.push('/AddPurchaseOrder')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/addcaigou.png" alt=""/></li>
           <li style={{marginLeft:".3rem"}} onClick={()=>{this.props.history.push('/PurchaseOrder')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigoudan.png" alt=""/></li>
         </ul>
