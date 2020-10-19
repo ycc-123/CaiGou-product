@@ -1,34 +1,86 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
+import { getPurchaseList } from 'network/Api'
+import { Toast } from 'antd-mobile';
+import BetterScroll from 'common/betterScroll/BetterScroll'
+const scrollConfig = {
+    probeType: 1
+}
+function Dan(value){
+    let item =value.item
+    console.log(item)
+    return(
+        <div className='caigoudan'  >
+                    <div className='dan'>
+                        <div className='dan-top'>
+                            <p>
+                            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt=""/>
+                            </p>
+                            <div className='caigoudanhao'>采购单号：{item.docno}</div>
+                            <div className='zuantai'>{item.statusname}</div>
+                        </div>
+                        <div className='dan-footer'>
+                            <p>单据日期：{item.docdate}</p>
+                            <p>采购仓库：{item.warehousename}</p>
+                        </div>
+                    </div>
+                </div>
+    )
+}
 export default class PurchaseOrder extends Component {
+    constructor(){
+        super()
+        this.state={
+            data:[]
+        }
+    }
+
+    componentDidMount(){
+        getPurchaseList({ action: 'getPurchaseList', data: {
+            uniacid: "53",
+            uid:"2271",
+            type:"1",
+            limit:"30",
+            page:"2"
+          } }).then((res) => {
+            console.log(res.data)
+            if(res.data.status===4001){
+                console.log(res.data.data.data)
+                this.setState({
+                    data: res.data.data.data
+                }, () => {
+                    this.refs.scroll.BScroll.refresh()
+                })
+            }else{
+                Toast.fail('网络错误', 2)
+            }
+        })
+    }
     render() {
         return (
             <PurchaseOrderStyle>
-            <div style={{width:"100%"}}>
+                <BetterScroll config={scrollConfig} ref='scroll'>
+
+            <div style={{width:"100%",height:"100%"}}>
                 <div className='search'>
                     <input type="search" className='input' placeholder="请输入采购单号/仓库名称"/>
                     <div className='img'>
                     <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search"/>
                     </div>
                 </div>
-
-                <div className='caigoudan' onClick={()=>{this.props.history.push('/PurchaseOrderDetailed')}}>
-                    <div className='dan'>
-                        <div className='dan-top'>
-                            <p>
-                            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt=""/>
-                            </p>
-                            <div className='caigoudanhao'>采购单号：CG20201009123456789</div>
-                            <div className='zuantai'>待审核</div>
-                        </div>
-                        <div className='dan-footer'>
-                            <p>单据日期：2020-10-08</p>
-                            <p>采购仓库：火蝶云三号店</p>
-                        </div>
+                    <div onClick={()=>{this.props.history.push('/PurchaseOrderDetailed')}}>
+                    {
+                        this.state.data.map((value,key)=>{
+                            // console.log(value)
+                            return(
+                                <Dan item={value} key={key}></Dan>
+                            )
+                            
+                        })
+                    }
                     </div>
-                </div>
             </div>
+            </BetterScroll>
             </PurchaseOrderStyle>
         )
     }
@@ -49,7 +101,7 @@ const PurchaseOrderStyle = styled.div`
 .caigoudanhao{
     margin-top:.15rem;
     margin-left:.2rem;
-    width:6.8rem;
+    width:6.5rem;
     font-size:.38rem;
     color: #333333;
 }

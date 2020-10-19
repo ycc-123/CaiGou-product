@@ -1,7 +1,38 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { getPurchaseDetail } from 'network/Api'
+import { Toast } from 'antd-mobile';
+import BetterScroll from 'common/betterScroll/BetterScroll'
 
 export default class PurchaseOrderDetailed extends Component {
+    constructor(){
+        super()
+        this.state={
+            purchaseDetail:{}
+        }
+    }
+    componentDidMount(){
+        getPurchaseDetail({ action: 'getPurchaseDetail', data: {
+            uniacid: "53",
+            uid:"2271",
+            purchaseId:"679",
+            type:"1",
+            limit:"30",
+            page:"2"
+          } }).then((res) => {
+            console.log(res.data)
+            if(res.data.status===4001){
+                console.log(res.data.data.purchaseDetail)
+                this.setState({
+                    purchaseDetail: res.data.data.purchaseDetail
+                }, () => {
+                    
+                })
+            }else{
+                Toast.fail('网络错误', 2)
+            }
+        })
+    }
     render() {
         return (
             <PurchaseOrderDetailedStyle>
@@ -22,8 +53,8 @@ export default class PurchaseOrderDetailed extends Component {
                         </div>
 
                         <div className='conten-c'>
-                            <p>单据日期：2020-09-05</p>
-                            <p>单据仓库：火蝶云一号店</p>
+                            <p>单据日期：{this.state.purchaseDetail.docdate}</p>
+                            <p>单据仓库：{this.state.purchaseDetail.warehousename}</p>
                             <p>单据状态：<span style={{ color: "#ed5f21" }}>待审核</span></p>
                         </div>
 

@@ -1,8 +1,36 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
+import { getPurchaseDeliveryDetail } from 'network/Api'
+import { Toast } from 'antd-mobile';
 
 export default class WarehousingOrderxing extends Component {
+    constructor(){
+        super()
+        this.state={
+            data:[]
+        }
+    }
+    componentDidMount() {
+
+        getPurchaseDeliveryDetail({ action: 'getPurchaseDeliveryDetail', data: {
+            uniacid: "53",
+            uid:"2271",
+            deliveryId:"483",
+            type:"1",
+            limit:"30",
+            page:"2"
+          } }).then((res) => {
+            console.log(res)
+            // if(res.data.status===4001){
+
+            //     this.setState({
+            //         data: res.data.data.data
+            //     })
+            // }else{
+            //     Toast.fail('网络错误', 2)
+            // }
+        })
+    }
     render() {
         return (
             <WarehousingOrderxingStyle>

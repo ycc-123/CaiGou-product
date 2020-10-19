@@ -3,7 +3,7 @@ import axios from 'axios'
 export function requestPost(config) {
   const instance = axios.create({
     timeout: 10000,
-    baseURL: 'https://dev.huodiesoft.com/posdataapi.php',
+    baseURL: 'https://dev.huodiesoft.com/pos_erp_api.php',
     method: 'post',
     headers: {
       'Content-Type': 'text/plain'
@@ -68,5 +68,3 @@ export function requestPost(config) {
 //     return instance(config)
 //   }
 // }
-
-

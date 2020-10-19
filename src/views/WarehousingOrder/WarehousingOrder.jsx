@@ -1,7 +1,36 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { getPurchaseDeliveryList } from 'network/Api'
+import { Toast } from 'antd-mobile';
+import Tiao from './Tiao'
 
 export default class WarehousingOrder extends Component {
+    constructor(){
+        super()
+        this.state={
+            data:[]
+        }
+    }
+    componentDidMount() {
+
+        getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
+            uniacid: "53",
+            uid:"2271",
+            type:"1",
+            limit:"30",
+            page:"2"
+          } }).then((res) => {
+            console.log(res.data.data.data)
+            if(res.data.status===4001){
+
+                this.setState({
+                    data: res.data.data.data
+                })
+            }else{
+                Toast.fail('网络错误', 2)
+            }
+        })
+    }
     render() {
         return (
             <WarehousingOrderStyle>
@@ -14,19 +43,17 @@ export default class WarehousingOrder extends Component {
                 </div>
 
                 <div className='caigoudan' onClick={()=>{this.props.history.push('/WarehousingOrderxing')}}>
-                    <div className='dan'>
-                        <div className='dan-top'>
-                            <p>
-                            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt=""/>
-                            </p>
-                            <div className='caigoudanhao'>入库单号：CG20201009123456789</div>
-                            <div className='zuantai'>待提交</div>
-                        </div>
-                        <div className='dan-footer'>
-                            <p>单据日期：2020-10-08</p>
-                            <p>入库仓库：火蝶云三号店</p>
-                        </div>
-                    </div>
+                    {
+                        this.state.data.map((value,key)=>{
+                            console.log(value)
+                            return(
+                                <Tiao item={value} key={key}/>
+                            )
+                            
+                        })
+                    }
+                    
+
                 </div>
             </div>
             </WarehousingOrderStyle>

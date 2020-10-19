@@ -19,7 +19,7 @@ import { _categoryLeft, _categoryRight } from 'network/category'
 
 const scollConfig = {
   probeType: 1
-}
+}  
 const scrollStyle = {
   width: '2.46rem',
   height: 'calc(100vh - 1.48rem)',
@@ -46,21 +46,21 @@ class Category extends Component {
     const { title, defaultIndex, goods, ys, kc, type } = this.state
     const { cartGoods } = store.getState()
 
-    if (title.length !== 0 && title[defaultIndex].goods.length !== 0) {
-      title[defaultIndex].goods.forEach(item => {
-        // 查找购物车商品是否和state的某个goods相等
-        let newGoods = cartGoods.find(cartItem => {
-          return cartItem.sid === item.id
-        })
-        // console.log(newGoods)
-        if (newGoods) {
-          item.num = newGoods.num
-        } else {
-          item.num = 0
-        }
-      })
-    }
-    console.log(title)
+    // if (title.length !== 0 && title[defaultIndex].goods.length !== 0) {
+    //   title[defaultIndex].goods.forEach(item => {
+    //     // 查找购物车商品是否和state的某个goods相等
+    //     let newGoods = cartGoods.find(cartItem => {
+    //       return cartItem.sid === item.id
+    //     })
+    //     // console.log(newGoods)
+    //     if (newGoods) {
+    //       item.num = newGoods.num
+    //     } else {
+    //       item.num = 0
+    //     }
+    //   })
+    // }
+    // console.log(title)
     return (
       <CategoryStyle>
       <Fragment>

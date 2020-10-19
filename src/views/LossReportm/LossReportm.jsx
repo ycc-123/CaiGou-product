@@ -74,7 +74,7 @@ const WarehousingOrderStyle = styled.div`
     color: #333333;
 }
 .dan-top p img{
-    width: auto;  
+    width: auto;
     height: auto;  
     max-width: 100%;  
     max-height: 100%;
