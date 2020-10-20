@@ -12,10 +12,10 @@ import CategoryRight from './childCom/CategoryRight'
 import { setTitle } from 'commons/utils'
 
 import { store } from 'store/index'
-
+import { getProductCategoryAll,showProductCategory } from 'network/Api'
 import { _categoryLeft, _categoryRight } from 'network/category'
 
-// import './style/category.css'
+import { Toast } from 'antd-mobile';
 
 const scollConfig = {
   probeType: 1
@@ -29,17 +29,16 @@ const scrollStyle = {
 class Category extends Component {
   constructor(props) {
     super(props)
-    props.cacheLifecycles.didCache(this.componentDidCache)
-    props.cacheLifecycles.didRecover(this.componentDidRecover)
+    // props.cacheLifecycles.didCache(this.componentDidCache)
+    // props.cacheLifecycles.didRecover(this.componentDidRecover)
     this.state = {
-      ys: '',
-      kc: '',
       title: [],
-      goods:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}],
-      tie: [{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"}
-      ,{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"}],
+      goods:[],
+      // tie: [{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"}
+      // ,{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"}],
       defaultIndex: 0,
-      type: 'goods'
+      type: 'goods',
+      id:[]
     }
   }
   render() {
@@ -71,9 +70,9 @@ class Category extends Component {
         <div className='category-main'>
           {type === 'goods' ? <Fragment><div className='categoryLeft'>
             <ul>
-              {this.state.tie.length !== 0 && <BetterScroll config={scollConfig} style={scrollStyle} ref='scroll'>
+              {title.length !== 0 && <BetterScroll config={scollConfig} style={scrollStyle} ref='scroll'>
                 <li className='category-left-head'></li>
-                {this.state.tie.map((item, index) => {
+                {title.map((item, index) => {
                   return (
                     <CategoryLeftItem key={item.id + index}
                       item={item}
@@ -101,8 +100,8 @@ class Category extends Component {
                     <div className='left'>
                         <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/lajitong.png" alt=""/>
                     </div>
-                    <div className='yuan'>9</div>
-                    <div className='foot_conton'>总额：<span>999999</span></div>
+                    <div className='yuan'>0</div>
+                    <div className='foot_conton'>总额：<span>0</span></div>
                     <div className='right'>提交</div>
 
                 </div>
@@ -152,38 +151,56 @@ class Category extends Component {
   }
 
   componentDidMount = () => {
-    this.refs.scroll.BScroll.refresh()
+    // this.refs.scroll.BScroll.refresh()
     setTitle('分类')
     const { appConfig } = store.getState()
-    _categoryLeft().then(res => {
-      const right_config = {
-        action: 'getGoodsByCategory',
-        data: {
-          uniacid: appConfig.uniacid,
-          openid: appConfig.wxUserInfo.openid,
-          cid: 0,
-          pagesize: 100
-        }
-      }
-      _categoryRight(right_config).then(res1 => {
-        // let search = window.location.search
-        // let newUrl = window.location.href.replace(search, search + `&cid=${right_config.data.cid}`)
-        // window.history.pushState(null, null, newUrl)
-
-        let title = (res.data && res.data.data) || []
-        // title[0].goods = (res1.data && res1.data.data && res1.data.data.list) || []
+    getProductCategoryAll({ action: 'getProductCategoryAll', data: {
+      uniacid: "53",
+    } }).then(res => {
+      console.log(res.data.data)
+      if(res.data.status===4001){
+        var result = res.data.data.map(o=>{return{name:o.name}});
+        console.log(result)
+        var Id = res.data.data.map(o=>{return{id:o.id}});
+        console.log(Id)
+        
         this.setState({
-          title
-        }, () => {
-          console.log(title)
-          this.refs.scroll.BScroll.refresh()
+          title: result,
+          id:Id
         })
-      })
+      }else{
+        Toast.fail('网络错误', 2)
+      }
     })
-
+    console.log(this.state.id)
   }
 
   onChangeActive = index => {
+    console.log(this.state.id[index].id)
+    showProductCategory({ action: 'showProductCategory', data: {
+      uniacid: "53",
+      id:this.state.id[index].id
+    } }).then(res => {
+      console.log(res.data)
+      if(res.data.status===4001){
+        console.log(res.data.data.childrens)
+        this.setState({
+          goods: res.data.data.childrens
+        })
+      }else{
+        Toast.fail('网络错误', 2)
+      }
+    })
+
+
+
+
+
+
+
+
+
+
     const { appConfig } = store.getState()
     let { title } = this.state
     if (!this.state.goods) {
@@ -316,7 +333,7 @@ const CategoryStyle = styled.div`
   width: 2.46rem;
   height: calc(100vh - 1.28rem);
   overflow: hidden;
-  background: white;
+  background: #F7F7F7;;
 }
 
 .wutu {

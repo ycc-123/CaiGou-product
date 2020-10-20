@@ -1,34 +1,63 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseDetail } from 'network/Api'
+import { getPurchaseDetail, getPurchaseList } from 'network/Api'
 import { Toast } from 'antd-mobile';
-import BetterScroll from 'common/betterScroll/BetterScroll'
 
+
+function Tiao(value) {
+    console.log(value)
+    let tiao = value.item
+    return (
+        <div className='tiao'>
+            <img className='t-img-l' src={tiao.image} alt="" />
+            <ul className='wen-zi'>
+                <li className='wen-zi-t'>
+                    <div className='name'>{tiao.goods_name}</div>
+                    <p>{tiao.gnum}公斤</p>
+                </li>
+                <li className='wen-zi-f'>
+                    <div>￥：{tiao.price}元/{tiao.unitname}</div>
+                    <p>{tiao.subtotal}</p>
+                </li>
+            </ul>
+        </div>
+    )
+}
 export default class PurchaseOrderDetailed extends Component {
-    constructor(){
-        super()
-        this.state={
-            purchaseDetail:{}
+    constructor(props) {
+        super(props)
+        this.state = {
+            purchaseDetail: {},
+            id: this.props.match.params.id,
+            data: [],
+            purchaseItem: []
         }
     }
-    componentDidMount(){
-        getPurchaseDetail({ action: 'getPurchaseDetail', data: {
-            uniacid: "53",
-            uid:"2271",
-            purchaseId:"679",
-            type:"1",
-            limit:"30",
-            page:"2"
-          } }).then((res) => {
+    componentDidUpdate = () => {
+
+    }
+    componentDidMount() {
+
+        getPurchaseDetail({
+            action: 'getPurchaseDetail', data: {
+                uniacid: "53",
+                uid: "2271",
+                purchaseId: this.props.match.params.id,
+                type: "1",
+                limit: "30",
+                page: "1"
+            }
+        }).then((res) => {
             console.log(res.data)
-            if(res.data.status===4001){
-                console.log(res.data.data.purchaseDetail)
+            if (res.data.status === 4001) {
+                console.log(res.data.data.purchaseItem)
                 this.setState({
-                    purchaseDetail: res.data.data.purchaseDetail
+                    purchaseDetail: res.data.data.purchaseDetail,
+                    purchaseItem: res.data.data.purchaseItem
                 }, () => {
-                    
+
                 })
-            }else{
+            } else {
                 Toast.fail('网络错误', 2)
             }
         })
@@ -55,30 +84,30 @@ export default class PurchaseOrderDetailed extends Component {
                         <div className='conten-c'>
                             <p>单据日期：{this.state.purchaseDetail.docdate}</p>
                             <p>单据仓库：{this.state.purchaseDetail.warehousename}</p>
-                            <p>单据状态：<span style={{ color: "#ed5f21" }}>待审核</span></p>
+                            <p>单据状态：<span style={{ color: "#ed5f21" }}>{this.state.purchaseDetail.statusname}</span></p>
                         </div>
 
-                    <div className='footer'>
-                            采购备注：
+                        <div className='footer'>
+                            采购备注：{this.state.purchaseDetail.remark}
                     </div>
-                </div>
+                    </div>
+                    {
+                        this.state.purchaseItem.map((value, key) => {
+                            console.log(value)
+                            return (
+                                <Tiao item={value} key={key}></Tiao>
+                            )
+                        })
+                    }
 
-                    <div className='tiao'>
-                       
-                            {/* <p className='t-img'> */}
-                                <img className='t-img-l' src="" alt=""/>
-                            {/* </p> */}
-                            <ul className='wen-zi'>
-                                <li className='wen-zi-t'>
-                                    <div className='name'>北海盗白色恋人巧克力饼干</div>
-                                    <p>99.9公斤</p>
-                                </li>
-                                <li className='wen-zi-f'>
-                                    <div>￥：85元/盒</div>
-                                    <p>999.9</p>
-                                </li>
-                            </ul>
-                       
+                    <div className='foot'>
+                        <div className='left'>
+                            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
+                        </div>
+                        <div className='yuan'>0</div>
+                        {/* <div className='foot_conton'>总额：<span>0</span></div> */}
+                        <div className='right'>审核</div>
+
                     </div>
                 </div>
             </PurchaseOrderDetailedStyle>
@@ -86,6 +115,62 @@ export default class PurchaseOrderDetailed extends Component {
     }
 }
 const PurchaseOrderDetailedStyle = styled.div`
+.yuan{
+    // padding-top:.1rem;
+    text-align:center;
+    // margin:auto;
+    position:absolute;
+    top: .2rem;
+    left:1.6rem;
+    color:#fff;
+    width:.5rem;
+    height:.5rem;
+    line-height:.5rem;
+    border-radius:.5rem;
+    background-color: red;
+  }
+  .foot_conton span{
+    color:#cf2424;
+  }
+  .foot_conton{
+    width: 10rem;
+    // height: 100%rem;
+    line-height:1.6rem;
+    text-align:center;
+    font-size:.4rem;
+  }
+  .left img{
+    width: auto;  
+    height: auto;  
+    max-width: 100%;  
+    max-height: 100%;
+  }
+  .left{
+    padding-left:.3rem;
+    margin:auto;
+    width: 22rem;
+    height: 1rem;
+  }
+  .right{
+    font-size:.4rem;
+    color:#fff;
+    text-align:center;
+    width: 100%;
+    margin:auto;
+    height: 1.6rem;
+    line-height:1.6rem;
+    background-color: #ED7913;
+  }
+  .foot{
+    display:flex;
+    width: 100%;
+    height: 1.6rem;
+    background-color: #fff;
+    position:absolute;
+    bottom:0;
+  }
+
+
 .wen-zi-t p{
     color:#646464;
     font-size:.35rem;

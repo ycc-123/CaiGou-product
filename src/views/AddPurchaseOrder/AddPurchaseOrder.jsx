@@ -11,6 +11,7 @@ export default class AddPurchaseOrder extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            Value:'',
             sValue: '',
             data:[],
             supplier:[]
@@ -90,8 +91,8 @@ export default class AddPurchaseOrder extends Component {
                              cols={1}  
                              className="forss"
                              extra="请选择供应商"
-                             value={this.state.sValue}
-                             onChange={v => this.setState({ sValue: v })}
+                             value={this.state.Value}
+                             onChange={v => this.setState({Value: v })}
                              onOk={v => console.log(v)}
                              >
                                 <List.Item className='time' arrow="horizontal"></List.Item>

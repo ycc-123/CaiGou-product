@@ -1,6 +1,7 @@
 import React from 'react'
-import { HashRouter as Router, Redirect } from 'react-router-dom'
-import CacheRoute, { CacheSwitch } from 'react-router-cache-route'
+// import { HashRouter as Router, Switch, Redirect } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
+import  { CacheSwitch } from 'react-router-cache-route'
 
 import Home from 'views/home/Home'
 import AddPurchaseOrder from 'views/AddPurchaseOrder/AddPurchaseOrder'
@@ -16,50 +17,30 @@ import ApplyOrder from 'views/ApplyOrder/ApplyOrder'
 import ApplyOrderx from 'views/ApplyOrderx/ApplyOrderx'
 import category from 'views/category/Category'
 
-
-
-
-
-
-
 const AppRouter = () => {
   return (
-    <Router> 
+    <Router>
+      {/* 缓存路由 */}
       <CacheSwitch>
-        {/* <Route path='/cart' exact component={Cart}></Route> */}
-        {/* 精确匹配  总是 */}
-        <CacheRoute path='/home' exact when='forward' component={Home} cacheKey='HomeComponent'></CacheRoute>
-        <CacheRoute path="/AddPurchaseOrder" exact when='always' component={AddPurchaseOrder}></CacheRoute>
-        <CacheRoute path='/PurchaseOrder' when='always' component={PurchaseOrder} ></CacheRoute>
-        <CacheRoute path='/PurchaseOrderDetailed' when='always' component={PurchaseOrderDetailed} ></CacheRoute>
-        <CacheRoute path='/WarehousingOrder' when='always' component={WarehousingOrder} ></CacheRoute>
-        <CacheRoute path='/WarehousingOrderxing' when='always' component={WarehousingOrderxing} ></CacheRoute>
-        <CacheRoute path='/stockList' when='always' component={stockList} ></CacheRoute>
-        <CacheRoute path='/LossReport' when='always' component={LossReport} ></CacheRoute>
-        <CacheRoute path='/LossReportm' when='always' component={LossReportm} ></CacheRoute>
-         <CacheRoute path='/LossReportf' when='always' component={LossReportf} ></CacheRoute>
-        <CacheRoute path='/ApplyOrder' when='always' component={ApplyOrder} ></CacheRoute>
-        <CacheRoute path='/ApplyOrderx' when='always' component={ApplyOrderx} ></CacheRoute>
-        <CacheRoute path='/category' when='always' component={category} ></CacheRoute>
 
-
-
-
- 
-
-
-
-
-
-
-
-
-
-        <Redirect from='/' exact to='/home'></Redirect>
       </CacheSwitch>
 
-
-
+      <Switch>
+        <Route path='/PurchaseOrderDetailed/:id' exact component={PurchaseOrderDetailed} ></Route>
+        <Route path='/home' exact component={Home} ></Route>
+        <Route path='/' exact component={Home} ></Route>
+        <Route path='/category' exact component={category} ></Route>
+        <Route path='/ApplyOrderx' exact component={ApplyOrderx} ></Route>
+        <Route path='/ApplyOrder' exact component={ApplyOrder} ></Route>
+        <Route path='/LossReportf' exact component={LossReportf} ></Route>
+        <Route path='/LossReportm' exact component={LossReportm} ></Route>
+        <Route path='/LossReport' exact component={LossReport} ></Route>
+        <Route path='/stockList' exact component={stockList} ></Route>
+        <Route path='/WarehousingOrderxing/:id' exact component={WarehousingOrderxing} ></Route>
+        <Route path='/WarehousingOrder' exact component={WarehousingOrder} ></Route>
+        <Route path='/PurchaseOrder' exact component={PurchaseOrder} ></Route>
+        <Route path='/AddPurchaseOrder' exact component={AddPurchaseOrder} ></Route>
+      </Switch>
     </Router>
   )
 }

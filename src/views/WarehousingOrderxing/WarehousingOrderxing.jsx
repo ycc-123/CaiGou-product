@@ -1,35 +1,52 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseDeliveryDetail } from 'network/Api'
+import { getPurchaseDeliveryDetail,getPurchaseDeliveryList } from 'network/Api'
 import { Toast } from 'antd-mobile';
 
 export default class WarehousingOrderxing extends Component {
     constructor(){
         super()
         this.state={
-            data:[]
+            data:{}
         }
     }
     componentDidMount() {
-
-        getPurchaseDeliveryDetail({ action: 'getPurchaseDeliveryDetail', data: {
+        getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
             uniacid: "53",
             uid:"2271",
-            deliveryId:"483",
             type:"1",
             limit:"30",
             page:"2"
           } }).then((res) => {
-            console.log(res)
-            // if(res.data.status===4001){
-
-            //     this.setState({
-            //         data: res.data.data.data
-            //     })
-            // }else{
-            //     Toast.fail('网络错误', 2)
-            // }
+            console.log(res.data.data.data)
+            if(res.data.status===4001){
+                let data= res.data.data.data
+                getPurchaseDeliveryDetail({ action: 'getPurchaseDeliveryDetail', data: {
+                    uniacid: "53",
+                    uid:"2271",
+                    deliveryId:res.data.data.data[this.props.match.params.id].id,
+                    type:"1",
+                    limit:"30",
+                    page:"2"
+                  } }).then((res) => {
+                    console.log(res.data.data.purchaseDeliveryDetail)
+                    if(res.data.status===4001){
+        
+                        this.setState({
+                            data: res.data.data.purchaseDeliveryDetail
+                        })
+                    }else{
+                        Toast.fail('网络错误', 2)
+                    }
+                })
+               
+            }else{
+                Toast.fail('网络错误', 2)
+            }
         })
+
+
+        
     }
     render() {
         return (
@@ -47,12 +64,12 @@ export default class WarehousingOrderxing extends Component {
                             <p>
                                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
                             </p>
-                            <div>CG20201009123456789</div>
+                            <div>{this.state.data.docno}</div>
                         </div>
 
                         <div className='conten-c'>
-                            <p>单据日期：2020-09-05</p>
-                            <p>入库仓库：火蝶云一号店</p>
+                            <p>单据日期：{this.state.data.docdate}</p>
+                            <p>入库仓库：{this.state.data.warehousename}</p>
                             <p>单据状态：<span style={{ color: "#ed5f21" }}>待提交</span></p>
                         </div>
 
@@ -69,7 +86,7 @@ export default class WarehousingOrderxing extends Component {
                             <ul className='wen-zi'>
                                 <li className='wen-zi-t'>
                                     <div className='name'>北海盗白色恋人巧克力饼干</div>
-                                    <p>99.9公斤</p>
+                                    <p></p>
                                 </li>
                                 <li className='wen-zi-f'>
                                     <div>采购数量：85</div>

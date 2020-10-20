@@ -19,7 +19,8 @@ class CategoryRightgoods extends Component {
     this.click = true
   }
   render() {
-    // const { goods, ys, kc } = this.props
+    const { goods, ys, kc } = this.props
+    console.log(goods)
     // const show = parseInt(goods.num) === 0 ? 'block' : 'none'
     // const showNum = parseInt(goods.num) === 0 ? 'none' : 'block'
     // const kca = parseInt(kc) === 1 ? 'none' : 'block'
@@ -40,7 +41,7 @@ class CategoryRightgoods extends Component {
             <img className='category-img' src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png" alt=""/>
           {/* <img className='category-img' src={goods.gimg} alt="" onClick={(e) => { this.goDetail(e, goods.id) }} /> */}
           <div className='category-goods-info'>
-            <p>北海盗白色恋人巧克力饼干</p>
+            <p>{goods.name}</p>
             {/* <p>市场价: <span>￥</span> {goods.mprice} {goods.selltype === '1' && <> <img src='https://res.lexiangpingou.cn/images/vip/team.png' className='team-img' alt='' />
               <label className='team'>
                 {goods.groupnum}人团

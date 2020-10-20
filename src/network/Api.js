@@ -60,9 +60,24 @@ export function getPurchaseDeliveryDetail(config) {
     data: config.data
   })
 }
-
-
-
+// 收银商品全部分类
+export function getProductCategoryAll(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+// 收银商品指定分类
+export function showProductCategory(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
 
 
 

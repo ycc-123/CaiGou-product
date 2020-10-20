@@ -18,7 +18,7 @@ class CategoryRight extends Component {
       width: '7.5rem',
     }
     const { goodsList, ys, kc } = this.props
-    console.log(goodsList)
+    console.log(this.props)
     return (
       <div className='categoryRight'>
         <ul>

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { getPurchaseDeliveryList } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import Tiao from './Tiao'
-
+import BetterScroll from 'common/betterScroll/BetterScroll'
 export default class WarehousingOrder extends Component {
     constructor(){
         super()
@@ -25,6 +25,8 @@ export default class WarehousingOrder extends Component {
 
                 this.setState({
                     data: res.data.data.data
+                },()=>{
+                    this.refs.scroll.BScroll.refresh()
                 })
             }else{
                 Toast.fail('网络错误', 2)
@@ -32,8 +34,15 @@ export default class WarehousingOrder extends Component {
         })
     }
     render() {
+        const scrollConfig = {
+            probeType: 1
+        }
+        const scrollstyle={
+            
+        }
         return (
             <WarehousingOrderStyle>
+                <BetterScroll config={scrollConfig} ref='scroll' style={scrollstyle}>
             <div style={{width:"100%"}}>
                 <div className='search'>
                     <input type="search" className='input' placeholder="请输入入库单号/仓库名称"/>
@@ -41,21 +50,18 @@ export default class WarehousingOrder extends Component {
                     <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search"/>
                     </div>
                 </div>
-
-                <div className='caigoudan' onClick={()=>{this.props.history.push('/WarehousingOrderxing')}}>
                     {
                         this.state.data.map((value,key)=>{
                             console.log(value)
                             return(
+                                <div className='caigoudan' onClick={()=>{this.props.history.push(`/WarehousingOrderxing/${key}`)}}>
                                 <Tiao item={value} key={key}/>
+                                </div>
                             )
-                            
                         })
                     }
-                    
-
-                </div>
             </div>
+            </BetterScroll>
             </WarehousingOrderStyle>
         )
     }
@@ -76,7 +82,7 @@ const WarehousingOrderStyle = styled.div`
 .caigoudanhao{
     margin-top:.15rem;
     margin-left:.2rem;
-    width:6.8rem;
+    width:6.4rem;
     font-size:.38rem;
     color: #333333;
 }
