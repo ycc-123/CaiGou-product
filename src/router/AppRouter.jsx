@@ -16,7 +16,10 @@ import LossReportf from 'views/LossReportf/LossReportf'
 import ApplyOrder from 'views/ApplyOrder/ApplyOrder'
 import ApplyOrderx from 'views/ApplyOrderx/ApplyOrderx'
 import category from 'views/category/Category'
-
+import Liebiao from 'views/caigoudanmx/liebiao'
+import Mingxi from 'views/caigoudanmx/mingxi'
+import Youhuimxb from 'views/kucundan/stockList/youhuimxb'
+import Shouyinmxb from 'views/kucundan/stockList/shouyinmxb'
 const AppRouter = () => {
   return (
     <Router>
@@ -40,6 +43,10 @@ const AppRouter = () => {
         <Route path='/WarehousingOrder' exact component={WarehousingOrder} ></Route>
         <Route path='/PurchaseOrder' exact component={PurchaseOrder} ></Route>
         <Route path='/AddPurchaseOrder' exact component={AddPurchaseOrder} ></Route>
+        <Route path='/Liebiao' exact component={Liebiao} ></Route>
+        <Route path='/Mingxi' exact component={Mingxi} ></Route>
+        <Route path='/Youhuimxb' exact component={Youhuimxb} ></Route>
+        <Route path='/Shouyinmxb' exact component={Shouyinmxb} ></Route>
       </Switch>
     </Router>
   )

@@ -16,6 +16,7 @@ import { getProductCategoryAll,searchProduct } from 'network/Api'
 import { _categoryLeft, _categoryRight } from 'network/category'
 
 import { Toast } from 'antd-mobile';
+import mingxi from '../caigoudanmx/mingxi'
 
 const scollConfig = {
   probeType: 1
@@ -41,6 +42,10 @@ class Category extends Component {
       type: 'goods',
       id:[]
     }
+  }
+  mingxi(){
+    console.log(111)
+    this.props.history.push('/Liebiao')
   }
   render() {
     const { title, defaultIndex, goods, ys, kc, type } = this.state
@@ -99,13 +104,13 @@ class Category extends Component {
         {/* <TabBar /> */}
         <div className='foot'>
                     {/* <div onClick={()=>{console.log(111)}}> */}
-                    <div className='left' onClick={()=>{console.log(111)}}>
+                    <div className='left' onClick={()=>{this.mingxi()}}>
                         <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt=""/>
                     </div>
 
                     <div className='yuan'>0</div>
 
-                    <div className='foot_conton' onClick={()=>{console.log(111)}}>总额：<span>0</span></div>
+                    <div className='foot_conton' onClick={()=>{this.mingxi()}}>总额：<span>0</span></div>
                     
                     {/* </div> */}
 
@@ -158,6 +163,7 @@ class Category extends Component {
   }
 
   componentDidMount = () => {
+    
     // this.refs.scroll.BScroll.refresh()
     setTitle('分类')
     const { appConfig } = store.getState()
@@ -172,7 +178,23 @@ class Category extends Component {
         console.log(Id)
         var value = res.data.data.map(o=>{return{code:o.code}});
         console.log(value)
-        
+        searchProduct({ action: 'searchProduct', data: {
+          uniacid: "53",
+          uid:"2271",
+          categoryid:Id[0].id,
+          // code:this.state.value[index].code,
+          // name:this.state.title[index].name
+        } }).then(res => {
+          console.log( res.data.msg)
+          if(res.data.status===4001){
+            console.log(res.data.data.data)
+            this.setState({
+              goods: res.data.msg==="成功"? res.data.data.data : [{}]
+            })
+          }else{
+            Toast.fail(res.data.msg, 2)
+          }
+        })
         this.setState({
           title: result,
           id:Id,
@@ -194,15 +216,18 @@ class Category extends Component {
       // code:this.state.value[index].code,
       // name:this.state.title[index].name
     } }).then(res => {
-      console.log(res.data)
-      // if(res.data.status===4001){
-      //   console.log(res.data.data.childrens)
-      //   this.setState({
-      //     goods: res.data.data.childrens
-      //   })
-      // }else{
-      //   Toast.fail('网络错误', 2)
-      // }
+      console.log( res.data.msg)
+      if(res.data.status===4001){
+        console.log(res.data.data.data)
+        this.setState({
+          goods: res.data.data.data
+        })
+      }else{
+        this.setState({
+          goods: []
+        })
+        Toast.fail(res.data.msg, 2)
+      }
     })
 
 

@@ -96,6 +96,7 @@ export default class PurchaseOrderDetailed extends Component {
                 console.log(res.data)
                
             })
+
         }else{
             console.log(this.props.match.params.id.split( ))
         let id=this.props.match.params.id.split( )
@@ -112,15 +113,20 @@ export default class PurchaseOrderDetailed extends Component {
             if (res.data.status === 4001) {
                 Toast.success(res.data.msg, 2)
             } else {
-                Toast.fail('网络错误', 2)
+                Toast.fail(res.data.msg, 2)
             }
         })
         }
-        
-
-
     }
     render() {
+        let Color=''
+        if(this.state.purchaseDetail.statusname==="审核成功"){
+            Color="#22a31b"
+        }else if(this.state.purchaseDetail.statusname==="待提交"){
+            Color="#d92929"
+        }else if(this.state.purchaseDetail.statusname==="待审核"){
+            Color="#ed5f21"
+        }
         return (
             <PurchaseOrderDetailedStyle>
                 <div>
@@ -142,7 +148,7 @@ export default class PurchaseOrderDetailed extends Component {
                         <div className='conten-c'>
                             <p>单据日期：{this.state.purchaseDetail.docdate}</p>
                             <p>单据仓库：{this.state.purchaseDetail.warehousename}</p>
-                            <p>单据状态：<span style={{ color: "#ed5f21" }}>{this.state.purchaseDetail.statusname}</span></p>
+                            <p>单据状态：<span style={{ color: Color }}>{this.state.purchaseDetail.statusname}</span></p>
                         </div>
 
                         <div className='footer'>
@@ -164,7 +170,7 @@ export default class PurchaseOrderDetailed extends Component {
                         </div>
                         <div className='yuan'>0</div>
                         {/* <div className='foot_conton'>总额：<span>0</span></div> */}
-                        <div className='right' onClick={()=>{this.shengHe()}}>{this.state.purchaseDetail.statusname==="待提交"?"提交":"审核"}</div>
+                        <div style={{background:this.state.purchaseDetail.statusname==="审核成功"?"#B4B4B4":''}} className='right' onClick={()=>{this.shengHe()}}>{this.state.purchaseDetail.statusname==="待提交"?"提交":"审核"}</div>
 
                     </div>
                 </div>

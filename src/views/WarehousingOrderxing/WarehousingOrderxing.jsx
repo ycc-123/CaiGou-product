@@ -8,22 +8,19 @@ function Tiao(value) {
     let tiao = value.item
     return (
         <div className='tiao'>
-                       
-                            {/* <p className='t-img'> */}
-                                <img className='t-img-l' src="" alt=""/>
-                            {/* </p> */}
-                            <ul className='wen-zi'>
-                                <li className='wen-zi-t'>
-                                    <div className='name'>{tiao.goods_name}</div>
-                                    <p></p>
-                                </li>
-                                <li className='wen-zi-f'>
-                                    <div>采购数量：{tiao.outnum}</div>
-                                    <p>入库数量：<span>{tiao.innum}</span></p>
-                                </li>
-                            </ul>
-                       
-                    </div>
+            <img className='t-img-l' src="" alt="" />
+            <ul className='wen-zi'>
+                <li className='wen-zi-t'>
+                    <div className='name'>{tiao.goods_name}</div>
+                    <p></p>
+                </li>
+                <li className='wen-zi-f'>
+                    <div>采购数量：{tiao.outnum}</div>
+                    <p>入库数量：<span>{tiao.innum}</span></p>
+                </li>
+            </ul>
+
+        </div>
     )
 }
 
@@ -32,8 +29,8 @@ export default class WarehousingOrderxing extends Component {
         super()
         this.state = {
             data: {},
-            purchaseDetail:[],
-            purchaseItem:[]
+            purchaseDetail: [],
+            purchaseItem: []
             // id: this.props.match.params.id,
         }
     }
@@ -56,15 +53,23 @@ export default class WarehousingOrderxing extends Component {
                     purchaseItem: res.data.data.purchaseDeliveryItem
                 })
             } else {
-                Toast.fail('网络错误', 2)
+                Toast.fail(res.data.msg, 2)
             }
         })
 
     }
-    shengHe(){
-        
+    shengHe() {
+
     }
     render() {
+        let Color = ''
+        if (this.state.purchaseDetail.statusname === "审核通过") {
+            Color = "#22a31b"
+        } else if (this.state.purchaseDetail.statusname === "待提交") {
+            Color = "#d92929"
+        } else if (this.state.purchaseDetail.statusname === "待审核") {
+            Color = "#ed5f21"
+        }
         return (
             <WarehousingOrderxingStyle>
                 <div>
@@ -86,12 +91,12 @@ export default class WarehousingOrderxing extends Component {
                         <div className='conten-c'>
                             <p>单据日期：{this.state.purchaseDetail.docdate}</p>
                             <p>单据仓库：{this.state.purchaseDetail.warehousename}</p>
-                            <p>单据状态：<span style={{ color: "#ed5f21" }}>{this.state.purchaseDetail.statusname}</span></p>
+                            <p>单据状态：<span style={{ color: Color }}>{this.state.purchaseDetail.statusname}</span></p>
                         </div>
 
                         <div className='footer'>
                             采购备注：{this.state.purchaseDetail.remark}
-                    </div>
+                        </div>
                     </div>
                     {
                         this.state.purchaseItem.map((value, key) => {
@@ -108,7 +113,7 @@ export default class WarehousingOrderxing extends Component {
                         </div>
                         <div className='yuan'>0</div>
                         {/* <div className='foot_conton'>总额：<span>0</span></div> */}
-                        <div className='right' onClick={()=>{this.shengHe()}}>{this.state.purchaseDetail.statusname==="待提交"?"提交":"审核"}</div>
+                        <div style={{ background: this.state.purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }} className='right' onClick={() => { this.shengHe() }}>{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
 
                     </div>
                 </div>
