@@ -8,8 +8,11 @@ export default class WarehousingOrder extends Component {
     constructor(){
         super()
         this.state={
-            data:[]
+            data:[],
+            limit:10,
+            page:1
         }
+        this.isLoadMore = true
     }
     componentDidMount() {
 
@@ -17,8 +20,8 @@ export default class WarehousingOrder extends Component {
             uniacid: "53",
             uid:"2271",
             type:"1",
-            limit:"30",
-            page:"2"
+            limit:this.state.limit,
+            page:this.state.page
           } }).then((res) => {
             console.log(res.data.data.data)
             if(res.data.status===4001){
@@ -42,7 +45,8 @@ export default class WarehousingOrder extends Component {
         }
         return (
             <WarehousingOrderStyle>
-                <BetterScroll config={scrollConfig} ref='scroll' style={scrollstyle}>
+                <BetterScroll config={scrollConfig} ref='scroll' style={scrollstyle} loadMore={this.loadMore}
+                    isLoadMore={this.isLoadMore}>
             <div style={{width:"100%"}}>
                 <div className='search'>
                     <input type="search" className='input' placeholder="请输入入库单号/仓库名称"/>
@@ -52,10 +56,10 @@ export default class WarehousingOrder extends Component {
                 </div>
                     {
                         this.state.data.map((value,key)=>{
-                            console.log(value)
+                            // console.log(value)
                             return(
-                                <div className='caigoudan' onClick={()=>{this.props.history.push(`/WarehousingOrderxing/${key}`)}}>
-                                <Tiao item={value} key={key}/>
+                                <div className='caigoudan' >
+                                <Tiao item={value} key={key} history={this.props.history}/>
                                 </div>
                             )
                         })
@@ -65,6 +69,56 @@ export default class WarehousingOrder extends Component {
             </WarehousingOrderStyle>
         )
     }
+    loadMore = () => {
+        // 加载数据时转圈
+        let loading = true
+        setTimeout(() => {
+            if (loading) {
+                this.setState({
+                    loadingMore: true
+                })
+            }
+        }, 1000)
+        if (this.isLoadMore) {
+            // console.log(111)
+            getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
+                uniacid: "53",
+                uid:"2271",
+                type:"1",
+                limit:this.state.limit,
+                page:this.state.page
+              } }).then(res => {
+                console.log(res.data.data.data)
+
+                // 如果长度不等于得时候加载 那么是到底了
+                if (res.data.data.data.length < this.state.limit) {
+                    this.isLoadMore = false
+                    /* let bottomTip = document.querySelector('.bottom-tip')
+                    bottomTip.style.visibility = 'visible'
+                    bottomTip.innerHTML = '商品已经全部加载完成' */
+                }
+                this.setState({
+                    data: [...this.state.data, ...res.data.data.data],
+                    loadingMore: false
+                }, () => {
+                    this.setState({
+                        page: this.state.page += 1
+                    })
+
+                    loading = false
+                    this.refs.scroll.BScroll.finishPullUp()
+                    this.refs.scroll.BScroll.refresh()
+                })
+            })
+        } else {
+            /* let bottomTip = document.querySelector('.bottom-tip')
+            bottomTip.style.visibility = 'visible'
+            bottomTip.innerHTML = '商品已经全部加载完成' */
+        }
+    }
+
+
+
 }
 const WarehousingOrderStyle = styled.div`
 .dan-footer p{

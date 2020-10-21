@@ -9,8 +9,11 @@ export default class PurchaseOrder extends Component {
     constructor(){
         super()
         this.state={
-            data:[]
+            data:[],
+            limit: 10,
+            page: 1
         }
+        this.isLoadMore = true
     }
 
     componentDidMount(){
@@ -18,8 +21,8 @@ export default class PurchaseOrder extends Component {
             uniacid: "53",
             uid:"2271",
             type:"1",
-            limit:"30",
-            page:"1"
+            limit:this.state.limit,
+            page:this.state.page
           } }).then((res) => {
             if(res.data.status===4001){
                 this.setState({
@@ -42,7 +45,8 @@ export default class PurchaseOrder extends Component {
         }
         return (
             <PurchaseOrderStyle>
-                <BetterScroll config={scrollConfig} ref='scroll' style={scrollstyle}>
+                <BetterScroll config={scrollConfig} ref='scroll' style={scrollstyle} loadMore={this.loadMore}
+                    isLoadMore={this.isLoadMore}>
                 <div className='search' >
                     <input type="search" className='input' placeholder="请输入采购单号/仓库名称"/>
                     <div className='img'>
@@ -62,6 +66,55 @@ export default class PurchaseOrder extends Component {
             </PurchaseOrderStyle>
         )
     }
+    loadMore = () => {
+        // 加载数据时转圈
+        let loading = true
+        setTimeout(() => {
+            if (loading) {
+                this.setState({
+                    loadingMore: true
+                })
+            }
+        }, 1000)
+        if (this.isLoadMore) {
+            // console.log(111)
+            getPurchaseList({ action: 'getPurchaseList', data: {
+                uniacid: "53",
+                uid:"2271",
+                type:"1",
+                limit:this.state.limit,
+                page:this.state.page
+              } }).then(res => {
+                // console.log(res.data.data.data)
+
+                // 如果长度不等于得时候加载 那么是到底了
+                if (res.data.data.data.length < this.state.limit) {
+                    this.isLoadMore = false
+                    /* let bottomTip = document.querySelector('.bottom-tip')
+                    bottomTip.style.visibility = 'visible'
+                    bottomTip.innerHTML = '商品已经全部加载完成' */
+                }
+                this.setState({
+                    data: [...this.state.data, ...res.data.data.data],
+                    loadingMore: false
+                }, () => {
+                    this.setState({
+                        page: this.state.page += 1
+                    })
+
+                    loading = false
+                    this.refs.scroll.BScroll.finishPullUp()
+                    this.refs.scroll.BScroll.refresh()
+                })
+            })
+        } else {
+            /* let bottomTip = document.querySelector('.bottom-tip')
+            bottomTip.style.visibility = 'visible'
+            bottomTip.innerHTML = '商品已经全部加载完成' */
+        }
+    }
+
+
 }
 const PurchaseOrderStyle = styled.div`
 .dan-footer p{

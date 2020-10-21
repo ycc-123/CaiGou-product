@@ -12,7 +12,7 @@ import CategoryRight from './childCom/CategoryRight'
 import { setTitle } from 'commons/utils'
 
 import { store } from 'store/index'
-import { getProductCategoryAll,showProductCategory } from 'network/Api'
+import { getProductCategoryAll,searchProduct } from 'network/Api'
 import { _categoryLeft, _categoryRight } from 'network/category'
 
 import { Toast } from 'antd-mobile';
@@ -32,6 +32,7 @@ class Category extends Component {
     // props.cacheLifecycles.didCache(this.componentDidCache)
     // props.cacheLifecycles.didRecover(this.componentDidRecover)
     this.state = {
+      value:[],
       title: [],
       goods:[],
       // tie: [{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"}
@@ -97,11 +98,17 @@ class Category extends Component {
         </div>
         {/* <TabBar /> */}
         <div className='foot'>
-                    <div className='left'>
-                        <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/lajitong.png" alt=""/>
+                    {/* <div onClick={()=>{console.log(111)}}> */}
+                    <div className='left' onClick={()=>{console.log(111)}}>
+                        <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt=""/>
                     </div>
+
                     <div className='yuan'>0</div>
-                    <div className='foot_conton'>总额：<span>0</span></div>
+
+                    <div className='foot_conton' onClick={()=>{console.log(111)}}>总额：<span>0</span></div>
+                    
+                    {/* </div> */}
+
                     <div className='right'>提交</div>
 
                 </div>
@@ -163,10 +170,13 @@ class Category extends Component {
         console.log(result)
         var Id = res.data.data.map(o=>{return{id:o.id}});
         console.log(Id)
+        var value = res.data.data.map(o=>{return{code:o.code}});
+        console.log(value)
         
         this.setState({
           title: result,
-          id:Id
+          id:Id,
+          value
         })
       }else{
         Toast.fail('网络错误', 2)
@@ -176,20 +186,23 @@ class Category extends Component {
   }
 
   onChangeActive = index => {
-    console.log(this.state.id[index].id)
-    showProductCategory({ action: 'showProductCategory', data: {
+    console.log(this.state.value[index])
+    searchProduct({ action: 'searchProduct', data: {
       uniacid: "53",
-      id:this.state.id[index].id
+      uid:"2271",
+      categoryid:this.state.id[index].id,
+      // code:this.state.value[index].code,
+      // name:this.state.title[index].name
     } }).then(res => {
       console.log(res.data)
-      if(res.data.status===4001){
-        console.log(res.data.data.childrens)
-        this.setState({
-          goods: res.data.data.childrens
-        })
-      }else{
-        Toast.fail('网络错误', 2)
-      }
+      // if(res.data.status===4001){
+      //   console.log(res.data.data.childrens)
+      //   this.setState({
+      //     goods: res.data.data.childrens
+      //   })
+      // }else{
+      //   Toast.fail('网络错误', 2)
+      // }
     })
 
 
@@ -237,8 +250,8 @@ const CategoryStyle = styled.div`
   text-align:center;
   // margin:auto;
   position:absolute;
-  top: .15rem;
-  left:1.1rem;
+  top: .2rem;
+  left:1.5rem;
   color:#fff;
   width:.5rem;
   height:.5rem;
@@ -267,7 +280,7 @@ const CategoryStyle = styled.div`
   padding-left:.3rem;
   margin:auto;
   width: 10rem;
-  height: 1.1rem;
+  height: 1rem;
 }
 .right{
   font-size:.4rem;

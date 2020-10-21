@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseDetail, getPurchaseList } from 'network/Api'
+import { getPurchaseDetail, changePurchaseStatus ,submitPurchase} from 'network/Api'
 import { Toast } from 'antd-mobile';
 
 
@@ -51,9 +51,17 @@ export default class PurchaseOrderDetailed extends Component {
             console.log(res.data)
             if (res.data.status === 4001) {
                 console.log(res.data.data.purchaseItem)
+                let count =res.data.data.count
+                // 商品总价
+
+                var subtotal = res.data.data.purchaseItem.map(o=>{return{subtotal:o.subtotal,gnum:o.gnum,price:o.price,goodsid:o.goodsid,goods_name:o.goods_name}});
+                console.log(subtotal)
+             
+
                 this.setState({
                     purchaseDetail: res.data.data.purchaseDetail,
-                    purchaseItem: res.data.data.purchaseItem
+                    purchaseItem: res.data.data.purchaseItem,
+                    count,
                 }, () => {
 
                 })
@@ -61,6 +69,56 @@ export default class PurchaseOrderDetailed extends Component {
                 Toast.fail('网络错误', 2)
             }
         })
+    }
+    shengHe(){
+        let itemData = [{
+            "amount":3,
+            "barcodeid":1988,
+            "barcode":"火龙果，芒果，瓜类0002",
+            "gnum":3,
+            "num":3,
+            "price":1
+        }]
+        let purchaseData={"subtotal":8,"snum":8}
+        if(this.state.purchaseDetail.statusname==="待提交"){
+            submitPurchase({
+                action: 'submitPurchase', data: {
+                    uniacid: "53",
+                    uid: "2271",
+                    purchaseId: this.props.match.params.id,
+                    type: "1",
+                    status: "2",
+                    itemData:[],
+                    purchaseData:{}
+
+                }
+            }).then((res) => {
+                console.log(res.data)
+               
+            })
+        }else{
+            console.log(this.props.match.params.id.split( ))
+        let id=this.props.match.params.id.split( )
+        changePurchaseStatus({
+            action: 'changePurchaseStatus', data: {
+                uniacid: "53",
+                uid: "2271",
+                purchaseId_list: id,
+                type: "1",
+                status: "4"
+            }
+        }).then((res) => {
+            console.log(res.data)
+            if (res.data.status === 4001) {
+                Toast.success(res.data.msg, 2)
+            } else {
+                Toast.fail('网络错误', 2)
+            }
+        })
+        }
+        
+
+
     }
     render() {
         return (
@@ -106,7 +164,7 @@ export default class PurchaseOrderDetailed extends Component {
                         </div>
                         <div className='yuan'>0</div>
                         {/* <div className='foot_conton'>总额：<span>0</span></div> */}
-                        <div className='right'>审核</div>
+                        <div className='right' onClick={()=>{this.shengHe()}}>{this.state.purchaseDetail.statusname==="待提交"?"提交":"审核"}</div>
 
                     </div>
                 </div>

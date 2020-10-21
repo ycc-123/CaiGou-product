@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getWarehouseList,getSupplierList } from 'network/Api'
+import { getWarehouseList,getSupplierList,createPurchase} from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
 
 
@@ -14,9 +14,12 @@ export default class AddPurchaseOrder extends Component {
             Value:'',
             sValue: '',
             data:[],
-            supplier:[]
-            // cols:'',
-            // asyncValue:'',
+            supplier:[],
+            IDck:[],
+            IDgy:[],
+            inputAmount:'',
+            inputHetong:'',
+            inputbeiz:''
 
 
         }
@@ -27,8 +30,8 @@ export default class AddPurchaseOrder extends Component {
             uniacid: "53",
             uid:"2271",
             type:"1",
-            limit:"30",
-            page:"2"
+            limit:"1000",
+            page:"1"
           } }).then((res) => {
             console.log(res.data.data.data)
             if(res.data.status===4001){
@@ -45,8 +48,8 @@ export default class AddPurchaseOrder extends Component {
         getSupplierList({ action: 'getSupplierList', data: {
             uniacid: "53",
             uid:"2271",
-            limit:"8",
-            page:"2"
+            limit:"1000",
+            page:"1"
           } }).then(res=>{
             console.log(res)
             if(res.data.status===4001){
@@ -59,14 +62,51 @@ export default class AddPurchaseOrder extends Component {
             }else{
                 Toast.fail('网络错误', 2)
             }
-        })
-
-
-        
+        }) 
     }
-    // onClick(){
-    //     console.log(111)
-    // }
+    createPurchase(){
+        // console.log(this.state.inputbeiz)
+        let idgy=this.state.IDgy.toString()
+        let idkc=this.state.IDck.toString()
+        // console.log(idkc)
+        // this.props.history.push('/category')
+        createPurchase({ action: 'createPurchase', data: {
+            uniacid: "53",
+            uid:"2271",
+            type:"1",
+            supplierid:idgy,
+            warehouseid:idkc,
+            beforepay:this.state.inputAmount,
+            contract:this.state.inputHetong,
+            remark:this.state.inputbeiz,
+          } }).then(res=>{
+            console.log(res)
+            if(res.data.status===4001){
+                this.props.history.push('/category')
+                Toast.success('新建采购单成功', 2)
+            }else{
+                Toast.fail('网络错误', 2)
+            }
+        })
+    }
+    inputChange(e) {
+        // console.log(e.target.value)
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    inputChangeht(e){
+        // console.log(e.target.value)
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    inputChangebz(e){
+        // console.log(e.target.value)
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
     render() {
         return (
             <AddPurchaseOrderStyle>
@@ -80,7 +120,7 @@ export default class AddPurchaseOrder extends Component {
                              extra="请选择对应采购仓库"
                              value={this.state.sValue}
                              onChange={v => this.setState({ sValue: v })}
-                             onOk={v => console.log(v)}
+                             onOk={v => this.setState({ IDck: v })}
                              >
                                 <List.Item className='times' arrow="horizontal"></List.Item>
                             </Picker>
@@ -92,22 +132,28 @@ export default class AddPurchaseOrder extends Component {
                              className="forss"
                              extra="请选择供应商"
                              value={this.state.Value}
-                             onChange={v => this.setState({Value: v })}
-                             onOk={v => console.log(v)}
+                             onChange={v => this.setState({Value: v})}
+                             onOk={v => this.setState({ IDgy: v })}
                              >
                                 <List.Item className='time' arrow="horizontal"></List.Item>
                             </Picker>
                         
                         </li>
-                        <li>预付款：<input type="text" /></li>
-                        <li>合同编号：<input type="text" /></li>
-                        <li style={{ border: "none" }}>备注：<input type="text" /></li>
+                        <li>预付款：<input name="inputAmount" 
+                                    onChange={this.inputChange.bind(this)}
+                                    value={this.state.inputAmount} type="text"/></li>
+                        <li>合同编号：<input name="inputHetong" 
+                                    onChange={this.inputChangeht.bind(this)}
+                                    value={this.state.inputHetong} type="text" /></li>
+                        <li style={{ border: "none" }}>备注：<input name="inputbeiz" 
+                                    onChange={this.inputChangebz.bind(this)}
+                                    value={this.state.inputbeiz} type="text" /></li>
                     </ul>
 
                     <div className='foot'>
                         <div className='left'></div>
                         <div></div>
-                        <div className='right' onClick={() => { this.props.history.push('/category') }}>下一步</div>
+                        <div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
 
                     </div>
 

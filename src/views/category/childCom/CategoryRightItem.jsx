@@ -3,13 +3,14 @@ import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 // import { Toast } from 'antd-mobile'
 
-
+import { Modal, Button, WingBlank, WhiteSpace, Toast } from 'antd-mobile';
+import { nonsense } from 'antd-mobile/lib/picker';
 // import { store } from 'store/index'
 // import { getCartData } from 'store/actionCreators'
 
 // import { _showCart, _cartApi } from 'network/cart'
 // import { _detailApi } from 'network/detail'
-
+const prompt = Modal.prompt;
 class CategoryRightgoods extends Component {
   constructor(props) {
     super(props)
@@ -37,8 +38,11 @@ class CategoryRightgoods extends Component {
       <CategoryRightgoodsStyle>
         <li className='category-goods clearfix'
         //  onClick={(e) => { this.goDetail(e, goods.id) }}
-          >
-            <img className='category-img' src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png" alt=""/>
+        >
+
+          {/* <WhiteSpace size="lg" /> */}
+
+          <img className='category-img' src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png" alt="" />
           {/* <img className='category-img' src={goods.gimg} alt="" onClick={(e) => { this.goDetail(e, goods.id) }} /> */}
           <div className='category-goods-info'>
             <p>{goods.name}</p>
@@ -47,9 +51,9 @@ class CategoryRightgoods extends Component {
                 {goods.groupnum}人团
               </label></>}</p> */}
             {/* <p> */}
-              {/* <span>￥</span> */}
-              {/* {price} */}
-              {/* <button className='category-button-left'>会员价</button>
+            {/* <span>￥</span> */}
+            {/* {price} */}
+            {/* <button className='category-button-left'>会员价</button>
               <button className='category-button-right'><span>￥</span>4.99</button> */}
             {/* </p> */}
             {/* <p className='yskc'>
@@ -64,12 +68,25 @@ class CategoryRightgoods extends Component {
                 alt="" />} */}
 
             {/* {goods.selltype === '0' && goods.hasoption !== '0' && */}
-              <img className='category-goods-img'
-                src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/cartx.png'
-                alt=""
-                // style={{ display: show }}
-                //  onClick={(e) => { this.goDetial(e) }} 
-                 />
+            <Button
+              style={{position:"absolute",top:".3rem",left:"4.6rem",color:"transparent",background:"transparent"}} 
+              className="btn_modal"
+              onClick={() => prompt(
+                '添加',
+                '请填写采购数量与单价',
+                (login, password) => console.log(`login: ${login}, password: ${password}`),
+                'login-password',
+                null,
+                ['请填写采购数量', '请填写采购单价'],
+              )}
+              visible={false}
+            >111111</Button>
+            <img className='category-goods-img'
+              src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/cartx.png'
+              alt=""
+            // style={{ display: show }}
+            //  onClick={(e) => { this.goDetial(e) }} 
+            />
             {/* } */}
             {/* {(goods.isshow === '3' || goods.gnum === '0') && <img src='https://res.lexiangpingou.cn/images/vip/maiwan.png' className='__--__' alt='' />} */}
 
@@ -288,6 +305,9 @@ class CategoryRightgoods extends Component {
 }
 
 const CategoryRightgoodsStyle = styled.div`
+.am-button::before{
+  border:none !important;
+}
 .yskc{
   font-size: .32rem;
   display:flex;
@@ -426,9 +446,8 @@ const CategoryRightgoodsStyle = styled.div`
 }
 
 .category-goods-img {
-  position: absolute;
-  bottom: 0;
-  right: -.5rem;
+  margin-top:.4rem;
+  margin-left:4.7rem;
   width: .5rem;
   height: .5rem;
 }

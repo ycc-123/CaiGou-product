@@ -70,7 +70,7 @@ export function getProductCategoryAll(config) {
   })
 }
 // 收银商品指定分类
-export function showProductCategory(config) {
+export function searchProduct(config) {
   return requestPost({
     params: {
       action: config.action
@@ -79,9 +79,35 @@ export function showProductCategory(config) {
   })
 }
 
+// 创建采购单
+export function createPurchase(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
 
+// 审核采购单
+export function changePurchaseStatus(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
 
-
+// 提交采购单
+export function submitPurchase(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
 
 
 

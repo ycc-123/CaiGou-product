@@ -4,7 +4,7 @@ import BScroll from 'better-scroll'
 
 class BetterScroll extends Component {
   render() {
-    console.log(this.props.style)
+    // console.log(this.props.style)
     return (
       <div className='wrapper' ref='wrapper' style={this.props.style} style={{
           overflow:" hidden",
