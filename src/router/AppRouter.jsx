@@ -32,7 +32,7 @@ const AppRouter = () => {
         <Route path='/PurchaseOrderDetailed/:id' exact component={PurchaseOrderDetailed} ></Route>
         <Route path='/home' exact component={Home} ></Route>
         <Route path='/' exact component={Home} ></Route>
-        <Route path='/category' exact component={category} ></Route>
+        <Route path='/category/:id' exact component={category} ></Route>
         <Route path='/ApplyOrderx' exact component={ApplyOrderx} ></Route>
         <Route path='/ApplyOrder' exact component={ApplyOrder} ></Route>
         <Route path='/LossReportf' exact component={LossReportf} ></Route>

@@ -50,7 +50,8 @@ class Category extends Component {
   render() {
     const { title, defaultIndex, goods, ys, kc, type } = this.state
     const { cartGoods } = store.getState()
-
+    console.log(this.props.match.params.id)
+    let ida=this.props.match.params.id
     // if (title.length !== 0 && title[defaultIndex].goods.length !== 0) {
     //   title[defaultIndex].goods.forEach(item => {
     //     // 查找购物车商品是否和state的某个goods相等
@@ -90,7 +91,7 @@ class Category extends Component {
               </BetterScroll>}
             </ul>
           </div>
-           <CategoryRight goodsList={this.state.goods} />
+           <CategoryRight goodsList={this.state.goods} onRef={this.onRef} id={ida}/>
           </Fragment> : <Fragment>
               {/* {title.length !== 0 && <CategoryTabBar title={title} index={defaultIndex} changeActive={this.onChangeActive} goodsList={title[defaultIndex].goods} ys={ys} kc={kc} />} */}
             </Fragment>}
@@ -114,7 +115,7 @@ class Category extends Component {
                     
                     {/* </div> */}
 
-                    <div className='right'>提交</div>
+                    <div className='right' onClick={this.click}>提交</div>
 
                 </div>
                 
@@ -122,6 +123,13 @@ class Category extends Component {
       </CategoryStyle>
     )
   }
+  onRef = (ref) => {
+    this.child = ref
+}
+
+click = (e) => {
+    this.child.myName()
+}
   changeImage = () => {
     if (this.state.type === 'swiper') {
       this.setState({
@@ -188,6 +196,7 @@ class Category extends Component {
           console.log( res.data.msg)
           if(res.data.status===4001){
             console.log(res.data.data.data)
+
             this.setState({
               goods: res.data.msg==="成功"? res.data.data.data : [{}]
             })

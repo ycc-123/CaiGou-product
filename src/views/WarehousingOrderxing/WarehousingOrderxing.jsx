@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseDeliveryDetail, getPurchaseDeliveryList } from 'network/Api'
+import { getPurchaseDeliveryDetail, submitPurchaseDelivery } from 'network/Api'
 import { Toast } from 'antd-mobile';
 
 function Tiao(value) {
@@ -15,7 +15,7 @@ function Tiao(value) {
                     <p></p>
                 </li>
                 <li className='wen-zi-f'>
-                    <div>采购数量：{tiao.outnum}</div>
+                    <div>采购数量：{tiao.gnum}</div>
                     <p>入库数量：<span>{tiao.innum}</span></p>
                 </li>
             </ul>
@@ -59,7 +59,58 @@ export default class WarehousingOrderxing extends Component {
 
     }
     shengHe() {
-
+        // console.log(this.state.purchaseItem[0].index)
+        let itemData = [{
+            id: this.state.purchaseDetail.id,
+            barcodeid: 1988,
+            // diffnum:dd[0].sa,
+            innum: 3,
+            goodsid: 4014
+        }]
+        let deliveryData = {
+            id: this.props.match.params.id,
+            snum: this.state.purchaseDetail.snum,
+            in_out_num: this.state.purchaseDetail.in_out_num
+        }
+        if (this.state.purchaseDetail.statusname === "待提交") {
+            submitPurchaseDelivery({
+                action: 'submitPurchaseDelivery', data: {
+                    uniacid: "53",
+                    uid: "2271",
+                    itemData: itemData,
+                    deliveryData: deliveryData,
+                    type: "1",
+                    status: "4"
+                }
+            }).then((res) => {
+                console.log(res.data)
+                if (res.data.status === 4001) {
+                    Toast.success(res.data.msg, 2)
+                } else {
+                    Toast.fail(res.data.msg, 2)
+                }
+            })
+        } else {
+            console.log(this.props.match.params.id.split())
+            let id = this.props.match.params.id.split()
+            submitPurchaseDelivery({
+                action: 'submitPurchaseDelivery', data: {
+                    uniacid: "53",
+                    uid: "2271",
+                    itemData: itemData,
+                    deliveryData: deliveryData,
+                    type: "1",
+                    status: "4"
+                }
+            }).then((res) => {
+                console.log(res.data)
+                if (res.data.status === 4001) {
+                    Toast.success(res.data.msg, 2)
+                } else {
+                    Toast.fail(res.data.msg, 2)
+                }
+            })
+        }
     }
     render() {
         let Color = ''

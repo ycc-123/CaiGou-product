@@ -109,7 +109,15 @@ export function submitPurchase(config) {
   })
 }
 
-
+// 提交采购入库单
+export function submitPurchaseDelivery(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
 
 
 

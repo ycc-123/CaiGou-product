@@ -54,7 +54,7 @@ export default class PurchaseOrderDetailed extends Component {
                 let count =res.data.data.count
                 // 商品总价
 
-                var subtotal = res.data.data.purchaseItem.map(o=>{return{subtotal:o.subtotal,gnum:o.gnum,price:o.price,goodsid:o.goodsid,goods_name:o.goods_name}});
+                var subtotal = res.data.data.purchaseItem.map(o=>{return{subtotal:o.subtotal,gnum:o.gnum,num:o.gnum,price:o.price,goodsid:o.goodsid}});
                 console.log(subtotal)
              
 
@@ -72,14 +72,14 @@ export default class PurchaseOrderDetailed extends Component {
     }
     shengHe(){
         let itemData = [{
-            "amount":3,
-            "barcodeid":1988,
-            "barcode":"火龙果，芒果，瓜类0002",
-            "gnum":3,
-            "num":3,
-            "price":1
+            amount:3,
+            barcodeid:1988,
+            barcode:"火龙果，芒果，瓜类0002",
+            gnum:3,
+            num:3,
+            price:1
         }]
-        let purchaseData={"subtotal":8,"snum":8}
+        let purchaseData={subtotal:8,snum:8}
         if(this.state.purchaseDetail.statusname==="待提交"){
             submitPurchase({
                 action: 'submitPurchase', data: {
@@ -89,11 +89,16 @@ export default class PurchaseOrderDetailed extends Component {
                     type: "1",
                     status: "2",
                     itemData:[],
-                    purchaseData:{}
+                    purchaseData:purchaseData
 
                 }
             }).then((res) => {
                 console.log(res.data)
+                if (res.data.status === 4001) {
+                    Toast.success(res.data.msg, 2)
+                } else {
+                    Toast.fail(res.data.msg, 2)
+                }
                
             })
 

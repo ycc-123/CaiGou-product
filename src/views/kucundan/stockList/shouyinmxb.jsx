@@ -15,7 +15,7 @@ export default class Shouyinmxb extends Component {
                             <p>
                             <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt=""/>
                             </p>
-                            <div className='caigoudanhao'>零售单号：111111111</div>
+                            <div className='caigoudanhao'>111111111</div>
                             {/* <div className='zuantai'></div> */}
                         </div>
                         <div className='dan-footer'>
@@ -27,16 +27,71 @@ export default class Shouyinmxb extends Component {
                             <p>原价总额：111111111111</p>
                             <p>优惠金额：111111111111</p>
                             <p>实收金额：111111111111</p>
-                            
                         </div>
                     </div>
-                </div>
+            </div>
+
+            <div>
+                <ul className='title'>
+                    <li className='yuanjia'>原价</li>
+                    <li className='shoujia'>售价</li>
+                    <li className='count'>数量</li>
+                    <li className='xiaoji'>小计</li>
+                </ul>
+            </div>
+
+            <div>
+                <div className='name'>撒大家科技打卡记录的就爱看</div>
+                <ul className='title' style={{color:"#1a1a1a",height:".8rem"}}>
+                    <li className='yuanjia'>999.99</li>
+                    <li className='shoujia'>888.88</li>
+                    <li className='count'>999</li>
+                    <li className='xiaoji'>9999</li>
+                </ul>
+            </div>
+
+
                 </div>
             </ShouyinmxbStyle>
         )
     }
 }
 const ShouyinmxbStyle = styled.div`
+.name{
+    margin-top:.2rem;
+    margin-left:.8rem;
+    color:#1a1a1a;
+    font-size:.35rem;
+}
+.xiaoji{
+    width:2rem;
+    height:100%;
+    // background-color: pink;
+}
+.count{
+    width:2rem;
+    height:100%;
+    // background-color: yellow;
+}
+.shoujia{
+    width:2rem;
+    height:100%;
+    // background-color: pink;
+}
+.yuanjia{
+    margin-left:.8rem;
+    width:2rem;
+    height:100%;
+    // background-color: red;
+}
+.title{
+    color:#ed7913;
+    font-size:.35rem;
+    display:flex;
+    height:.8rem;
+    line-height:.8rem;
+    border-bottom:2px solid #dadada;
+}
 .bj{
     width:100rem;
     height:100rem;
@@ -87,7 +142,7 @@ const ShouyinmxbStyle = styled.div`
 .dan{
     margin:0rem .4rem;
     width: 9.1rem;  
-    height: 4rem;
+    height: 7rem;
     background-color: #fff;
     border-radius:.2rem;
     // border:1px solid #dddddd;

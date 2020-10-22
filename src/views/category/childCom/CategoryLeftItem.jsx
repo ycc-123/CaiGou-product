@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from 'react'
 
-// import { store } from 'store/index'
-// import { getCategoryData, getCategoryGoods, _categoryLeft, _categoryRight } from 'network/category'
 class CategoryLeftItem extends Component {
   constructor(props) {
     super(props);

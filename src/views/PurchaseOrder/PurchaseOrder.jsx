@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseList } from 'network/Api'
-import { Toast } from 'antd-mobile';
+import { SearchBar, Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiao'
 
@@ -10,8 +10,9 @@ export default class PurchaseOrder extends Component {
         super()
         this.state={
             data:[],
-            limit: 10,
-            page: 1
+            limit: 100,
+            page: 1,
+            inputSearch:''
         }
         this.isLoadMore = true
     }
@@ -35,7 +36,57 @@ export default class PurchaseOrder extends Component {
             }
         })
     }
-    
+    inputChange(e){
+        console.log(e.target.value)
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+        
+    }
+    Search(){
+        console.log(111)
+        // if(){
+
+        // }else{
+
+        // }
+        getPurchaseList({ action: 'getPurchaseList', data: {
+            uniacid: "53",
+            uid:"2271",
+            type:"1",
+            docno:this.state.inputSearch,
+            // warehouseName:this.state.inputSearch,
+            limit:this.state.limit,
+            page:this.state.page
+          } }).then((res) => {
+            if(res.data.status===4001){
+                this.setState({
+                    data: res.data.data.data
+                }, () => {
+                    this.refs.scroll.BScroll.refresh()
+                })
+            }else{
+                // Toast.fail('网络错误', 2)
+                getPurchaseList({ action: 'getPurchaseList', data: {
+                    uniacid: "53",
+                    uid:"2271",
+                    type:"1",
+                    // docno:this.state.inputSearch,
+                    warehouseName:this.state.inputSearch,
+                    limit:this.state.limit,
+                    page:this.state.page
+                  } }).then((res) => {
+                    if(res.data.status===4001){
+                        this.setState({
+                            data: res.data.data.data
+                        }, () => {
+                            this.refs.scroll.BScroll.refresh()
+                        })
+                    }
+                  })
+            }
+        })
+    }
     render() {
         const scrollConfig = {
             probeType: 1
@@ -48,8 +99,10 @@ export default class PurchaseOrder extends Component {
                 <BetterScroll config={scrollConfig} ref='scroll' style={scrollstyle} loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
                 <div className='search' >
-                    <input type="search" className='input' placeholder="请输入采购单号/仓库名称"/>
-                    <div className='img'>
+                    <input type="search" className='input' placeholder="请输入采购单号/仓库名称" name="inputSearch" 
+                                    onChange={this.inputChange.bind(this)}
+                                    value={this.state.inputSearch}/>
+                    <div className='img' onClick={()=>{this.Search()}}>
                     <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search"/>
                     </div>
                 </div>
