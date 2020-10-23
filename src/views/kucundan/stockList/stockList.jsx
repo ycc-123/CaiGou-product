@@ -1,13 +1,51 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-// import { getPurchaseList } from 'network/Api'
+import { getStockList } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
+import StockListTiao from './stockListTiao'
 
 export default class stockList extends Component {
+    constructor(){
+        super()
+        this.state={
+            goods:[],
+            totalgnum:'',
+            totalcostprice:''
+        }
+    }
+    componentDidMount(){
+        getStockList({
+            action: 'getStockList', data: {
+                uniacid: "53",
+                uid: "2271",
+            }
+        }).then((res) => {
+            console.log(res)
+            if(res.data.status===4001){
+                this.setState({
+                    goods: res.data.data.data,
+                    totalcostprice: res.data.data.totalcostprice,
+                    totalgnum: res.data.data.totalgnum
+                }, () => {
+                    this.refs.scroll.BScroll.refresh()
+                })
+            }else{
+                Toast.fail(res.data.msg,2)
+            }
+        })
+    }
     render() {
+        const scrollConfig = {
+            probeType: 1
+        }
+        const scrollstyle={
+            
+        }
+        console.log(this.state.goods)
         return (
             <StockListStyle>
+                <BetterScroll config={scrollConfig} ref='scroll' style={scrollstyle}>
                 <div>
                     <div style={{ display: "flex" }}>
                         <div className='search' >
@@ -20,28 +58,40 @@ export default class stockList extends Component {
                             <img className='sximg-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
                         </div>
                     </div>
-
-                    <div className='tiao'>
-                        <img className='t-img-l'  alt="" />
-                        <ul className='wen-zi'>
-                            <li className='wen-zi-t'>
-                                <div className='name'>name</div>
-                                <p>100盒</p>
-                            </li>
-                            <li className='wen-zi-f'>
-                                <div>￥：3333元/盒</div>
-                                <p><span>库存金额：</span>999</p>
-                            </li>
-                        </ul>
-                    </div>
                     
+                    {
+                        this.state.goods.map((v,k)=>{
 
+                            return(
+                                <StockListTiao v={v} k={k}/>
+                            )
+                        })
+                    }
+                </div>
+                </BetterScroll>
+                <div className='foot'>
+                    <div>总库存：<span>{this.state.totalgnum}</span></div>
+                    <div style={{marginLeft:".8rem"}}>总库存金额：<span>{this.state.totalcostprice}</span></div>
                 </div>
             </StockListStyle>
         )
     }
 }
 const StockListStyle = styled.div`
+.foot div span{
+    color:#cf2424;
+}
+.foot{
+    padding-left:.9rem;
+    font-size:.38rem;
+    display:flex;
+    width:100%;
+    height:1.5rem;
+    line-height:1.5rem;
+    position:absolute;
+    bottom:0rem;
+    background-color: #fff;
+}
 .wen-zi-t p{
     color:#646464;
     font-size:.35rem;

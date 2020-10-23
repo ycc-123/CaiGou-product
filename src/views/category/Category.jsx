@@ -12,7 +12,7 @@ import CategoryRight from './childCom/CategoryRight'
 import { setTitle } from 'commons/utils'
 
 import { store } from 'store/index'
-import { getProductCategoryAll,searchProduct } from 'network/Api'
+import { getProductCategoryAll, searchProduct } from 'network/Api'
 import { _categoryLeft, _categoryRight } from 'network/category'
 
 import { Toast } from 'antd-mobile';
@@ -20,7 +20,7 @@ import mingxi from '../caigoudanmx/mingxi'
 
 const scollConfig = {
   probeType: 1
-}  
+}
 const scrollStyle = {
   width: '2.46rem',
   height: 'calc(100vh - 1.48rem)',
@@ -33,113 +33,131 @@ class Category extends Component {
     // props.cacheLifecycles.didCache(this.componentDidCache)
     // props.cacheLifecycles.didRecover(this.componentDidRecover)
     this.state = {
-      value:[],
+      indexId:'',
+      value: [],
       title: [],
-      goods:[],
+      goods: [],
       // tie: [{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"}
       // ,{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"}],
       defaultIndex: 0,
       type: 'goods',
-      id:[],
-      num:'',
-      price:''
+      id: [],
+      num: '',
+      price: '',
+      inputSearch:''
     }
   }
-  mingxi(){
+  mingxi() {
     console.log(111)
     this.props.history.push('/Liebiao')
   }
-  getChildValue(aa,val) {
+  getChildValue(aa, val) {
     console.log(aa);
     this.setState({
-        num:aa,
-        price: val
+      num: aa,
+      price: val
     })
-}
+  }
+  inputChange(e){
+    console.log(e.target.value)
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+  }
+  Search(){
+    console.log(this.state.inputSearch)
+    searchProduct({
+      action: 'searchProduct', data: {
+        uniacid: "53",
+        uid: "2271",
+        categoryid: this.state.indexId,
+        // code:this.state.inputSearch,
+        search:this.state.inputSearch
+      }
+    }).then(res => {
+      if(res.data.status===4001){
+        this.setState({
+            goods: res.data.data.data
+        })
+      }else{
+        Toast.fail(res.data.msg,2)
+      }
+      
+    })
+  }
   render() {
     const { title, defaultIndex, goods, ys, kc, type } = this.state
     const { cartGoods } = store.getState()
     console.log(this.props.match.params.id)
-    let ida=this.props.match.params.id
-    // if (title.length !== 0 && title[defaultIndex].goods.length !== 0) {
-    //   title[defaultIndex].goods.forEach(item => {
-    //     // 查找购物车商品是否和state的某个goods相等
-    //     let newGoods = cartGoods.find(cartItem => {
-    //       return cartItem.sid === item.id
-    //     })
-    //     // console.log(newGoods)
-    //     if (newGoods) {
-    //       item.num = newGoods.num
-    //     } else {
-    //       item.num = 0
-    //     }
-    //   })
-    // }
-    // console.log(title)
+    let ida = this.props.match.params.id
     return (
       <CategoryStyle>
-      <Fragment>
-        {/* <div className='category-head-button'> */}
-          {/* {type === 'goods' ? <img src='https://res.lexiangpingou.cn/images/vip/left.png' alt="" onClick={this.changeImage} />
-            : <img src='https://res.lexiangpingou.cn/images/vip/right.png' alt="" onClick={this.changeImage} />} */}
-        {/* </div> */}
-        <div className='category-main'>
-          {type === 'goods' ? <Fragment><div className='categoryLeft'>
-            <ul>
-              {title.length !== 0 && <BetterScroll config={scollConfig} style={scrollStyle} ref='scroll'>
-                <li className='category-left-head'></li>
-                {title.map((item, index) => {
-                  return (
-                    <CategoryLeftItem key={item.id + index}
-                      item={item}
-                      index={index}
-                      active={this.state.defaultIndex === index ? true : false}
-                      onChangeActive={() => { this.onChangeActive(index) }} />
-                  )
-                })}
-              </BetterScroll>}
-            </ul>
+        <Fragment>
+          <div className='search'>
+            <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch" 
+                                    onChange={this.inputChange.bind(this)}
+                                    value={this.state.inputSearch}/>
+            <div className='img' onClick={() => { this.Search() }}>
+              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+            </div>
           </div>
-           <CategoryRight goodsList={this.state.goods} onRef={this.onRef} id={ida} aa={this.getChildValue.bind(this)}/>
-          </Fragment> : <Fragment>
-              {/* {title.length !== 0 && <CategoryTabBar title={title} index={defaultIndex} changeActive={this.onChangeActive} goodsList={title[defaultIndex].goods} ys={ys} kc={kc} />} */}
-            </Fragment>}
-          {/* {
+          <div className='category-main'>
+            {type === 'goods' ? <Fragment><div className='categoryLeft'>
+              <ul>
+                {title.length !== 0 && <BetterScroll config={scollConfig} style={scrollStyle} ref='scroll'>
+                  <li className='category-left-head'></li>
+                  {title.map((item, index) => {
+                    return (
+                      <CategoryLeftItem key={item.id + index}
+                        item={item}
+                        index={index}
+                        active={this.state.defaultIndex === index ? true : false}
+                        onChangeActive={() => { this.onChangeActive(index) }} />
+                    )
+                  })}
+                </BetterScroll>}
+              </ul>
+            </div>
+              <CategoryRight goodsList={this.state.goods} onRef={this.onRef} id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />
+            </Fragment> : <Fragment>
+                {/* {title.length !== 0 && <CategoryTabBar title={title} index={defaultIndex} changeActive={this.onChangeActive} goodsList={title[defaultIndex].goods} ys={ys} kc={kc} />} */}
+              </Fragment>}
+            {/* {
             title.length !== 0 && title[defaultIndex].goods.length === 0 && <div className='wutu' style={{ color: 'white' }}>
               <img style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '2rem', height: '' }} src='https://res.lexiangpingou.cn/images/vip/fengleiwu.png' alt="" />
               <p style={{ position: 'absolute', fontSize: '.32rem', top: '60%', left: '50%', transform: 'translate(-50%, 0)', }}>商家正在努力上新中</p>
             </div>
           } */}
-        </div>
-        {/* <TabBar /> */}
-        <div className='foot'>
-                    {/* <div onClick={()=>{console.log(111)}}> */}
-                    <div className='left' onClick={()=>{this.mingxi()}}>
-                        <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt=""/>
-                    </div>
+          </div>
+          {/* <TabBar /> */}
+          <div className='foot'>
+            {/* <div onClick={()=>{console.log(111)}}> */}
+            <div className='left' onClick={() => { this.mingxi() }}>
+              <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
+            </div>
 
-                    <div className='yuan'>{this.state.num?this.state.num:0}</div>
+            <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
 
-                    <div className='foot_conton' onClick={()=>{this.mingxi()}}>总额：
-                    <span>{this.state.price?this.state.price:0}</span></div>
-                    
-                    {/* </div> */}
+            <div className='foot_conton' onClick={() => { this.mingxi() }}>总额：
+                    <span>{this.state.price ? this.state.price : 0}</span></div>
 
-                    <div className='right' onClick={this.click}>提交</div>
+            {/* </div> */}
 
-                </div>
-                
-      </Fragment>
+            <div className='right' onClick={this.click}>提交</div>
+
+          </div>
+
+        </Fragment>
       </CategoryStyle>
     )
   }
   onRef = (ref) => {
     this.child = ref
-}
+  }
 
-click = (e) => {
+  click = (e) => {
     this.child.myName()
-}
+  }
   changeImage = () => {
     if (this.state.type === 'swiper') {
       this.setState({
@@ -181,45 +199,49 @@ click = (e) => {
   }
 
   componentDidMount = () => {
-    
+
     // this.refs.scroll.BScroll.refresh()
     setTitle('分类')
     const { appConfig } = store.getState()
-    getProductCategoryAll({ action: 'getProductCategoryAll', data: {
-      uniacid: "53",
-    } }).then(res => {
+    getProductCategoryAll({
+      action: 'getProductCategoryAll', data: {
+        uniacid: "53",
+      }
+    }).then(res => {
       console.log(res.data.data)
-      if(res.data.status===4001){
-        var result = res.data.data.map(o=>{return{name:o.name}});
+      if (res.data.status === 4001) {
+        var result = res.data.data.map(o => { return { name: o.name } });
         console.log(result)
-        var Id = res.data.data.map(o=>{return{id:o.id}});
+        var Id = res.data.data.map(o => { return { id: o.id } });
         console.log(Id)
-        var value = res.data.data.map(o=>{return{code:o.code}});
+        var value = res.data.data.map(o => { return { code: o.code } });
         console.log(value)
-        searchProduct({ action: 'searchProduct', data: {
-          uniacid: "53",
-          uid:"2271",
-          categoryid:Id[0].id,
-          // code:this.state.value[index].code,
-          // name:this.state.title[index].name
-        } }).then(res => {
-          console.log( res.data.msg)
-          if(res.data.status===4001){
+        searchProduct({
+          action: 'searchProduct', data: {
+            uniacid: "53",
+            uid: "2271",
+            categoryid: Id[0].id,
+            // code:this.state.value[index].code,
+            // name:this.state.title[index].name
+          }
+        }).then(res => {
+          console.log(res.data.msg)
+          if (res.data.status === 4001) {
             console.log(res.data.data.data)
 
             this.setState({
-              goods: res.data.msg==="成功"? res.data.data.data : [{}]
+              goods: res.data.msg === "成功" ? res.data.data.data : [{}]
             })
-          }else{
+          } else {
             Toast.fail(res.data.msg, 2)
           }
         })
         this.setState({
           title: result,
-          id:Id,
+          id: Id,
           value
         })
-      }else{
+      } else {
         Toast.fail('网络错误', 2)
       }
     })
@@ -228,20 +250,25 @@ click = (e) => {
 
   onChangeActive = index => {
     console.log(this.state.value[index])
-    searchProduct({ action: 'searchProduct', data: {
-      uniacid: "53",
-      uid:"2271",
-      categoryid:this.state.id[index].id,
-      // code:this.state.value[index].code,
-      // name:this.state.title[index].name
-    } }).then(res => {
-      console.log( res.data.msg)
-      if(res.data.status===4001){
+    this.setState({
+      indexId:this.state.id[index].id
+    })
+    searchProduct({
+      action: 'searchProduct', data: {
+        uniacid: "53",
+        uid: "2271",
+        categoryid: this.state.id[index].id,
+        // code:this.state.value[index].code,
+        // name:this.state.title[index].name
+      }
+    }).then(res => {
+      console.log(res.data.msg)
+      if (res.data.status === 4001) {
         console.log(res.data.data.data)
         this.setState({
           goods: res.data.data.data
         })
-      }else{
+      } else {
         this.setState({
           goods: []
         })
@@ -289,6 +316,49 @@ click = (e) => {
 
 }
 const CategoryStyle = styled.div`
+input::-webkit-input-placeholder {
+  color: #c9c9c9;
+  fontsize:.4rem;
+}
+.img{
+  width: .8rem;  
+  height: .6rem; 
+}
+.img-search{
+  margin-top:.1rem;
+  width: auto;  
+  height: auto;  
+  max-width: 100%;  
+  max-height: 100%;
+}
+  
+.input{
+  border:none;
+  width:8.3rem;
+  margin-top:.1rem;
+  margin-left:.3rem;
+  height: .6rem;
+  // background-color: red;
+
+}
+.search{
+  display:flex;
+  margin: .15rem .2rem;
+  width:9.5rem;
+  height: .8rem;
+  border-radius:.5rem;
+  background-color: #fff;
+
+}
+
+
+
+
+
+
+
+
+
 .yuan{
   // padding-top:.1rem;
   text-align:center;
@@ -388,7 +458,7 @@ const CategoryStyle = styled.div`
   position: relative;
   float: left;
   width: 2.46rem;
-  height: calc(100vh - 1.28rem);
+  height: calc(100vh - 2.7rem);
   overflow: hidden;
   background: #F7F7F7;;
 }
@@ -407,7 +477,7 @@ const CategoryStyle = styled.div`
   display: inline-block;
   // left: .16rem;
   width: 7.5rem;
-  height: calc(100vh - 1.28rem);
+  height: calc(100vh - 2.7rem);
   overflow: hidden;
 }
 

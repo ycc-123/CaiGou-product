@@ -54,8 +54,8 @@ export default class PurchaseOrderDetailed extends Component {
                 let count =res.data.data.count
                 // 商品总价
 
-                var subtotal = res.data.data.purchaseItem.map(o=>{return{subtotal:o.subtotal,gnum:o.gnum,num:o.gnum,price:o.price,goodsid:o.goodsid}});
-                console.log(subtotal)
+                // var subtotal = res.data.data.purchaseItem.map(o=>{return{subtotal:o.subtotal,gnum:o.gnum,num:o.gnum,price:o.price,goodsid:o.goodsid}});
+                // console.log(subtotal)
              
 
                 this.setState({
@@ -121,7 +121,7 @@ export default class PurchaseOrderDetailed extends Component {
                 Toast.fail(res.data.msg, 2)
             }
         })
-        }
+    }
     }
     render() {
         let Color=''

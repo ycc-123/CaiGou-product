@@ -118,8 +118,15 @@ export function submitPurchaseDelivery(config) {
     data: config.data
   })
 }
-
-
+// 盘点单
+export function getStockList(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
 
 
 

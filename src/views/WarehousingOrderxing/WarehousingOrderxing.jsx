@@ -3,34 +3,28 @@ import styled from 'styled-components'
 import { getPurchaseDeliveryDetail, submitPurchaseDelivery } from 'network/Api'
 import { Toast } from 'antd-mobile';
 
-function Tiao(value) {
-    console.log(value)
-    let tiao = value.item
-    return (
-        <div className='tiao'>
-            <img className='t-img-l' src="" alt="" />
-            <ul className='wen-zi'>
-                <li className='wen-zi-t'>
-                    <div className='name'>{tiao.goods_name}</div>
-                    <p></p>
-                </li>
-                <li className='wen-zi-f'>
-                    <div>采购数量：{tiao.gnum}</div>
-                    <p>入库数量：<span>{tiao.innum}</span></p>
-                </li>
-            </ul>
+import Tiao from './Tiao'
 
-        </div>
-    )
-}
+// function Tiao(value) {
+//     console.log(value)
+//     let tiao = value.item
+//     return (
+
+//     )
+// }
 
 export default class WarehousingOrderxing extends Component {
     constructor() {
         super()
         this.state = {
+            arr: 0,
             data: {},
             purchaseDetail: [],
-            purchaseItem: []
+            purchaseItem: [],
+            goods: [],
+            num: '',
+            count: '',
+            input:[]
             // id: this.props.match.params.id,
         }
     }
@@ -49,6 +43,7 @@ export default class WarehousingOrderxing extends Component {
             console.log(res.data.data.purchaseDeliveryItem)
             if (res.data.status === 4001) {
                 this.setState({
+                    count: res.data.data.count,
                     purchaseDetail: res.data.data.purchaseDeliveryDetail,
                     purchaseItem: res.data.data.purchaseDeliveryItem
                 })
@@ -56,61 +51,93 @@ export default class WarehousingOrderxing extends Component {
                 Toast.fail(res.data.msg, 2)
             }
         })
-
     }
     shengHe() {
-        // console.log(this.state.purchaseItem[0].index)
-        let itemData = [{
-            id: this.state.purchaseDetail.id,
-            barcodeid: 1988,
-            // diffnum:dd[0].sa,
-            innum: 3,
-            goodsid: 4014
-        }]
+
+        let aa = {}
+        let arr = []
+
+        this.state.goods.map((v, k) => {
+            console.log(v, k)
+            aa = {
+                id: this.state.purchaseDetail.id,
+                barcodeid: 1988,
+                diffnum:'',
+                innum: 3,
+                goodsid: 4014
+            }
+            arr.push(aa);
+        })
+        let itemData=arr
+        console.log(itemData)
+        // let itemData = [{
+        //     id: this.state.purchaseDetail.id,
+        //     barcodeid: 1988,
+        //     // diffnum:dd[0].sa,
+        //     innum: 3,
+        //     goodsid: 4014
+        // }]
         let deliveryData = {
             id: this.props.match.params.id,
-            snum: this.state.purchaseDetail.snum,
-            in_out_num: this.state.purchaseDetail.in_out_num
+            snum: this.state.count,
+            in_out_num: this.state.num
         }
-        if (this.state.purchaseDetail.statusname === "待提交") {
-            submitPurchaseDelivery({
-                action: 'submitPurchaseDelivery', data: {
-                    uniacid: "53",
-                    uid: "2271",
-                    itemData: itemData,
-                    deliveryData: deliveryData,
-                    type: "1",
-                    status: "4"
-                }
-            }).then((res) => {
-                console.log(res.data)
-                if (res.data.status === 4001) {
-                    Toast.success(res.data.msg, 2)
-                } else {
-                    Toast.fail(res.data.msg, 2)
-                }
-            })
-        } else {
-            console.log(this.props.match.params.id.split())
-            let id = this.props.match.params.id.split()
-            submitPurchaseDelivery({
-                action: 'submitPurchaseDelivery', data: {
-                    uniacid: "53",
-                    uid: "2271",
-                    itemData: itemData,
-                    deliveryData: deliveryData,
-                    type: "1",
-                    status: "4"
-                }
-            }).then((res) => {
-                console.log(res.data)
-                if (res.data.status === 4001) {
-                    Toast.success(res.data.msg, 2)
-                } else {
-                    Toast.fail(res.data.msg, 2)
-                }
-            })
-        }
+        console.log(this.state.goods, this.state.num,this.state.input)
+        // if (this.state.purchaseDetail.statusname === "待提交") {
+        //     submitPurchaseDelivery({
+        //         action: 'submitPurchaseDelivery', data: {
+        //             uniacid: "53",
+        //             uid: "2271",
+        //             itemData: itemData,
+        //             deliveryData: deliveryData,
+        //             type: "1",
+        //             status: "4"
+        //         }
+        //     }).then((res) => {
+        //         console.log(res.data)
+        //         if (res.data.status === 4001) {
+        //             Toast.success(res.data.msg, 2)
+        //         } else {
+        //             Toast.fail(res.data.msg, 2)
+        //         }
+        //     })
+        // } else {
+        //     console.log(this.props.match.params.id.split())
+        //     let id = this.props.match.params.id.split()
+        //     submitPurchaseDelivery({
+        //         action: 'submitPurchaseDelivery', data: {
+        //             uniacid: "53",
+        //             uid: "2271",
+        //             itemData: itemData,
+        //             deliveryData: deliveryData,
+        //             type: "1",
+        //             status: "4"
+        //         }
+        //     }).then((res) => {
+        //         console.log(res.data)
+        //         if (res.data.status === 4001) {
+        //             Toast.success(res.data.msg, 2)
+        //         } else {
+        //             Toast.fail(res.data.msg, 2)
+        //         }
+        //     })
+        // }
+    }
+    getChildrenMsg = (result, msg) => {
+        // console.log(result, msg)
+        let input=[]
+        input.push(result)
+
+        let ww = []
+        ww.push(msg)
+        let arr = Number(result) + Number(this.state.arr)
+        // console.log(arr)
+        this.setState({
+            arr,
+            goods: [...this.state.goods, ...ww],
+            num: arr,
+            input:[...this.state.input, ...input]
+        })
     }
     render() {
         let Color = ''
@@ -151,9 +178,9 @@ export default class WarehousingOrderxing extends Component {
                     </div>
                     {
                         this.state.purchaseItem.map((value, key) => {
-                            console.log(value)
+                            // console.log(value)
                             return (
-                                <Tiao item={value} key={key}></Tiao>
+                                <Tiao item={value} key={key} parent={this}></Tiao>
                             )
                         })
                     }
@@ -173,6 +200,9 @@ export default class WarehousingOrderxing extends Component {
     }
 }
 const WarehousingOrderxingStyle = styled.div`
+.am-button::before {
+    border: none !important;
+}
 .yuan{
     // padding-top:.1rem;
     text-align:center;
