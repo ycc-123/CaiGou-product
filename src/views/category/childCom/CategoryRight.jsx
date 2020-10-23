@@ -14,6 +14,8 @@ class CategoryRight extends Component {
       login:'', 
       password:'',
       goods:{},
+      num:'',
+      price:'',
     }
   }
   render() {
@@ -43,9 +45,14 @@ class CategoryRight extends Component {
     );
   }
   getChildrenMsg = (result,login, password,goods) => {
-    console.log(login, password)
+    let num=Number(this.state.num)+Number(login)
+    let price=Number(this.state.price)+Number(login)*Number(password)
+   this.props.aa(num,price)
+    console.log(num,price,login, password)
     // 很奇怪这里的result就是子组件那bind的第一个参数this，msg是第二个参数
     this.setState({
+      num,
+      price,
       login,
       password,
       goods

@@ -40,13 +40,22 @@ class Category extends Component {
       // ,{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"}],
       defaultIndex: 0,
       type: 'goods',
-      id:[]
+      id:[],
+      num:'',
+      price:''
     }
   }
   mingxi(){
     console.log(111)
     this.props.history.push('/Liebiao')
   }
+  getChildValue(aa,val) {
+    console.log(aa);
+    this.setState({
+        num:aa,
+        price: val
+    })
+}
   render() {
     const { title, defaultIndex, goods, ys, kc, type } = this.state
     const { cartGoods } = store.getState()
@@ -91,7 +100,7 @@ class Category extends Component {
               </BetterScroll>}
             </ul>
           </div>
-           <CategoryRight goodsList={this.state.goods} onRef={this.onRef} id={ida}/>
+           <CategoryRight goodsList={this.state.goods} onRef={this.onRef} id={ida} aa={this.getChildValue.bind(this)}/>
           </Fragment> : <Fragment>
               {/* {title.length !== 0 && <CategoryTabBar title={title} index={defaultIndex} changeActive={this.onChangeActive} goodsList={title[defaultIndex].goods} ys={ys} kc={kc} />} */}
             </Fragment>}
@@ -109,9 +118,10 @@ class Category extends Component {
                         <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt=""/>
                     </div>
 
-                    <div className='yuan'>0</div>
+                    <div className='yuan'>{this.state.num?this.state.num:0}</div>
 
-                    <div className='foot_conton' onClick={()=>{this.mingxi()}}>总额：<span>0</span></div>
+                    <div className='foot_conton' onClick={()=>{this.mingxi()}}>总额：
+                    <span>{this.state.price?this.state.price:0}</span></div>
                     
                     {/* </div> */}
 
