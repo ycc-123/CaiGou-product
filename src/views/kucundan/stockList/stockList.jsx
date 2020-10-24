@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getStockList } from 'network/Api'
+import { getStockList ,getWarehouseList ,getProductCategoryAll,showProductCategory} from 'network/Api'
 import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import StockListTiao from './stockListTiao'
+// import { display } from 'html2canvas/dist/types/css/property-descriptors/display';
 
 export default class stockList extends Component {
     constructor(){
@@ -11,7 +12,17 @@ export default class stockList extends Component {
         this.state={
             goods:[],
             totalgnum:'',
-            totalcostprice:''
+            totalcostprice:'',
+            xian:false,
+            result:[],
+            fenleiName:[],
+            cankuID:'',
+            yijifenleiID:'',
+            childrens:[],
+            erjifenlei:'',
+            erji:false,
+            yikey:'',
+            ckkey:''
         }
     }
     componentDidMount(){
@@ -23,6 +34,127 @@ export default class stockList extends Component {
         }).then((res) => {
             console.log(res)
             if(res.data.status===4001){
+                var result = res.data.data.data.map(o=>{return{id:o.warehouseid,name:o.name}});
+                    console.log(result)
+                this.setState({
+                    goods: res.data.data.data,
+                    totalcostprice: res.data.data.totalcostprice,
+                    totalgnum: res.data.data.totalgnum
+                }, () => {
+                    this.refs.scroll.BScroll.refresh()
+                })
+            }else{
+                Toast.fail(res.data.msg,2)
+            }
+        })
+
+        getWarehouseList({
+            action: 'getWarehouseList', data: {
+                uniacid: "53",
+                uid: "2271",
+                type:"1",
+                limit:"8",
+                page:"1"
+            }
+        }).then((res) => {
+            console.log(res)
+            if(res.data.status===4001){
+                var result = res.data.data.data.map(o=>{return{id:o.id,name:o.name}});
+                    console.log(result)
+                this.setState({
+                    result
+                })
+            }else{
+                Toast.fail(res.data.msg,2)
+            }
+        })
+        // 分类
+        getProductCategoryAll({
+            action: 'getProductCategoryAll', data: {
+                uniacid: "53",
+               
+            }
+        }).then((res) => {
+            console.log(res)
+            if(res.data.status===4001){
+                var result = res.data.data.map(o=>{return{id:o.id,name:o.name}});
+                    console.log(result)
+                this.setState({
+                   fenleiName:result
+
+                })
+            }else{
+                Toast.fail(res.data.msg,2)
+            }
+        })
+        
+    }
+    // 获取二级分类
+    yijifenlei(v,k){
+        
+        console.log(v,k)
+        showProductCategory({
+            action: 'showProductCategory', data: {
+                uniacid: "53",
+                id:v.id
+            }
+        }).then((res) => {
+            console.log(res)
+            if(res.data.status===4001){
+                var result = res.data.data.childrens.map(o=>{return{id:o.id,name:o.name}});
+                    console.log(result)
+                this.setState({
+                    childrens:result,
+                    erji:true,
+                    yikey:v.id
+                })
+            }else{
+                Toast.fail(res.data.msg,2)
+            }
+            
+        })
+    }
+    xianyin(){
+        // console.log(111)
+        if(this.state.xian===false){
+            this.setState({
+                xian:true
+            })
+        }else{
+            this.setState({
+                xian:false
+            })
+        }
+    }
+    canku(v,k){
+        console.log(v.id)
+        this.setState({
+            cankuID:v.id,
+            ckkey:v.id
+        })
+    }
+    erjifenlei(v){
+        this.setState({
+            erjifenlei:v.id,
+            ekey:v.id
+        })
+    }
+    queding(){
+        this.setState({
+            xian:false
+        })
+        console.log(this.state.childrens)
+        getStockList({
+            action: 'getStockList', data: {
+                uniacid: "53",
+                uid: "2271",
+                warehouseid:this.state.cankuID,
+                categoryid:this.state.childrens===[]?this.state.yijifenleiID:this.state.erjifenlei
+            }
+        }).then((res) => {
+            if(res.data.status===4001){
+                // var result = res.data.data.data.map(o=>{return{id:o.warehouseid,name:o.name}});
+                //     console.log(result)
                 this.setState({
                     goods: res.data.data.data,
                     totalcostprice: res.data.data.totalcostprice,
@@ -36,17 +168,19 @@ export default class stockList extends Component {
         })
     }
     render() {
+        console.log(this.state.childrens)
         const scrollConfig = {
             probeType: 1
         }
         const scrollstyle={
-            
+            // position:"absolute",
+            top:"2rem"
         }
         console.log(this.state.goods)
         return (
             <StockListStyle>
-                <BetterScroll config={scrollConfig} ref='scroll' style={scrollstyle}>
-                <div>
+                
+                
                     <div style={{ display: "flex" }}>
                         <div className='search' >
                             <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
@@ -54,11 +188,11 @@ export default class stockList extends Component {
                                 <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
                             </div>
                         </div>
-                        <div className='sximg'>
-                            <img className='sximg-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
+                        <div className='sximg' >
+                            <img className='sximg-search' onClick={()=>{ this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
                         </div>
                     </div>
-                    
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1rem",bottom:"1.5rem"}}>
                     {
                         this.state.goods.map((v,k)=>{
 
@@ -67,8 +201,59 @@ export default class stockList extends Component {
                             )
                         })
                     }
-                </div>
                 </BetterScroll>
+                {/* <BetterScroll config={scrollConfig} ref='scrolls' style={{ top:"1rem",bottom:"1.5rem"}}> */}
+                    <div className='fenglei' style={{display: this.state.xian===false?"none":"block"}}>
+                        <div>仓库名称
+                            <ul>
+                                {
+                                    this.state.result.map((v,k)=>{
+                                        return(
+                                            <li onClick={(e)=>{this.canku(v,k)}}
+                                            style={{background:this.state.ckkey===v.id?"#fff5ed":'',color:this.state.ckkey===v.id?"#ed7913":'',border:this.state.ckkey===v.id?"1px solid #ed7913":''}}
+                                            >{v.name}</li>
+                                        )
+                                    })
+                                }
+                                {/* <li>1</li> */}
+                                
+                            </ul>
+                        </div>
+
+                        <div>一级分类
+                            <ul>
+                                {
+                                    this.state.fenleiName.map((v,k)=>{
+                                        return(
+                                            <li onClick={(e)=>{this.yijifenlei(v,k)}} 
+                                            style={{background:this.state.yikey===v.id?"#fff5ed":'',color:this.state.yikey===v.id?"#ed7913":'',border:this.state.yikey===v.id?"1px solid #ed7913":''}}
+                                            >{v.name}</li>
+                                        )
+                                    })
+                                }
+                                
+                            </ul>
+                        </div>
+
+                        <div style={{display:this.state.erji===false?"none":"block"}}>二级分类
+                            <ul>
+                                {
+                                    this.state.childrens.map((v,k)=>{
+                                        return(
+                                            <li onClick={(e)=>{this.erjifenlei(v,k)}}
+                                            style={{background:this.state.ekey===v.id?"#fff5ed":'',color:this.state.ekey===v.id?"#ed7913":'',border:this.state.ekey===v.id?"1px solid #ed7913":''}}
+                                            >{v.name}</li>
+                                        )
+                                    })
+                                }
+                                {/* <li>2</li> */}
+                            </ul>
+                        </div>
+                                
+                        <div className='btn' onClick={()=>{this.queding()}}>确定</div>
+                    </div>
+                    {/* </BetterScroll> */}
+                    
                 <div className='foot'>
                     <div>总库存：<span>{this.state.totalgnum}</span></div>
                     <div style={{marginLeft:".8rem"}}>总库存金额：<span>{this.state.totalcostprice}</span></div>
@@ -78,6 +263,41 @@ export default class stockList extends Component {
     }
 }
 const StockListStyle = styled.div`
+.fenglei div ul li{
+    width:2.8rem;
+    height:.8rem;
+    line-height:.8rem;
+    text-align:center;
+    background-color: #f6f6f6;
+    margin:.2rem .2rem;
+    border-radius:.1rem;
+    border:1px solid #dcdcdc;
+}
+.fenglei div ul{
+    display:flex;
+    flex-wrap:wrap;
+}
+.fenglei div{
+    font-size:.4rem;
+}
+.fenglei{
+    padding:.2rem .2rem;
+    position:relative;
+    width:10rem;
+    background-color: #f0f0f0;
+    // height:4rem;
+}
+.btn{
+    // position:absolute;
+    // bottom:.2rem;
+    color:#fff;
+    width:100%;
+    background-color: #ed7912;
+    height:1rem;
+    line-height:1rem;
+    text-align:center;
+    border-radius:.1rem;
+}
 .foot div span{
     color:#cf2424;
 }

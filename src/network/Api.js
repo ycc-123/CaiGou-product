@@ -128,5 +128,12 @@ export function getStockList(config) {
   })
 }
 
-
+export function showProductCategory(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
 

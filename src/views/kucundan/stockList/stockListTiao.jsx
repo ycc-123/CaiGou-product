@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 export default class StockListTiao extends Component {
     render() {
-        console.log(this.props.v)
+        // console.log(this.props.v)
         let good=this.props.v
         return (
             <div className='tiao'>

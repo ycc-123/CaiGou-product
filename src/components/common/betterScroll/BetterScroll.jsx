@@ -4,14 +4,15 @@ import BScroll from 'better-scroll'
 
 class BetterScroll extends Component {
   render() {
-    // console.log(this.props.style)
+    console.log( 'better 样式', this.props.style )
     return (
-      <div className='wrapper' ref='wrapper' style={this.props.style} style={{
+      <div className='wrapper' ref='wrapper'  style={{
+          ...this.props.style,
           overflow:" hidden",
           position: "absolute",
           borderStyle:"none",
-          top: "0",
-          bottom: "0",
+        //   top: "0",
+        //   bottom: "0",
           left: "0",
           right: "0",
         }}>

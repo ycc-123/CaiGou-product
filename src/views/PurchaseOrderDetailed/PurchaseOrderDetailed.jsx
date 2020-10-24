@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseDetail, changePurchaseStatus ,submitPurchase} from 'network/Api'
-import { Toast } from 'antd-mobile';
+import { SearchBar, Toast } from 'antd-mobile';
 
 
 function Tiao(value) {
@@ -30,7 +30,8 @@ export default class PurchaseOrderDetailed extends Component {
             purchaseDetail: {},
             id: this.props.match.params.id,
             data: [],
-            purchaseItem: []
+            purchaseItem: [],
+            goodsSearch:''
         }
     }
     componentDidUpdate = () => {
@@ -123,6 +124,41 @@ export default class PurchaseOrderDetailed extends Component {
         })
     }
     }
+
+    search(){
+        console.log(this.state.goodsSearch)
+        getPurchaseDetail({
+            action: 'getPurchaseDetail', data: {
+                uniacid: "53",
+                uid: "2271",
+                purchaseId: this.props.match.params.id,
+                search:this.state.goodsSearch,
+                type: "1",
+                limit: "30",
+                page: "1"
+            }
+        }).then((res) => {
+            if (res.data.status === 4001) {
+                console.log(res.data.data.purchaseItem)
+                let count =res.data.data.count
+                this.setState({
+                    purchaseDetail: res.data.data.purchaseDetail,
+                    purchaseItem: res.data.data.purchaseItem,
+                    count,
+                }, () => {
+
+                })
+            } else {
+                Toast.fail('网络错误', 2)
+            }
+        })
+    }
+    goodsChange(e){
+        console.log(e.target.value)
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
     render() {
         let Color=''
         if(this.state.purchaseDetail.statusname==="审核成功"){
@@ -136,8 +172,10 @@ export default class PurchaseOrderDetailed extends Component {
             <PurchaseOrderDetailedStyle>
                 <div>
                     <div className='search'>
-                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
-                        <div className='img'>
+                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="goodsSearch" 
+                                    onChange={this.goodsChange.bind(this)}
+                                    value={this.state.goodsSearch}/>
+                        <div className='img' onClick={()=>{this.search()}}>
                             <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
                         </div>
                     </div>

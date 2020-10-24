@@ -118,7 +118,7 @@ export default class AddPurchaseOrder extends Component {
                              data={this.state.data} 
                              cols={1}  
                              className="forss"
-                             extra="请选择对应采购仓库"
+                             extra="请选择采购仓库"
                              value={this.state.sValue}
                              onChange={v => this.setState({ sValue: v })}
                              onOk={v => this.setState({ IDck: v })}
@@ -192,7 +192,7 @@ const AddPurchaseOrderStyle = styled.div`
     width:3rem;
 }
 .am-list-item .am-list-line .am-list-arrow{
-
+    margin-left:2.8rem !important;
     // background-image: none;
     // opacity:0;
 }
@@ -207,7 +207,7 @@ const AddPurchaseOrderStyle = styled.div`
 }
 .time{
     position:absolute;
-    left:2rem;
+    left:2.2rem;
     top:1.5rem;
     // padding-top:.3rem;
     color: #a9a9a9;
@@ -217,7 +217,7 @@ const AddPurchaseOrderStyle = styled.div`
 .times{
     position:absolute;
     left:2.2rem;
-    top:0rem;
+    top:.1rem;
     // padding-top:.3rem;
     color: #a9a9a9;
     width:12rem;
@@ -226,6 +226,7 @@ const AddPurchaseOrderStyle = styled.div`
 .am-list-arrow am-list-arrow-horizontal{
     background-image: none;
     opacity:0;
+    // 
 }
 
 

@@ -24,7 +24,8 @@ export default class WarehousingOrderxing extends Component {
             goods: [],
             num: '',
             count: '',
-            input:[]
+            input:[],
+            inputSearch:''
             // id: this.props.match.params.id,
         }
     }
@@ -53,18 +54,18 @@ export default class WarehousingOrderxing extends Component {
         })
     }
     shengHe() {
-
+        console.log(this.state.input)
         let aa = {}
         let arr = []
 
         this.state.goods.map((v, k) => {
             console.log(v, k)
             aa = {
-                id: this.state.purchaseDetail.id,
-                barcodeid: 1988,
-                diffnum:'',
-                innum: 3,
-                goodsid: 4014
+                id: this.state.goods[k].id,
+                barcodeid:this.state.goods[k].barcodeid,
+                diffnum:this.state.goods[k].price-this.state.input[k],
+                innum: this.state.input[k],
+                goodsid: this.state.goods[k].goodsid
             }
             arr.push(aa);
         })
@@ -84,23 +85,23 @@ export default class WarehousingOrderxing extends Component {
         }
         console.log(this.state.goods, this.state.num,this.state.input)
         // if (this.state.purchaseDetail.statusname === "待提交") {
-        //     submitPurchaseDelivery({
-        //         action: 'submitPurchaseDelivery', data: {
-        //             uniacid: "53",
-        //             uid: "2271",
-        //             itemData: itemData,
-        //             deliveryData: deliveryData,
-        //             type: "1",
-        //             status: "4"
-        //         }
-        //     }).then((res) => {
-        //         console.log(res.data)
-        //         if (res.data.status === 4001) {
-        //             Toast.success(res.data.msg, 2)
-        //         } else {
-        //             Toast.fail(res.data.msg, 2)
-        //         }
-        //     })
+            submitPurchaseDelivery({
+                action: 'submitPurchaseDelivery', data: {
+                    uniacid: "53",
+                    uid: "2271",
+                    itemData: itemData,
+                    deliveryData: deliveryData,
+                    type: "1",
+                    status: "4"
+                }
+            }).then((res) => {
+                console.log(res.data)
+                if (res.data.status === 4001) {
+                    Toast.success(res.data.msg, 2)
+                } else {
+                    Toast.fail(res.data.msg, 2)
+                }
+            })
         // } else {
         //     console.log(this.props.match.params.id.split())
         //     let id = this.props.match.params.id.split()
@@ -139,6 +140,37 @@ export default class WarehousingOrderxing extends Component {
             input:[...this.state.input, ...input]
         })
     }
+    seach(){
+        getPurchaseDeliveryDetail({
+            action: 'getPurchaseDeliveryDetail', data: {
+                uniacid: "53",
+                uid: "2271",
+                deliveryId: this.props.match.params.id,
+                search:this.state.inputSearch,
+                type: "1",
+                limit: "30",
+                page: "1"
+            }
+        }).then((res) => {
+            console.log(res.data.data.purchaseDeliveryItem)
+            if (res.data.status === 4001) {
+                this.setState({
+                    count: res.data.data.count,
+                    purchaseDetail: res.data.data.purchaseDeliveryDetail,
+                    purchaseItem: res.data.data.purchaseDeliveryItem
+                })
+            } else {
+                Toast.fail(res.data.msg, 2)
+            }
+        })
+    }
+    inputChange(e){
+        console.log(e.target.value)
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+        
+    }
     render() {
         let Color = ''
         if (this.state.purchaseDetail.statusname === "审核通过") {
@@ -152,8 +184,10 @@ export default class WarehousingOrderxing extends Component {
             <WarehousingOrderxingStyle>
                 <div>
                     <div className='search'>
-                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
-                        <div className='img'>
+                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch" 
+                                    onChange={this.inputChange.bind(this)}
+                                    value={this.state.inputSearch}/>
+                        <div className='img' onClick={()=>{this.seach()}}>
                             <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
                         </div>
                     </div>

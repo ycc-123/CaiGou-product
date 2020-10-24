@@ -46,16 +46,11 @@ export default class WarehousingOrder extends Component {
     }
     Search(){
         console.log(111)
-        // if(){
-
-        // }else{
-
-        // }
         getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
             uniacid: "53",
             uid:"2271",
             type:"1",
-            docno:this.state.inputSearch,
+            search:this.state.inputSearch,
             // warehouseName:this.state.inputSearch,
             limit:this.state.limit,
             page:this.state.page
@@ -67,24 +62,7 @@ export default class WarehousingOrder extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             }else{
-                // Toast.fail('网络错误', 2)
-                getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
-                    uniacid: "53",
-                    uid:"2271",
-                    type:"1",
-                    // docno:this.state.inputSearch,
-                    warehouseName:this.state.inputSearch,
-                    limit:this.state.limit,
-                    page:this.state.page
-                  } }).then((res) => {
-                    if(res.data.status===4001){
-                        this.setState({
-                            data: res.data.data.data
-                        }, () => {
-                            this.refs.scroll.BScroll.refresh()
-                        })
-                    }
-                  })
+                Toast.fail(res.data.msg,2)
             }
         })
     }
@@ -97,9 +75,8 @@ export default class WarehousingOrder extends Component {
         }
         return (
             <WarehousingOrderStyle>
-                <BetterScroll config={scrollConfig} ref='scroll' style={scrollstyle} loadMore={this.loadMore}
-                    isLoadMore={this.isLoadMore}>
-            <div style={{width:"100%"}}>
+                
+            {/* <div style={{width:"100%"}}> */}
                 <div className='search'>
                     <input type="search" className='input' placeholder="请输入入库单号/仓库名称" name="inputSearch" 
                                     onChange={this.inputChange.bind(this)}
@@ -108,6 +85,8 @@ export default class WarehousingOrder extends Component {
                     <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search"/>
                     </div>
                 </div>
+                <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1.3rem",bottom:"0"}} loadMore={this.loadMore}
+                    isLoadMore={this.isLoadMore}>
                     {
                         this.state.data.map((value,key)=>{
                             // console.log(value)
@@ -118,7 +97,7 @@ export default class WarehousingOrder extends Component {
                             )
                         })
                     }
-            </div>
+            {/* </div> */}
             </BetterScroll>
             </WarehousingOrderStyle>
         )
