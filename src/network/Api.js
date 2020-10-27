@@ -169,3 +169,26 @@ export function get_store(config) {
   })
 
 }
+
+
+// 采购申请单列表
+export function getPurchaseApplyList(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+
+}
+
+// 采购申请单详情
+export function getPurchaseApplyDetail(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+
+}

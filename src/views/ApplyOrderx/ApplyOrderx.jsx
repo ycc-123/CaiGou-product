@@ -1,8 +1,38 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { getPurchaseApplyDetail } from 'network/Api'
+import { SearchBar, Toast } from 'antd-mobile';
+import BetterScroll from 'common/betterScroll/BetterScroll'
 
 export default class ApplyOrderx extends Component {
+    constructor() {
+        super()
+        this.state = {
+            quan: [],
+            tiao:[]
+        }
+    }
+    componentDidMount() {
+        getPurchaseApplyDetail({
+            action: 'getPurchaseApplyDetail', data: {
+                uniacid: "53",
+                uid: "2271",
+                id: this.props.match.params.id
+            }
+        }).then((res) => {
+            console.log(res)
+            if (res.data.status === 4001) {
+                this.setState({
+                    quan: res.data.data,
+                    tiao:res.data.data.item?res.data.data.item:[]
+                })
+            } else {
+                Toast.fail(res.data.msg, 2)
+            }
+        })
+    }
     render() {
+        console.log(this.state.quan.item)
         return (
             <ApplyOrderxStyle>
                 <div>
@@ -18,45 +48,64 @@ export default class ApplyOrderx extends Component {
                             <p>
                                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
                             </p>
-                            <div>CG20201009123456789</div>
+                            <div>{this.state.quan.docno}</div>
                         </div>
 
                         <div className='conten-c'>
-                            <p>单据日期：2020-09-05</p>
-                            <p>申请数量：9999</p>
-                            <p>单据状态：<span style={{ color: "#ed5f21" }}>待提交</span></p>
+                            <p>单据日期：{this.state.quan.docdate}</p>
+                            <p>申请数量：{this.state.quan.statusname}</p>
+                            <p>单据状态：<span style={{ color: "#ed5f21" }}>{this.state.quan.statusname}</span></p>
                         </div>
 
-                    <div className='footer'>
+                        <div className='footer'>
                             采购备注：
                     </div>
-                </div>
-
-                    <div className='tiao'>
-                       
-                                <img className='t-img-l' src="" alt=""/>
-                            <ul className='wen-zi'>
-                                <li className='wen-zi-t'>
-                                    <div className='name'>北海盗白色恋人巧克力饼干</div>
-                                    <p></p>
-                                </li>
-                                <li className='wen-zi-f'>
-                                    <div></div>
-                                    <p>申请数量：<span>999</span></p>
-                                </li>
-                            </ul>
-                       
                     </div>
+
+                    {
+                        this.state.tiao.map((v, k) => {
+                            return (
+                                <div className='tiao'>
+                                    <img className='t-img-l' src="" alt="" />
+                                    <ul className='wen-zi'>
+                                        <li className='wen-zi-t'>
+                                            <div className='name'>{v.goodsname}</div>
+                                            <p></p>
+                                        </li>
+                                        <li className='wen-zi-f'>
+                                            <div></div>
+                                            <p>申请数量：<span>{v.goodsnum}</span></p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            )
+                        })
+                    }
+                    {/* <div className='tiao'>
+
+                        <img className='t-img-l' src="" alt="" />
+                        <ul className='wen-zi'>
+                            <li className='wen-zi-t'>
+                                <div className='name'>北海盗白色恋人巧克力饼干</div>
+                                <p></p>
+                            </li>
+                            <li className='wen-zi-f'>
+                                <div></div>
+                                <p>申请数量：<span>999</span></p>
+                            </li>
+                        </ul>
+
+                    </div> */}
 
                     <div className='foot'>
-                    <div className='left'>
-                        <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt=""/>
-                    </div>
-                    <div className='yuan'>9</div>
-                    <div className='foot_conton'></div>
-                    <div className='right'>提交</div>
+                        <div className='left'>
+                            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
+                        </div>
+                        <div className='yuan'>9</div>
+                        <div className='foot_conton'></div>
+                        <div className='right'>提交</div>
 
-                </div>
+                    </div>
                 </div>
             </ApplyOrderxStyle>
         )

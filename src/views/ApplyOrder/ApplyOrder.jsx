@@ -1,37 +1,106 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { getPurchaseApplyList } from 'network/Api'
+import { SearchBar, Toast } from 'antd-mobile';
+import BetterScroll from 'common/betterScroll/BetterScroll'
+// import Tiao from './Tiao'
+import { setTitle } from 'commons/utils'
 
 export default class ApplyOrder extends Component {
+    constructor() {
+        super()
+        this.state = {
+            tiao: [],
+            inputSearch:''
+        }
+    }
+    componentDidMount() {
+        getPurchaseApplyList({
+            action: 'getPurchaseApplyList', data: {
+                uniacid: "53",
+                uid: "2271",
+                // type:"1",
+                limit: "1000",
+                page: "1"
+            }
+        }).then((res) => {
+            console.log(res)
+            this.setState({
+                tiao: res.data.data.data
+            }, () => {
+                this.refs.scroll.BScroll.refresh()
+            })
+        })
+    }
+    inputChange(e){
+        console.log(e.target.value)
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    search(){
+        getPurchaseApplyList({
+            action: 'getPurchaseApplyList', data: {
+                uniacid: "53",
+                uid: "2271",
+                search: this.state.inputSearch,
+                limit: "1000",
+                page: "1"
+            }
+        }).then((res) => {
+            console.log(res)
+            this.setState({
+                tiao: res.data.data.data
+            }, () => {
+                this.refs.scroll.BScroll.refresh()
+            })
+        })
+    }
     render() {
+        const scrollConfig = {
+            probeType: 1
+        }
         return (
             <ApplyOrderStyle>
-            <div style={{width:"100%"}}>
-                <div className='search'>
-                    <input type="search" className='input' placeholder="请输入采购申请单号"/>
-                    <div className='img'>
-                    <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search"/>
+                <div style={{ width: "100%" }}>
+                    <div className='search'>
+                        <input type="search" className='input' placeholder="请输入采购申请单号1" name="inputSearch" 
+                                    onChange={this.inputChange.bind(this)}
+                                    value={this.state.inputSearch}/>
+                        <div className='img' onClick={()=>{this.search()}}>
+                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+                        </div>
                     </div>
-                </div>
 
-                <div className='caigoudan' >
-                    <div className='dan'>
-                        <div className='dan-top'>
-                            <p>
-                            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt=""/>
-                            </p>
-                            <div className='caigoudanhao'>采购单号：CG20201009123456789</div>
-                            <div className='zuantai'>待提交</div>
-                        </div>
-                        <div className='dan-footer'>
-                            <div>
-                            <p>单据日期：2020-10-08</p>
-                            <p>申请数量：999.99</p>
-                            </div>
-                            <div className='btn_sh' onClick={()=>{this.props.history.push('/ApplyOrderx')}}>提交</div>
-                        </div>
+                    <div className='caigoudan' >
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1.3rem",bottom:"0"}}>
+                        {
+                            this.state.tiao.map((v, k) => {
+                                return (
+                                    <div className='dan' onClick={()=>{this.props.history.push(`/ApplyOrderx/${v.id}`)}}>
+                                        <div className='dan-top'>
+                                            <p>
+                                                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
+                                            </p>
+                                            <div className='caigoudanhao'>采购单号：{v.docno}</div>
+                                            <div className='zuantai'>{v.statusname}</div>
+                                        </div>
+                                        <div className='dan-footer'>
+                                            <div>
+                                                <p>单据日期：{v.docdate}</p>
+                                                <p>申请数量：{v.totalnum}</p>
+                                            </div>
+                                            <div className='btn_sh' onClick={() => { this.props.history.push('/ApplyOrderx') }}>提交</div>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                        </BetterScroll>
+
+
                     </div>
                 </div>
-            </div>
             </ApplyOrderStyle>
         )
     }
@@ -69,7 +138,7 @@ const ApplyOrderStyle = styled.div`
 .caigoudanhao{
     margin-top:.15rem;
     margin-left:.2rem;
-    width:6.8rem;
+    width:6.3rem;
     font-size:.38rem;
     color: #333333;
 }
