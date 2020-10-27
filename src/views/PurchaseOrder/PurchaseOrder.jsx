@@ -11,7 +11,7 @@ export default class PurchaseOrder extends Component {
         super()
         this.state={
             data:[],
-            limit: 100,
+            limit: 10,
             page: 1,
             inputSearch:''
         }

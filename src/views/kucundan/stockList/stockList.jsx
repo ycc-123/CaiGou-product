@@ -23,7 +23,8 @@ export default class stockList extends Component {
             erji:false,
             yikey:'',
             ckkey:'',
-            inputSearch:''
+            inputSearch:'',
+            panduan:false
         }
     }
     componentDidMount(){
@@ -106,6 +107,7 @@ export default class stockList extends Component {
                 var result = res.data.data.childrens.map(o=>{return{id:o.id,name:o.name}});
                     console.log(result)
                 this.setState({
+                    panduan:result===[]?false:true,
                     childrens:result,
                     erji:true,
                     yikey:v.id
@@ -145,15 +147,20 @@ export default class stockList extends Component {
         this.setState({
             xian:false
         })
-        console.log(this.state.childrens)
+        console.log(this.state.yikey)
         getStockList({
             action: 'getStockList', data: {
                 uniacid: "53",
                 uid: "2271",
                 warehouseid:this.state.cankuID,
-                categoryid:this.state.childrens===[]?this.state.yijifenleiID:this.state.erjifenlei
+                // categoryid:this.state.panduan===false? this.state.yikey : this.state.erjifenlei 
+                categoryid:this.state.erjifenlei?  this.state.erjifenlei: this.state.yikey 
+
             }
         }).then((res) => {
+            this.setState({
+                panduan:false
+            })
             if(res.data.status===4001){
                 // var result = res.data.data.data.map(o=>{return{id:o.warehouseid,name:o.name}});
                 //     console.log(result)
@@ -291,8 +298,8 @@ export default class stockList extends Component {
                     {/* </BetterScroll> */}
                     
                 <div className='foot' >
-                    <div>总库存：<span>{this.state.totalgnum}</span></div>
-                    <div style={{marginLeft:".8rem"}}>总库存金额：<span>{this.state.totalcostprice}</span></div>
+                    <div>总库存：<span>{this.state.totalgnum?this.state.totalgnum:0}</span></div>
+                    <div style={{marginLeft:".8rem"}}>总库存金额：<span>{this.state.totalcostprice?this.state.totalcostprice:0}</span></div>
                 </div>
             </StockListStyle>
         )
