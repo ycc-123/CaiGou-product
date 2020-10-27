@@ -201,7 +201,7 @@ class Category extends Component {
   componentDidMount = () => {
 
     // this.refs.scroll.BScroll.refresh()
-    setTitle('分类')
+    setTitle('新建采购单')
     const { appConfig } = store.getState()
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {

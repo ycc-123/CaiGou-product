@@ -54,7 +54,7 @@ class CategoryRightgoods extends Component {
               visible={false}
             >111111</Button>
             {
-              this.state.login?<div className='category-goods-img' style={{marginTop: ".8rem",marginLeft: "4.8rem",color:"#d54343",fontSize:".4rem"}}>{this.state.login}</div>:
+              this.state.login?<div className='category-goods-img' style={{textAlign:"center",width:"2rem",height:".5rem",marginTop: ".8rem",marginLeft: "4rem",color:"#d54343",fontSize:".4rem"}}>{this.state.login}</div>:
             <img className='category-goods-img'
               src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
               alt=""/>

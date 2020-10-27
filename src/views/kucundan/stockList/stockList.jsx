@@ -5,7 +5,7 @@ import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import StockListTiao from './stockListTiao'
 // import { display } from 'html2canvas/dist/types/css/property-descriptors/display';
-
+import { setTitle } from 'commons/utils'
 export default class stockList extends Component {
     constructor(){
         super()
@@ -22,10 +22,12 @@ export default class stockList extends Component {
             erjifenlei:'',
             erji:false,
             yikey:'',
-            ckkey:''
+            ckkey:'',
+            inputSearch:''
         }
     }
     componentDidMount(){
+        setTitle('库存单')
         getStockList({
             action: 'getStockList', data: {
                 uniacid: "53",
@@ -156,6 +158,32 @@ export default class stockList extends Component {
                 // var result = res.data.data.data.map(o=>{return{id:o.warehouseid,name:o.name}});
                 //     console.log(result)
                 this.setState({
+                    goods: res.data.data.data!==null?res.data.data.data:[],
+                    totalcostprice: res.data.data.totalcostprice,
+                    totalgnum: res.data.data.totalgnum
+                }, () => {
+                    this.refs.scroll.BScroll.refresh()
+                })
+            }else{
+                Toast.fail(res.data.msg,2)
+            }
+        })
+    }
+    search(){
+        console.log(this.state.inputSearch)
+        getStockList({
+            action: 'getStockList', data: {
+                uniacid: "53",
+                uid: "2271",
+                search:this.state.inputSearch,
+                
+            }
+        }).then((res) => {
+            console.log(res)
+            if(res.data.status===4001){
+                var result = res.data.data.data.map(o=>{return{id:o.warehouseid,name:o.name}});
+                    console.log(result)
+                this.setState({
                     goods: res.data.data.data,
                     totalcostprice: res.data.data.totalcostprice,
                     totalgnum: res.data.data.totalgnum
@@ -165,6 +193,12 @@ export default class stockList extends Component {
             }else{
                 Toast.fail(res.data.msg,2)
             }
+        })
+    }
+    inputChange(e){
+        console.log(e.target.value)
+        this.setState({
+            [e.target.name]: e.target.value
         })
     }
     render() {
@@ -182,9 +216,11 @@ export default class stockList extends Component {
                 
                 
                     <div style={{ display: "flex" }}>
-                        <div className='search' >
-                            <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
-                            <div className='img'>
+                        <div className='search'  >
+                            <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch" 
+                                    onChange={this.inputChange.bind(this)}
+                                    value={this.state.inputSearch}/>
+                            <div className='img' onClick={()=>{this.search()}}>
                                 <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
                             </div>
                         </div>
@@ -254,7 +290,7 @@ export default class stockList extends Component {
                     </div>
                     {/* </BetterScroll> */}
                     
-                <div className='foot'>
+                <div className='foot' >
                     <div>总库存：<span>{this.state.totalgnum}</span></div>
                     <div style={{marginLeft:".8rem"}}>总库存金额：<span>{this.state.totalcostprice}</span></div>
                 </div>

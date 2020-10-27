@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseDeliveryDetail, submitPurchaseDelivery } from 'network/Api'
 import { Toast } from 'antd-mobile';
-
+import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiao'
-
+import { setTitle } from 'commons/utils'
 // function Tiao(value) {
 //     console.log(value)
 //     let tiao = value.item
@@ -30,7 +30,7 @@ export default class WarehousingOrderxing extends Component {
         }
     }
     componentDidMount() {
-
+        setTitle('采购入库单')
         getPurchaseDeliveryDetail({
             action: 'getPurchaseDeliveryDetail', data: {
                 uniacid: "53",
@@ -47,6 +47,8 @@ export default class WarehousingOrderxing extends Component {
                     count: res.data.data.count,
                     purchaseDetail: res.data.data.purchaseDeliveryDetail,
                     purchaseItem: res.data.data.purchaseDeliveryItem
+                },()=>{
+                    this.refs.scroll.BScroll.refresh()
                 })
             } else {
                 Toast.fail(res.data.msg, 2)
@@ -172,6 +174,9 @@ export default class WarehousingOrderxing extends Component {
         
     }
     render() {
+        const scrollConfig = {
+            probeType: 1
+        }
         let Color = ''
         if (this.state.purchaseDetail.statusname === "审核通过") {
             Color = "#22a31b"
@@ -210,6 +215,7 @@ export default class WarehousingOrderxing extends Component {
                             采购备注：{this.state.purchaseDetail.remark}
                         </div>
                     </div>
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"5.8rem",bottom:"1.6rem"}}>
                     {
                         this.state.purchaseItem.map((value, key) => {
                             // console.log(value)
@@ -218,7 +224,7 @@ export default class WarehousingOrderxing extends Component {
                             )
                         })
                     }
-
+                    </BetterScroll>
                     <div className='foot'>
                         <div className='left'>
                             <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />

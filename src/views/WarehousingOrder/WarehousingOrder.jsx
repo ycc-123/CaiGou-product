@@ -4,6 +4,8 @@ import { getPurchaseDeliveryList } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import Tiao from './Tiao'
 import BetterScroll from 'common/betterScroll/BetterScroll'
+import { setTitle } from 'commons/utils'
+
 export default class WarehousingOrder extends Component {
     constructor(){
         super()
@@ -16,7 +18,7 @@ export default class WarehousingOrder extends Component {
         this.isLoadMore = true
     }
     componentDidMount() {
-
+        setTitle('采购入库单')
         getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
             uniacid: "53",
             uid:"2271",

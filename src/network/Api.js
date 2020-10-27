@@ -137,3 +137,35 @@ export function showProductCategory(config) {
   })
 }
 
+// 优惠统计表列表和详情
+export function getRetailList(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+
+export function get_cashier(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+
+}
+
+
+
+export function get_store(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+
+}

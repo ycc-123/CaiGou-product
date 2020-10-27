@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getWarehouseList,getSupplierList,createPurchase} from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
-
+import { setTitle } from 'commons/utils'
 
 
 
@@ -25,7 +25,7 @@ export default class AddPurchaseOrder extends Component {
         }
     }
     componentDidMount() {
-
+        setTitle('新建采购单')
         getWarehouseList({ action: 'getWarehouseList', data: {
             uniacid: "53",
             uid:"2271",
@@ -192,7 +192,7 @@ const AddPurchaseOrderStyle = styled.div`
     width:3rem;
 }
 .am-list-item .am-list-line .am-list-arrow{
-    margin-left:2.8rem !important;
+    margin-left:2.5rem !important;
     // background-image: none;
     // opacity:0;
 }
@@ -232,7 +232,7 @@ const AddPurchaseOrderStyle = styled.div`
 
 
 .left{
-    width: 35rem;
+    width: 25rem;
     height: 1.6rem;
     background-color: #fff;
 }

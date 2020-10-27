@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseDetail, changePurchaseStatus ,submitPurchase} from 'network/Api'
 import { SearchBar, Toast } from 'antd-mobile';
-
+import BetterScroll from 'common/betterScroll/BetterScroll'
+import { setTitle } from 'commons/utils'
 
 function Tiao(value) {
     console.log(value)
@@ -38,7 +39,7 @@ export default class PurchaseOrderDetailed extends Component {
 
     }
     componentDidMount() {
-
+        setTitle('采购单明细')
         getPurchaseDetail({
             action: 'getPurchaseDetail', data: {
                 uniacid: "53",
@@ -64,7 +65,7 @@ export default class PurchaseOrderDetailed extends Component {
                     purchaseItem: res.data.data.purchaseItem,
                     count,
                 }, () => {
-
+                    this.refs.scroll.BScroll.refresh()
                 })
             } else {
                 Toast.fail('网络错误', 2)
@@ -146,7 +147,7 @@ export default class PurchaseOrderDetailed extends Component {
                     purchaseItem: res.data.data.purchaseItem,
                     count,
                 }, () => {
-
+                    this.refs.scroll.BScroll.refresh()
                 })
             } else {
                 Toast.fail('网络错误', 2)
@@ -160,6 +161,9 @@ export default class PurchaseOrderDetailed extends Component {
         })
     }
     render() {
+        const scrollConfig = {
+            probeType: 1
+        }
         let Color=''
         if(this.state.purchaseDetail.statusname==="审核成功"){
             Color="#22a31b"
@@ -198,6 +202,7 @@ export default class PurchaseOrderDetailed extends Component {
                             采购备注：{this.state.purchaseDetail.remark}
                     </div>
                     </div>
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"5.8rem",bottom:"1.6rem"}}>
                     {
                         this.state.purchaseItem.map((value, key) => {
                             console.log(value)
@@ -206,7 +211,7 @@ export default class PurchaseOrderDetailed extends Component {
                             )
                         })
                     }
-
+                    </BetterScroll>
                     <div className='foot'>
                         <div className='left'>
                             <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />

@@ -4,6 +4,7 @@ import { getPurchaseList } from 'network/Api'
 import { SearchBar, Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiao'
+import { setTitle } from 'commons/utils'
 
 export default class PurchaseOrder extends Component {
     constructor(){
@@ -18,6 +19,7 @@ export default class PurchaseOrder extends Component {
     }
 
     componentDidMount(){
+        setTitle('采购单')
         getPurchaseList({ action: 'getPurchaseList', data: {
             uniacid: "53",
             uid:"2271",
@@ -41,10 +43,9 @@ export default class PurchaseOrder extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
-        
     }
     Search(){
-        console.log(111)
+        
 
         getPurchaseList({ action: 'getPurchaseList', data: {
             uniacid: "53",
@@ -69,9 +70,6 @@ export default class PurchaseOrder extends Component {
     render() {
         const scrollConfig = {
             probeType: 1
-        }
-        const scrollstyle={
-            
         }
         return (
             <PurchaseOrderStyle>
@@ -146,8 +144,6 @@ export default class PurchaseOrder extends Component {
             bottomTip.innerHTML = '商品已经全部加载完成' */
         }
     }
-
-
 }
 const PurchaseOrderStyle = styled.div`
 .dan-footer p{

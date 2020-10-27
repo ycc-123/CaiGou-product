@@ -9,7 +9,7 @@ export default class StockListTiao extends Component {
                         <img className='t-img-l'  alt="" />
                         <ul className='wen-zi'>
                             <li className='wen-zi-t'>
-                                <div className='name'>{good.warehousename}</div>
+                                <div className='name'>{good.goods_name}</div>
                                 <p>{good.gnum}{good.unit_name}</p>
                             </li>
                             <li className='wen-zi-f'>

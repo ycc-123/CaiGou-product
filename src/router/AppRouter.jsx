@@ -46,7 +46,7 @@ const AppRouter = () => {
         <Route path='/Liebiao' exact component={Liebiao} ></Route>
         <Route path='/Mingxi' exact component={Mingxi} ></Route>
         <Route path='/Youhuimxb' exact component={Youhuimxb} ></Route>
-        <Route path='/Shouyinmxb' exact component={Shouyinmxb} ></Route>
+        <Route path='/Shouyinmxb/:id' exact component={Shouyinmxb} ></Route>
       </Switch>
     </Router>
   )
