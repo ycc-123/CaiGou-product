@@ -6,6 +6,7 @@ import BetterScroll from 'common/betterScroll/BetterScroll'
 import { Picker, List, DatePicker } from 'antd-mobile';
 import Youhuimxbs from './youhuimxbs'
 import { setTitle } from 'commons/utils'
+import { store } from "store/index";
 export default class Youhuimxb extends Component {
     constructor() {
         super()
@@ -29,7 +30,7 @@ export default class Youhuimxb extends Component {
         setTitle('优惠明细表')
         get_store({
             action: 'get_store', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
             }
         }).then((res) => {
             // console.log(res)
@@ -45,7 +46,7 @@ export default class Youhuimxb extends Component {
         })
         get_cashier({
             action: 'get_cashier', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
             }
         }).then((res) => {
             var shouyinyuan = res.data.data.map(o=>{return{value:o.id,label:o.nick_name}});
@@ -62,7 +63,7 @@ export default class Youhuimxb extends Component {
         let IDsj=this.state.IDsj.toString()
         getRetailList({
             action: 'getRetailList', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid: "2271",
                 starttime:this.state.start_time,
                 endtime:this.state.end_time,
@@ -89,7 +90,7 @@ export default class Youhuimxb extends Component {
         let IDsj=this.state.IDsj.toString()
         getRetailList({
             action: 'getRetailList', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid: "2271",
                 starttime:this.state.start_time,
                 endtime:this.state.end_time,
@@ -252,7 +253,7 @@ export default class Youhuimxb extends Component {
             // console.log(111)
             getRetailList({
                 action: 'getRetailList', data: {
-                    uniacid: "53",
+                    uniacid: store.getState().uniacid,
                     uid: "2271",
                     // starttime:"2020-10-1 13:41:08",
                     // endtime:"2020-10-24 13:41:08",

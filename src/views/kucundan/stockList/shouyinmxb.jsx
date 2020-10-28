@@ -4,6 +4,7 @@ import { getRetailList } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { setTitle } from 'commons/utils'
+import { store } from "store/index";
 export default class Shouyinmxb extends Component {
     constructor() {
         super()
@@ -15,7 +16,7 @@ export default class Shouyinmxb extends Component {
         setTitle('收银明细表')
         getRetailList({
             action: 'getRetailList', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid: "2271",
                 // starttime:"2020-10-1 13:41:08",
                 // endtime:"2020-10-24 13:41:08",

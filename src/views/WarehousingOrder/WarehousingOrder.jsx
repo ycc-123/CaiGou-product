@@ -5,7 +5,7 @@ import { Toast } from 'antd-mobile';
 import Tiao from './Tiao'
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { setTitle } from 'commons/utils'
-
+import { store } from "store/index";
 export default class WarehousingOrder extends Component {
     constructor(){
         super()
@@ -20,7 +20,7 @@ export default class WarehousingOrder extends Component {
     componentDidMount() {
         setTitle('采购入库单')
         getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
-            uniacid: "53",
+            uniacid: store.getState().uniacid,
             uid:"2271",
             type:"1",
             limit:this.state.limit,
@@ -49,7 +49,7 @@ export default class WarehousingOrder extends Component {
     Search(){
         console.log(111)
         getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
-            uniacid: "53",
+            uniacid: store.getState().uniacid,
             uid:"2271",
             type:"1",
             search:this.state.inputSearch,
@@ -117,7 +117,7 @@ export default class WarehousingOrder extends Component {
         if (this.isLoadMore) {
             // console.log(111)
             getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid:"2271",
                 type:"1",
                 limit:this.state.limit,

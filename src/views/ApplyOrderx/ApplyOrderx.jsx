@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { getPurchaseApplyDetail } from 'network/Api'
 import { SearchBar, Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
-
+import { store } from "store/index";
 export default class ApplyOrderx extends Component {
     constructor() {
         super()
@@ -16,7 +16,7 @@ export default class ApplyOrderx extends Component {
     componentDidMount() {
         getPurchaseApplyDetail({
             action: 'getPurchaseApplyDetail', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid: "2271",
                 id: this.props.match.params.id
             }

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { getWarehouseList,getSupplierList,createPurchase} from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
 import { setTitle } from 'commons/utils'
-
+import { store } from "store/index";
 
 
 
@@ -27,7 +27,7 @@ export default class AddPurchaseOrder extends Component {
     componentDidMount() {
         setTitle('新建采购单')
         getWarehouseList({ action: 'getWarehouseList', data: {
-            uniacid: "53",
+            uniacid: store.getState().uniacid,
             uid:"2271",
             type:"1",
             limit:"1000",
@@ -46,7 +46,7 @@ export default class AddPurchaseOrder extends Component {
             }
         })
         getSupplierList({ action: 'getSupplierList', data: {
-            uniacid: "53",
+            uniacid: store.getState().uniacid,
             uid:"2271",
             limit:"1000",
             page:"1"
@@ -71,7 +71,7 @@ export default class AddPurchaseOrder extends Component {
         // console.log(idkc)
         // this.props.history.push('/category')
         createPurchase({ action: 'createPurchase', data: {
-            uniacid: "53",
+            uniacid: store.getState().uniacid,
             uid:"2271",
             type:"1",
             supplierid:idgy,

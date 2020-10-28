@@ -14,24 +14,24 @@ import 'assets/css/basic.css'
 import { update } from 'js-md5';
 
 // let uid = getParamsString('uid')
-// let uniacid = getParamsString('uniacid')
+let uniacid = getParamsString('uniacid')
 
 
 
-let uid = 2271
-let uniacid = 53
+// let uid = 2271
+// let uniacid = 826
 
-console.log(uid,uniacid)
-const actionuid = saveUserUid(uid)
-store.dispatch(actionuid)
+console.log(uniacid)
+// const actionuid = saveUserUid(uid)
+// store.dispatch(actionuid)
 
 const actionuniacid = saveUserUniacid(uniacid)
 store.dispatch(actionuniacid)
 
 ReactDOM.render(
   <Provider store={store}> 
-    <PersistGate persistor={persistor}>
+    {/* <PersistGate persistor={persistor}> */}
       <AppRouter />
-    </PersistGate>
+    {/* </PersistGate> */}
   </Provider>, document.getElementById('root'))
 

@@ -4,7 +4,7 @@ import { getPurchaseDetail, changePurchaseStatus ,submitPurchase} from 'network/
 import { SearchBar, Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { setTitle } from 'commons/utils'
-
+import { store } from "store/index";
 function Tiao(value) {
     console.log(value)
     let tiao = value.item
@@ -42,7 +42,7 @@ export default class PurchaseOrderDetailed extends Component {
         setTitle('采购单明细')
         getPurchaseDetail({
             action: 'getPurchaseDetail', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid: "2271",
                 purchaseId: this.props.match.params.id,
                 type: "1",
@@ -85,7 +85,7 @@ export default class PurchaseOrderDetailed extends Component {
         if(this.state.purchaseDetail.statusname==="待提交"){
             submitPurchase({
                 action: 'submitPurchase', data: {
-                    uniacid: "53",
+                    uniacid: store.getState().uniacid,
                     uid: "2271",
                     purchaseId: this.props.match.params.id,
                     type: "1",
@@ -109,7 +109,7 @@ export default class PurchaseOrderDetailed extends Component {
         let id=this.props.match.params.id.split( )
         changePurchaseStatus({
             action: 'changePurchaseStatus', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid: "2271",
                 purchaseId_list: id,
                 type: "1",
@@ -130,7 +130,7 @@ export default class PurchaseOrderDetailed extends Component {
         console.log(this.state.goodsSearch)
         getPurchaseDetail({
             action: 'getPurchaseDetail', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid: "2271",
                 purchaseId: this.props.match.params.id,
                 search:this.state.goodsSearch,

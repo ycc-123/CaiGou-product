@@ -5,7 +5,7 @@ import { SearchBar, Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 // import Tiao from './Tiao'
 import { setTitle } from 'commons/utils'
-
+import { store } from "store/index";
 export default class ApplyOrder extends Component {
     constructor() {
         super()
@@ -17,7 +17,7 @@ export default class ApplyOrder extends Component {
     componentDidMount() {
         getPurchaseApplyList({
             action: 'getPurchaseApplyList', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid: "2271",
                 // type:"1",
                 limit: "1000",
@@ -41,7 +41,7 @@ export default class ApplyOrder extends Component {
     search(){
         getPurchaseApplyList({
             action: 'getPurchaseApplyList', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid: "2271",
                 search: this.state.inputSearch,
                 limit: "1000",

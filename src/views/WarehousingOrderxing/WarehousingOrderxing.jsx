@@ -5,6 +5,8 @@ import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiao'
 import { setTitle } from 'commons/utils'
+import { store } from "store/index";
+
 // function Tiao(value) {
 //     console.log(value)
 //     let tiao = value.item
@@ -33,7 +35,7 @@ export default class WarehousingOrderxing extends Component {
         setTitle('采购入库单')
         getPurchaseDeliveryDetail({
             action: 'getPurchaseDeliveryDetail', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid: "2271",
                 deliveryId: this.props.match.params.id,
                 type: "1",
@@ -89,7 +91,7 @@ export default class WarehousingOrderxing extends Component {
         // if (this.state.purchaseDetail.statusname === "待提交") {
             submitPurchaseDelivery({
                 action: 'submitPurchaseDelivery', data: {
-                    uniacid: "53",
+                    uniacid: store.getState().uniacid,
                     uid: "2271",
                     itemData: itemData,
                     deliveryData: deliveryData,
@@ -145,7 +147,7 @@ export default class WarehousingOrderxing extends Component {
     seach(){
         getPurchaseDeliveryDetail({
             action: 'getPurchaseDeliveryDetail', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid: "2271",
                 deliveryId: this.props.match.params.id,
                 search:this.state.inputSearch,

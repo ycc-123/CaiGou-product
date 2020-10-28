@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import BetterScroll from 'common/betterScroll/BetterScroll'
 // import TabBar from 'common/tabBar/TabBar'
-
 import CategoryLeftItem from './childCom/CategoryLeftItem'
 import CategoryRight from './childCom/CategoryRight'
 // import CategoryTabBar from './childCom/CategoryTabBar'
@@ -68,7 +67,7 @@ class Category extends Component {
     console.log(this.state.inputSearch)
     searchProduct({
       action: 'searchProduct', data: {
-        uniacid: "53",
+        uniacid: store.getState().uniacid,
         uid: "2271",
         categoryid: this.state.indexId,
         // code:this.state.inputSearch,
@@ -205,7 +204,7 @@ class Category extends Component {
     const { appConfig } = store.getState()
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
-        uniacid: "53",
+        uniacid: store.getState().uniacid,
       }
     }).then(res => {
       console.log(res.data.data)
@@ -218,7 +217,7 @@ class Category extends Component {
         console.log(value)
         searchProduct({
           action: 'searchProduct', data: {
-            uniacid: "53",
+            uniacid: store.getState().uniacid,
             uid: "2271",
             categoryid: Id[0].id,
             // code:this.state.value[index].code,
@@ -255,7 +254,7 @@ class Category extends Component {
     })
     searchProduct({
       action: 'searchProduct', data: {
-        uniacid: "53",
+        uniacid: store.getState().uniacid,
         uid: "2271",
         categoryid: this.state.id[index].id,
         // code:this.state.value[index].code,

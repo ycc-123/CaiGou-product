@@ -4,7 +4,7 @@ import { getStockList ,getWarehouseList ,getProductCategoryAll,showProductCatego
 import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import StockListTiao from './stockListTiao'
-// import { display } from 'html2canvas/dist/types/css/property-descriptors/display';
+import { store } from "store/index";
 import { setTitle } from 'commons/utils'
 export default class stockList extends Component {
     constructor(){
@@ -31,7 +31,7 @@ export default class stockList extends Component {
         setTitle('库存单')
         getStockList({
             action: 'getStockList', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid: "2271",
             }
         }).then((res) => {
@@ -53,7 +53,7 @@ export default class stockList extends Component {
 
         getWarehouseList({
             action: 'getWarehouseList', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid: "2271",
                 type:"1",
                 limit:"8",
@@ -74,7 +74,7 @@ export default class stockList extends Component {
         // 分类
         getProductCategoryAll({
             action: 'getProductCategoryAll', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                
             }
         }).then((res) => {
@@ -98,7 +98,7 @@ export default class stockList extends Component {
         console.log(v,k)
         showProductCategory({
             action: 'showProductCategory', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 id:v.id
             }
         }).then((res) => {
@@ -151,7 +151,7 @@ export default class stockList extends Component {
         console.log(this.state.yikey)
         getStockList({
             action: 'getStockList', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid: "2271",
                 warehouseid:this.state.cankuID,
                 // categoryid:this.state.panduan===false? this.state.yikey : this.state.erjifenlei 
@@ -181,7 +181,7 @@ export default class stockList extends Component {
         console.log(this.state.inputSearch)
         getStockList({
             action: 'getStockList', data: {
-                uniacid: "53",
+                uniacid: store.getState().uniacid,
                 uid: "2271",
                 search:this.state.inputSearch,
                 

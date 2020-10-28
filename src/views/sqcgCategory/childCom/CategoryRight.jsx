@@ -7,7 +7,7 @@ import BetterScroll from 'common/betterScroll/BetterScroll'
 import { createPurchaseApply } from 'network/Api'
 // import { store } from 'store/index'
 import {  Toast } from 'antd-mobile';
-
+import { store } from "store/index";
 class CategoryRight extends Component {
   constructor(){
     super()
@@ -129,7 +129,7 @@ class CategoryRight extends Component {
       snum:this.state.num
     }
     createPurchaseApply({ action: 'createPurchaseApply', data: {
-      uniacid: "53",
+      uniacid: store.getState().uniacid,
       uid:"2271",
       totalnum:this.state.num,
       // purchaseId:this.props.id,
