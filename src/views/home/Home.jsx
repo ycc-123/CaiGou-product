@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
+import { store } from "store/index";
 
 export default class Home extends Component {
 
-
+  componentDidMount(){
+    console.log(store.getState().uniacid)
+  }
   render() {
     return (
       <HomeStyle>

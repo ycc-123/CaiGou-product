@@ -9,7 +9,8 @@ export default class ApplyOrderx extends Component {
         super()
         this.state = {
             quan: [],
-            tiao:[]
+            tiao: [],
+            sum:''
         }
     }
     componentDidMount() {
@@ -22,9 +23,29 @@ export default class ApplyOrderx extends Component {
         }).then((res) => {
             console.log(res)
             if (res.data.status === 4001) {
+                let aa = {}
+                let arr = []
+
+                res.data.data.item.map((v, k) => {
+                    console.log(v, k)
+                    aa = v.goodsnum
+                    arr.push(aa);
+                })
+                console.log(arr)
+
+                let sum = 0;
+                // let dd = arr
+                arr.forEach(item => {
+                    console.log(item)
+                    sum = sum +Number(item)
+                })
+                console.log(sum)
+
+
                 this.setState({
                     quan: res.data.data,
-                    tiao:res.data.data.item?res.data.data.item:[]
+                    tiao: res.data.data.item ? res.data.data.item : [],
+                    sum
                 })
             } else {
                 Toast.fail(res.data.msg, 2)
@@ -53,7 +74,7 @@ export default class ApplyOrderx extends Component {
 
                         <div className='conten-c'>
                             <p>单据日期：{this.state.quan.docdate}</p>
-                            <p>申请数量：{this.state.quan.statusname}</p>
+                            <p>申请数量：{this.state.sum}</p>
                             <p>单据状态：<span style={{ color: "#ed5f21" }}>{this.state.quan.statusname}</span></p>
                         </div>
 
@@ -103,7 +124,9 @@ export default class ApplyOrderx extends Component {
                         </div>
                         <div className='yuan'>9</div>
                         <div className='foot_conton'></div>
-                        <div className='right'>提交</div>
+                        <div className='right' style={{ background: this.state.quan.statusname === "提交成功" ? "#B4B4B4" : '' }}
+                        onClick={()=>{this.props.history.push('/sqcgCategory')}}
+                        >提交</div>
 
                     </div>
                 </div>
@@ -283,7 +306,7 @@ const ApplyOrderxStyle = styled.div`
 }
 input::-webkit-input-placeholder {
     color: #c9c9c9;
-    font-size:.4rem;
+    font-size:.35rem;
 }
 .img{
     width: .8rem;  
@@ -298,6 +321,7 @@ input::-webkit-input-placeholder {
 }
     
 .input{
+    font-size:.35rem;
     border:none;
     width:8.3rem;
     margin-top:.1rem;

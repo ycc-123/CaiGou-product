@@ -16,6 +16,7 @@ import LossReportf from 'views/LossReportf/LossReportf'
 import ApplyOrder from 'views/ApplyOrder/ApplyOrder'
 import ApplyOrderx from 'views/ApplyOrderx/ApplyOrderx'
 import category from 'views/category/Category'
+import Sqcgcategory from 'views/sqcgCategory/Category'
 import Liebiao from 'views/caigoudanmx/liebiao'
 import Mingxi from 'views/caigoudanmx/mingxi'
 import Youhuimxb from 'views/kucundan/stockList/youhuimxb'
@@ -33,6 +34,7 @@ const AppRouter = () => {
         <Route path='/home' exact component={Home} ></Route>
         <Route path='/' exact component={Home} ></Route>
         <Route path='/category/:id' exact component={category} ></Route>
+        <Route path='/Sqcgcategory' exact component={Sqcgcategory} ></Route>
         <Route path='/ApplyOrderx/:id' exact component={ApplyOrderx} ></Route>
         <Route path='/ApplyOrder' exact component={ApplyOrder} ></Route>
         <Route path='/LossReportf' exact component={LossReportf} ></Route>

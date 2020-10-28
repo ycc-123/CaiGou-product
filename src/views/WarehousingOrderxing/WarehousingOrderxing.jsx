@@ -417,7 +417,7 @@ const WarehousingOrderxingStyle = styled.div`
 }
 input::-webkit-input-placeholder {
     color: #c9c9c9;
-    font-size:.4rem;
+    font-size:.35rem;
 }
 .img{
     width: .8rem;  
@@ -432,6 +432,7 @@ input::-webkit-input-placeholder {
 }
     
 .input{
+    font-size:.35rem;
     border:none;
     width:8.3rem;
     margin-top:.1rem;

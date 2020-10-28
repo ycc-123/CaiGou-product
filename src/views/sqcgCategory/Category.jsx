@@ -138,8 +138,8 @@ class Category extends Component {
 
             <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
 
-            <div className='foot_conton' onClick={() => { this.mingxi() }}>总额：
-                    <span>{this.state.price ? this.state.price : 0}</span></div>
+            <div className='foot_conton' onClick={() => { this.mingxi() }}>
+                   </div>
 
             {/* </div> */}
 

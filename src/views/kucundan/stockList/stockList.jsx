@@ -140,6 +140,7 @@ export default class stockList extends Component {
     erjifenlei(v){
         this.setState({
             erjifenlei:v.id,
+            yikey:v.id,
             ekey:v.id
         })
     }
@@ -154,7 +155,7 @@ export default class stockList extends Component {
                 uid: "2271",
                 warehouseid:this.state.cankuID,
                 // categoryid:this.state.panduan===false? this.state.yikey : this.state.erjifenlei 
-                categoryid:this.state.erjifenlei?  this.state.erjifenlei: this.state.yikey 
+                categoryid:this.state.yikey 
 
             }
         }).then((res) => {
@@ -435,7 +436,7 @@ const StockListStyle = styled.div`
 }
 input::-webkit-input-placeholder {
     color: #c9c9c9;
-    fontsize:.4rem;
+    font-size:.35rem;
 }
 .img{
     width: .8rem;  
@@ -450,6 +451,7 @@ input::-webkit-input-placeholder {
 }
     
 .input{
+    font-size:.35rem;
     border:none;
     width:8.3rem;
     margin-top:.1rem;

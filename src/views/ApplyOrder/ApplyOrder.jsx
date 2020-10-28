@@ -64,7 +64,7 @@ export default class ApplyOrder extends Component {
             <ApplyOrderStyle>
                 <div style={{ width: "100%" }}>
                     <div className='search'>
-                        <input type="search" className='input' placeholder="请输入采购申请单号1" name="inputSearch" 
+                        <input type="search" className='input' placeholder="请输入采购申请单号" name="inputSearch" 
                                     onChange={this.inputChange.bind(this)}
                                     value={this.state.inputSearch}/>
                         <div className='img' onClick={()=>{this.search()}}>
@@ -90,7 +90,9 @@ export default class ApplyOrder extends Component {
                                                 <p>单据日期：{v.docdate}</p>
                                                 <p>申请数量：{v.totalnum}</p>
                                             </div>
-                                            <div className='btn_sh' onClick={() => { this.props.history.push('/ApplyOrderx') }}>提交</div>
+                                            <div className='btn_sh' onClick={() => { }}
+                                            style={{display:v.statusname==="提交成功"?"none":''}}
+                                            >提交</div>
                                         </div>
                                     </div>
                                 )
@@ -173,7 +175,7 @@ const ApplyOrderStyle = styled.div`
 }
 input::-webkit-input-placeholder {
     color: #c9c9c9;
-    fontsize:.4rem;
+    font-size:.35rem;
 }
 .img{
     width: .8rem;  
@@ -188,6 +190,7 @@ input::-webkit-input-placeholder {
 }
     
 .input{
+    font-size:.35rem;
     border:none;
     width:8.3rem;
     margin-top:.1rem;

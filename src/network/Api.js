@@ -192,3 +192,15 @@ export function getPurchaseApplyDetail(config) {
   })
 
 }
+
+
+// 提交采购申请单
+export function createPurchaseApply(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+
+}
