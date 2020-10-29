@@ -1,16 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import { withRouter } from 'react-router-dom'
-
 import CategoryLeftItem from './CategoryLeftItem'
 import CategoryRight from './CategoryRight'
-// import CategoryTabBar from './CategoryTabBar'
-
-
 import BetterScroll from 'common/betterScroll/BetterScroll'
 
-// import { _categoryLeft, _categoryRight } from 'network/category'
-
-// import { store } from 'store/index'
 
 class CategoryLeft extends Component {
   constructor(props) {
@@ -38,11 +31,9 @@ class CategoryLeft extends Component {
 
     if (title.length !== 0 && title[defaultIndex].goods.length !== 0) {
       title[defaultIndex].goods.forEach(item => {
-        // 查找购物车商品是否和state的某个goods相等
         let newGoods = cartGoods.find(cartItem => {
           return cartItem.sid === item.id
         })
-        // console.log(newGoods)
         if (newGoods) {
           item.num = newGoods.num
         } else {
@@ -108,10 +99,6 @@ class CategoryLeft extends Component {
       })
     }
   }
-  /* componentWillUnmount() {
-    // 取消订阅者模式
-    this.cancelSub()
-  } */
 
   componentDidMount = () => {
     _categoryLeft().then(res => {
@@ -125,10 +112,6 @@ class CategoryLeft extends Component {
         }
       }
       _categoryRight(right_config).then(res1 => {
-        // let search = window.location.search
-        // let newUrl = window.location.href.replace(search, search + `&cid=${right_config.data.cid}`)
-        // window.history.pushState(null, null, newUrl)
-
         let title = (res.data && res.data.data) || []
         title[0].goods = (res1.data && res1.data.data && res1.data.data.list) || []
         this.setState({
@@ -139,10 +122,6 @@ class CategoryLeft extends Component {
       })
     })
   }
-
-  /*  componentDidUpdate = () => {
-     this.refs.scroll.BScroll.refresh()
-   } */
 }
 
 

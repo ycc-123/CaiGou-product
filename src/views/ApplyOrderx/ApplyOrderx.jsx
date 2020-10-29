@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseApplyDetail } from 'network/Api'
-import { SearchBar, Toast } from 'antd-mobile';
-import BetterScroll from 'common/betterScroll/BetterScroll'
+import {  Toast } from 'antd-mobile';
+// import BetterScroll from 'common/betterScroll/BetterScroll'
 import { store } from "store/index";
 export default class ApplyOrderx extends Component {
     constructor() {
@@ -29,7 +29,8 @@ export default class ApplyOrderx extends Component {
                 res.data.data.item.map((v, k) => {
                     console.log(v, k)
                     aa = v.goodsnum
-                    arr.push(aa);
+                   return arr.push(aa);
+                    
                 })
                 console.log(arr)
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseList } from 'network/Api'
-import { SearchBar, Toast } from 'antd-mobile';
+import {  Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiao'
 import { setTitle } from 'commons/utils'
@@ -129,8 +129,9 @@ export default class PurchaseOrder extends Component {
                     data: [...this.state.data, ...res.data.data.data],
                     loadingMore: false
                 }, () => {
+                    let page=this.state.page
                     this.setState({
-                        page: this.state.page += 1
+                        page: page += 1
                     })
 
                     loading = false

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseDetail, changePurchaseStatus ,submitPurchase} from 'network/Api'
-import { SearchBar, Toast } from 'antd-mobile';
+import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { setTitle } from 'commons/utils'
 import { store } from "store/index";
@@ -73,14 +73,14 @@ export default class PurchaseOrderDetailed extends Component {
         })
     }
     shengHe(){
-        let itemData = [{
-            amount:3,
-            barcodeid:1988,
-            barcode:"火龙果，芒果，瓜类0002",
-            gnum:3,
-            num:3,
-            price:1
-        }]
+        // let itemData = [{
+        //     amount:3,
+        //     barcodeid:1988,
+        //     barcode:"火龙果，芒果，瓜类0002",
+        //     gnum:3,
+        //     num:3,
+        //     price:1
+        // }]
         let purchaseData={subtotal:8,snum:8}
         if(this.state.purchaseDetail.statusname==="待提交"){
             submitPurchase({

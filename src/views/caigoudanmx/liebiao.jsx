@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseList } from 'network/Api'
-import { Toast } from 'antd-mobile';
-import BetterScroll from 'common/betterScroll/BetterScroll'
+// import { getPurchaseList } from 'network/Api'
+// import { Toast } from 'antd-mobile';
+// import BetterScroll from 'common/betterScroll/BetterScroll'
 
 
 export default class Liebiao extends Component {

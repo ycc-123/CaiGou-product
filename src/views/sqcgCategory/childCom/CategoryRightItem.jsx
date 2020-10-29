@@ -25,7 +25,7 @@ class CategoryRightgoods extends Component {
   }
 
   render() {
-    const { goods, ys, kc } = this.props
+    const { goods } = this.props
     console.log(goods)
 
     return (
@@ -55,15 +55,6 @@ class CategoryRightgoods extends Component {
                 },
               ]
               )}
-              //   (
-              //   '添加',
-              //   '请填写采购数量与单价',
-              //   (login, password) => this.zjian(login, password,goods),
-              //   'login-password',
-              //   null,
-              //   ['请填写采购数量', '请填写采购单价'],
-              // )}
-              // visible={false}
             >111111</Button>
             {
               this.state.login?<div className='category-goods-img' style={{textAlign:"center",width:"2rem",height:".5rem",marginTop: ".8rem",marginLeft: "4rem",color:"#d54343",fontSize:".4rem"}}>{this.state.login}</div>:

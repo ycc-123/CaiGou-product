@@ -25,7 +25,7 @@ class CategoryRightgoods extends Component {
   }
 
   render() {
-    const { goods, ys, kc } = this.props
+    const { goods} = this.props
     console.log(goods)
 
     return (

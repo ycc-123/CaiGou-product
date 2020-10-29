@@ -1,21 +1,13 @@
 import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
-
 import BetterScroll from 'common/betterScroll/BetterScroll'
-// import TabBar from 'common/tabBar/TabBar'
 import CategoryLeftItem from './childCom/CategoryLeftItem'
 import CategoryRight from './childCom/CategoryRight'
-// import CategoryTabBar from './childCom/CategoryTabBar'
-
-// import { getQueryString } from 'commons/AuthFunction'
 import { setTitle } from 'commons/utils'
-
 import { store } from 'store/index'
 import { getProductCategoryAll, searchProduct } from 'network/Api'
-import { _categoryLeft, _categoryRight } from 'network/category'
-
+import {  _categoryRight } from 'network/category'
 import { Toast } from 'antd-mobile';
-import mingxi from '../caigoudanmx/mingxi'
 
 const scollConfig = {
   probeType: 1
@@ -29,15 +21,11 @@ const scrollStyle = {
 class Category extends Component {
   constructor(props) {
     super(props)
-    // props.cacheLifecycles.didCache(this.componentDidCache)
-    // props.cacheLifecycles.didRecover(this.componentDidRecover)
     this.state = {
       indexId:'',
       value: [],
       title: [],
       goods: [],
-      // tie: [{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"}
-      // ,{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"},{name:"苹果类"},{name:"梨类"},{name:"瓜果类"},{name:"核果类"}],
       defaultIndex: 0,
       type: 'goods',
       id: [],
@@ -85,8 +73,8 @@ class Category extends Component {
     })
   }
   render() {
-    const { title, defaultIndex, goods, ys, kc, type } = this.state
-    const { cartGoods } = store.getState()
+    const { title, type } = this.state
+    // const { cartGoods } = store.getState()
     console.log(this.props.match.params.id)
     let ida = this.props.match.params.id
     return (
@@ -119,18 +107,9 @@ class Category extends Component {
             </div>
               <CategoryRight goodsList={this.state.goods} onRef={this.onRef} id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />
             </Fragment> : <Fragment>
-                {/* {title.length !== 0 && <CategoryTabBar title={title} index={defaultIndex} changeActive={this.onChangeActive} goodsList={title[defaultIndex].goods} ys={ys} kc={kc} />} */}
               </Fragment>}
-            {/* {
-            title.length !== 0 && title[defaultIndex].goods.length === 0 && <div className='wutu' style={{ color: 'white' }}>
-              <img style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '2rem', height: '' }} src='https://res.lexiangpingou.cn/images/vip/fengleiwu.png' alt="" />
-              <p style={{ position: 'absolute', fontSize: '.32rem', top: '60%', left: '50%', transform: 'translate(-50%, 0)', }}>商家正在努力上新中</p>
-            </div>
-          } */}
           </div>
-          {/* <TabBar /> */}
           <div className='foot'>
-            {/* <div onClick={()=>{console.log(111)}}> */}
             <div className='left' onClick={() => { this.mingxi() }}>
               <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
             </div>
@@ -139,9 +118,6 @@ class Category extends Component {
 
             <div className='foot_conton' onClick={() => { this.mingxi() }}>
                    </div>
-
-            {/* </div> */}
-
             <div className='right' onClick={this.click}>提交</div>
 
           </div>
@@ -201,7 +177,7 @@ class Category extends Component {
 
     // this.refs.scroll.BScroll.refresh()
     setTitle('新建采购单')
-    const { appConfig } = store.getState()
+    // const { appConfig } = store.getState()
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
@@ -220,8 +196,6 @@ class Category extends Component {
             uniacid: store.getState().uniacid,
             uid: "2271",
             categoryid: Id[0].id,
-            // code:this.state.value[index].code,
-            // name:this.state.title[index].name
           }
         }).then(res => {
           console.log(res.data.msg)
@@ -257,8 +231,6 @@ class Category extends Component {
         uniacid: store.getState().uniacid,
         uid: "2271",
         categoryid: this.state.id[index].id,
-        // code:this.state.value[index].code,
-        // name:this.state.title[index].name
       }
     }).then(res => {
       console.log(res.data.msg)
@@ -274,12 +246,6 @@ class Category extends Component {
         Toast.fail(res.data.msg, 2)
       }
     })
-
-
-
-
-
-
 
 
 

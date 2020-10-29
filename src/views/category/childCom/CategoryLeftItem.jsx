@@ -14,7 +14,6 @@ class CategoryLeftItem extends Component {
     return (
       <Fragment>
         <li className={`category-title ${this.props.active ? 'category-title-active' : ' '}`}
-          // style={{ paddingLeft: this.props.active ? '.1rem' : '.23rem' }}
           ref='li' onClick={() => { this.getGoodsData(index, item) }}>
           {item.name}
         </li>

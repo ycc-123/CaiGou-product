@@ -276,9 +276,11 @@ export default class Youhuimxb extends Component {
                     linshou: [...this.state.linshou, ...res.data.data.data],
                     loadingMore: false
                 }, () => {
+                    let page=this.state.page
                     this.setState({
-                        page: this.state.page += 1
+                        page: page += 1
                     })
+
 
                     loading = false
                     this.refs.scroll.BScroll.finishPullUp()

@@ -72,9 +72,6 @@ export default class WarehousingOrder extends Component {
         const scrollConfig = {
             probeType: 1
         }
-        const scrollstyle={
-            
-        }
         return (
             <WarehousingOrderStyle>
                 
@@ -124,20 +121,16 @@ export default class WarehousingOrder extends Component {
                 page:this.state.page
               } }).then(res => {
                 console.log(res.data.data.data)
-
-                // 如果长度不等于得时候加载 那么是到底了
                 if (res.data.data.data.length < this.state.limit) {
                     this.isLoadMore = false
-                    /* let bottomTip = document.querySelector('.bottom-tip')
-                    bottomTip.style.visibility = 'visible'
-                    bottomTip.innerHTML = '商品已经全部加载完成' */
                 }
                 this.setState({
                     data: [...this.state.data, ...res.data.data.data],
                     loadingMore: false
                 }, () => {
+                    let page=this.state.page
                     this.setState({
-                        page: this.state.page += 1
+                        page: page += 1
                     })
 
                     loading = false
@@ -146,9 +139,6 @@ export default class WarehousingOrder extends Component {
                 })
             })
         } else {
-            /* let bottomTip = document.querySelector('.bottom-tip')
-            bottomTip.style.visibility = 'visible'
-            bottomTip.innerHTML = '商品已经全部加载完成' */
         }
     }
 

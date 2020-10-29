@@ -28,7 +28,7 @@ class CategoryRight extends Component {
       bottom: '0',
       width: '7.5rem',
     }
-    const { id,goodsList, ys, kc } = this.props
+    const { goodsList } = this.props
     console.log(this.props)
     return (
       <div className='categoryRight'>
@@ -39,7 +39,6 @@ class CategoryRight extends Component {
                 <CategoryRightItem key={item.id + index} goods={item} parent={ this }/>
               )
             })}
-
           </BetterScroll>
         </ul>
       </div>
@@ -50,7 +49,6 @@ class CategoryRight extends Component {
     let price=Number(this.state.price)+Number(login)*Number(password)
    this.props.aa(num,price)
     console.log(num,price,login, password)
-    // 很奇怪这里的result就是子组件那bind的第一个参数this，msg是第二个参数
     let arr  = []
     arr.push(ww);
 
@@ -76,9 +74,6 @@ class CategoryRight extends Component {
     let num =this.state.login
     let price =this.state.password
     console.log(this.props.id)
-    // this.child.myName()
-    // let itemData=[]
-    // let aa=''
     console.log(num.length)
 
     let aa = {}
@@ -94,36 +89,12 @@ class CategoryRight extends Component {
           num:num[k],
           price:price[k]
         }
-        arr.push(aa);
+       return arr.push(aa);
     })
 
     console.log(arr)
     let itemData=arr
     console.log(itemData)
-    // let itemData=[{
-    //   amount:num[0]*price[0],
-    //   barcodeid:this.state.goods[0].barcodeid,
-    //   barcode:this.state.goods[0].code,
-    //   gnum:num[0],
-    //   num:num[0],
-    //   price:price[0]
-    //   },
-    //   {
-    //     amount:num[1]*price[1],
-    //     barcodeid:this.state.goods[1].barcodeid,
-    //     barcode:this.state.goods[1].code,
-    //     gnum:num[1],
-    //     num:num[1],
-    //     price:price[1]
-    //     },
-    //     {
-    //       amount:num[aa-1!==-1?aa:0]*price[num.length-1!==-1?num.length:0],
-    //       barcodeid:this.state.goods[num.length-1!==-1?num.length:0].barcodeid,
-    //       barcode:this.state.goods[num.length-1!==-1?num.length:0].code,
-    //       gnum:num[num.length-1!==-1?num.length:0],
-    //       num:num[num.length-1!==-1?num.length:0],
-    //       price:price[num.length-1!==-1?num.length:0]
-    //       }]
     let purchaseData={
       subtotal:this.state.price,
       snum:this.state.num
@@ -151,15 +122,11 @@ class CategoryRight extends Component {
   }
 
   shouldComponentUpdate = (nextProps, nextState) => {
-    // console.log(this.props)
     return JSON.stringify(this.props) !== JSON.stringify(nextProps)
   }
 
 
   componentDidUpdate = () => {
-    // 默认每次加载x=0，y=0 不然会有bug
-    // console.log(this)
-    /* console.log('进来了') */
     this.refs.scroll.BScroll.scrollTo(0, 0)
     this.refs.scroll.BScroll.refresh()
 

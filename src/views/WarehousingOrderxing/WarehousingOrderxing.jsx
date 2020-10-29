@@ -7,14 +7,6 @@ import Tiao from './Tiao'
 import { setTitle } from 'commons/utils'
 import { store } from "store/index";
 
-// function Tiao(value) {
-//     console.log(value)
-//     let tiao = value.item
-//     return (
-
-//     )
-// }
-
 export default class WarehousingOrderxing extends Component {
     constructor() {
         super()
@@ -26,9 +18,8 @@ export default class WarehousingOrderxing extends Component {
             goods: [],
             num: '',
             count: '',
-            input:[],
-            inputSearch:''
-            // id: this.props.match.params.id,
+            input: [],
+            inputSearch: ''
         }
     }
     componentDidMount() {
@@ -49,7 +40,7 @@ export default class WarehousingOrderxing extends Component {
                     count: res.data.data.count,
                     purchaseDetail: res.data.data.purchaseDeliveryDetail,
                     purchaseItem: res.data.data.purchaseDeliveryItem
-                },()=>{
+                }, () => {
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
@@ -66,91 +57,61 @@ export default class WarehousingOrderxing extends Component {
             console.log(v, k)
             aa = {
                 id: this.state.goods[k].id,
-                barcodeid:this.state.goods[k].barcodeid,
-                diffnum:this.state.goods[k].price-this.state.input[k],
+                barcodeid: this.state.goods[k].barcodeid,
+                diffnum: this.state.goods[k].price - this.state.input[k],
                 innum: this.state.input[k],
                 goodsid: this.state.goods[k].goodsid
+
             }
-            arr.push(aa);
+            return arr.push(aa);
         })
-        let itemData=arr
+        let itemData = arr
         console.log(itemData)
-        // let itemData = [{
-        //     id: this.state.purchaseDetail.id,
-        //     barcodeid: 1988,
-        //     // diffnum:dd[0].sa,
-        //     innum: 3,
-        //     goodsid: 4014
-        // }]
         let deliveryData = {
             id: this.props.match.params.id,
             snum: this.state.count,
             in_out_num: this.state.num
         }
-        console.log(this.state.goods, this.state.num,this.state.input)
-        // if (this.state.purchaseDetail.statusname === "待提交") {
-            submitPurchaseDelivery({
-                action: 'submitPurchaseDelivery', data: {
-                    uniacid: store.getState().uniacid,
-                    uid: "2271",
-                    itemData: itemData,
-                    deliveryData: deliveryData,
-                    type: "1",
-                    status: "4"
-                }
-            }).then((res) => {
-                console.log(res.data)
-                if (res.data.status === 4001) {
-                    Toast.success(res.data.msg, 2)
-                } else {
-                    Toast.fail(res.data.msg, 2)
-                }
-            })
-        // } else {
-        //     console.log(this.props.match.params.id.split())
-        //     let id = this.props.match.params.id.split()
-        //     submitPurchaseDelivery({
-        //         action: 'submitPurchaseDelivery', data: {
-        //             uniacid: "53",
-        //             uid: "2271",
-        //             itemData: itemData,
-        //             deliveryData: deliveryData,
-        //             type: "1",
-        //             status: "4"
-        //         }
-        //     }).then((res) => {
-        //         console.log(res.data)
-        //         if (res.data.status === 4001) {
-        //             Toast.success(res.data.msg, 2)
-        //         } else {
-        //             Toast.fail(res.data.msg, 2)
-        //         }
-        //     })
-        // }
+        console.log(this.state.goods, this.state.num, this.state.input)
+        submitPurchaseDelivery({
+            action: 'submitPurchaseDelivery', data: {
+                uniacid: store.getState().uniacid,
+                uid: "2271",
+                itemData: itemData,
+                deliveryData: deliveryData,
+                type: "1",
+                status: "4"
+            }
+        }).then((res) => {
+            console.log(res.data)
+            if (res.data.status === 4001) {
+                Toast.success(res.data.msg, 2)
+            } else {
+                Toast.fail(res.data.msg, 2)
+            }
+        })
     }
     getChildrenMsg = (result, msg) => {
-        // console.log(result, msg)
-        let input=[]
+        let input = []
         input.push(result)
 
         let ww = []
         ww.push(msg)
         let arr = Number(result) + Number(this.state.arr)
-        // console.log(arr)
         this.setState({
             arr,
             goods: [...this.state.goods, ...ww],
             num: arr,
-            input:[...this.state.input, ...input]
+            input: [...this.state.input, ...input]
         })
     }
-    seach(){
+    seach() {
         getPurchaseDeliveryDetail({
             action: 'getPurchaseDeliveryDetail', data: {
                 uniacid: store.getState().uniacid,
                 uid: "2271",
                 deliveryId: this.props.match.params.id,
-                search:this.state.inputSearch,
+                search: this.state.inputSearch,
                 type: "1",
                 limit: "30",
                 page: "1"
@@ -168,12 +129,12 @@ export default class WarehousingOrderxing extends Component {
             }
         })
     }
-    inputChange(e){
+    inputChange(e) {
         console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
-        
+
     }
     render() {
         const scrollConfig = {
@@ -191,10 +152,10 @@ export default class WarehousingOrderxing extends Component {
             <WarehousingOrderxingStyle>
                 <div>
                     <div className='search'>
-                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch" 
-                                    onChange={this.inputChange.bind(this)}
-                                    value={this.state.inputSearch}/>
-                        <div className='img' onClick={()=>{this.seach()}}>
+                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
+                            onChange={this.inputChange.bind(this)}
+                            value={this.state.inputSearch} />
+                        <div className='img' onClick={() => { this.seach() }}>
                             <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
                         </div>
                     </div>
@@ -217,22 +178,20 @@ export default class WarehousingOrderxing extends Component {
                             采购备注：{this.state.purchaseDetail.remark}
                         </div>
                     </div>
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"5.8rem",bottom:"1.6rem"}}>
-                    {
-                        this.state.purchaseItem.map((value, key) => {
-                            // console.log(value)
-                            return (
-                                <Tiao item={value} key={key} parent={this}></Tiao>
-                            )
-                        })
-                    }
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "5.8rem", bottom: "1.6rem" }}>
+                        {
+                            this.state.purchaseItem.map((value, key) => {
+                                return (
+                                    <Tiao item={value} key={key} parent={this}></Tiao>
+                                )
+                            })
+                        }
                     </BetterScroll>
                     <div className='foot'>
                         <div className='left'>
                             <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
                         </div>
                         <div className='yuan'>0</div>
-                        {/* <div className='foot_conton'>总额：<span>0</span></div> */}
                         <div style={{ background: this.state.purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }} className='right' onClick={() => { this.shengHe() }}>{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
 
                     </div>

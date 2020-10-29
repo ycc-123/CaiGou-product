@@ -214,10 +214,10 @@ export default class stockList extends Component {
         const scrollConfig = {
             probeType: 1
         }
-        const scrollstyle={
-            // position:"absolute",
-            top:"2rem"
-        }
+        // const scrollstyle={
+        //     // position:"absolute",
+        //     top:"2rem"
+        // }
         console.log(this.state.goods)
         return (
             <StockListStyle>

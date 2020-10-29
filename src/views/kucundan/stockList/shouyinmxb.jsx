@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getRetailList } from 'network/Api'
-import { Toast } from 'antd-mobile';
-import BetterScroll from 'common/betterScroll/BetterScroll'
+// import { Toast } from 'antd-mobile';
+// import BetterScroll from 'common/betterScroll/BetterScroll'
 import { setTitle } from 'commons/utils'
 import { store } from "store/index";
 export default class Shouyinmxb extends Component {
@@ -18,10 +18,6 @@ export default class Shouyinmxb extends Component {
             action: 'getRetailList', data: {
                 uniacid: store.getState().uniacid,
                 uid: "2271",
-                // starttime:"2020-10-1 13:41:08",
-                // endtime:"2020-10-24 13:41:08",
-                // createid:'59',
-                // store_id:"38",
                 limit: "50",
                 page: "1"
             }
@@ -30,7 +26,6 @@ export default class Shouyinmxb extends Component {
             this.setState({
                 linshou: res.data.data.data
             }, () => {
-                // this.refs.scroll.BScroll.refresh()
             })
         })
     }
@@ -50,7 +45,6 @@ export default class Shouyinmxb extends Component {
                                                     <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
                                                 </p>
                                                 <div className='caigoudanhao'>{v.orderno}</div>
-                                                {/* <div className='zuantai'></div> */}
                                             </div>
                                             <div className='dan-footer'>
                                                 <p>单据日期：{v.createtime}</p>
@@ -88,60 +82,13 @@ export default class Shouyinmxb extends Component {
                                             )
                                         })
                                     }
-
-
-
                                 </div>
                             )
                         } else {
-                            // console.log(222)
+                            return ''
                         }
                     })
                 }
-                {/* <div className='bj'>
-                    <div className='caigoudan'>
-                        <div className='dan'>
-                            <div className='dan-top'>
-                                <p>
-                                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
-                                </p>
-                                <div className='caigoudanhao'>111111111</div> */}
-                {/* <div className='zuantai'></div> */}
-                {/* </div>
-                            <div className='dan-footer'>
-                                <p>单据日期：11111</p>
-                                <p>所属商家：111111111111</p>
-                                <p>收银员：111111111111</p>
-                                <p>支付方式：111111111111</p>
-                                <p>订单状态：11111</p>
-                                <p>原价总额：111111111111</p>
-                                <p>优惠金额：111111111111</p>
-                                <p>实收金额：111111111111</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <ul className='title'>
-                            <li className='yuanjia'>原价</li>
-                            <li className='shoujia'>售价</li>
-                            <li className='count'>数量</li>
-                            <li className='xiaoji'>小计</li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <div className='name'>撒大家科技打卡记录的就爱看</div>
-                        <ul className='title' style={{ color: "#1a1a1a", height: ".8rem" }}>
-                            <li className='yuanjia'>999.99</li>
-                            <li className='shoujia'>888.88</li>
-                            <li className='count'>999</li>
-                            <li className='xiaoji'>9999</li>
-                        </ul>
-                    </div>
-
-
-                </div> */}
             </ShouyinmxbStyle>
         )
     }
