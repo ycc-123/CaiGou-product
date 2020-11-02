@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseApplyDetail } from 'network/Api'
+import { getPurchaseApplyDetail ,createPurchaseApply} from 'network/Api'
 import {  Toast } from 'antd-mobile';
 // import BetterScroll from 'common/betterScroll/BetterScroll'
 import { store } from "store/index";
@@ -10,14 +10,15 @@ export default class ApplyOrderx extends Component {
         this.state = {
             quan: [],
             tiao: [],
-            sum:''
+            sum:'',
+            remark:''
         }
     }
     componentDidMount() {
         getPurchaseApplyDetail({
             action: 'getPurchaseApplyDetail', data: {
                 uniacid: store.getState().uniacid,
-                uid: "2271",
+                uid: store.getState().uid,
                 id: this.props.match.params.id
             }
         }).then((res) => {
@@ -45,6 +46,7 @@ export default class ApplyOrderx extends Component {
 
                 this.setState({
                     quan: res.data.data,
+                    remark:res.data.data.remark,
                     tiao: res.data.data.item ? res.data.data.item : [],
                     sum
                 })
@@ -52,6 +54,44 @@ export default class ApplyOrderx extends Component {
                 Toast.fail(res.data.msg, 2)
             }
         })
+    }
+
+    tijiao(){
+        console.log(this.state.remark)
+        let aa = {}
+            let arr = []
+            this.state.tiao.map((v, k) => {
+                console.log(v, k)
+                aa = {
+                    barcode: v.barcode,
+                    gnum: v.goodsnum,
+                    name: v.goodsname,
+                    // innum: this.state.input[k],
+                }
+                return arr.push(aa);
+            })
+            console.log(arr)
+            let itemData=arr
+
+
+
+        createPurchaseApply({
+            action: 'createPurchaseApply', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                totalnum: this.state.tiao.length,
+                remark: this.state.remark,
+                itemData: itemData,
+            }
+        }).then((res) => {
+            console.log(res)
+            if(res.data.status===4001){
+                Toast.success(res.data.msg,1)
+            }else{
+                Toast.fail(res.data.msg,1)
+            }
+        })
+
     }
     render() {
         console.log(this.state.quan.item)
@@ -88,7 +128,9 @@ export default class ApplyOrderx extends Component {
                         this.state.tiao.map((v, k) => {
                             return (
                                 <div className='tiao'>
-                                    <img className='t-img-l' src="" alt="" />
+                                    {/* <img className='t-img-l' src="" alt="" /> */}
+            <img className='t-img-l' src={v.image?v.image:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+
                                     <ul className='wen-zi'>
                                         <li className='wen-zi-t'>
                                             <div className='name'>{v.goodsname}</div>
@@ -121,12 +163,13 @@ export default class ApplyOrderx extends Component {
 
                     <div className='foot'>
                         <div className='left'>
+
                             <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
                         </div>
-                        <div className='yuan'>9</div>
+                        <div className='yuan'>0</div>
                         <div className='foot_conton'></div>
                         <div className='right' style={{ background: this.state.quan.statusname === "提交成功" ? "#B4B4B4" : '' }}
-                        onClick={()=>{this.props.history.push('/sqcgCategory')}}
+                        onClick={()=>{this.tijiao()}}
                         >提交</div>
 
                     </div>

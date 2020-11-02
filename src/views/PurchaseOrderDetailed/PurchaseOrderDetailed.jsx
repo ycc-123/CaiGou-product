@@ -1,16 +1,20 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseDetail, changePurchaseStatus ,submitPurchase} from 'network/Api'
-import { Toast } from 'antd-mobile';
+import { getPurchaseDetail, changePurchaseStatus, submitPurchase } from 'network/Api'
+import { Toast, Modal, Button} from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { setTitle } from 'commons/utils'
 import { store } from "store/index";
+
+const alert = Modal.alert;
 function Tiao(value) {
     console.log(value)
     let tiao = value.item
     return (
         <div className='tiao'>
-            <img className='t-img-l' src={tiao.image} alt="" />
+            {/* <img className='t-img-l' src={tiao.image} alt="" /> */}
+            <img className='t-img-l' src={tiao.image?tiao.image:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+
             <ul className='wen-zi'>
                 <li className='wen-zi-t'>
                     <div className='name'>{tiao.goods_name}</div>
@@ -32,7 +36,7 @@ export default class PurchaseOrderDetailed extends Component {
             id: this.props.match.params.id,
             data: [],
             purchaseItem: [],
-            goodsSearch:''
+            goodsSearch: ''
         }
     }
     componentDidUpdate = () => {
@@ -43,7 +47,7 @@ export default class PurchaseOrderDetailed extends Component {
         getPurchaseDetail({
             action: 'getPurchaseDetail', data: {
                 uniacid: store.getState().uniacid,
-                uid: "2271",
+                uid: store.getState().uid,
                 purchaseId: this.props.match.params.id,
                 type: "1",
                 limit: "30",
@@ -53,12 +57,12 @@ export default class PurchaseOrderDetailed extends Component {
             console.log(res.data)
             if (res.data.status === 4001) {
                 console.log(res.data.data.purchaseItem)
-                let count =res.data.data.count
+                let count = res.data.data.count
                 // 商品总价
 
                 // var subtotal = res.data.data.purchaseItem.map(o=>{return{subtotal:o.subtotal,gnum:o.gnum,num:o.gnum,price:o.price,goodsid:o.goodsid}});
                 // console.log(subtotal)
-             
+
 
                 this.setState({
                     purchaseDetail: res.data.data.purchaseDetail,
@@ -72,7 +76,7 @@ export default class PurchaseOrderDetailed extends Component {
             }
         })
     }
-    shengHe(){
+    shengHe() {
         // let itemData = [{
         //     amount:3,
         //     barcodeid:1988,
@@ -81,17 +85,17 @@ export default class PurchaseOrderDetailed extends Component {
         //     num:3,
         //     price:1
         // }]
-        let purchaseData={subtotal:8,snum:8}
-        if(this.state.purchaseDetail.statusname==="待提交"){
+        let purchaseData = { subtotal: 8, snum: 8 }
+        if (this.state.purchaseDetail.statusname === "待提交") {
             submitPurchase({
                 action: 'submitPurchase', data: {
                     uniacid: store.getState().uniacid,
-                    uid: "2271",
+                    uid: store.getState().uid,
                     purchaseId: this.props.match.params.id,
                     type: "1",
                     status: "2",
-                    itemData:[],
-                    purchaseData:purchaseData
+                    itemData: [],
+                    purchaseData: purchaseData
 
                 }
             }).then((res) => {
@@ -101,39 +105,39 @@ export default class PurchaseOrderDetailed extends Component {
                 } else {
                     Toast.fail(res.data.msg, 2)
                 }
-               
+
             })
 
-        }else{
-            console.log(this.props.match.params.id.split( ))
-        let id=this.props.match.params.id.split( )
-        changePurchaseStatus({
-            action: 'changePurchaseStatus', data: {
-                uniacid: store.getState().uniacid,
-                uid: "2271",
-                purchaseId_list: id,
-                type: "1",
-                status: "4"
-            }
-        }).then((res) => {
-            console.log(res.data)
-            if (res.data.status === 4001) {
-                Toast.success(res.data.msg, 2)
-            } else {
-                Toast.fail(res.data.msg, 2)
-            }
-        })
-    }
+        } else {
+            console.log(this.props.match.params.id.split())
+            let id = this.props.match.params.id.split()
+            changePurchaseStatus({
+                action: 'changePurchaseStatus', data: {
+                    uniacid: store.getState().uniacid,
+                    uid: store.getState().uid,
+                    purchaseId_list: id,
+                    type: "1",
+                    status: "4"
+                }
+            }).then((res) => {
+                console.log(res.data)
+                if (res.data.status === 4001) {
+                    Toast.success(res.data.msg, 2)
+                } else {
+                    Toast.fail(res.data.msg, 2)
+                }
+            })
+        }
     }
 
-    search(){
+    search() {
         console.log(this.state.goodsSearch)
         getPurchaseDetail({
             action: 'getPurchaseDetail', data: {
                 uniacid: store.getState().uniacid,
-                uid: "2271",
+                uid: store.getState().uid,
                 purchaseId: this.props.match.params.id,
-                search:this.state.goodsSearch,
+                search: this.state.goodsSearch,
                 type: "1",
                 limit: "30",
                 page: "1"
@@ -141,7 +145,7 @@ export default class PurchaseOrderDetailed extends Component {
         }).then((res) => {
             if (res.data.status === 4001) {
                 console.log(res.data.data.purchaseItem)
-                let count =res.data.data.count
+                let count = res.data.data.count
                 this.setState({
                     purchaseDetail: res.data.data.purchaseDetail,
                     purchaseItem: res.data.data.purchaseItem,
@@ -154,7 +158,7 @@ export default class PurchaseOrderDetailed extends Component {
             }
         })
     }
-    goodsChange(e){
+    goodsChange(e) {
         console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
@@ -164,22 +168,22 @@ export default class PurchaseOrderDetailed extends Component {
         const scrollConfig = {
             probeType: 1
         }
-        let Color=''
-        if(this.state.purchaseDetail.statusname==="审核成功"){
-            Color="#22a31b"
-        }else if(this.state.purchaseDetail.statusname==="待提交"){
-            Color="#d92929"
-        }else if(this.state.purchaseDetail.statusname==="待审核"){
-            Color="#ed5f21"
+        let Color = ''
+        if (this.state.purchaseDetail.statusname === "审核成功") {
+            Color = "#22a31b"
+        } else if (this.state.purchaseDetail.statusname === "待提交") {
+            Color = "#d92929"
+        } else if (this.state.purchaseDetail.statusname === "待审核") {
+            Color = "#ed5f21"
         }
         return (
             <PurchaseOrderDetailedStyle>
                 <div>
                     <div className='search'>
-                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="goodsSearch" 
-                                    onChange={this.goodsChange.bind(this)}
-                                    value={this.state.goodsSearch}/>
-                        <div className='img' onClick={()=>{this.search()}}>
+                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="goodsSearch"
+                            onChange={this.goodsChange.bind(this)}
+                            value={this.state.goodsSearch} />
+                        <div className='img' onClick={() => { this.search() }}>
                             <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
                         </div>
                     </div>
@@ -200,17 +204,17 @@ export default class PurchaseOrderDetailed extends Component {
 
                         <div className='footer'>
                             采购备注：{this.state.purchaseDetail.remark}
+                        </div>
                     </div>
-                    </div>
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"5.8rem",bottom:"1.6rem"}}>
-                    {
-                        this.state.purchaseItem.map((value, key) => {
-                            console.log(value)
-                            return (
-                                <Tiao item={value} key={key}></Tiao>
-                            )
-                        })
-                    }
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "5.8rem", bottom: "1.6rem" }}>
+                        {
+                            this.state.purchaseItem.map((value, key) => {
+                                console.log(value)
+                                return (
+                                    <Tiao item={value} key={key}></Tiao>
+                                )
+                            })
+                        }
                     </BetterScroll>
                     <div className='foot'>
                         <div className='left'>
@@ -218,8 +222,37 @@ export default class PurchaseOrderDetailed extends Component {
                         </div>
                         <div className='yuan'>0</div>
                         {/* <div className='foot_conton'>总额：<span>0</span></div> */}
-                        <div style={{background:this.state.purchaseDetail.statusname==="审核成功"?"#B4B4B4":''}} className='right' onClick={()=>{this.shengHe()}}>{this.state.purchaseDetail.statusname==="待提交"?"提交":"审核"}</div>
+                        <div style={{ background: this.state.purchaseDetail.statusname === "审核成功" ? "#B4B4B4" : '' }}
+                            className='right'
+                            onClick={() => { this.shengHe() }}
+                        >{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
 
+                        <Button
+                        style={{display:this.state.purchaseDetail.statusname === "待提交" ? "none" : "block", width:"3rem",height:"2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
+                        className="btn_modal"
+                            onClick={() =>
+                                alert('审核', '是否确认审核采购单', [
+                                    { text: '取消', onPress: () => console.log('cancel') },
+                                    { text: '确定', onPress: () => this.shengHe() },
+                                ])
+                            }
+                        >
+                            confirm
+                        </Button>
+
+                        {/* <Button
+                            style={{ position: "absolute", top: ".3rem", left: "4.6rem", color: "transparent", background: "transparent" }}
+                            className="btn_modal"
+                            onClick={() => prompt(
+                                '添加',
+                                '请填写采购数量与单价',
+                                (login, password) => this.zjian(login, password, goods),
+                                'login-password',
+                                null,
+                                ['请填写采购数量', '请填写采购单价'],
+                            )}
+                            visible={false}
+                        >111111</Button> */}
                     </div>
                 </div>
             </PurchaseOrderDetailedStyle>
@@ -227,6 +260,9 @@ export default class PurchaseOrderDetailed extends Component {
     }
 }
 const PurchaseOrderDetailedStyle = styled.div`
+.am-button::before{
+    border:none !important;
+  }
 .yuan{
     // padding-top:.1rem;
     text-align:center;

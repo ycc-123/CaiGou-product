@@ -26,7 +26,8 @@ export default class Liebiao extends Component {
                             </li>
                             <li className='wen-zi-f'>
                                 <div>￥：3333元/盒</div>
-                                <p><span>库存金额：</span>999</p>
+                                <p><span>库存金额：</span>99
+                                </p>
                             </li>
                         </ul>
                     </div>

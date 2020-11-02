@@ -17,9 +17,16 @@ export default class Tiao extends Component {
     }
     render() {
         let tiao = this.props.item
+        let rk=''
+        if(tiao.innum==="0.00"){
+            rk=tiao.gnum
+        }else{
+            rk=tiao.innum
+        }
         return (
             <div className='tiao' style={{position:"relative"}}>
-            <img className='t-img-l' src="" alt="" />
+            {/* <img className='t-img-l' src="" alt="" /> */}
+            <img className='t-img-l' src={tiao.image?tiao.image:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
             <ul className='wen-zi'>
                 <li className='wen-zi-t'>
                     <div className='name'>{tiao.goods_name}</div>
@@ -27,7 +34,7 @@ export default class Tiao extends Component {
                 </li>
                 <li className='wen-zi-f'>
                     <div>采购数量：{tiao.gnum}</div>
-                    <p>入库数量：<span>{this.state.value!==''?this.state.value:tiao.innum}</span></p>
+                    <p>入库数量：<span>{this.state.value!==''? this.state.value : rk}</span></p>
                     <Button
                         style={{ position: "absolute", left: "6.6rem", color: "transparent", background: "transparent",width:"9rem" }}
                         className="btn_modal"

@@ -56,7 +56,7 @@ class Category extends Component {
     searchProduct({
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
-        uid: "2271",
+        uid: store.getState().uid,
         categoryid: this.state.indexId,
         search:this.state.inputSearch
       }
@@ -189,7 +189,7 @@ class Category extends Component {
         searchProduct({
           action: 'searchProduct', data: {
             uniacid: store.getState().uniacid,
-            uid: "2271",
+            uid: store.getState().uid,
             categoryid: Id[0].id,
           }
         }).then(res => {
@@ -224,7 +224,7 @@ class Category extends Component {
     searchProduct({
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
-        uid: "2271",
+        uid: store.getState().uid,
         categoryid: this.state.id[index].id,
       }
     }).then(res => {

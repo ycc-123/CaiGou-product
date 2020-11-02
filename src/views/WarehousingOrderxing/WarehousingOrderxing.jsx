@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseDeliveryDetail, submitPurchaseDelivery } from 'network/Api'
-import { Toast } from 'antd-mobile';
+import { Toast, Modal, Button } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiao'
 import { setTitle } from 'commons/utils'
 import { store } from "store/index";
-
+const alert = Modal.alert;
 export default class WarehousingOrderxing extends Component {
     constructor() {
         super()
         this.state = {
+            result: [],
             arr: 0,
             data: {},
             purchaseDetail: [],
@@ -19,7 +20,8 @@ export default class WarehousingOrderxing extends Component {
             num: '',
             count: '',
             input: [],
-            inputSearch: ''
+            inputSearch: '',
+            supplier: []
         }
     }
     componentDidMount() {
@@ -27,16 +29,19 @@ export default class WarehousingOrderxing extends Component {
         getPurchaseDeliveryDetail({
             action: 'getPurchaseDeliveryDetail', data: {
                 uniacid: store.getState().uniacid,
-                uid: "2271",
+                uid: store.getState().uid,
                 deliveryId: this.props.match.params.id,
                 type: "1",
                 limit: "30",
                 page: "1"
             }
         }).then((res) => {
-            console.log(res.data.data.purchaseDeliveryItem)
+            // console.log(res.data.data.purchaseDeliveryItem)
             if (res.data.status === 4001) {
+                var supplier = res.data.data.purchaseDeliveryItem.map(o => { return { gnum: o.gnum } });
+                console.log(supplier)
                 this.setState({
+                    supplier,
                     count: res.data.data.count,
                     purchaseDetail: res.data.data.purchaseDeliveryDetail,
                     purchaseItem: res.data.data.purchaseDeliveryItem
@@ -49,67 +54,161 @@ export default class WarehousingOrderxing extends Component {
         })
     }
     shengHe() {
-        console.log(this.state.input)
-        let aa = {}
-        let arr = []
-
-        this.state.goods.map((v, k) => {
-            console.log(v, k)
-            aa = {
-                id: this.state.goods[k].id,
-                barcodeid: this.state.goods[k].barcodeid,
-                diffnum: this.state.goods[k].price - this.state.input[k],
-                innum: this.state.input[k],
-                goodsid: this.state.goods[k].goodsid
-
+        if (this.state.input.length === 0) {
+            // 默认
+            let aa = {}
+            let arr = []
+            this.state.purchaseItem.map((v, k) => {
+                aa = {
+                    id: this.state.purchaseItem[k].id,
+                    barcodeid: this.state.purchaseItem[k].barcodeid,
+                    diffnum: this.state.purchaseItem[k].price - this.state.purchaseItem[k].price,
+                    innum: this.state.purchaseItem[k].gnum,
+                    goodsid: this.state.purchaseItem[k].goodsid
+                }
+                return arr.push(aa);
+            })
+            let itemData = arr
+            let in_out_num = []
+            this.state.purchaseItem.map((v, k) => {
+                let innum = this.state.purchaseItem[k].gnum
+                return in_out_num.push(innum);
+            })
+            let sum = 0;
+            in_out_num.forEach(item => {
+                sum = Number(sum)  + parseInt(item)
+            })
+            let deliveryData = {
+                id: this.props.match.params.id,
+                snum: this.state.count,
+                in_out_num: sum
             }
-            return arr.push(aa);
-        })
-        let itemData = arr
-        console.log(itemData)
-        let deliveryData = {
-            id: this.props.match.params.id,
-            snum: this.state.count,
-            in_out_num: this.state.num
+            console.log("默认", deliveryData, itemData)
+            submitPurchaseDelivery({
+                    action: 'submitPurchaseDelivery', data: {
+                        uniacid: store.getState().uniacid,
+                        uid: store.getState().uid,
+                        itemData: itemData,
+                        deliveryData: deliveryData,
+                        type: "1",
+                        status: "4"
+                    }
+                }).then((res) => {
+                    console.log(res.data)
+                    if (res.data.status === 4001) {
+                        Toast.success(res.data.msg, 2)
+                    } else {
+                        Toast.fail(res.data.msg, 2)
+                    }
+                })
+        } else {
+            let aa = {}
+            let arr = []
+            this.state.goods.map((v, k) => {
+                console.log(v, k)
+                aa = {
+                    id: this.state.goods[k].id,
+                    barcodeid: this.state.goods[k].barcodeid,
+                    diffnum: this.state.goods[k].price - this.state.input[k],
+                    innum: this.state.input[k],
+                    goodsid: this.state.goods[k].goodsid
+                }
+                return arr.push(aa);
+            })
+            let itemData = arr
+            console.log(itemData)
+            let deliveryData = {
+                id: this.props.match.params.id,
+                snum: this.state.count,
+                in_out_num: this.state.num
+            }
+            console.log("22222", deliveryData, itemData)
+            submitPurchaseDelivery({
+                    action: 'submitPurchaseDelivery', data: {
+                        uniacid: store.getState().uniacid,
+                        uid: store.getState().uid,
+                        itemData: itemData,
+                        deliveryData: deliveryData,
+                        type: "1",
+                        status: "4"
+                    }
+                }).then((res) => {
+                    console.log(res.data)
+                    if (res.data.status === 4001) {
+                        Toast.success(res.data.msg, 2)
+                    } else {
+                        Toast.fail(res.data.msg, 2)
+                    }
+                })
         }
-        console.log(this.state.goods, this.state.num, this.state.input)
-        submitPurchaseDelivery({
-            action: 'submitPurchaseDelivery', data: {
-                uniacid: store.getState().uniacid,
-                uid: "2271",
-                itemData: itemData,
-                deliveryData: deliveryData,
-                type: "1",
-                status: "4"
-            }
-        }).then((res) => {
-            console.log(res.data)
-            if (res.data.status === 4001) {
-                Toast.success(res.data.msg, 2)
-            } else {
-                Toast.fail(res.data.msg, 2)
-            }
-        })
+        // let aa = {}
+        // let arr = []
+
+        // this.state.goods.map((v, k) => {
+        //     console.log(v, k)
+        //     aa = {
+        //         id: this.state.goods[k].id,
+        //         barcodeid: this.state.goods[k].barcodeid,
+        //         diffnum: this.state.goods[k].price - this.state.input[k],
+        //         innum: this.state.input[k],
+        //         goodsid: this.state.goods[k].goodsid
+
+        //     }
+        //     return arr.push(aa);
+        // })
+        // let itemData = arr
+        // console.log(itemData)
+        // let deliveryData = {
+        //     id: this.props.match.params.id,
+        //     snum: this.state.count,
+        //     in_out_num: this.state.num
+        // }
+        // console.log(this.state.goods, this.state.num, this.state.input)
+        // submitPurchaseDelivery({
+        //     action: 'submitPurchaseDelivery', data: {
+        //         uniacid: store.getState().uniacid,
+        //         uid: store.getState().uid,
+        //         itemData: itemData,
+        //         deliveryData: deliveryData,
+        //         type: "1",
+        //         status: "4"
+        //     }
+        // }).then((res) => {
+        //     console.log(res.data)
+        //     if (res.data.status === 4001) {
+        //         Toast.success(res.data.msg, 2)
+        //     } else {
+        //         Toast.fail(res.data.msg, 2)
+        //     }
+        // })
     }
+
+
+
+
+
+
+
     getChildrenMsg = (result, msg) => {
         let input = []
         input.push(result)
-
         let ww = []
         ww.push(msg)
         let arr = Number(result) + Number(this.state.arr)
         this.setState({
+            result,
             arr,
             goods: [...this.state.goods, ...ww],
             num: arr,
             input: [...this.state.input, ...input]
         })
+        console.log(result, msg)
     }
     seach() {
         getPurchaseDeliveryDetail({
             action: 'getPurchaseDeliveryDetail', data: {
                 uniacid: store.getState().uniacid,
-                uid: "2271",
+                uid: store.getState().uid,
                 deliveryId: this.props.match.params.id,
                 search: this.state.inputSearch,
                 type: "1",
@@ -193,7 +292,18 @@ export default class WarehousingOrderxing extends Component {
                         </div>
                         <div className='yuan'>0</div>
                         <div style={{ background: this.state.purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }} className='right' onClick={() => { this.shengHe() }}>{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
-
+                        {/* <Button
+                        style={{display:this.state.purchaseDetail.statusname === "待提交" ? "none" : "block", width:"3rem",height:"2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
+                        className="btn_modal"
+                            onClick={() =>
+                                alert('审核', '是否确认审核采购单', [
+                                    { text: '取消', onPress: () => console.log('cancel') },
+                                    { text: '确定', onPress: () => this.shengHe() },
+                                ])
+                            }
+                        >
+                            confirm
+                        </Button> */}
                     </div>
                 </div>
             </WarehousingOrderxingStyle>

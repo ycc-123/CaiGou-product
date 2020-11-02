@@ -21,7 +21,7 @@ export default class WarehousingOrder extends Component {
         setTitle('采购入库单')
         getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
             uniacid: store.getState().uniacid,
-            uid:"2271",
+            uid:store.getState().uid,
             type:"1",
             limit:this.state.limit,
             page:this.state.page
@@ -50,7 +50,7 @@ export default class WarehousingOrder extends Component {
         console.log(111)
         getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
             uniacid: store.getState().uniacid,
-            uid:"2271",
+            uid:store.getState().uid,
             type:"1",
             search:this.state.inputSearch,
             // warehouseName:this.state.inputSearch,
@@ -115,7 +115,7 @@ export default class WarehousingOrder extends Component {
             // console.log(111)
             getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
                 uniacid: store.getState().uniacid,
-                uid:"2271",
+                uid:store.getState().uid,
                 type:"1",
                 limit:this.state.limit,
                 page:this.state.page

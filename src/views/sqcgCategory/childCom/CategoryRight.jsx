@@ -97,7 +97,7 @@ class CategoryRight extends Component {
     console.log(itemData)
     createPurchaseApply({ action: 'createPurchaseApply', data: {
       uniacid: store.getState().uniacid,
-      uid:"2271",
+      uid:store.getState().uid,
       totalnum:this.state.num,
       // purchaseId:this.props.id,
       remark:"",

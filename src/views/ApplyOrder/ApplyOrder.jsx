@@ -18,7 +18,7 @@ export default class ApplyOrder extends Component {
         getPurchaseApplyList({
             action: 'getPurchaseApplyList', data: {
                 uniacid: store.getState().uniacid,
-                uid: "2271",
+                uid: store.getState().uid,
                 // type:"1",
                 limit: "1000",
                 page: "1"
@@ -42,7 +42,7 @@ export default class ApplyOrder extends Component {
         getPurchaseApplyList({
             action: 'getPurchaseApplyList', data: {
                 uniacid: store.getState().uniacid,
-                uid: "2271",
+                uid: store.getState().uid,
                 search: this.state.inputSearch,
                 limit: "1000",
                 page: "1"

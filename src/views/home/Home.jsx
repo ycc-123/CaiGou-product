@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { store } from "store/index";
+// import  VConsole  from  'vconsole';
+// let vConsole = new VConsole();、
+
 
 export default class Home extends Component {
 
   componentDidMount(){
-    console.log(store.getState().uniacid)
+    console.log(store.getState().uid)
   }
   render() {
     return (

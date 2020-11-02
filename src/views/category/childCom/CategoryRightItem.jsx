@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import { Modal, Button } from 'antd-mobile';
+import { Modal, Button, Toast } from 'antd-mobile';
 
 
 const prompt = Modal.prompt;
@@ -10,22 +10,28 @@ class CategoryRightgoods extends Component {
     super(props)
     this.state = {
       num: this.props.goods.num,
-      login:'',
-      password:''
+      login: '',
+      password: ''
     }
     this.click = true
   }
-  zjian = (login, password,goods) => {
-    console.log(login, password,goods)
-    this.setState({
-      login,
-      password
-    })
-    this.props.parent.getChildrenMsg(this, login, password,goods)
+  zjian = (login, password, goods) => {
+    if (login === '' ) {
+      Toast.fail('请填写采购数量')
+    } else if(password === ''){
+      Toast.fail('请填写采购单价')
+    }else{
+      console.log(login, password, goods)
+      this.setState({
+        login,
+        password
+      })
+      this.props.parent.getChildrenMsg(this, login, password, goods)
+    }
   }
 
   render() {
-    const { goods} = this.props
+    const { goods } = this.props
     console.log(goods)
 
     return (
@@ -35,18 +41,18 @@ class CategoryRightgoods extends Component {
         >
 
 
-          <img className='category-img' src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png" alt="" />
+          <img className='category-img' src={goods.albumpath?goods.albumpath:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
           <div className='category-goods-info'>
             <p>{goods.name}</p>
-            
+
             <Button
-              style={{position:"absolute",top:".3rem",left:"4.6rem",color:"transparent",background:"transparent"}} 
+              style={{ position: "absolute", top: ".3rem", left: "4.6rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
               onClick={() => prompt(
                 '添加',
                 '请填写采购数量与单价',
-                (login, password) => this.zjian(login, password,goods),
+                (login, password) => this.zjian(login, password, goods),
                 'login-password',
                 null,
                 ['请填写采购数量', '请填写采购单价'],
@@ -54,12 +60,12 @@ class CategoryRightgoods extends Component {
               visible={false}
             >111111</Button>
             {
-              this.state.login?<div className='category-goods-img' style={{textAlign:"center",width:"2rem",height:".5rem",marginTop: ".8rem",marginLeft: "4rem",color:"#d54343",fontSize:".4rem"}}>{this.state.login}</div>:
-            <img className='category-goods-img'
-              src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
-              alt=""/>
+              this.state.login ? <div className='category-goods-img' style={{ textAlign: "center", width: "2rem", height: ".5rem", marginTop: ".8rem", marginLeft: "4rem", color: "#d54343", fontSize: ".4rem" }}>{this.state.login}</div> :
+                <img className='category-goods-img'
+                  src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
+                  alt="" />
             }
-            
+
 
           </div>
 

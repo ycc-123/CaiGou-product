@@ -17,7 +17,7 @@ export default class Shouyinmxb extends Component {
         getRetailList({
             action: 'getRetailList', data: {
                 uniacid: store.getState().uniacid,
-                uid: "2271",
+                uid: store.getState().uid,
                 limit: "50",
                 page: "1"
             }

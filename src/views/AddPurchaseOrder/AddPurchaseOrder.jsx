@@ -28,7 +28,7 @@ export default class AddPurchaseOrder extends Component {
         setTitle('新建采购单')
         getWarehouseList({ action: 'getWarehouseList', data: {
             uniacid: store.getState().uniacid,
-            uid:"2271",
+            uid:store.getState().uid,
             type:"1",
             limit:"1000",
             page:"1"
@@ -47,7 +47,7 @@ export default class AddPurchaseOrder extends Component {
         })
         getSupplierList({ action: 'getSupplierList', data: {
             uniacid: store.getState().uniacid,
-            uid:"2271",
+            uid:store.getState().uid,
             limit:"1000",
             page:"1"
           } }).then(res=>{
@@ -72,7 +72,7 @@ export default class AddPurchaseOrder extends Component {
         // this.props.history.push('/category')
         createPurchase({ action: 'createPurchase', data: {
             uniacid: store.getState().uniacid,
-            uid:"2271",
+            uid:store.getState().uid,
             type:"1",
             supplierid:idgy,
             warehouseid:idkc,

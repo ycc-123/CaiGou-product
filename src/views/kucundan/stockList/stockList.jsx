@@ -32,7 +32,7 @@ export default class stockList extends Component {
         getStockList({
             action: 'getStockList', data: {
                 uniacid: store.getState().uniacid,
-                uid: "2271",
+                uid: store.getState().uid,
             }
         }).then((res) => {
             console.log(res)
@@ -54,7 +54,7 @@ export default class stockList extends Component {
         getWarehouseList({
             action: 'getWarehouseList', data: {
                 uniacid: store.getState().uniacid,
-                uid: "2271",
+                uid: store.getState().uid,
                 type:"1",
                 limit:"8",
                 page:"1"
@@ -152,7 +152,7 @@ export default class stockList extends Component {
         getStockList({
             action: 'getStockList', data: {
                 uniacid: store.getState().uniacid,
-                uid: "2271",
+                uid: store.getState().uid,
                 warehouseid:this.state.cankuID,
                 // categoryid:this.state.panduan===false? this.state.yikey : this.state.erjifenlei 
                 categoryid:this.state.yikey 
@@ -182,7 +182,7 @@ export default class stockList extends Component {
         getStockList({
             action: 'getStockList', data: {
                 uniacid: store.getState().uniacid,
-                uid: "2271",
+                uid: store.getState().uid,
                 search:this.state.inputSearch,
                 
             }

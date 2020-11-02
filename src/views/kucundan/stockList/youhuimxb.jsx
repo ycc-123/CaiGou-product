@@ -64,7 +64,7 @@ export default class Youhuimxb extends Component {
         getRetailList({
             action: 'getRetailList', data: {
                 uniacid: store.getState().uniacid,
-                uid: "2271",
+                uid: store.getState().uid,
                 starttime:this.state.start_time,
                 endtime:this.state.end_time,
                 createid:IDsyy,
@@ -91,7 +91,7 @@ export default class Youhuimxb extends Component {
         getRetailList({
             action: 'getRetailList', data: {
                 uniacid: store.getState().uniacid,
-                uid: "2271",
+                uid: store.getState().uid,
                 starttime:this.state.start_time,
                 endtime:this.state.end_time,
                 createid:IDsyy,
@@ -254,7 +254,7 @@ export default class Youhuimxb extends Component {
             getRetailList({
                 action: 'getRetailList', data: {
                     uniacid: store.getState().uniacid,
-                    uid: "2271",
+                    uid: store.getState().uid,
                     // starttime:"2020-10-1 13:41:08",
                     // endtime:"2020-10-24 13:41:08",
                     // createid:'59',

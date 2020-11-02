@@ -1,7 +1,7 @@
 import React from 'react'
 // import { HashRouter as Router, Switch, Redirect } from 'react-router-dom'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
-import  { CacheSwitch } from 'react-router-cache-route'
+import CacheRoute, { CacheSwitch } from 'react-router-cache-route'
 
 import Home from 'views/home/Home'
 import AddPurchaseOrder from 'views/AddPurchaseOrder/AddPurchaseOrder'
@@ -17,7 +17,7 @@ import ApplyOrder from 'views/ApplyOrder/ApplyOrder'
 import ApplyOrderx from 'views/ApplyOrderx/ApplyOrderx'
 import category from 'views/category/Category'
 import Sqcgcategory from 'views/sqcgCategory/Category'
-import Liebiao from 'views/caigoudanmx/liebiao'
+import Liebiao from 'views/category/childCom/CategorySwiper'
 import Mingxi from 'views/caigoudanmx/mingxi'
 import Youhuimxb from 'views/kucundan/stockList/youhuimxb'
 import Shouyinmxb from 'views/kucundan/stockList/shouyinmxb'
@@ -26,14 +26,15 @@ const AppRouter = () => {
     <Router>
       {/* 缓存路由 */}
       <CacheSwitch>
-
+      {/* <Route path='/category/:id' exact component={category} ></Route> */}
+      <CacheRoute path='/category/:id' when='always' component={category}></CacheRoute>
       </CacheSwitch>
 
       <Switch>
         <Route path='/PurchaseOrderDetailed/:id' exact component={PurchaseOrderDetailed} ></Route>
         <Route path='/home' exact component={Home} ></Route>
         <Route path='/' exact component={Home} ></Route>
-        <Route path='/category/:id' exact component={category} ></Route>
+        
         <Route path='/Sqcgcategory' exact component={Sqcgcategory} ></Route>
         <Route path='/ApplyOrderx/:id' exact component={ApplyOrderx} ></Route>
         <Route path='/ApplyOrder' exact component={ApplyOrder} ></Route>
