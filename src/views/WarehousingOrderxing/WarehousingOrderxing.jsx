@@ -96,6 +96,7 @@ export default class WarehousingOrderxing extends Component {
                 }).then((res) => {
                     console.log(res.data)
                     if (res.data.status === 4001) {
+                        window.location.reload();
                         Toast.success(res.data.msg, 2)
                     } else {
                         Toast.fail(res.data.msg, 2)
@@ -135,6 +136,7 @@ export default class WarehousingOrderxing extends Component {
                 }).then((res) => {
                     console.log(res.data)
                     if (res.data.status === 4001) {
+                        window.location.reload();
                         Toast.success(res.data.msg, 2)
                     } else {
                         Toast.fail(res.data.msg, 2)

@@ -15,6 +15,8 @@ import LossReportm from 'views/LossReportm/LossReportm'
 import LossReportf from 'views/LossReportf/LossReportf'
 import ApplyOrder from 'views/ApplyOrder/ApplyOrder'
 import ApplyOrderx from 'views/ApplyOrderx/ApplyOrderx'
+// 测试
+import Text from 'views/ApplyOrderx/Text'
 import category from 'views/category/Category'
 import Sqcgcategory from 'views/sqcgCategory/Category'
 import Liebiao from 'views/category/childCom/CategorySwiper'
@@ -50,6 +52,7 @@ const AppRouter = () => {
         <Route path='/Mingxi' exact component={Mingxi} ></Route>
         <Route path='/Youhuimxb' exact component={Youhuimxb} ></Route>
         <Route path='/Shouyinmxb/:id' exact component={Shouyinmxb} ></Route>
+        <Route path='/Text' exact component={Text} ></Route>
       </Switch>
     </Router>
   )

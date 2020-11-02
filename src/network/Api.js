@@ -204,3 +204,14 @@ export function createPurchaseApply(config) {
   })
 
 }
+
+
+export function submitPurchaseApply(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+
+}

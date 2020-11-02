@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseApplyDetail ,createPurchaseApply} from 'network/Api'
+import { getPurchaseApplyDetail ,submitPurchaseApply} from 'network/Api'
 import {  Toast } from 'antd-mobile';
 // import BetterScroll from 'common/betterScroll/BetterScroll'
 import { store } from "store/index";
@@ -57,35 +57,36 @@ export default class ApplyOrderx extends Component {
     }
 
     tijiao(){
-        console.log(this.state.remark)
-        let aa = {}
-            let arr = []
-            this.state.tiao.map((v, k) => {
-                console.log(v, k)
-                aa = {
-                    barcode: v.barcode,
-                    gnum: v.goodsnum,
-                    name: v.goodsname,
-                    // innum: this.state.input[k],
-                }
-                return arr.push(aa);
-            })
-            console.log(arr)
-            let itemData=arr
+        // console.log(this.state.remark)
+        // let aa = {}
+        //     let arr = []
+        //     this.state.tiao.map((v, k) => {
+        //         console.log(v, k)
+        //         aa = {
+        //             barcode: v.barcode,
+        //             gnum: v.goodsnum,
+        //             name: v.goodsname,
+        //             // innum: this.state.input[k],
+        //         }
+        //         return arr.push(aa);
+        //     })
+        //     console.log(arr)
+        //     let itemData=arr
 
 
 
-        createPurchaseApply({
-            action: 'createPurchaseApply', data: {
+        submitPurchaseApply({
+            action: 'submitPurchaseApply', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                totalnum: this.state.tiao.length,
-                remark: this.state.remark,
-                itemData: itemData,
+                id: this.props.match.params.id,
+                // remark: this.state.remark,
+                // itemData: itemData,
             }
         }).then((res) => {
             console.log(res)
             if(res.data.status===4001){
+                window.location.reload();
                 Toast.success(res.data.msg,1)
             }else{
                 Toast.fail(res.data.msg,1)
