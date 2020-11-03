@@ -24,7 +24,8 @@ export default class stockList extends Component {
             yikey:'',
             ckkey:'',
             inputSearch:'',
-            panduan:false
+            panduan:false,
+            quankey:''
         }
     }
     componentDidMount(){
@@ -94,7 +95,6 @@ export default class stockList extends Component {
     }
     // 获取二级分类
     yijifenlei(v,k){
-        
         console.log(v,k)
         showProductCategory({
             action: 'showProductCategory', data: {
@@ -110,16 +110,15 @@ export default class stockList extends Component {
                     panduan:result===[]?false:true,
                     childrens:result,
                     erji:true,
+                    quankey:v.id,
                     yikey:v.id
                 })
             }else{
                 Toast.fail(res.data.msg,2)
             }
-            
         })
     }
     xianyin(){
-        // console.log(111)
         if(this.state.xian===false){
             this.setState({
                 xian:true
@@ -140,7 +139,7 @@ export default class stockList extends Component {
     erjifenlei(v){
         this.setState({
             erjifenlei:v.id,
-            yikey:v.id,
+            quankey:v.id,
             ekey:v.id
         })
     }
@@ -154,17 +153,13 @@ export default class stockList extends Component {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 warehouseid:this.state.cankuID,
-                // categoryid:this.state.panduan===false? this.state.yikey : this.state.erjifenlei 
-                categoryid:this.state.yikey 
-
+                categoryid:this.state.quankey 
             }
         }).then((res) => {
             this.setState({
                 panduan:false
             })
             if(res.data.status===4001){
-                // var result = res.data.data.data.map(o=>{return{id:o.warehouseid,name:o.name}});
-                //     console.log(result)
                 this.setState({
                     goods: res.data.data.data!==null?res.data.data.data:[],
                     totalcostprice: res.data.data.totalcostprice,
@@ -184,7 +179,6 @@ export default class stockList extends Component {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 search:this.state.inputSearch,
-                
             }
         }).then((res) => {
             console.log(res)
@@ -214,10 +208,6 @@ export default class stockList extends Component {
         const scrollConfig = {
             probeType: 1
         }
-        // const scrollstyle={
-        //     // position:"absolute",
-        //     top:"2rem"
-        // }
         console.log(this.state.goods)
         return (
             <StockListStyle>
@@ -246,7 +236,6 @@ export default class stockList extends Component {
                         })
                     }
                 </BetterScroll>
-                {/* <BetterScroll config={scrollConfig} ref='scrolls' style={{ top:"1rem",bottom:"1.5rem"}}> */}
                     <div className='fenglei' style={{display: this.state.xian===false?"none":"block"}}>
                         <div>仓库名称
                             <ul>
@@ -259,8 +248,6 @@ export default class stockList extends Component {
                                         )
                                     })
                                 }
-                                {/* <li>1</li> */}
-                                
                             </ul>
                         </div>
 
@@ -275,7 +262,6 @@ export default class stockList extends Component {
                                         )
                                     })
                                 }
-                                
                             </ul>
                         </div>
 
@@ -290,13 +276,11 @@ export default class stockList extends Component {
                                         )
                                     })
                                 }
-                                {/* <li>2</li> */}
                             </ul>
                         </div>
                                 
                         <div className='btn' onClick={()=>{this.queding()}}>确定</div>
                     </div>
-                    {/* </BetterScroll> */}
                     
                 <div className='foot' >
                     <div>总库存：<span>{this.state.totalgnum?this.state.totalgnum:0}</span></div>

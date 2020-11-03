@@ -56,7 +56,7 @@ export default class ApplyOrderx extends Component {
         })
     }
 
-    tijiao(){
+    tijiao(e){
         // console.log(this.state.remark)
         // let aa = {}
         //     let arr = []
@@ -72,7 +72,7 @@ export default class ApplyOrderx extends Component {
         //     })
         //     console.log(arr)
         //     let itemData=arr
-
+        if(e==="提交成功"){}else{
 
 
         submitPurchaseApply({
@@ -92,6 +92,7 @@ export default class ApplyOrderx extends Component {
                 Toast.fail(res.data.msg,1)
             }
         })
+    }
 
     }
     render() {
@@ -170,7 +171,7 @@ export default class ApplyOrderx extends Component {
                         <div className='yuan'>0</div>
                         <div className='foot_conton'></div>
                         <div className='right' style={{ background: this.state.quan.statusname === "提交成功" ? "#B4B4B4" : '' }}
-                        onClick={()=>{this.tijiao()}}
+                        onClick={(e)=>{this.tijiao(this.state.quan.statusname)}}
                         >提交</div>
 
                     </div>

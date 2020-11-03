@@ -7,7 +7,7 @@ export function _categoryLeft() {
       action: 'category'
     },
     data: {
-      uniacid: store.getState().appConfig.uniacid || 53
+      // uniacid: store.getState().appConfig.uniacid || 53
     }
   })
 }

@@ -53,7 +53,11 @@ export default class WarehousingOrderxing extends Component {
             }
         })
     }
-    shengHe() {
+    shengHe(e) {
+        console.log(e)
+        if(e==="审核通过"){
+
+        }else{
         if (this.state.input.length === 0) {
             // 默认
             let aa = {}
@@ -96,7 +100,7 @@ export default class WarehousingOrderxing extends Component {
                 }).then((res) => {
                     console.log(res.data)
                     if (res.data.status === 4001) {
-                        window.location.reload();
+                        // window.location.reload();
                         Toast.success(res.data.msg, 2)
                     } else {
                         Toast.fail(res.data.msg, 2)
@@ -143,6 +147,7 @@ export default class WarehousingOrderxing extends Component {
                     }
                 })
         }
+    }
         // let aa = {}
         // let arr = []
 
@@ -293,7 +298,7 @@ export default class WarehousingOrderxing extends Component {
                             <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
                         </div>
                         <div className='yuan'>0</div>
-                        <div style={{ background: this.state.purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }} className='right' onClick={() => { this.shengHe() }}>{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
+                        <div style={{ background: this.state.purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }} className='right' onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
                         {/* <Button
                         style={{display:this.state.purchaseDetail.statusname === "待提交" ? "none" : "block", width:"3rem",height:"2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
                         className="btn_modal"

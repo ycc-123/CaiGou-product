@@ -11,16 +11,67 @@ class CategoryRightgoods extends Component {
     this.state = {
       num: this.props.goods.num,
       login: '',
-      password: ''
+      password: '',
+      showModal: false,
+      inputsl: '',
+      inputjg: ''
     }
     this.click = true
   }
-  zjian = (login, password, goods) => {
-    if (login === '' ) {
+  // zjian = (login, password, goods) => {
+    // if (login === '') {
+    //   Toast.fail('请填写采购数量')
+    // } else if (password === '') {
+    //   Toast.fail('请填写采购单价')
+    // } else {
+    //   console.log(login, password, goods)
+    //   this.setState({
+    //     login,
+    //     password
+    //   })
+    //   this.props.parent.getChildrenMsg(this, login, password, goods)
+    // }
+  // }
+
+  // 弹出框
+
+   /*
+   * 弹窗
+   */
+  showDialogBtn() {
+    this.setState({
+        showModal: true
+    })
+}
+/**
+ * 隐藏模态对话框
+ */
+hideModal() {
+    this.setState({
+        showModal: false
+    })
+}
+/**
+ * 对话框取消按钮点击事件
+ */
+onCancel() {
+    console.log("取消")
+    this.hideModal();
+}
+/**
+ * 对话框确认按钮点击事件
+ */
+onConfirm() {
+    // console.log("确定" + this.state.inputsl, this.props.goods)
+    this.hideModal();
+    let goods=this.props.goods
+    let login=this.state.inputsl
+    let password=this.state.inputjg
+    if (login === '') {
       Toast.fail('请填写采购数量')
-    } else if(password === ''){
+    } else if (password === '') {
       Toast.fail('请填写采购单价')
-    }else{
+    } else {
       console.log(login, password, goods)
       this.setState({
         login,
@@ -28,8 +79,19 @@ class CategoryRightgoods extends Component {
       })
       this.props.parent.getChildrenMsg(this, login, password, goods)
     }
-  }
-
+}
+inputChangesl(e) {
+    console.log(e.target.value)
+    this.setState({
+        [e.target.name]: e.target.value
+    })
+}
+inputChangejg(e) {
+    console.log(e.target.value)
+    this.setState({
+        [e.target.name]: e.target.value
+    })
+}
   render() {
     const { goods } = this.props
     console.log(goods)
@@ -41,24 +103,40 @@ class CategoryRightgoods extends Component {
         >
 
 
-          <img className='category-img' src={goods.albumpath?goods.albumpath:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+          <img className='category-img' src={goods.albumpath ? goods.albumpath : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
           <div className='category-goods-info'>
             <p>{goods.name}</p>
-
-            <Button
-              style={{ position: "absolute", top: ".3rem", left: "4.6rem", color: "transparent", background: "transparent" }}
-              className="btn_modal"
-              onClick={() => prompt(
-                '添加',
-                '请填写采购数量与单价',
-                (login, password) => this.zjian(login, password, goods),
-                'login-password',
-                null,
-                ['请填写采购数量', '请填写采购单价'],
-              )}
-              visible={false}
-            >111111</Button>
+            {/* 弹出框 */}
+            <button class="show-btn" 
+            style={{height:".5rem", width:".5rem",position: "absolute", top: "1rem", left: "4rem", color: "transparent", background: "transparent" }}
+             onClick={(e) =>{this.showDialogBtn() }}>111</button>
+            <div className="modal-mask"
+              style={{ display: this.state.showModal === false ? "none" : "block" }}
+            ></div>
+            <div className="modal-dialog"
+              style={{ display: this.state.showModal === false ? "none" : "block" }}
+            >
+              <div className="modal-title">添加</div>
+              <div className="centen-m-t">请填写采购数量与单价</div>
+              <div className="modal-content">
+                <div className="modal-input">
+                  <p>
+                    <input 
+                     className="inputone" placeholder="请填写采购数量" name="inputsl"
+                      onChange={this.inputChangesl.bind(this)}
+                      value={this.state.inputsl} type="number" />
+                  </p>
+                    <input className="int-two" placeholder="请填写采购单价" name="inputjg"
+                      onChange={this.inputChangejg.bind(this)}
+                      value={this.state.inputjg} type="number" />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <div className="btn-cancel" onClick={() => { this.onCancel() }} >取消</div>
+                <div className="btn-confirm" onClick={() => { this.onConfirm() }} >确定</div>
+              </div>
+            </div>
             {
               this.state.login ? <div className='category-goods-img' style={{ textAlign: "center", width: "2rem", height: ".5rem", marginTop: ".8rem", marginLeft: "4rem", color: "#d54343", fontSize: ".4rem" }}>{this.state.login}</div> :
                 <img className='category-goods-img'
@@ -73,12 +151,113 @@ class CategoryRightgoods extends Component {
       </CategoryRightgoodsStyle>
     );
   }
-
-
-
 }
 
 const CategoryRightgoodsStyle = styled.div`
+
+// 对话弹出款样式start
+.show-btn {
+  margin: 0 0.64rem;
+  background-color: #2E5BFF;
+  color: white;
+}
+.modal-mask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.5;
+  overflow: hidden;
+  z-index: 9000;
+  color: #fff;
+}
+
+.modal-dialog {
+  width: 6.4rem;
+  overflow: hidden;
+  position: fixed;
+  top: 58%;
+  left: 0;
+  z-index: 9999;
+  background: #fff;
+  margin: -4rem 2rem;
+  border-radius: .2rem;
+}
+.centen-m-t{
+  padding-top: .3rem;
+  font-size: 0.4rem;
+  color: #888;
+  text-align: center;
+}
+.modal-title {
+  padding-top: .3rem;
+  font-size: 0.5rem;
+  color: #000;
+  text-align: center;
+}
+.modal-content {
+  padding: .3rem .4rem;
+}
+.modal-input {
+  border-radius: .1rem;
+  font-size: .5rem;
+}
+input::-webkit-input-placeholder {
+  color: #ccc;
+  font-size:.35rem;
+}
+.int-two{
+  font-family: sans-serif;
+  border:1px solid #eee;
+  width: 100%;
+  height: .8rem;
+  font-size: .4rem;
+  line-height: .8rem;
+  box-sizing: border-box;
+  color: #000;
+}
+.inputone {
+  font-family: sans-serif;
+  border:1px solid #eee;
+  width: 100%;
+  height: .8rem;
+  font-size: .4rem;
+  line-height: .8rem;
+  box-sizing: border-box;
+  color: #000;
+}
+input-holder {
+  color: #666;
+  font-size: 60px;
+}
+.modal-footer {
+  display: flex;
+  flex-direction: row;
+  height: 1.1rem;
+  border-top: 1px solid #eee;
+  font-size: .48rem;
+  line-height: 1.1rem;
+}
+.btn-cancel {
+  width: 50%;
+  color: #000;
+  text-align: center;
+  border-right: 1px solid #eee;
+}
+
+.btn-confirm {
+  width: 50%;
+  color: #108ee9;
+  text-align: center;
+}
+
+// 对话弹出款样式end
+
+
+
+
 .am-button::before{
   border:none !important;
 }

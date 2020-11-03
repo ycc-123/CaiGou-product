@@ -103,6 +103,7 @@ export default class PurchaseOrder extends Component {
         setTimeout(() => {
             if (loading) {
                 this.setState({
+                    
                     loadingMore: true
                 })
             }

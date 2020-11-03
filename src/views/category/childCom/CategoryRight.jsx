@@ -133,11 +133,12 @@ class CategoryRight extends Component {
     let itemData=arr
     console.log(itemData)
     let purchaseData={
+      
       subtotal:this.state.price,
       snum:this.state.num
     }
     submitPurchase({ action: 'submitPurchase', data: {
-      uniacid: "53",
+      uniacid: store.getState().uniacid,
       uid:store.getState().uid,
       type:"1",
       purchaseId:this.props.id,
