@@ -112,6 +112,9 @@ export default class stockList extends Component {
                     erji:true,
                     quankey:v.id,
                     yikey:v.id
+                },()=>{
+
+                    this.refs.scroll.BScroll.refresh()
                 })
             }else{
                 Toast.fail(res.data.msg,2)
@@ -208,6 +211,10 @@ export default class stockList extends Component {
         const scrollConfig = {
             probeType: 1
         }
+        const scrollConfigs = {
+            probeType: 1
+        }
+
         console.log(this.state.goods)
         return (
             <StockListStyle>
@@ -235,7 +242,10 @@ export default class stockList extends Component {
                             )
                         })
                     }
-                </BetterScroll>
+                    </BetterScroll>
+
+
+                    {/* <BetterScroll config={scrollConfigs} ref='scroll' style={{ top:"1rem",bottom:"1.5rem"}}> */}
                     <div className='fenglei' style={{display: this.state.xian===false?"none":"block"}}>
                         <div>仓库名称
                             <ul>
@@ -278,10 +288,10 @@ export default class stockList extends Component {
                                 }
                             </ul>
                         </div>
-                                
+                        
                         <div className='btn' onClick={()=>{this.queding()}}>确定</div>
                     </div>
-                    
+                    {/* </BetterScroll> */}
                 <div className='foot' >
                     <div>总库存：<span>{this.state.totalgnum?this.state.totalgnum:0}</span></div>
                     <div style={{marginLeft:".8rem"}}>总库存金额：<span>{this.state.totalcostprice?this.state.totalcostprice:0}</span></div>

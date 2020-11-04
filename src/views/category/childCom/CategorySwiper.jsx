@@ -13,6 +13,7 @@ export default class Liebiao extends Component {
         }
     }
     componentDidMount(){
+        console.log(store.getState().goodsList)
         if(store.getState().goodsList===[]){
             Toast.fail("无采购商品",1.5)
             this.setState({
@@ -37,10 +38,10 @@ export default class Liebiao extends Component {
             </div>
             {
                 this.state.goodsList.map((v,k)=>{
-                    console.log(v)
+                    // console.log(v)
                     return(
                         <div className='tiao'>
-                        <img className='t-img-l'  alt="" />
+                        <img className='t-img-l' src={v.img}  alt="网络卡" />
                         <ul className='wen-zi'>
                             <li className='wen-zi-t'>
                                 <div className='name'>{v.name}</div>
@@ -48,6 +49,7 @@ export default class Liebiao extends Component {
                             </li>
                             <li className='wen-zi-f'>
                                 <div>￥：{v.price}元/盒</div>
+
                                 <p>{v.amount}
                                 </p>
                             </li>

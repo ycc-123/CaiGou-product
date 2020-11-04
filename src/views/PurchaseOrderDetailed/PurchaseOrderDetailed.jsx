@@ -222,7 +222,7 @@ export default class PurchaseOrderDetailed extends Component {
                         <div className='left'>
                             <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
                         </div>
-                        <div className='yuan'>0</div>
+                        <div className='yuan'>{this.state.purchaseItem.length}</div>
                         {/* <div className='foot_conton'>总额：<span>0</span></div> */}
                         <div style={{ background: this.state.purchaseDetail.statusname === "审核成功" ? "#B4B4B4" : '' }}
                             className='right'

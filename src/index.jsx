@@ -11,6 +11,9 @@ import 'lib-flexible'
 import 'assets/css/border.css'
 import 'assets/css/basic.css'
 
+// import  VConsole  from  'vconsole';
+// let vConsole = new VConsole();
+
 // let uid = getParamsString('uid')
 // let uniacid = getParamsString('uniacid')
 
@@ -27,6 +30,9 @@ store.dispatch(actionuid)
 
 const actionuniacid = saveUserUniacid(uniacid)
 store.dispatch(actionuniacid)
+
+localStorage.clear()
+// window.location.reload()
 
 ReactDOM.render(
   <Provider store={store}> 
