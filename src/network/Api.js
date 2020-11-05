@@ -127,7 +127,7 @@ export function getStockList(config) {
     data: config.data
   })
 }
-
+// 获取盘点单分类
 export function showProductCategory(config) {
   return requestPost({
     params: {
@@ -147,7 +147,7 @@ export function getRetailList(config) {
   })
 }
 
-
+// 获取收银员
 export function get_cashier(config) {
   return requestPost({
     params: {
@@ -159,7 +159,7 @@ export function get_cashier(config) {
 }
 
 
-
+// 获取仓库
 export function get_store(config) {
   return requestPost({
     params: {
@@ -194,7 +194,7 @@ export function getPurchaseApplyDetail(config) {
 }
 
 
-// 提交采购申请单
+// 提交采购单
 export function createPurchaseApply(config) {
   return requestPost({
     params: {
@@ -205,7 +205,7 @@ export function createPurchaseApply(config) {
 
 }
 
-
+// 采购申请单提交
 export function submitPurchaseApply(config) {
   return requestPost({
     params: {

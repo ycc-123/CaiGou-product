@@ -41,7 +41,7 @@ export default class Liebiao extends Component {
                     // console.log(v)
                     return(
                         <div className='tiao'>
-                        <img className='t-img-l' src={v.img}  alt="网络卡" />
+                        <img className='t-img-l' src={v.img?v.img :"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"}  alt="网络卡" />
                         <ul className='wen-zi'>
                             <li className='wen-zi-t'>
                                 <div className='name'>{v.name}</div>

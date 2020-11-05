@@ -1,5 +1,4 @@
 import React from 'react'
-// import { HashRouter as Router, Switch, Redirect } from 'react-router-dom'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import CacheRoute, { CacheSwitch } from 'react-router-cache-route'
 
@@ -15,20 +14,23 @@ import LossReportm from 'views/LossReportm/LossReportm'
 import LossReportf from 'views/LossReportf/LossReportf'
 import ApplyOrder from 'views/ApplyOrder/ApplyOrder'
 import ApplyOrderx from 'views/ApplyOrderx/ApplyOrderx'
-// 测试
-import Text from 'views/ApplyOrderx/Text'
 import category from 'views/category/Category'
 import Sqcgcategory from 'views/sqcgCategory/Category'
 import Liebiao from 'views/category/childCom/CategorySwiper'
 import Mingxi from 'views/caigoudanmx/mingxi'
 import Youhuimxb from 'views/kucundan/stockList/youhuimxb'
 import Shouyinmxb from 'views/kucundan/stockList/shouyinmxb'
+// 测试
+import Text from 'views/ApplyOrderx/Text'
+
+
+
+
 const AppRouter = () => {
   return (
     <Router>
       {/* 缓存路由 */}
       <CacheSwitch>
-      {/* <Route path='/category/:id' exact component={category} ></Route> */}
       <CacheRoute path='/category/:id' when='always' component={category}></CacheRoute>
       </CacheSwitch>
 
@@ -36,7 +38,6 @@ const AppRouter = () => {
         <Route path='/PurchaseOrderDetailed/:id' exact component={PurchaseOrderDetailed} ></Route>
         <Route path='/home' exact component={Home} ></Route>
         <Route path='/' exact component={Home} ></Route>
-        
         <Route path='/Sqcgcategory' exact component={Sqcgcategory} ></Route>
         <Route path='/ApplyOrderx/:id' exact component={ApplyOrderx} ></Route>
         <Route path='/ApplyOrder' exact component={ApplyOrder} ></Route>
@@ -52,6 +53,7 @@ const AppRouter = () => {
         <Route path='/Mingxi' exact component={Mingxi} ></Route>
         <Route path='/Youhuimxb' exact component={Youhuimxb} ></Route>
         <Route path='/Shouyinmxb/:id' exact component={Shouyinmxb} ></Route>
+        {/* 测试 */}
         <Route path='/Text' exact component={Text} ></Route>
       </Switch>
     </Router>

@@ -1,3 +1,4 @@
+
 export const getParamsString = (name) => {
       // 获取URL中的code
       var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
