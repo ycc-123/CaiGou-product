@@ -6,6 +6,7 @@ import BetterScroll from 'common/betterScroll/BetterScroll'
 import LossReportTiao from './LossReportTiao'
 import { store } from "store/index";
 import { setTitle } from 'commons/utils'
+import axios from 'axios';
 export default class LossReport extends Component {
     constructor() {
         super()
@@ -16,8 +17,8 @@ export default class LossReport extends Component {
             ckkey: '',
             result: [],
             ekey: '',
-            xian:false,
-            
+            xian: false,
+
             data: [],
             key: '',
             date: '',
@@ -32,6 +33,21 @@ export default class LossReport extends Component {
     }
     componentDidMount() {
         setTitle('库存单')
+
+          axios({
+            timeout: 10000,
+            baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
+            method: 'post',
+            headers: {
+              'Content-Type': 'text/plain'
+            },
+            data: "当天"
+          }).then(function (response) {
+            console.log(response);
+          })
+          
+
+
 
         var day2 = new Date();
         day2.setTime(day2.getTime());
@@ -82,7 +98,17 @@ export default class LossReport extends Component {
             }
         })
     }
+    queding() {
+        console.log(111)
+        if (this.state.yikey === 1) {
+            console.log("全部")
+        }
+        this.setState({
+            xian: false
+        })
+    }
     erjifenlei(v, k) {
+        console.log(v)
         this.setState({
             ekey: k
         })
@@ -188,7 +214,7 @@ export default class LossReport extends Component {
                                 </li>
                                 <li className='wen-zi-f'>
                                     <div>￥：444元/斤</div>
-                                    <p><span style={{fontWeight:"100"}}>总价格：</span>444</p>
+                                    <p><span style={{ fontWeight: "100" }}>总价格：</span>444</p>
                                 </li>
                             </ul>
                         </div>
@@ -224,9 +250,9 @@ export default class LossReport extends Component {
                                     >
                                         <List.Item arrow="horizontal" className='data'></List.Item>
                                     </DatePicker>
-                                    
+
                                 </div>
-                                <span style={{ fontSize: ".5rem", paddingTop: ".25rem",paddingLeft:'.3rem' }}>&nbsp;~</span>
+                                <span style={{ fontSize: ".5rem", paddingTop: ".25rem", paddingLeft: '.3rem' }}>&nbsp;~</span>
                                 <div className='end'>
                                     <DatePicker
                                         mode="date"
@@ -278,9 +304,8 @@ export default class LossReport extends Component {
     }
 }
 const LossReportStyle = styled.div`
-
 .start{
-    margin-left:2rem;
+    margin-left:1.6rem;
     }
     
     .data{
@@ -322,7 +347,7 @@ const LossReportStyle = styled.div`
     color: #5cab31;
 }
 .header{
-    font-size:.35rem;
+    font-size:.38rem;
     display:flex;
     justify-content: space-between;
     padding:.2rem .2rem;
@@ -356,6 +381,7 @@ const LossReportStyle = styled.div`
     // position:absolute;
     // bottom:.2rem;
     color:#fff;
+    margin-top:.2rem;
     width:100%;
     background-color: #ed7912;
     height:1rem;
@@ -437,11 +463,12 @@ const LossReportStyle = styled.div`
 .tiao{
     background-color: #fff;
     width: 100%;
-    height: 2.6rem;
+    height: 2.9rem;
+    border-bottom:2px solid #dadada;
 }
 .conten{
     display:flex;
-    border-bottom:2px solid #dadada;
+    
 }
 
 .sximg{

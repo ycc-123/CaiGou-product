@@ -45,12 +45,12 @@ export default class Home extends Component {
         </ul>
       </div>
 
-      <div className='conten'>
-        <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shujubaobiao.png" alt=""/></div>
+      <div className='conten' >
+        <div style={{marginLeft:".35rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shujubaobiao.png" alt=""/></div>
         <ul>
-        <li style={{marginLeft:".5rem"}} onClick={()=>{this.props.history.push('/')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/youhuimxb.png" alt=""/></li>
+        <li style={{marginLeft:".5rem"}} onClick={()=>{this.props.history.push('/youhuimxb')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/youhuimxb.png" alt=""/></li>
           <li style={{marginLeft:".4rem"}} onClick={()=>{this.props.history.push('/LossReport')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/baoshuizong.png" alt=""/></li>
-           {/*  <li style={{marginLeft:".3rem"}} onClick={()=>{this.props.history.push('/PurchaseOrder')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigoudan.png" alt=""/></li> */}
+           {/*  <li style={{marginLeft:".3rem"}} onClick={()=>{this.props.history.push('/LossReport')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigoudan.png" alt=""/></li> */}
         </ul>
       </div>
       </HomeStyle>

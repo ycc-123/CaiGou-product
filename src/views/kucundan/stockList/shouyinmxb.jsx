@@ -47,14 +47,24 @@ export default class Shouyinmxb extends Component {
                                                 <div className='caigoudanhao'>{v.orderno}</div>
                                             </div>
                                             <div className='dan-footer'>
-                                                <p>单据日期：{v.createtime}</p>
+                                                {/* <p>单据日期：{v.createtime}</p>
                                                 <p>所属商家：{v.storeName}</p>
-                                                <p>收银员：{v.createName}</p>
+                                                <p>收银员：{v.createName}</p> */}
+                                                <div>
                                                 <p>支付方式：{v.pay_type_name}</p>
                                                 <p>订单状态：{v.statusName}</p>
-                                                <p>原价总额：{v.price}</p>
+                                                </div>
+                                                {/* <div>
+                                                <p>支付方式：{v.pay_type_name}</p>
+                                                <p>订单状态：{v.statusName}</p>
+                                                </div>
+                                                <div>
+                                                <p>支付方式：{v.pay_type_name}</p>
+                                                <p>订单状态：{v.statusName}</p>
+                                                </div> */}
+                                                {/* <p>原价总额：{v.price}</p>
                                                 <p>优惠金额：{v.total_discount_fee}</p>
-                                                <p>实收金额：{v.price}</p>
+                                                <p>实收金额：{v.price}</p> */}
                                             </div>
                                         </div>
                                     </div>
@@ -64,7 +74,8 @@ export default class Shouyinmxb extends Component {
                                             <li className='yuanjia'>原价</li>
                                             <li className='shoujia'>售价</li>
                                             <li className='count'>数量</li>
-                                            <li className='xiaoji'>小计</li>
+                                            <li className='xiaojiyh'>小计优惠</li>
+                                            <li className='xji'>小计</li>
                                         </ul>
                                     </div>
                                     {
@@ -76,7 +87,8 @@ export default class Shouyinmxb extends Component {
                                                         <li className='yuanjia'>{v.posprice}</li>
                                                         <li className='shoujia'>{v.modifyprice}</li>
                                                         <li className='count'>{v.num}</li>
-                                                        <li className='xiaoji'>{v.subtotal}</li>
+                                                        <li className='xiaojiyh'>{v.subtotal}</li>
+                                                        <li className='xji'>小计</li>
                                                     </ul>
                                                 </div>
                                             )
@@ -100,13 +112,18 @@ const ShouyinmxbStyle = styled.div`
     color:#1a1a1a;
     font-size:.35rem;
 }
-.xiaoji{
+.xji{
     width:2rem;
+    height:100%;
+    // background-color: red;
+}
+.xiaojiyh{
+    width:2.2rem;
     height:100%;
     // background-color: pink;
 }
 .count{
-    width:2rem;
+    width:1.6rem;
     height:100%;
     // background-color: yellow;
 }
@@ -117,7 +134,7 @@ const ShouyinmxbStyle = styled.div`
 }
 .yuanjia{
     margin-left:.8rem;
-    width:2rem;
+    width:1.6rem;
     height:100%;
     // background-color: red;
 }
@@ -134,7 +151,12 @@ const ShouyinmxbStyle = styled.div`
     height:100rem;
     background-color: #fff;
 }
+.dan-footer div{
+    display:flex;
+    width:100%;
+}
 .dan-footer{
+    display:flex;
     background-color: #f8f8f8;
     padding-bottom:.4rem;
 }
