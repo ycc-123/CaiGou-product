@@ -209,12 +209,12 @@ export default class LossReport extends Component {
 
                             <ul className='wen-zi'>
                                 <li className='wen-zi-t'>
-                                    <div className='name'>name</div>
+                                    <div className='name'>苹果</div>
                                     <p style={{ color: "#858585" }}>0.85斤</p>
                                 </li>
                                 <li className='wen-zi-f'>
                                     <div>￥：444元/斤</div>
-                                    <p><span style={{ fontWeight: "100" }}>总价格：</span>444</p>
+                                    <p><span style={{ fontWeight: "100" }}>总价格: </span>444</p>
                                 </li>
                             </ul>
                         </div>
@@ -341,9 +341,10 @@ const LossReportStyle = styled.div`
 
 .store_name{
     color: #8b8b8b;
-    padding-right:.4rem;
+    padding-right:.3rem;
 }
 .order{
+    margin-left:.1rem;
     color: #5cab31;
 }
 .header{
@@ -447,7 +448,7 @@ const LossReportStyle = styled.div`
     // background-color: red;
 }
 .t-img-l{
-    margin-left: .2rem;
+    margin-left: .3rem;
     // margin-top:.2rem;
     width: 1.5rem;
     height: 1.5rem;

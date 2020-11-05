@@ -295,6 +295,45 @@ export default class Youhuimxb extends Component {
     }
 }
 const YouhuimxbStyle = styled.div`
+.conten ul li article div img{
+    width: auto;  
+    height: auto;  
+    max-width: 100%;  
+    max-height: 100%;
+}
+.conten ul li article div{
+    margin-top:.1rem;
+    width:.55rem;
+    height:1.25em;
+}
+.conten ul li article span{
+    font-size:.35rem;
+}
+.conten ul li article{
+    display:flex;
+}
+.conten ul li p{
+    margin-top:.35rem;
+    font-size:.3rem;
+}
+.conten ul li{
+    padding-left:.2rem;
+    
+    // margin-left:.1rem;
+    border-right:2px solid #c8c8c8;
+    width:6rem;
+    // background-color: pink;
+    height:1.2rem;
+
+}
+.conten ul{
+    display:flex;
+}
+.conten{
+    width:100%;
+    // background-color: #ed7912;
+    height:1.7rem;
+}
 // }
 // .btn{
 //     // position:absolute;
@@ -505,50 +544,28 @@ const YouhuimxbStyle = styled.div`
 
 
 
-.dan-footer p{
-    margin-top:.28rem;
-    margin-left:.4rem;
-    font-size:.38rem;
-    color: #969696;
-}
-.zuantai{
-    margin-top:.15rem;
-    // margin-left:2.1rem;
-    font-size:.38rem;
-    color: #ed5f21;
-}
+
 .caigoudanhao{
     margin-top:.15rem;
     margin-left:.2rem;
     width:7.5rem;
-    font-size:.38rem;
+    font-size:.35rem;
     color: #333333;
 }
-.dan-top p img{
-    width: auto;  
-    height: auto;  
-    max-width: 100%;  
-    max-height: 100%;
-}
-.dan-top p{
-    margin-top:.24rem;
-    margin-left:.3rem;
-    width: .4rem;  
-    height: .4rem;
-}
+
 .dan-top{
     display:flex;
     width: 100%;  
     height: .9rem;
-    border-bottom:1px solid #dddddd;
+    // border-bottom:1px solid #dddddd;
 }
 .dan{
-    margin:.4rem .4rem;
-    width: 9.1rem;  
-    height: 4.7rem;
+    margin:.3rem .25rem;
+    width: 9.5rem;  
+    // height: rem;
     background-color: #fff;
     border-radius:.2rem;
-    border:1px solid #dddddd;
+    // border:1px solid #dddddd;
 }
 
 

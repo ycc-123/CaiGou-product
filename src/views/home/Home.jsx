@@ -45,12 +45,18 @@ export default class Home extends Component {
         </ul>
       </div>
 
-      <div className='conten' >
+      <div className='sujubaobiao' >
         <div style={{marginLeft:".35rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shujubaobiao.png" alt=""/></div>
         <ul>
-        <li style={{marginLeft:".5rem"}} onClick={()=>{this.props.history.push('/youhuimxb')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/youhuimxb.png" alt=""/></li>
-          <li style={{marginLeft:".4rem"}} onClick={()=>{this.props.history.push('/LossReport')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/baoshuizong.png" alt=""/></li>
-           {/*  <li style={{marginLeft:".3rem"}} onClick={()=>{this.props.history.push('/LossReport')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigoudan.png" alt=""/></li> */}
+        <li style={{marginLeft:".3rem"}} >
+          <img onClick={()=>{this.props.history.push('/youhuimxb')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/yhmxb.png" alt=""/>
+          {/* </li> */}
+          {/* <li style={{marginLeft:".4rem"}}  */}
+            <img style={{marginLeft:".1rem"}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/spyhhz.png" alt=""/>
+            {/* </li> */}
+            {/* <li style={{marginLeft:".3rem"}} onClick={()=>{this.props.history.push('/LossReport')}}> */}
+              <img  onClick={()=>{this.props.history.push('/LossReport')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/bshz.png" alt=""/>
+              </li>
         </ul>
       </div>
       </HomeStyle>
@@ -59,6 +65,53 @@ export default class Home extends Component {
   }
 }
 const HomeStyle = styled.div`
+
+.sujubaobiao{
+  height: 4rem;
+  width:  9.3rem;
+  background-color: #fff;
+  margin-left: .35rem;
+  margin-top: .3rem;
+  box-shadow: 0px 0px 15px #e4e4e4;
+  border-radius:.1rem;
+}
+.sujubaobiao div img{
+  padding-left:.1rem;
+  padding-top:.4rem;
+  width:100%;
+  height:100%;
+}
+.sujubaobiao div{
+  margin-left: .3rem;
+  margin-top: .3rem;
+  height: 1.2rem;
+  width:  2.2rem;
+}
+.sujubaobiao ul{
+  display:flex;
+  flex-wrap: wrap;
+  margin-top: .6rem;
+  height: 2.5rem;
+  width:  100%;
+  // background-color: red;
+}
+.sujubaobiao ul li{
+  // margin-left:.5rem;
+  height: 1.6rem;
+  width:  100%;
+  // background-color: yellow;
+}
+.sujubaobiao ul li img{
+  width: auto;  
+    height: auto;  
+    max-width: 100%;  
+    max-height: 100%;
+}
+
+
+
+
+
 .conten{
   height: 4rem;
   width:  9.3rem;
