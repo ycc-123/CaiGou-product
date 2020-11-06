@@ -11,6 +11,8 @@ export default class Youhuimxb extends Component {
     constructor() {
         super()
         this.state = {
+            total:{},
+            inputSearch:'',
             start:"",
             end:"",
             store_id:[],
@@ -22,12 +24,20 @@ export default class Youhuimxb extends Component {
             IDsyy:'',
             IDsj:'',
             end_time:'',
-            start_time:''
+            start_time:'',
+            today_time:""
         }
         this.isLoadMore = true
     }
     componentDidMount() {
         setTitle('优惠明细表')
+        var day2 = new Date();
+        day2.setTime(day2.getTime());
+        var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+        console.log(s2)
+        this.setState({
+            today_time: s2
+        })
         get_store({
             action: 'get_store', data: {
                 uniacid: store.getState().uniacid,
@@ -75,7 +85,8 @@ export default class Youhuimxb extends Component {
         }).then((res) => {
             // console.log(res)
             this.setState({
-                linshou:res.data.data.data
+                linshou:res.data.data.data,
+                total:res.data.data.total
             },()=>{
                 this.refs.scroll.BScroll.refresh()
             })
@@ -86,6 +97,9 @@ export default class Youhuimxb extends Component {
     }
     queding(){
         console.log(this.state.IDsj,"=======",this.state.IDsyy,this.state.end_time,this.state.start_time)
+        this.setState({
+            zuantai:false,
+        })
         let IDsyy=this.state.IDsyy.toString()
         let IDsj=this.state.IDsj.toString()
         getRetailList({
@@ -100,11 +114,46 @@ export default class Youhuimxb extends Component {
                 page: this.state.page
             }
         }).then((res) => {
-            this.setState({
+            if(res.data.status===4001){
+                this.setState({
                 linshou:res.data.data.data
             },()=>{
-                this.refs.scroll.BScroll.refresh()
+                // this.refs.scroll.BScroll.refresh()
             })
+            }else{
+                Toast.fail(res.data.msg,1)
+            }
+            
+        })
+    }
+    search() {
+        console.log(this.state.inputSearch)
+       
+        getRetailList({
+            action: 'getRetailList', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                search:this.state.inputSearch,
+                limit: this.state.limit,
+                page: this.state.page
+            }
+        }).then((res) => {
+            if(res.data.status===4001){
+                this.setState({
+                linshou:res.data.data.data
+            },()=>{
+                // this.refs.scroll.BScroll.refresh()
+            })
+            }else{
+                Toast.fail(res.data.msg,1)
+            }
+            
+        })
+    }
+    inputChange(e) {
+        console.log(e.target.value)
+        this.setState({
+            [e.target.name]: e.target.value
         })
     }
     render() {
@@ -118,8 +167,10 @@ export default class Youhuimxb extends Component {
                 <div>
                     <div style={{ display: "flex" }}>
                         <div className='search' >
-                            <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
-                            <div className='img' onClick={()=>{}}>
+                            <input type="search" className='input' placeholder="请输入零售单号" name="inputSearch"
+                            onChange={this.inputChange.bind(this)}
+                            value={this.state.inputSearch} />
+                            <div className='img' onClick={()=>{this.search()}}>
                                 <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
                             </div>
                         </div>
@@ -131,7 +182,7 @@ export default class Youhuimxb extends Component {
                     <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1.3rem",bottom:"0"}} loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
                     {
                         linshou.map((v,k)=>{
-                            // console.log(v)
+                            console.log(v.all_fee)
                             return(
                                 <Youhuimxbs item={v} history={this.props.history}></Youhuimxbs>
                             )
@@ -147,7 +198,7 @@ export default class Youhuimxb extends Component {
                                 <article className='articleone'></article>
                                     <DatePicker
                                         value={this.state.start}
-                                        extra="2020-10-23 06:23"
+                                        extra={this.state.today_time}
                                         // value={this.state.dates}
                                         onChange={v => this.setState({
                                             start:v,
@@ -159,7 +210,7 @@ export default class Youhuimxb extends Component {
                                 
                                 <article className='articletwo'></article>
                                     <DatePicker
-                                        extra="2020-10-23 06:23"
+                                        extra={this.state.today_time}
                                         value={this.state.end}
                                         onChange={v => this.setState({
                                             end:v,
@@ -230,8 +281,8 @@ export default class Youhuimxb extends Component {
                         </div>
                     </div> */}
                     <div className='foot'>
-                    <div>当前结果：<span>11111</span></div>
-                    <div style={{marginLeft:".8rem"}}>总计优惠：<span>22222</span></div>
+                    <div>当前结果：<span>{this.state.total.total_price}</span></div>
+                    <div style={{marginLeft:".8rem"}}>总计优惠：<span>{this.state.total.total_fee}</span></div>
                 </div>
 
 
@@ -350,7 +401,7 @@ const YouhuimxbStyle = styled.div`
     color:#cf2424;
 }
 .foot{
-    padding-left:.9rem;
+    padding-left:.2rem;
     font-size:.38rem;
     display:flex;
     width:100%;
@@ -451,7 +502,7 @@ const YouhuimxbStyle = styled.div`
 .time{
     position:absolute;
     left:0rem;
-    top:4rem;
+    top:4.4rem;
     // padding-top:.3rem;
     color: #a9a9a9;
     width:12rem;
@@ -463,7 +514,7 @@ const YouhuimxbStyle = styled.div`
 .times{
     position:absolute;
     left:0rem;
-    top:2.2rem;
+    top:2.5rem;
     // padding-top:.3rem;
     color: #a9a9a9;
     width:12rem;

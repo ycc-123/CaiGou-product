@@ -18,12 +18,12 @@ localStorage.clear()
 // let uniacid = getParamsString('uniacid')
 
 // 正式站
-let uid = "5372"
-let uniacid = "826"
+// let uid = "5372"
+// let uniacid = "826"
 
 // 测试站
-// let uid ="2271"
-// let uniacid = "53"
+let uid ="2271"
+let uniacid = "53"
 
 const actionuid = saveUserUid(uid)
 store.dispatch(actionuid)

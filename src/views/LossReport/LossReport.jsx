@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getStockList, getWarehouseList, getProductCategoryAll, showProductCategory } from 'network/Api'
+import { getStockList, getWarehouseList, getDamageList } from 'network/Api'
 import { Toast, List, DatePicker } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import LossReportTiao from './LossReportTiao'
@@ -11,9 +11,16 @@ export default class LossReport extends Component {
     constructor() {
         super()
         this.state = {
-            fenleiName: ["今天", "昨天", "7天", "30日"],
-            childrens: ["全部", "已审核", "待审核"],
             cankuID: '',
+            status:'',
+            page:1,
+            limit:"20",
+            inputSearch:'',
+            zongnp:{},
+            damageList:[],
+            fenleiName: ["今天", "昨天", "7天", "本月"],
+            childrens: ["全部", "已审核", "待审核"],
+            
             ckkey: '',
             result: [],
             ekey: '',
@@ -30,68 +37,55 @@ export default class LossReport extends Component {
             today_time: ''
 
         }
+        this.isLoadMore = true
     }
     componentDidMount() {
-        setTitle('库存单')
-
-          axios({
-            timeout: 10000,
-            baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
-            method: 'post',
-            headers: {
-              'Content-Type': 'text/plain'
-            },
-            data: "当天"
-          }).then(function (response) {
-            console.log(response);
-          })
-          
-
-
-
+        setTitle('报损汇总')
         var day2 = new Date();
         day2.setTime(day2.getTime());
         var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+        console.log(s2)
         this.setState({
             today_time: s2
         })
-        // getStockList({
-        //     action: 'getStockList', data: {
-        //         uniacid: store.getState().uniacid,
-        //         uid: store.getState().uid,
-        //     }
-        // }).then((res) => {
-        //     console.log(res)
-        //     if (res.data.status === 4001) {
-        //         var result = res.data.data.data.map(o => { return { id: o.warehouseid, name: o.name } });
-        //         console.log(result)
-        //         this.setState({
-        //             goods: res.data.data.data,
-        //             totalcostprice: res.data.data.totalcostprice,
-        //             totalgnum: res.data.data.totalgnum
-        //         }, () => {
-        //             this.refs.scroll.BScroll.refresh()
-        //         })
-        //     } else {
-        //         Toast.fail(res.data.msg, 2)
-        //     }
-        // })
-
+        // 仓库
         getWarehouseList({
             action: 'getWarehouseList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                type: "1",
-                limit: "8",
-                page: "1"
+                type:"1",
+                limit:"9",
+                page:"1"
             }
         }).then((res) => {
             console.log(res)
-            if (res.data.status === 4001) {
-                var result = res.data.data.data.map(o => { return { id: o.id, name: o.name } });
-                console.log(result)
+            if(res.data.status===4001){
+                var result = res.data.data.data.map(o=>{return{id:o.id,name:o.name}});
+                    console.log(result)
                 this.setState({
                     result
+                })
+            }else{
+                Toast.fail(res.data.msg,2)
+            }
+        })
+        // 报损列表
+        getDamageList({
+            action: 'getDamageList', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                // type: "1",
+                limit:this.state.limit,
+                page:this.state.page
+            }
+        }).then((res) => {
+            console.log(res.data.data.data)
+            if (res.data.status === 4001) {
+                this.setState({
+                    damageList:res.data.data.data,
+                    zongnp:res.data.data.total
+                },()=>{
+                    this.refs.scroll.BScroll.refresh()
                 })
             } else {
                 Toast.fail(res.data.msg, 2)
@@ -99,25 +93,121 @@ export default class LossReport extends Component {
         })
     }
     queding() {
-        console.log(111)
-        if (this.state.yikey === 1) {
-            console.log("全部")
-        }
-        this.setState({
-            xian: false
+        console.log(this.state.end_data,this.state.start_data)
+        getDamageList({
+            action: 'getDamageList', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                warehouseid: this.state.cankuID,
+                starttime:this.state.start_data?this.state.start_data:this.state.today_time,
+                endtime:this.state.end_data?this.state.end_data:this.state.today_time,
+                status:this.state.status,
+                limit:"100",
+                page:this.state.page
+            }
+        }).then((res) => {
+            console.log(res.data.data.data)
+            if (res.data.status === 4001) {
+                this.setState({
+                    damageList:res.data.data.data,
+                    zongnp:res.data.data.total
+                },()=>{
+                    this.refs.scroll.BScroll.refresh()
+                })
+            } else {
+                Toast.fail(res.data.msg, 2)
+            }
         })
     }
     erjifenlei(v, k) {
         console.log(v)
-        this.setState({
-            ekey: k
-        })
+        if(v==="已审核"){
+            this.setState({
+                ekey: k,
+                status:"2"
+            })
+        }else if(v==="待审核"){
+            this.setState({
+                ekey: k,
+                status:"1"
+            })
+        }else{
+            this.setState({
+                ekey: k,
+                
+            })
+        }
     }
     yijifenlei(v, k) {
         console.log(v, k)
         this.setState({
             yikey: k
         })
+        if(v==="今天"){
+            axios({
+                timeout: 10000,
+                baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
+                method: 'post',
+                headers: {
+                  'Content-Type': 'text/plain'
+                },
+                data: {date:"今天"}
+              }).then(res=> {
+                console.log(res.data.data.end);
+                this.setState({
+                    end_data:res.data.data.end,
+                    start_data:res.data.data.start,
+                })
+              })
+        }else if(v==="昨天"){
+            axios({
+                timeout: 10000,
+                baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
+                method: 'post',
+                headers: {
+                  'Content-Type': 'text/plain'
+                },
+                data: {date:"昨天"}
+              }).then(res=> {
+                console.log(res.data.data.end);
+                this.setState({
+                    end_data:res.data.data.end,
+                    start_data:res.data.data.start,
+                })
+              })
+        }else if(v==="7天"){
+            axios({
+                timeout: 10000,
+                baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
+                method: 'post',
+                headers: {
+                  'Content-Type': 'text/plain'
+                },
+                data:{date: "近七天"}
+              }).then(res=> {
+                console.log(res.data.data.end);
+                this.setState({
+                    end_data:res.data.data.end,
+                    start_data:res.data.data.start,
+                })
+              })
+        }else if(v==="30日"){
+            axios({
+                timeout: 10000,
+                baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
+                method: 'post',
+                headers: {
+                  'Content-Type': 'text/plain'
+                },
+                data:{date: "本月"}
+              }).then(res=> {
+                console.log(res.data.data.end);
+                this.setState({
+                    end_data:res.data.data.end,
+                    start_data:res.data.data.start,
+                })
+              })
+        }
     }
     xianyin() {
         if (this.state.xian === false) {
@@ -141,22 +231,22 @@ export default class LossReport extends Component {
 
     search() {
         console.log(this.state.inputSearch)
-        getStockList({
-            action: 'getStockList', data: {
+        getDamageList({
+            action: 'getDamageList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                search: this.state.inputSearch,
+                // type: "1",
+                limit: "100",
+                page: "1",
+                search:this.state.inputSearch
             }
         }).then((res) => {
-            console.log(res)
+            console.log(res.data.data.data)
             if (res.data.status === 4001) {
-                var result = res.data.data.data.map(o => { return { id: o.warehouseid, name: o.name } });
-                console.log(result)
                 this.setState({
-                    goods: res.data.data.data,
-                    totalcostprice: res.data.data.totalcostprice,
-                    totalgnum: res.data.data.totalgnum
-                }, () => {
+                    damageList:res.data.data.data,
+                    zongnp:res.data.data.total
+                },()=>{
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
@@ -171,15 +261,9 @@ export default class LossReport extends Component {
         })
     }
     render() {
-        console.log(this.state.childrens)
         const scrollConfig = {
             probeType: 1
         }
-        const scrollConfigs = {
-            probeType: 1
-        }
-
-        console.log(this.state.goods)
         return (
             <LossReportStyle>
 
@@ -197,28 +281,16 @@ export default class LossReport extends Component {
                         <img className='sximg-search' onClick={() => { this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
                     </div>
                 </div>
-                <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1rem", bottom: "1.5rem" }}>
-                    <div className='tiao'>
-                        <ul className='header'>
-                            <li className='order'>报损单号：BS20201020563456465</li>
-                            <li className='store_name'>火蝶云</li>
-                        </ul>
-                        <div className='conten'>
-                            {/* <img className='t-img-l'  alt="" /> */}
-                            <img className='t-img-l' src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png" alt="" />
-
-                            <ul className='wen-zi'>
-                                <li className='wen-zi-t'>
-                                    <div className='name'>苹果</div>
-                                    <p style={{ color: "#858585" }}>0.85斤</p>
-                                </li>
-                                <li className='wen-zi-f'>
-                                    <div>￥：444元/斤</div>
-                                    <p><span style={{ fontWeight: "100" }}>总价格: </span>444</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1.3rem",bottom:"0"}} loadMore={this.loadMore}
+                    isLoadMore={this.isLoadMore}>
+                    {
+                        this.state.damageList.map((v,k)=>{
+                            return(
+                                <LossReportTiao item={v}/>
+                            )
+                        })
+                    }
+                    
                 </BetterScroll>
 
                 <div className='fenglei' style={{ display: this.state.xian === false ? "none" : "block" }}>
@@ -296,11 +368,63 @@ export default class LossReport extends Component {
                 </div>
 
                 <div className='foot' >
-                    <div>总数量：<span>{this.state.totalgnum ? this.state.totalgnum : 0}</span></div>
-                    <div style={{ marginLeft: ".8rem" }}>总报损金额：<span>{this.state.totalcostprice ? this.state.totalcostprice : 0}</span></div>
+                    <div>总数量：<span>{this.state.zongnp.num ? this.state.zongnp.num : 0}</span></div>
+                    <div style={{ marginLeft: ".8rem" }}>总报损金额：<span>{this.state.zongnp.total ? this.state.zongnp.total : 0}</span></div>
                 </div>
             </LossReportStyle>
         )
+    }
+    loadMore = () => {
+        // 加载数据时转圈
+        let loading = true
+        setTimeout(() => {
+            if (loading) {
+                this.setState({
+                    
+                    loadingMore: true
+                })
+            }
+        }, 1000)
+        if (this.isLoadMore) {
+          
+            getDamageList({
+                action: 'getDamageList', data: {
+                    uniacid: store.getState().uniacid,
+                    uid: store.getState().uid,
+                    // type: "1",
+                    limit:this.state.limit,
+                    page:this.state.page
+                }
+            }).then((res) => {
+               
+
+                // 如果长度不等于得时候加载 那么是到底了
+                if (res.data.data.data.length < this.state.limit) {
+                    this.isLoadMore = false
+                    /* let bottomTip = document.querySelector('.bottom-tip')
+                    bottomTip.style.visibility = 'visible'
+                    bottomTip.innerHTML = '商品已经全部加载完成' */
+                }
+                this.setState({
+                    damageList: [...this.state.damageList, ...res.data.data.data],
+                    zongnp:res.data.data.total,
+                    loadingMore: false
+                }, () => {
+                    let page=Number(this.state.page)
+                    this.setState({
+                        page: page += 1
+                    })
+
+                    loading = false
+                    this.refs.scroll.BScroll.finishPullUp()
+                    this.refs.scroll.BScroll.refresh()
+                })
+            })
+        } else {
+            /* let bottomTip = document.querySelector('.bottom-tip')
+            bottomTip.style.visibility = 'visible'
+            bottomTip.innerHTML = '商品已经全部加载完成' */
+        }
     }
 }
 const LossReportStyle = styled.div`
