@@ -52,7 +52,7 @@ export default class Home extends Component {
           <img onClick={()=>{this.props.history.push('/youhuimxb')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/yhmxb.png" alt=""/>
           {/* </li> */}
           {/* <li style={{marginLeft:".4rem"}}  */}
-            <img style={{marginLeft:".1rem"}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/spyhhz.png" alt=""/>
+            <img style={{marginLeft:".1rem"}} onClick={()=>{this.props.history.push('/GoodDiscount')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/spyhhz.png" alt=""/>
             {/* </li> */}
             {/* <li style={{marginLeft:".3rem"}} onClick={()=>{this.props.history.push('/LossReport')}}> */}
               <img  onClick={()=>{this.props.history.push('/LossReport')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/bshz.png" alt=""/>

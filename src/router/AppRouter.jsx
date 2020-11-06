@@ -20,6 +20,7 @@ import Liebiao from 'views/category/childCom/CategorySwiper'
 import Mingxi from 'views/caigoudanmx/mingxi'
 import Youhuimxb from 'views/kucundan/stockList/youhuimxb'
 import Shouyinmxb from 'views/kucundan/stockList/shouyinmxb'
+import GoodDiscount from 'views/GoodDiscount/GoodDiscount'
 // 测试
 import Text from 'views/ApplyOrderx/Text'
 
@@ -52,6 +53,7 @@ const AppRouter = () => {
         <Route path='/Liebiao' exact component={Liebiao} ></Route>
         <Route path='/Mingxi' exact component={Mingxi} ></Route>
         <Route path='/Youhuimxb' exact component={Youhuimxb} ></Route>
+        <Route path='/GoodDiscount' exact component={GoodDiscount} ></Route>
         <Route path='/Shouyinmxb/:id' exact component={Shouyinmxb} ></Route>
         {/* 测试 */}
         <Route path='/Text' exact component={Text} ></Route>
