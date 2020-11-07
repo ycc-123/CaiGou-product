@@ -340,6 +340,7 @@ const StockListStyle = styled.div`
     color:#cf2424;
 }
 .foot{
+    box-shadow: -2px -2px 3px #ccc;
     padding-left:.9rem;
     font-size:.38rem;
     display:flex;

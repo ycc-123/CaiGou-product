@@ -397,58 +397,58 @@ export default class LossReport extends Component {
             </LossReportStyle>
         )
     }
-    // loadMore = () => {
-    //     // 加载数据时转圈
-    //     let loading = true
-    //     setTimeout(() => {
-    //         if (loading) {
-    //             this.setState({
+    loadMore = () => {
+        // 加载数据时转圈
+        let loading = true
+        setTimeout(() => {
+            if (loading) {
+                this.setState({
                     
-    //                 loadingMore: true
-    //             })
-    //         }
-    //     }, 1000)
-    //     if (this.isLoadMore) {
+                    loadingMore: true
+                })
+            }
+        }, 1000)
+        if (this.isLoadMore) {
           
-    //         getDamageList({
-    //             action: 'getDamageList', data: {
-    //                 uniacid: store.getState().uniacid,
-    //                 uid: store.getState().uid,
-    //                 // type: "1",
-    //                 limit:this.state.limit,
-    //                 page:this.state.page
-    //             }
-    //         }).then((res) => {
+            getDamageList({
+                action: 'getDamageList', data: {
+                    uniacid: store.getState().uniacid,
+                    uid: store.getState().uid,
+                    search:this.state.inputSearch,
+                    limit:this.state.limit,
+                    page:this.state.page
+                }
+            }).then((res) => {
                
 
-    //             // 如果长度不等于得时候加载 那么是到底了
-    //             if (res.data.data.data.length < this.state.limit) {
-    //                 this.isLoadMore = false
-    //                 /* let bottomTip = document.querySelector('.bottom-tip')
-    //                 bottomTip.style.visibility = 'visible'
-    //                 bottomTip.innerHTML = '商品已经全部加载完成' */
-    //             }
-    //             this.setState({
-    //                 damageList: [...this.state.damageList, ...res.data.data.data],
-    //                 zongnp:res.data.data.total,
-    //                 loadingMore: false
-    //             }, () => {
-    //                 let page=Number(this.state.page)
-    //                 this.setState({
-    //                     page: page += 1
-    //                 })
+                // 如果长度不等于得时候加载 那么是到底了
+                if (res.data.data.data.length < this.state.limit) {
+                    this.isLoadMore = false
+                    /* let bottomTip = document.querySelector('.bottom-tip')
+                    bottomTip.style.visibility = 'visible'
+                    bottomTip.innerHTML = '商品已经全部加载完成' */
+                }
+                this.setState({
+                    damageList: [...this.state.damageList, ...res.data.data.data],
+                    zongnp:res.data.data.total,
+                    loadingMore: false
+                }, () => {
+                    let page=Number(this.state.page)
+                    this.setState({
+                        page: page += 1
+                    })
 
-    //                 loading = false
-    //                 this.refs.scroll.BScroll.finishPullUp()
-    //                 this.refs.scroll.BScroll.refresh()
-    //             })
-    //         })
-    //     } else {
-    //         /* let bottomTip = document.querySelector('.bottom-tip')
-    //         bottomTip.style.visibility = 'visible'
-    //         bottomTip.innerHTML = '商品已经全部加载完成' */
-    //     }
-    // }
+                    loading = false
+                    this.refs.scroll.BScroll.finishPullUp()
+                    this.refs.scroll.BScroll.refresh()
+                })
+            })
+        } else {
+            /* let bottomTip = document.querySelector('.bottom-tip')
+            bottomTip.style.visibility = 'visible'
+            bottomTip.innerHTML = '商品已经全部加载完成' */
+        }
+    }
 }
 const LossReportStyle = styled.div`
 .start{

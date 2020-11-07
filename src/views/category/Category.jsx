@@ -131,8 +131,51 @@ class Category extends Component {
   click = (e) => {
     this.child.myName()
   }
+  changeImage = () => {
+    if (this.state.type === 'swiper') {
+      this.setState({
+        type: 'goods'
+      })
+    } else {
+      this.setState({
+        type: 'swiper'
+      })
+    }
+  }
+
+  componentDidCache = () => {
+    console.log('缓存了')
+  }
+
+  componentDidRecover = () => {
+    const { defaultIndex, title } = this.state
+    const { appConfig } = store.getState()
+    const right_config = {
+      action: 'getGoodsByCategory',
+      data: {
+        uniacid: appConfig.uniacid,
+        openid: appConfig.wxUserInfo.openid,
+        cid: title[defaultIndex].id,
+        pagesize: 100
+      }
+    }
+
+    _categoryRight(right_config).then(res => {
+      title[defaultIndex].goods = (res.data && res.data.data && res.data.data.list) || []
+      this.setState({
+        ys: res.data.data.issell,
+        kc: res.data.data.showPubStock,
+        title
+      })
+    })
+
+  }
+
   componentDidMount = () => {
+
+    // this.refs.scroll.BScroll.refresh()
     setTitle('新建采购单')
+    // const { appConfig } = store.getState()
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
@@ -201,7 +244,39 @@ class Category extends Component {
         Toast.info(res.data.msg, 2)
       }
     })
+
+
+
+
+    const { appConfig } = store.getState()
+    let { title } = this.state
+    if (!this.state.goods) {
+      const right_config = {
+        action: 'getGoodsByCategory',
+        data: {
+          uniacid: appConfig.uniacid,
+          openid: appConfig.wxUserInfo.openid,
+          cid: this.state.title[index].id,
+          pagesize: 100
+        }
+      }
+      _categoryRight(right_config).then(res => {
+        title[index].goods = (res.data && res.data.data && res.data.data.list) || []
+        this.setState({
+          ys: res.data.data.issell,
+          kc: res.data.data.showPubStock,
+          title,
+          defaultIndex: index
+        })
+      })
+    } else {
+      this.setState({
+        defaultIndex: index
+      })
+    }
   }
+
+
 }
 const CategoryStyle = styled.div`
 input::-webkit-input-placeholder {
@@ -239,6 +314,13 @@ input::-webkit-input-placeholder {
   background-color: #fff;
 
 }
+
+
+
+
+
+
+
 
 
 .yuan{
@@ -389,6 +471,288 @@ input::-webkit-input-placeholder {
   width: 100%;
   // height: .8rem;
   background: #f5f5f5;
+}
+
+/* 左侧结束 */
+
+/* 右侧开始 */
+
+/* 轮播开始 */
+
+.category-tab-box {
+  position: absolute;
+  overflow: hidden;
+  bottom: 1.28rem;
+  width: 100%;
+}
+
+.category-tab {
+  position: relative;
+  overflow: hidden;
+  height: 1.33rem;
+  z-index: 9999;
+  transition: all 1s;
+}
+
+.category-tab-bar {
+  position: absolute;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 2rem;
+  height: 1.33rem;
+  word-wrap: break-word;
+  word-break: normal;
+  text-align: center;
+  font-size: .3rem;
+  color: #fff;
+}
+
+.bar-active {
+  font-size: .35rem;
+  color: #ff833a;
+}
+
+.tab-un {
+  position: absolute;
+  bottom: 0;
+  width: 2rem;
+  height: .05rem;
+  background-color: #ff833a;
+  transition: all 1s;
+}
+
+.category-swiper {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 2.61rem);
+}
+
+.category-swiper .swiper-container {
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.category-swiper .swiper-wrapper {
+  width: 100%;
+  padding-bottom: .1rem;
+}
+
+.category-swiper .swiper-slide {
+  position: relative;
+  background: #fff;
+  width: 77.33% !important;
+  height: 58%;
+  transform: scale(0.9);
+  transition: all 1s;
+  opacity: .5;
+  border-radius: .4rem;
+  overflow: hidden;
+}
+
+.category-swiper .swiper-slide:first-child {
+  opacity: 1;
+  transform: scale(.95);
+}
+
+.swiper-goods-info {
+  position: relative;
+  width: 6.9339rem;
+  height: calc(10.45rem - .8rem - 6.93rem - .4rem);
+  margin: 0 .4rem .4rem .4rem;
+}
+
+.swiper-slide .swiper-goods-img {
+  width: 6.9339rem;
+  height: 6.9339rem;
+  margin: .4rem .4rem 0 .4rem;
+}
+
+/* .category-swiper .swiper-slide-active {
+  opacity: 1;
+  transform: scale(.95);
+} */
+
+.category-swiper .swiper-slide p:nth-of-type(1) {
+  margin: .2rem 0;
+  text-align: justify;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: .4rem;
+}
+
+.category-swiper .swiper-slide p:nth-of-type(2) {
+  display: flex;
+  text-decoration: line-through;
+  margin-bottom: .15rem;
+  font-size: .3rem;
+  align-items: center;
+  color: #c1c1c1;
+}
+
+.category-swiper .swiper-slide p:nth-of-type(3) {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: .4rem;
+  color: #f5702a;
+  height: .55rem;
+}
+
+.category-swiper .swiper-slide p:nth-of-type(3) span {
+  font-size: .3rem;
+  margin-top: .09rem;
+}
+
+.category-swiper .swiper-slide p:nth-of-type(3) .category-button-left {
+  left: 2rem;
+}
+
+.category-swiper .swiper-slide p:nth-of-type(3) .category-button-right {
+  left: 2.825rem;
+}
+
+.category-swiper .swiper-slide p:nth-of-type(4) {
+  width: 100%;
+  position: absolute;
+  color: #ccc;
+  bottom: 0;
+  font-size: .2rem;
+}
+
+.category-swiper .swiper-slide p:nth-of-type(4) span {
+  margin-right: .4rem;
+}
+
+.swiper-goods-info .category-goods-img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  width: .56rem;
+  height: .56rem;
+}
+
+.category-swiper .swiper-scrollbar {
+  background: #fff;
+  width: 2rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.category-swiper .swiper-scrollbar-drag {
+  background: #ff762e;
+}
+
+.calculate_1 {
+  position: absolute;
+  box-sizing: content-box;
+  right: 0;
+  bottom: 0;
+  padding: .7rem .16rem .17rem .4rem;
+  height: .53rem;
+  line-height: .53rem;
+  text-align: center;
+  font-size: .32rem;
+  color: #f5702a;
+}
+
+.decrement_1, .increment_1 {
+  position: relative;
+  width: .53rem;
+  height: .53rem;
+  border-radius: 50%;
+}
+
+.decrement_1 {
+  float: left;
+  margin-right: .3rem;
+  color: #201d1d;
+  background: #dadada;
+}
+
+.decrement_1::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: .3rem;
+  height: .05rem;
+  background: #201d1d;
+}
+
+.increment_1::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: .3rem;
+  height: .05rem;
+  background: #fff;
+}
+
+.increment_1::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: .05rem;
+  height: .3rem;
+  background: #fff;
+}
+
+.increment_1 {
+  float: right;
+  margin-left: .3rem;
+  ;
+  color: #fff;
+  background: #ff762e;
+}
+
+.＋▂＋ {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 1.87rem;
+  height: auto;
+}
+
+.category-button {
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: #ff762e;
+  bottom: .335rem;
+  left: 5.5rem;
+  border: none;
+  width: 1.85rem;
+  height: .8rem !important;
+  padding-left: .41rem;
+  font-size: .35rem;
+  color: white;
+  border-top-left-radius: .4rem;
+  border-bottom-left-radius: .4rem;
+}
+
+.category-button::after {
+  content: '';
+    position: absolute;
+    display: inline-block;
+    right: 9%;
+    width: .12rem;
+    height: .12rem;
+    border-top: .03rem solid #fff;
+    border-right: .03rem solid #fff;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 `
 

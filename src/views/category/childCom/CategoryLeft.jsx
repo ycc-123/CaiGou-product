@@ -4,6 +4,7 @@ import CategoryLeftItem from './CategoryLeftItem'
 import CategoryRight from './CategoryRight'
 import BetterScroll from 'common/betterScroll/BetterScroll'
 
+
 class CategoryLeft extends Component {
   constructor(props) {
     super(props)
@@ -99,7 +100,6 @@ class CategoryLeft extends Component {
     }
   }
 
-
   componentDidMount = () => {
     _categoryLeft().then(res => {
       const right_config = {
@@ -112,7 +112,6 @@ class CategoryLeft extends Component {
         }
       }
       _categoryRight(right_config).then(res1 => {
-
         let title = (res.data && res.data.data) || []
         title[0].goods = (res1.data && res1.data.data && res1.data.data.list) || []
         this.setState({

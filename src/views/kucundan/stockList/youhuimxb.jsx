@@ -46,7 +46,7 @@ export default class Youhuimxb extends Component {
             // console.log(res)
             var supplier = res.data.data.map(o=>{return{value:o.id,label:o.name}});
                     // console.log(supplier)
-            if(res.data.status===1002){
+            if(res.data.status===4001){
                 this.setState({
                     store_id:supplier
                 })
@@ -59,9 +59,10 @@ export default class Youhuimxb extends Component {
                 uniacid: store.getState().uniacid,
             }
         }).then((res) => {
+            console.log(res)
             var shouyinyuan = res.data.data.map(o=>{return{value:o.id,label:o.nick_name}});
                     // console.log(shouyinyuan)
-            if(res.data.status===1002){
+            if(res.data.status===4001){
                 this.setState({
                     shouyinyuan
                 })
@@ -182,7 +183,7 @@ export default class Youhuimxb extends Component {
                     <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1.3rem",bottom:"0"}} loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
                     {
                         linshou.map((v,k)=>{
-                            console.log(v.all_fee)
+                            // console.log(v.all_fee)
                             return(
                                 <Youhuimxbs item={v} history={this.props.history}></Youhuimxbs>
                             )

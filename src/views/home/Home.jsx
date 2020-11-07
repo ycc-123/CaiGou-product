@@ -54,8 +54,8 @@ export default class Home extends Component {
         <div style={{marginLeft:".35rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shujubaobiao.png" alt=""/></div>
         <ul>
         <li style={{marginLeft:".2rem"}} >
-          <img onClick={()=>{this.props.history.push('/youhuimxb')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/yhmxb.png" alt=""/>
-            <img style={{marginLeft:".1rem"}} onClick={()=>{this.props.history.push('/GoodDiscount')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/spyhhz.png" alt=""/>
+          {/* <img onClick={()=>{this.props.history.push('/youhuimxb')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/yhmxb.png" alt=""/> */}
+            {/* <img style={{marginLeft:".1rem"}} onClick={()=>{this.props.history.push('/GoodDiscount')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/spyhhz.png" alt=""/> */}
               <img  onClick={()=>{this.props.history.push('/LossReport')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/bshz.png" alt=""/>
               </li>
         </ul>
