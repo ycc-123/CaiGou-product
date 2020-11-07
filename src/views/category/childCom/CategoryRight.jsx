@@ -104,7 +104,7 @@ class CategoryRight extends Component {
 
   myName = () =>{
     if(this.state.login[0]===undefined){
-     Toast.fail('请采购商品后提交',1.5)
+     Toast.info('请采购商品后提交',1.5)
     }else{
       // console.log(this.state.login[0], this.state.password,this.state.goods)
     let num =this.state.login
@@ -152,7 +152,7 @@ class CategoryRight extends Component {
         Toast.success(res.data.msg, 2)
         this.home()
       }else{
-        Toast.fail(res.data.msg, 2)
+        Toast.info(res.data.msg, 2)
       }
     })
     }

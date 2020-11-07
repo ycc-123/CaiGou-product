@@ -12,7 +12,7 @@ export default class StockListTiao extends Component {
                         </ul>
                         <div className='conten'>
                             {/* <img className='t-img-l'  alt="" /> */}
-                            <img className='t-img-l' src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png" alt="" />
+                            <img className='t-img-l'  src={good.image?good.image:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
                             <ul className='wen-zi'>
                                 <li className='wen-zi-t'>

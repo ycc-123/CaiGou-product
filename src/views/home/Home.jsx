@@ -1,14 +1,19 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { store } from "store/index";
+import { Toast } from 'antd-mobile';
 
 
 
 export default class Home extends Component {
 
   componentDidMount(){
-    console.log(store.getState().uid)
+    console.log("uid=====")
+    console.log("uid=====",store.getState().uid)
+    console.log("uniacid=====",store.getState().uniacid)
     localStorage.clear()
+
+    // Toast.loading('Loading...', 1);
   }
   render() {
     return (
@@ -48,13 +53,9 @@ export default class Home extends Component {
       <div className='sujubaobiao' >
         <div style={{marginLeft:".35rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shujubaobiao.png" alt=""/></div>
         <ul>
-        <li style={{marginLeft:".3rem"}} >
+        <li style={{marginLeft:".2rem"}} >
           <img onClick={()=>{this.props.history.push('/youhuimxb')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/yhmxb.png" alt=""/>
-          {/* </li> */}
-          {/* <li style={{marginLeft:".4rem"}}  */}
             <img style={{marginLeft:".1rem"}} onClick={()=>{this.props.history.push('/GoodDiscount')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/spyhhz.png" alt=""/>
-            {/* </li> */}
-            {/* <li style={{marginLeft:".3rem"}} onClick={()=>{this.props.history.push('/LossReport')}}> */}
               <img  onClick={()=>{this.props.history.push('/LossReport')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/bshz.png" alt=""/>
               </li>
         </ul>

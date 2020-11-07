@@ -42,7 +42,7 @@ export default class AddPurchaseOrder extends Component {
                     data: result
                 })
             }else{
-                Toast.fail('网络错误', 2)
+                Toast.info('网络错误', 2)
             }
         })
         getSupplierList({ action: 'getSupplierList', data: {
@@ -60,7 +60,7 @@ export default class AddPurchaseOrder extends Component {
                         supplier
                     })
             }else{
-                Toast.fail('网络错误', 2)
+                Toast.info('网络错误', 2)
             }
         }) 
     }
@@ -86,7 +86,7 @@ export default class AddPurchaseOrder extends Component {
                 console.log(res.data.data)
                 Toast.success('新建采购单成功', 2)
             }else{
-                Toast.fail(res.data.msg, 2)
+                Toast.info(res.data.msg, 2)
             }
         })
     }

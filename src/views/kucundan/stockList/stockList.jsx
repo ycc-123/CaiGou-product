@@ -48,7 +48,7 @@ export default class stockList extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             }else{
-                Toast.fail(res.data.msg,2)
+                Toast.info(res.data.msg,2)
             }
         })
 
@@ -69,7 +69,7 @@ export default class stockList extends Component {
                     result
                 })
             }else{
-                Toast.fail(res.data.msg,2)
+                Toast.info(res.data.msg,2)
             }
         })
         // 分类
@@ -88,7 +88,7 @@ export default class stockList extends Component {
 
                 })
             }else{
-                Toast.fail(res.data.msg,2)
+                Toast.info(res.data.msg,2)
             }
         })
         
@@ -117,7 +117,7 @@ export default class stockList extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             }else{
-                Toast.fail(res.data.msg,2)
+                Toast.info(res.data.msg,2)
             }
         })
     }
@@ -171,7 +171,7 @@ export default class stockList extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             }else{
-                Toast.fail(res.data.msg,2)
+                Toast.info(res.data.msg,2)
             }
         })
     }
@@ -196,7 +196,7 @@ export default class stockList extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             }else{
-                Toast.fail(res.data.msg,2)
+                Toast.info(res.data.msg,2)
             }
         })
     }

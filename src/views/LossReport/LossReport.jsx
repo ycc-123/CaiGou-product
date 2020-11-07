@@ -66,7 +66,7 @@ export default class LossReport extends Component {
                     result
                 })
             }else{
-                Toast.fail(res.data.msg,2)
+                Toast.info(res.data.msg,2)
             }
         })
         // 报损列表
@@ -88,12 +88,15 @@ export default class LossReport extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
-                Toast.fail(res.data.msg, 2)
+                Toast.info(res.data.msg, 2)
             }
         })
     }
     queding() {
         console.log(this.state.end_data,this.state.start_data)
+        this.setState({
+            xian: false
+        })
         getDamageList({
             action: 'getDamageList', data: {
                 uniacid: store.getState().uniacid,
@@ -115,7 +118,7 @@ export default class LossReport extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
-                Toast.fail(res.data.msg, 2)
+                Toast.info(res.data.msg, 2)
             }
         })
     }
@@ -138,6 +141,10 @@ export default class LossReport extends Component {
             })
         }
     }
+    StrToGMT(time) {
+        let GMT = new Date(time)
+        return GMT
+    }
     yijifenlei(v, k) {
         console.log(v, k)
         this.setState({
@@ -154,7 +161,11 @@ export default class LossReport extends Component {
                 data: {date:"今天"}
               }).then(res=> {
                 console.log(res.data.data.end);
+                let start = this.StrToGMT(res.data.data.start)
+                let end = this.StrToGMT(res.data.data.end)
                 this.setState({
+                    end:end,
+                    start:start,
                     end_data:res.data.data.end,
                     start_data:res.data.data.start,
                 })
@@ -170,7 +181,11 @@ export default class LossReport extends Component {
                 data: {date:"昨天"}
               }).then(res=> {
                 console.log(res.data.data.end);
+                let start = this.StrToGMT(res.data.data.start)
+                let end = this.StrToGMT(res.data.data.end)
                 this.setState({
+                    end:end,
+                    start:start,
                     end_data:res.data.data.end,
                     start_data:res.data.data.start,
                 })
@@ -186,12 +201,16 @@ export default class LossReport extends Component {
                 data:{date: "近七天"}
               }).then(res=> {
                 console.log(res.data.data.end);
+                let start = this.StrToGMT(res.data.data.start)
+                let end = this.StrToGMT(res.data.data.end)
                 this.setState({
+                    end:end,
+                    start:start,
                     end_data:res.data.data.end,
                     start_data:res.data.data.start,
                 })
               })
-        }else if(v==="30日"){
+        }else if(v==="本月"){
             axios({
                 timeout: 10000,
                 baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
@@ -202,7 +221,11 @@ export default class LossReport extends Component {
                 data:{date: "本月"}
               }).then(res=> {
                 console.log(res.data.data.end);
+                let start = this.StrToGMT(res.data.data.start)
+                let end = this.StrToGMT(res.data.data.end)
                 this.setState({
+                    end:end,
+                    start:start,
                     end_data:res.data.data.end,
                     start_data:res.data.data.start,
                 })
@@ -250,7 +273,7 @@ export default class LossReport extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
-                Toast.fail(res.data.msg, 2)
+                Toast.info(res.data.msg, 2)
             }
         })
     }
@@ -281,7 +304,7 @@ export default class LossReport extends Component {
                         <img className='sximg-search' onClick={() => { this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
                     </div>
                 </div>
-                <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1.3rem",bottom:"0"}} loadMore={this.loadMore}
+                <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1rem",bottom:"1.5rem"}} loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
                     {
                         this.state.damageList.map((v,k)=>{
@@ -374,58 +397,58 @@ export default class LossReport extends Component {
             </LossReportStyle>
         )
     }
-    loadMore = () => {
-        // 加载数据时转圈
-        let loading = true
-        setTimeout(() => {
-            if (loading) {
-                this.setState({
+    // loadMore = () => {
+    //     // 加载数据时转圈
+    //     let loading = true
+    //     setTimeout(() => {
+    //         if (loading) {
+    //             this.setState({
                     
-                    loadingMore: true
-                })
-            }
-        }, 1000)
-        if (this.isLoadMore) {
+    //                 loadingMore: true
+    //             })
+    //         }
+    //     }, 1000)
+    //     if (this.isLoadMore) {
           
-            getDamageList({
-                action: 'getDamageList', data: {
-                    uniacid: store.getState().uniacid,
-                    uid: store.getState().uid,
-                    // type: "1",
-                    limit:this.state.limit,
-                    page:this.state.page
-                }
-            }).then((res) => {
+    //         getDamageList({
+    //             action: 'getDamageList', data: {
+    //                 uniacid: store.getState().uniacid,
+    //                 uid: store.getState().uid,
+    //                 // type: "1",
+    //                 limit:this.state.limit,
+    //                 page:this.state.page
+    //             }
+    //         }).then((res) => {
                
 
-                // 如果长度不等于得时候加载 那么是到底了
-                if (res.data.data.data.length < this.state.limit) {
-                    this.isLoadMore = false
-                    /* let bottomTip = document.querySelector('.bottom-tip')
-                    bottomTip.style.visibility = 'visible'
-                    bottomTip.innerHTML = '商品已经全部加载完成' */
-                }
-                this.setState({
-                    damageList: [...this.state.damageList, ...res.data.data.data],
-                    zongnp:res.data.data.total,
-                    loadingMore: false
-                }, () => {
-                    let page=Number(this.state.page)
-                    this.setState({
-                        page: page += 1
-                    })
+    //             // 如果长度不等于得时候加载 那么是到底了
+    //             if (res.data.data.data.length < this.state.limit) {
+    //                 this.isLoadMore = false
+    //                 /* let bottomTip = document.querySelector('.bottom-tip')
+    //                 bottomTip.style.visibility = 'visible'
+    //                 bottomTip.innerHTML = '商品已经全部加载完成' */
+    //             }
+    //             this.setState({
+    //                 damageList: [...this.state.damageList, ...res.data.data.data],
+    //                 zongnp:res.data.data.total,
+    //                 loadingMore: false
+    //             }, () => {
+    //                 let page=Number(this.state.page)
+    //                 this.setState({
+    //                     page: page += 1
+    //                 })
 
-                    loading = false
-                    this.refs.scroll.BScroll.finishPullUp()
-                    this.refs.scroll.BScroll.refresh()
-                })
-            })
-        } else {
-            /* let bottomTip = document.querySelector('.bottom-tip')
-            bottomTip.style.visibility = 'visible'
-            bottomTip.innerHTML = '商品已经全部加载完成' */
-        }
-    }
+    //                 loading = false
+    //                 this.refs.scroll.BScroll.finishPullUp()
+    //                 this.refs.scroll.BScroll.refresh()
+    //             })
+    //         })
+    //     } else {
+    //         /* let bottomTip = document.querySelector('.bottom-tip')
+    //         bottomTip.style.visibility = 'visible'
+    //         bottomTip.innerHTML = '商品已经全部加载完成' */
+    //     }
+    // }
 }
 const LossReportStyle = styled.div`
 .start{
@@ -519,6 +542,7 @@ const LossReportStyle = styled.div`
     font-weight:900;
 }
 .foot{
+    box-shadow: -2px -2px 3px #ccc;
     padding-left:.9rem;
     font-size:.38rem;
     display:flex;

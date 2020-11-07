@@ -109,7 +109,7 @@ class CategoryRight extends Component {
         Toast.success(res.data.msg, 2)
         this.home()
       }else{
-        Toast.fail(res.data.msg, 2)
+        Toast.info(res.data.msg, 2)
       }
     })
   } 

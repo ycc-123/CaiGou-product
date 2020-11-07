@@ -51,7 +51,7 @@ export default class Youhuimxb extends Component {
                     store_id:supplier
                 })
             }else{
-                Toast.fail(res.data.msg,2)
+                Toast.info(res.data.msg,2)
             }
         })
         get_cashier({
@@ -66,7 +66,7 @@ export default class Youhuimxb extends Component {
                     shouyinyuan
                 })
             }else{
-                Toast.fail(res.data.msg,2)
+                Toast.info(res.data.msg,2)
             }
         })
         let IDsyy=this.state.IDsyy.toString()
@@ -121,7 +121,7 @@ export default class Youhuimxb extends Component {
                 // this.refs.scroll.BScroll.refresh()
             })
             }else{
-                Toast.fail(res.data.msg,1)
+                Toast.info(res.data.msg,1)
             }
             
         })
@@ -145,7 +145,7 @@ export default class Youhuimxb extends Component {
                 // this.refs.scroll.BScroll.refresh()
             })
             }else{
-                Toast.fail(res.data.msg,1)
+                Toast.info(res.data.msg,1)
             }
             
         })

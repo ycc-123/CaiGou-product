@@ -66,7 +66,7 @@ class Category extends Component {
             goods: res.data.data.data
         })
       }else{
-        Toast.fail(res.data.msg,2)
+        Toast.info(res.data.msg,2)
       }
       
     })
@@ -161,7 +161,7 @@ class Category extends Component {
               goods: res.data.msg === "成功" ? res.data.data.data : [{}]
             })
           } else {
-            Toast.fail(res.data.msg, 2)
+            Toast.info(res.data.msg, 2)
           }
         })
         this.setState({
@@ -170,7 +170,7 @@ class Category extends Component {
           value
         })
       } else {
-        Toast.fail('网络错误', 2)
+        Toast.info('网络错误', 2)
       }
     })
     console.log(this.state.id)
@@ -198,7 +198,7 @@ class Category extends Component {
         this.setState({
           goods: []
         })
-        Toast.fail(res.data.msg, 2)
+        Toast.info(res.data.msg, 2)
       }
     })
   }

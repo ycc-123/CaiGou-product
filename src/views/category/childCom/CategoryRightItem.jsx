@@ -17,9 +17,9 @@ class CategoryRightgoods extends Component {
   }
   zjian = (login, password, goods) => {
     if (login === '' ) {
-      Toast.fail('请填写采购数量')
+      Toast.info('请填写采购数量')
     } else if(password === ''){
-      Toast.fail('请填写采购单价')
+      Toast.info('请填写采购单价')
     }else{
       console.log(login, password, goods)
       this.setState({

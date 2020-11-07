@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getStockList, getWarehouseList, getProductCategoryAll, showProductCategory } from 'network/Api'
+import { getWarehouseList, getRetailGoodsList } from 'network/Api'
 import { Toast, List, DatePicker } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
-// import LossReportTiao from './LossReportTiao'
+import GoodDiscounts from './GoodDiscounts'
 import { store } from "store/index";
 import { setTitle } from 'commons/utils'
 import axios from 'axios';
@@ -11,8 +11,11 @@ export default class LossReport extends Component {
     constructor() {
         super()
         this.state = {
-            fenleiName: ["今天", "昨天", "7天", "30日"],
-            childrens: ["全部", "已审核", "待审核"],
+            status:"",
+            Goodszong: {},
+            GoodsList: [],
+            fenleiName: ["今天", "昨天", "7天", "本月"],
+            childrens: ["全部", "已付款", "未付款", "全部退款", "部分退款", "已取消"],
             cankuID: '',
             ckkey: '',
             result: [],
@@ -31,62 +34,68 @@ export default class LossReport extends Component {
 
         }
     }
+    StrToGMT(time) {
+        let GMT = new Date(time)
+        return GMT
+    }
     componentDidMount() {
-        setTitle('库存单')
+        setTitle('商品优惠汇总')
+        var day2 = new Date();
+        day2.setTime(day2.getTime());
+        var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+        console.log(s2)
+        this.setState({
+            today_time: s2
+        })
 
-          axios({
+        axios({
             timeout: 10000,
             baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
             method: 'post',
             headers: {
-              'Content-Type': 'text/plain'
+                'Content-Type': 'text/plain'
             },
             data: "当天"
-          }).then(function (response) {
+        }).then(function (response) {
             console.log(response);
-          })
-          
-
-
-
+        })
         var day2 = new Date();
         day2.setTime(day2.getTime());
         var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
         this.setState({
             today_time: s2
         })
-        // getStockList({
-        //     action: 'getStockList', data: {
-        //         uniacid: store.getState().uniacid,
-        //         uid: store.getState().uid,
-        //     }
-        // }).then((res) => {
-        //     console.log(res)
-        //     if (res.data.status === 4001) {
-        //         var result = res.data.data.data.map(o => { return { id: o.warehouseid, name: o.name } });
-        //         console.log(result)
-        //         this.setState({
-        //             goods: res.data.data.data,
-        //             totalcostprice: res.data.data.totalcostprice,
-        //             totalgnum: res.data.data.totalgnum
-        //         }, () => {
-        //             this.refs.scroll.BScroll.refresh()
-        //         })
-        //     } else {
-        //         Toast.fail(res.data.msg, 2)
-        //     }
-        // })
+        getRetailGoodsList({
+            action: 'getRetailGoodsList', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                limit: "30",
+                page: "1"
+            }
+        }).then((res) => {
+            console.log(res.data.data.data)
+            if (res.data.status === 4001) {
+                this.setState({
+                    GoodsList: res.data.data.data,
+                    Goodszong: res.data.data.total
+                }, () => {
+                    this.refs.scroll.BScroll.refresh()
+                })
+            } else {
+                Toast.info(res.data.msg, 1)
+            }
+        })
 
         getWarehouseList({
             action: 'getWarehouseList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 type: "1",
-                limit: "8",
+                limit: "9",
                 page: "1"
             }
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             if (res.data.status === 4001) {
                 var result = res.data.data.data.map(o => { return { id: o.id, name: o.name } });
                 console.log(result)
@@ -94,30 +103,157 @@ export default class LossReport extends Component {
                     result
                 })
             } else {
-                Toast.fail(res.data.msg, 2)
+                Toast.offline(res.data.msg, 2)
             }
         })
     }
     queding() {
-        console.log(111)
-        if (this.state.yikey === 1) {
-            console.log("全部")
-        }
+        console.log(this.state.end_data,this.state.start_data)
         this.setState({
             xian: false
         })
+        getRetailGoodsList({
+            action: 'getRetailGoodsList', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                starttime:this.state.start_data,
+                endtime:this.state.end_data,
+                status:this.state.status,
+                store_id:this.state.cankuID,
+                limit: "30",
+                page: "1"
+            }
+        }).then((res) => {
+            console.log(res.data.data.data)
+            if (res.data.status === 4001) {
+                this.setState({
+                    GoodsList: res.data.data.data,
+                    Goodszong: res.data.data.total
+                }, () => {
+                    this.refs.scroll.BScroll.refresh()
+                })
+            } else {
+                Toast.info(res.data.msg, 1)
+            }
+        })
     }
-    erjifenlei(v, k) {
+    status(v, k) {
         console.log(v)
         this.setState({
             ekey: k
         })
+    if (v==="全部") {
+        // this.setState({
+        //     ekey: k
+        // })
+    } else if (v==="已付款") {
+        this.setState({
+            status: "1"
+        })
+    } else if (v==="未付款") {
+        this.setState({
+            status: "0"
+        })
+    }else if (v==="全部退款") {
+        this.setState({
+            status: "4"
+        })
+    }else if (v==="部分退款") {
+        this.setState({
+            status: "6"
+        })
+    }else if (v==="已取消") {
+        this.setState({
+            status: "9"
+        })
+    }
     }
     yijifenlei(v, k) {
         console.log(v, k)
         this.setState({
             yikey: k
         })
+        if(v==="今天"){
+            axios({
+                timeout: 10000,
+                baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
+                method: 'post',
+                headers: {
+                  'Content-Type': 'text/plain'
+                },
+                data: {date:"今天"}
+              }).then(res=> {
+                console.log(res.data.data.end);
+                let start = this.StrToGMT(res.data.data.start)
+                let end = this.StrToGMT(res.data.data.end)
+                this.setState({
+                    end:end,
+                    start:start,
+                    end_data:res.data.data.end,
+                    start_data:res.data.data.start,
+                })
+              })
+        }else if(v==="昨天"){
+            axios({
+                timeout: 10000,
+                baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
+                method: 'post',
+                headers: {
+                  'Content-Type': 'text/plain'
+                },
+                data: {date:"昨天"}
+              }).then(res=> {
+                console.log(res.data.data.end);
+                let start = this.StrToGMT(res.data.data.start)
+                let end = this.StrToGMT(res.data.data.end)
+                this.setState({
+                    end:end,
+                    start:start,
+                    end_data:res.data.data.end,
+                    start_data:res.data.data.start,
+                })
+              })
+        }else if(v==="7天"){
+            axios({
+                timeout: 10000,
+                baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
+                method: 'post',
+                headers: {
+                  'Content-Type': 'text/plain'
+                },
+                data:{date: "近七天"}
+              }).then(res=> {
+                console.log(res.data.data.end);
+                let start = this.StrToGMT(res.data.data.start)
+                let end = this.StrToGMT(res.data.data.end)
+                this.setState({
+                    end:end,
+                    start:start,
+                    end_data:res.data.data.end,
+                    start_data:res.data.data.start,
+                })
+              })
+        }else if(v==="本月"){
+            axios({
+                timeout: 10000,
+                baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
+                method: 'post',
+                headers: {
+                  'Content-Type': 'text/plain'
+                },
+                data:{date: "本月"}
+              }).then(res=> {
+                console.log(res.data.data.end);
+                let start = this.StrToGMT(res.data.data.start)
+                let end = this.StrToGMT(res.data.data.end)
+                this.setState({
+                    end:end,
+                    start:start,
+                    end_data:res.data.data.end,
+                    start_data:res.data.data.start,
+                })
+              })
+        }
     }
     xianyin() {
         if (this.state.xian === false) {
@@ -141,28 +277,27 @@ export default class LossReport extends Component {
 
     search() {
         console.log(this.state.inputSearch)
-        getStockList({
-            action: 'getStockList', data: {
+        getRetailGoodsList({
+            action: 'getRetailGoodsList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 search: this.state.inputSearch,
+                limit: "30",
+                page: "1"
             }
         }).then((res) => {
-            console.log(res)
             if (res.data.status === 4001) {
-                var result = res.data.data.data.map(o => { return { id: o.warehouseid, name: o.name } });
-                console.log(result)
                 this.setState({
-                    goods: res.data.data.data,
-                    totalcostprice: res.data.data.totalcostprice,
-                    totalgnum: res.data.data.totalgnum
+                    GoodsList: res.data.data.data,
+                    Goodszong: res.data.data.total
                 }, () => {
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
-                Toast.fail(res.data.msg, 2)
+                Toast.info(res.data.msg, 1)
             }
         })
+
     }
     inputChange(e) {
         console.log(e.target.value)
@@ -171,19 +306,11 @@ export default class LossReport extends Component {
         })
     }
     render() {
-        console.log(this.state.childrens)
         const scrollConfig = {
             probeType: 1
         }
-        const scrollConfigs = {
-            probeType: 1
-        }
-
-        console.log(this.state.goods)
         return (
             <LossReportStyle>
-
-
                 <div style={{ display: "flex" }}>
                     <div className='search'  >
                         <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
@@ -198,31 +325,14 @@ export default class LossReport extends Component {
                     </div>
                 </div>
                 <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1rem", bottom: "1.5rem" }}>
-                    <div className='tiao'>
-                        <ul className='header'>
-                            <li className='order'>零售单号：BS20201020563456465</li>
-                            <li className='store_name'>火蝶云</li>
-                        </ul>
-                        <div className='conten'>
-                            {/* <img className='t-img-l'  alt="" /> */}
-                            <img className='t-img-l' src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png" alt="" />
+                    {
+                        this.state.GoodsList.map((v, k) => {
+                            return (
+                                <GoodDiscounts item={v} />
+                            )
+                        })
+                    }
 
-                            <ul className='wen-zi'>
-                                <li className='wen-zi-t'>
-                                    <div className='name'>苹果</div>
-                                    <p style={{ color: "#858585" }}>0.85斤</p>
-                                </li>
-                                <li className='wen-zi-f'>
-                                    <div>原价：444元/斤</div>
-                                    <p><span style={{ fontWeight: "100" }}>小计优惠: </span>444</p>
-                                </li>
-                                <li className='wen-zi-f'>
-                                    <div>售价：444元/斤</div>
-                                    <p><span style={{ fontWeight: "100" }}>订单优惠分摊: </span>444</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
                 </BetterScroll>
 
                 <div className='fenglei' style={{ display: this.state.xian === false ? "none" : "block" }}>
@@ -288,7 +398,7 @@ export default class LossReport extends Component {
                             {
                                 this.state.childrens.map((v, k) => {
                                     return (
-                                        <li onClick={(e) => { this.erjifenlei(v, k) }}
+                                        <li onClick={(e) => { this.status(v, k) }}
                                             style={{ background: this.state.ekey === k ? "#fff5ed" : '', color: this.state.ekey === k ? "#ed7913" : '', border: this.state.ekey === k ? "1px solid #ed7913" : '' }}
                                         >{v}</li>
                                     )
@@ -300,8 +410,8 @@ export default class LossReport extends Component {
                 </div>
 
                 <div className='foot' >
-                    <div>总数量：<span>{this.state.totalgnum ? this.state.totalgnum : 0}</span></div>
-                    <div style={{ marginLeft: ".8rem" }}>总报损金额：<span>{this.state.totalcostprice ? this.state.totalcostprice : 0}</span></div>
+                    <div>总数量：<span>{this.state.Goodszong.total_subtotal ? this.state.Goodszong.total_subtotal : 0}</span></div>
+                    <div style={{ marginLeft: ".8rem" }}>总报损金额：<span>{this.state.Goodszong.total_fee ? this.state.Goodszong.total_fee : 0}</span></div>
                 </div>
             </LossReportStyle>
         )
@@ -399,7 +509,7 @@ const LossReportStyle = styled.div`
     font-weight:900;
 }
 .foot{
-    padding-left:.9rem;
+    padding-left:.2rem;
     font-size:.38rem;
     display:flex;
     width:100%;

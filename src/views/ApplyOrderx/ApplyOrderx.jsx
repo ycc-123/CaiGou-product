@@ -51,7 +51,7 @@ export default class ApplyOrderx extends Component {
                     sum
                 })
             } else {
-                Toast.fail(res.data.msg, 2)
+                Toast.info(res.data.msg, 2)
             }
         })
     }
@@ -89,7 +89,7 @@ export default class ApplyOrderx extends Component {
                 window.location.reload();
                 Toast.success(res.data.msg,1)
             }else{
-                Toast.fail(res.data.msg,1)
+                Toast.info(res.data.msg,1)
             }
         })
     }

@@ -118,7 +118,7 @@ export function submitPurchaseDelivery(config) {
     data: config.data
   })
 }
-// 盘点单
+// 库存单列表
 export function getStockList(config) {
   return requestPost({
     params: {
@@ -127,7 +127,7 @@ export function getStockList(config) {
     data: config.data
   })
 }
-// 获取盘点单分类
+// 获取库存单分类
 export function showProductCategory(config) {
   return requestPost({
     params: {
@@ -160,15 +160,15 @@ export function get_cashier(config) {
 
 
 // 获取仓库
-export function get_store(config) {
-  return requestPost({
-    params: {
-      action: config.action
-    },
-    data: config.data
-  })
+// export function get_store(config) {
+//   return requestPost({
+//     params: {
+//       action: config.action
+//     },
+//     data: config.data
+//   })
 
-}
+// }
 
 
 // 采购申请单列表
@@ -224,5 +224,25 @@ export function getDamageList(config) {
     },
     data: config.data
   })
+}
+// 商品优惠明细列表
+export function getRetailGoodsList(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
 
+
+// 商品优惠明细列表
+
+export function get_store(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
 }

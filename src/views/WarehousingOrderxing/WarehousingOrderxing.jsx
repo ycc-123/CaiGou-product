@@ -49,7 +49,7 @@ export default class WarehousingOrderxing extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
-                Toast.fail(res.data.msg, 2)
+                Toast.info(res.data.msg, 2)
             }
         })
     }
@@ -100,10 +100,10 @@ export default class WarehousingOrderxing extends Component {
                 }).then((res) => {
                     console.log(res.data)
                     if (res.data.status === 4001) {
-                        // window.location.reload();
+                        window.location.reload();
                         Toast.success(res.data.msg, 2)
                     } else {
-                        Toast.fail(res.data.msg, 2)
+                        Toast.info(res.data.msg, 2)
                     }
                 })
         } else {
@@ -143,59 +143,13 @@ export default class WarehousingOrderxing extends Component {
                         window.location.reload();
                         Toast.success(res.data.msg, 2)
                     } else {
-                        Toast.fail(res.data.msg, 2)
+                        Toast.info(res.data.msg, 2)
                     }
                 })
         }
     }
-        // let aa = {}
-        // let arr = []
-
-        // this.state.goods.map((v, k) => {
-        //     console.log(v, k)
-        //     aa = {
-        //         id: this.state.goods[k].id,
-        //         barcodeid: this.state.goods[k].barcodeid,
-        //         diffnum: this.state.goods[k].price - this.state.input[k],
-        //         innum: this.state.input[k],
-        //         goodsid: this.state.goods[k].goodsid
-
-        //     }
-        //     return arr.push(aa);
-        // })
-        // let itemData = arr
-        // console.log(itemData)
-        // let deliveryData = {
-        //     id: this.props.match.params.id,
-        //     snum: this.state.count,
-        //     in_out_num: this.state.num
-        // }
-        // console.log(this.state.goods, this.state.num, this.state.input)
-        // submitPurchaseDelivery({
-        //     action: 'submitPurchaseDelivery', data: {
-        //         uniacid: store.getState().uniacid,
-        //         uid: store.getState().uid,
-        //         itemData: itemData,
-        //         deliveryData: deliveryData,
-        //         type: "1",
-        //         status: "4"
-        //     }
-        // }).then((res) => {
-        //     console.log(res.data)
-        //     if (res.data.status === 4001) {
-        //         Toast.success(res.data.msg, 2)
-        //     } else {
-        //         Toast.fail(res.data.msg, 2)
-        //     }
-        // })
+        
     }
-
-
-
-
-
-
-
     getChildrenMsg = (result, msg) => {
         let input = []
         input.push(result)
@@ -231,7 +185,7 @@ export default class WarehousingOrderxing extends Component {
                     purchaseItem: res.data.data.purchaseDeliveryItem
                 })
             } else {
-                Toast.fail(res.data.msg, 2)
+                Toast.info(res.data.msg, 2)
             }
         })
     }
@@ -299,18 +253,7 @@ export default class WarehousingOrderxing extends Component {
                         </div>
                         <div className='yuan'>{this.state.purchaseItem.length}</div>
                         <div style={{ background: this.state.purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }} className='right' onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
-                        {/* <Button
-                        style={{display:this.state.purchaseDetail.statusname === "待提交" ? "none" : "block", width:"3rem",height:"2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
-                        className="btn_modal"
-                            onClick={() =>
-                                alert('审核', '是否确认审核采购单', [
-                                    { text: '取消', onPress: () => console.log('cancel') },
-                                    { text: '确定', onPress: () => this.shengHe() },
-                                ])
-                            }
-                        >
-                            confirm
-                        </Button> */}
+                        
                     </div>
                 </div>
             </WarehousingOrderxingStyle>

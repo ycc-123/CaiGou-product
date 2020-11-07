@@ -14,8 +14,10 @@ import 'assets/css/basic.css'
 // import  VConsole  from  'vconsole';
 // let vConsole = new VConsole();
 localStorage.clear()
-// let uid = getParamsString('uid')
+
 // let uniacid = getParamsString('uniacid')
+// let uid = getParamsString('uid')
+
 
 // 正式站
 // let uid = "5372"

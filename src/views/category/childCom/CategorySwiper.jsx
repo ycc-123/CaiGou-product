@@ -15,7 +15,7 @@ export default class Liebiao extends Component {
     componentDidMount(){
         console.log(store.getState().goodsList)
         if(store.getState().goodsList===[]){
-            Toast.fail("无采购商品",1.5)
+            Toast.info("无采购商品",1.5)
             this.setState({
                 goodsList:[]
             })

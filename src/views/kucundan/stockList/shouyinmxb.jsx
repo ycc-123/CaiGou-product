@@ -59,7 +59,7 @@ export default class Shouyinmxb extends Component {
                                                 </li>
                                                 <li style={{width:"3.5rem"}}>
                                                     <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/goods_cashier.png" alt=""/></div>
-                                                    <p style={{marginTop:".1rem"}}>{v.createName}</p>
+                                                    <p style={{marginTop:".1rem"}}>收银员：{v.createName}</p>
                                                 </li>
                                             </ul>
                                         </div>

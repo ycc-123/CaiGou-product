@@ -35,7 +35,7 @@ export default class WarehousingOrder extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             }else{
-                Toast.fail('网络错误', 2)
+                Toast.info('网络错误', 2)
             }
         })
     }
@@ -64,7 +64,7 @@ export default class WarehousingOrder extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             }else{
-                Toast.fail(res.data.msg,2)
+                Toast.info(res.data.msg,2)
             }
         })
     }

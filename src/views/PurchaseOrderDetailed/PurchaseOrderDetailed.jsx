@@ -72,7 +72,7 @@ export default class PurchaseOrderDetailed extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
-                Toast.fail('网络错误', 2)
+                Toast.info('网络错误', 2)
             }
         })
     }
@@ -104,7 +104,7 @@ export default class PurchaseOrderDetailed extends Component {
                     window.location.reload();
                     Toast.success(res.data.msg, 2)
                 } else {
-                    Toast.fail(res.data.msg, 2)
+                    Toast.info(res.data.msg, 2)
                 }
 
             })
@@ -126,7 +126,7 @@ export default class PurchaseOrderDetailed extends Component {
                     window.location.reload();
                     Toast.success(res.data.msg, 2)
                 } else {
-                    Toast.fail(res.data.msg, 2)
+                    Toast.info(res.data.msg, 2)
                 }
             })
         }
@@ -156,7 +156,7 @@ export default class PurchaseOrderDetailed extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
-                Toast.fail('网络错误', 2)
+                Toast.info('网络错误', 2)
             }
         })
     }
