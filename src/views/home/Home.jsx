@@ -7,10 +7,10 @@ import { Toast } from 'antd-mobile';
 
 export default class Home extends Component {
 
-  componentDidMount(){
+  componentDidMount() {
     console.log("uid=====")
-    console.log("uid=====",store.getState().uid)
-    console.log("uniacid=====",store.getState().uniacid)
+    console.log("uid=====", store.getState().uid)
+    console.log("uniacid=====", store.getState().uniacid)
     localStorage.clear()
 
     // Toast.loading('Loading...', 1);
@@ -18,7 +18,7 @@ export default class Home extends Component {
   render() {
     return (
       <HomeStyle>
-      {/* <div className='top'>
+        {/* <div className='top'>
         <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/base.png" alt=""/></div>
         <ul>
           <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/add.png" alt=""/></li>
@@ -29,36 +29,39 @@ export default class Home extends Component {
       </div> */}
 
 
-      <div className='conten'>
-        <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigou.png" alt=""/></div>
-        <ul>
-          <li style={{marginLeft:".5rem"}} onClick={()=>{this.props.history.push('/ApplyOrder')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shengqing.png" alt=""/></li>
-          <li style={{marginLeft:".4rem"}} onClick={()=>{this.props.history.push('/AddPurchaseOrder')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/addcaigou.png" alt=""/></li>
-          <li style={{marginLeft:".3rem"}} onClick={()=>{this.props.history.push('/PurchaseOrder')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigoudan.png" alt=""/></li>
-        </ul>
-      </div>
+        <div className='conten'>
+          <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigou.png" alt="" /></div>
+          <ul>
+            <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/ApplyOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shengqing.png" alt="" /></li>
+            <li style={{ marginLeft: ".4rem" }} onClick={() => { this.props.history.push('/AddPurchaseOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/addcaigou.png" alt="" /></li>
+            <li style={{ marginLeft: ".3rem" }} onClick={() => { this.props.history.push('/PurchaseOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigoudan.png" alt="" /></li>
+          </ul>
+        </div>
 
-      <div className='footer'>
-        <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/ckgl.png" alt=""/></div>
-        <ul>
-          <li style={{marginLeft:".5rem"}} onClick={()=>{this.props.history.push('/stockList')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kucundan.png" alt=""/></li>
-          <li style={{height:"1.6rem",width:"1.95rem",marginLeft:".4rem"}} onClick={()=>{this.props.history.push('/WarehousingOrder')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/rkdan.png" alt=""/></li>
-          {/* <li onClick={()=>{alert("该功能未实现")}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/pandiandan.png" alt=""/></li> */}
-          {/* <li onClick={()=>{this.props.history.push('/LossReport')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/baosdan.png" alt=""/></li> */}
-          {/* <li onClick={()=>{alert("该功能未实现")}} style={{marginTop:".8rem",marginLeft:".5rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaobodan.png" alt=""/></li> */}
-          {/* <li style={{marginTop:".8rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dabao.png" alt=""/></li> */}
-        </ul>
-      </div>
+        <div className='footer'>
+          <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/ckgl.png" alt="" /></div>
+          <ul>
+            <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/stockList') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kucundan.png" alt="" /></li>
+            <li style={{ height: "1.6rem", width: "1.95rem", marginLeft: ".4rem" }} onClick={() => { this.props.history.push('/WarehousingOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/rkdan.png" alt="" /></li>
+            {/* <li onClick={()=>{alert("该功能未实现")}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/pandiandan.png" alt=""/></li> */}
+            {/* <li onClick={()=>{this.props.history.push('/LossReport')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/baosdan.png" alt=""/></li> */}
+            {/* <li onClick={()=>{alert("该功能未实现")}} style={{marginTop:".8rem",marginLeft:".5rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaobodan.png" alt=""/></li> */}
+            {/* <li style={{marginTop:".8rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dabao.png" alt=""/></li> */}
+          </ul>
+        </div>
 
-      <div className='sujubaobiao' >
-        <div style={{marginLeft:".35rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shujubaobiao.png" alt=""/></div>
-        <ul>
-        <li style={{marginLeft:".2rem"}} >
-          {/* <img onClick={()=>{this.props.history.push('/youhuimxb')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/yhmxb.png" alt=""/> */}
-            {/* <img style={{marginLeft:".1rem"}} onClick={()=>{this.props.history.push('/GoodDiscount')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/spyhhz.png" alt=""/> */}
-              <img  onClick={()=>{this.props.history.push('/LossReport')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/bshz.png" alt=""/>
-              </li>
-        </ul>
+        <div className='sujubaobiao' >
+          <div style={{ marginLeft: ".35rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shujubaobiao.png" alt="" /></div>
+          <ul>
+            <li style={{ marginLeft: ".3rem" }} >
+              <img onClick={()=>{this.props.history.push('/youhuimxb')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/yhmxb.png" alt=""/>
+              <img style={{marginLeft:".1rem"}} onClick={()=>{this.props.history.push('/GoodDiscount')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/spyhhz.png" alt=""/>
+              <img onClick={() => { this.props.history.push('/LossReport') }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/bshz.png" alt="" />
+            </li>
+          </ul>
+        </div>
+        <div className="banben">
+          版本号：1.1.1
       </div>
       </HomeStyle>
 
@@ -66,6 +69,17 @@ export default class Home extends Component {
   }
 }
 const HomeStyle = styled.div`
+.banben{
+  opacity: .2;
+  color: #3E3E3E;
+  font-size: 15px;
+  position: absolute;
+  right: 0px;
+  bottom: 5px;
+  width: 100%;
+  text-align: center;
+}
+
 
 .sujubaobiao{
   height: 4rem;

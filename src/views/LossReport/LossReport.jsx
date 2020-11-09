@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getStockList, getWarehouseList, getDamageList } from 'network/Api'
+import {  getWarehouseList, getDamageList } from 'network/Api'
 import { Toast, List, DatePicker } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import LossReportTiao from './LossReportTiao'
@@ -20,10 +20,10 @@ export default class LossReport extends Component {
             damageList:[],
             fenleiName: ["今天", "昨天", "7天", "本月"],
             childrens: ["全部", "已审核", "待审核"],
-            
+            yikey:0,
             ckkey: '',
             result: [],
-            ekey: '',
+            ekey: 0,
             xian: false,
 
             data: [],
@@ -54,14 +54,16 @@ export default class LossReport extends Component {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 type:"1",
-                limit:"9",
+                limit:"14",
                 page:"1"
             }
         }).then((res) => {
             console.log(res)
             if(res.data.status===4001){
-                var result = res.data.data.data.map(o=>{return{id:o.id,name:o.name}});
-                    console.log(result)
+                var bb = res.data.data.data.map(o=>{return{id:o.id,name:o.name}});
+                    let aa= [{id:"",name:"全部门店"}]
+                    let result=[...aa,...bb]
+                    // console.log()
                 this.setState({
                     result
                 })
@@ -69,6 +71,7 @@ export default class LossReport extends Component {
                 Toast.info(res.data.msg,2)
             }
         })
+       
         // 报损列表
         getDamageList({
             action: 'getDamageList', data: {
@@ -106,7 +109,7 @@ export default class LossReport extends Component {
                 endtime:this.state.end_data?this.state.end_data:this.state.today_time,
                 status:this.state.status,
                 limit:"100",
-                page:this.state.page
+                page:"1"
             }
         }).then((res) => {
             console.log(res.data.data.data)
@@ -115,6 +118,7 @@ export default class LossReport extends Component {
                     damageList:res.data.data.data,
                     zongnp:res.data.data.total
                 },()=>{
+                    this.refs.scroll.BScroll.finishPullUp()
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
@@ -122,8 +126,8 @@ export default class LossReport extends Component {
             }
         })
     }
-    erjifenlei(v, k) {
-        console.log(v)
+    erjifenlei(v,k ) {
+        console.log(v,k)
         if(v==="已审核"){
             this.setState({
                 ekey: k,
@@ -600,7 +604,7 @@ const LossReportStyle = styled.div`
     // margin-top:.2rem;
     width: 1.5rem;
     height: 1.5rem;
-    background-color: orange;
+    // background-color: orange;
 }
 .t-img{
     // padding-top: .2rem;
@@ -612,7 +616,7 @@ const LossReportStyle = styled.div`
 .tiao{
     background-color: #fff;
     width: 100%;
-    height: 2.9rem;
+    // height: 2.9rem;
     border-bottom:2px solid #dadada;
 }
 .conten{

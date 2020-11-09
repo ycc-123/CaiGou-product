@@ -17,10 +17,10 @@ export default class StockListTiao extends Component {
                             <ul className='wen-zi'>
                                 <li className='wen-zi-t'>
                                     <div className='name'>{good.goods_name}</div>
-                                    <p style={{ color: "#858585" }}>{good.num}斤</p>
+                                    <p style={{ color: "#858585" }}>{good.num}{good.unitname}</p>
                                 </li>
                                 <li className='wen-zi-f'>
-                                    <div>￥：{good.costprice}元/斤</div>
+                                    <div>￥：{good.costprice}元/{good.unitname}</div>
                                     <p><span style={{ fontWeight: "100" }}>总价格: </span>{good.subtotal}</p>
                                 </li>
                             </ul>

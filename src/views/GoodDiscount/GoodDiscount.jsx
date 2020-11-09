@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getWarehouseList, getRetailGoodsList } from 'network/Api'
+import { getWarehouseList, getRetailGoodsList ,get_store} from 'network/Api'
 import { Toast, List, DatePicker } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import GoodDiscounts from './GoodDiscounts'
@@ -19,9 +19,9 @@ export default class LossReport extends Component {
             cankuID: '',
             ckkey: '',
             result: [],
-            ekey: '',
+            ekey: 0,
             xian: false,
-
+            yikey:0,
             data: [],
             key: '',
             date: '',
@@ -30,9 +30,11 @@ export default class LossReport extends Component {
             end: '',
             end_data: '',
             time: '',
-            today_time: ''
-
+            today_time: '',
+            limit:"10",
+            page:1,
         }
+        this.isLoadMore = true
     }
     StrToGMT(time) {
         let GMT = new Date(time)
@@ -40,37 +42,12 @@ export default class LossReport extends Component {
     }
     componentDidMount() {
         setTitle('商品优惠汇总')
-        var day2 = new Date();
-        day2.setTime(day2.getTime());
-        var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
-        console.log(s2)
-        this.setState({
-            today_time: s2
-        })
-
-        axios({
-            timeout: 10000,
-            baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
-            method: 'post',
-            headers: {
-                'Content-Type': 'text/plain'
-            },
-            data: "当天"
-        }).then(function (response) {
-            console.log(response);
-        })
-        var day2 = new Date();
-        day2.setTime(day2.getTime());
-        var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
-        this.setState({
-            today_time: s2
-        })
         getRetailGoodsList({
             action: 'getRetailGoodsList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                limit: "30",
-                page: "1"
+                limit: this.state.limit,
+                page: this.state.page
             }
         }).then((res) => {
             console.log(res.data.data.data)
@@ -85,20 +62,28 @@ export default class LossReport extends Component {
                 Toast.info(res.data.msg, 1)
             }
         })
-
-        getWarehouseList({
-            action: 'getWarehouseList', data: {
+        var day2 = new Date();
+        day2.setTime(day2.getTime());
+        var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+        console.log(s2)
+        this.setState({
+            today_time: s2
+        })
+        get_store({
+            action: 'get_store', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 type: "1",
-                limit: "9",
+                limit: "15",
                 page: "1"
             }
         }).then((res) => {
             // console.log(res)
             if (res.data.status === 4001) {
-                var result = res.data.data.data.map(o => { return { id: o.id, name: o.name } });
-                console.log(result)
+                var bb = res.data.data.map(o => { return { id: o.id, name: o.name } });
+                // console.log(result)
+                let aa=[{id:"",name:"全部仓库"}]
+                let result=[...aa,...bb]
                 this.setState({
                     result
                 })
@@ -116,8 +101,8 @@ export default class LossReport extends Component {
             action: 'getRetailGoodsList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                starttime:this.state.start_data,
-                endtime:this.state.end_data,
+                starttime:this.state.start_data?this.state.start_data:this.state.today_time,
+                endtime:this.state.end_data?this.state.end_data:this.state.today_time,
                 status:this.state.status,
                 store_id:this.state.cankuID,
                 limit: "30",
@@ -324,7 +309,8 @@ export default class LossReport extends Component {
                         <img className='sximg-search' onClick={() => { this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
                     </div>
                 </div>
-                <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1rem", bottom: "1.5rem" }}>
+                <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1rem", bottom: "1.5rem" }} loadMore={this.loadMore}
+                    isLoadMore={this.isLoadMore}>
                     {
                         this.state.GoodsList.map((v, k) => {
                             return (
@@ -415,6 +401,62 @@ export default class LossReport extends Component {
                 </div>
             </LossReportStyle>
         )
+    }
+    loadMore = () => {
+        // 加载数据时转圈
+        let loading = true
+        setTimeout(() => {
+            if (loading) {
+                this.setState({
+                    
+                    loadingMore: true
+                })
+            }
+        }, 1000)
+        if (this.isLoadMore) {
+          
+            getRetailGoodsList({
+                action: 'getRetailGoodsList', data: {
+                    uniacid: store.getState().uniacid,
+                    uid: store.getState().uid,
+                    starttime:this.state.start_data,
+                    endtime:this.state.end_data,
+                    status:this.state.status,
+                    store_id:this.state.cankuID,
+                    limit: "30",
+                    page: "1"
+                }
+            }).then((res) => {
+               
+                let good=res.data.data.data.length
+                // 如果长度不等于得时候加载 那么是到底了
+                if (good < this.state.limit ) {
+                    this.isLoadMore = false
+                    /* let bottomTip = document.querySelector('.bottom-tip')
+                    bottomTip.style.visibility = 'visible'
+                    bottomTip.innerHTML = '商品已经全部加载完成' : res.data.data.data,*/
+                    // : res.data.data.total
+                }
+                this.setState({
+                    GoodsList: [...this.state.GoodsList, ...res.data.data.data],
+                    Goodszong:res.data.data.total,
+                    loadingMore: false
+                }, () => {
+                    let page=Number(this.state.page)
+                    this.setState({
+                        page: page += 1
+                    })
+
+                    loading = false
+                    this.refs.scroll.BScroll.finishPullUp()
+                    this.refs.scroll.BScroll.refresh()
+                })
+            })
+        } else {
+            /* let bottomTip = document.querySelector('.bottom-tip')
+            bottomTip.style.visibility = 'visible'
+            bottomTip.innerHTML = '商品已经全部加载完成' */
+        }
     }
 }
 const LossReportStyle = styled.div`
@@ -510,7 +552,7 @@ const LossReportStyle = styled.div`
 }
 .foot{
     padding-left:.2rem;
-    font-size:.38rem;
+    font-size:.36rem;
     display:flex;
     width:100%;
     height:1.5rem;
@@ -566,7 +608,7 @@ const LossReportStyle = styled.div`
     // margin-top:.2rem;
     width: 1.5rem;
     height: 1.5rem;
-    background-color: orange;
+    // background-color: orange;
 }
 .t-img{
     // padding-top: .2rem;

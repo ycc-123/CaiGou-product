@@ -31,5 +31,6 @@ export function requestPost(config) {
     // console.log(err)
     return Promise.reject(err)
   })
+  
   return instance(config)
 }

@@ -25,8 +25,11 @@ export default class stockList extends Component {
             ckkey:'',
             inputSearch:'',
             panduan:false,
-            quankey:''
+            quankey:'',
+            limit:"10",
+            page:1
         }
+        this.isLoadMore = true
     }
     componentDidMount(){
         setTitle('库存单')
@@ -34,6 +37,8 @@ export default class stockList extends Component {
             action: 'getStockList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
+                limit:this.state.limit,
+                page:this.state.page
             }
         }).then((res) => {
             console.log(res)
@@ -57,14 +62,16 @@ export default class stockList extends Component {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 type:"1",
-                limit:"8",
+                limit:"15",
                 page:"1"
             }
         }).then((res) => {
             console.log(res)
             if(res.data.status===4001){
-                var result = res.data.data.data.map(o=>{return{id:o.id,name:o.name}});
-                    console.log(result)
+                var bb = res.data.data.data.map(o=>{return{id:o.id,name:o.name}});
+                    console.log(bb)
+                    let aa=[{id:"",name:"全部仓库"}]
+                    let result=[...aa,...bb]
                 this.setState({
                     result
                 })
@@ -81,7 +88,9 @@ export default class stockList extends Component {
         }).then((res) => {
             console.log(res)
             if(res.data.status===4001){
-                var result = res.data.data.map(o=>{return{id:o.id,name:o.name}});
+                var bb = res.data.data.map(o=>{return{id:o.id,name:o.name}});
+                let aa=[{id:"",name:"全部分类"}]
+                    let result=[...aa,...bb]
                     console.log(result)
                 this.setState({
                    fenleiName:result
@@ -233,7 +242,8 @@ export default class stockList extends Component {
                             <img className='sximg-search' onClick={()=>{ this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
                         </div>
                     </div>
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1rem",bottom:"1.5rem"}}>
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1rem",bottom:"1.5rem"}} loadMore={this.loadMore}
+                    isLoadMore={this.isLoadMore}>
                     {
                         this.state.goods.map((v,k)=>{
 
@@ -298,6 +308,58 @@ export default class stockList extends Component {
                 </div>
             </StockListStyle>
         )
+    }
+    loadMore = () => {
+        // 加载数据时转圈
+        let loading = true
+        setTimeout(() => {
+            if (loading) {
+                this.setState({
+                    
+                    loadingMore: true
+                })
+            }
+        }, 1000)
+        if (this.isLoadMore) {
+          
+            getStockList({
+                action: 'getStockList', data: {
+                    uniacid: store.getState().uniacid,
+                    uid: store.getState().uid,
+                    limit:this.state.limit,
+                    page:this.state.page
+                }
+            }).then((res) => {
+               
+
+                // 如果长度不等于得时候加载 那么是到底了
+                if (res.data.data.data.length < this.state.limit) {
+                    this.isLoadMore = false
+                    /* let bottomTip = document.querySelector('.bottom-tip')
+                    bottomTip.style.visibility = 'visible'
+                    bottomTip.innerHTML = '商品已经全部加载完成' */
+                }
+                this.setState({
+                    goods: [...this.state.goods, ...res.data.data.data],
+                    totalcostprice: res.data.data.totalcostprice,
+                    totalgnum: res.data.data.totalgnum,
+                    loadingMore: false
+                }, () => {
+                    let page=Number(this.state.page)
+                    this.setState({
+                        page: page += 1
+                    })
+
+                    loading = false
+                    this.refs.scroll.BScroll.finishPullUp()
+                    this.refs.scroll.BScroll.refresh()
+                })
+            })
+        } else {
+            /* let bottomTip = document.querySelector('.bottom-tip')
+            bottomTip.style.visibility = 'visible'
+            bottomTip.innerHTML = '商品已经全部加载完成' */
+        }
     }
 }
 const StockListStyle = styled.div`
@@ -397,7 +459,7 @@ const StockListStyle = styled.div`
     margin-top:.2rem;
     width: 1.5rem;
     height: 1.5rem;
-    background-color: orange;
+    // background-color: orange;
 }
 .t-img{
     // padding-top: .2rem;

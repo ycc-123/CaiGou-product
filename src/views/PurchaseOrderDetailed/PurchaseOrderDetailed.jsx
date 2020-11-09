@@ -364,7 +364,7 @@ const PurchaseOrderDetailedStyle = styled.div`
     margin-top:.2rem;
     width: 1.5rem;
     height: 1.5rem;
-    background-color: orange;
+    // background-color: orange;
 }
 .t-img{
     // padding-top: .2rem;

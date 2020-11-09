@@ -53,10 +53,11 @@ export default class PurchaseOrder extends Component {
             type:"1",
             search:this.state.inputSearch,
             // warehouseName:this.state.inputSearch,
-            limit:this.state.limit,
-            page:this.state.page
+            limit:"10",
+            page:"1"
           } }).then((res) => {
             if(res.data.status===4001){
+                this.isLoadMore = false
                 this.setState({
                     data: res.data.data.data
                 }, () => {

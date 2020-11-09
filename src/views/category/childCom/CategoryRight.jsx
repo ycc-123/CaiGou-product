@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import CategoryRightItem from './CategoryRightItem'
 
 import BetterScroll from 'common/betterScroll/BetterScroll'
-import { submitPurchase } from 'network/Api'
+import { submitPurchase,searchProduct } from 'network/Api'
 // import { store } from 'store/index'
 import {  Toast } from 'antd-mobile';
 
@@ -22,7 +22,12 @@ class CategoryRight extends Component {
       goods:[],
       num:'',
       price:'',
+      goodsList:[],
+      index:0,
+      limit:"10",
+      page:1,
     }
+    this.isLoadMore = true
   }
   render() {
     const scollConfig = {
@@ -38,7 +43,8 @@ class CategoryRight extends Component {
     return (
       <div className='categoryRight'>
         <ul>
-          <BetterScroll config={scollConfig} style={scrollStyle} ref='scroll'>
+          <BetterScroll config={scollConfig} style={scrollStyle} ref='scroll' loadMore={this.loadMore}
+                    isLoadMore={this.isLoadMore}>
             {goodsList.map((item, index) => {
               return (
                 <CategoryRightItem key={item.id + index} goods={item} parent={ this }/>
@@ -172,6 +178,56 @@ class CategoryRight extends Component {
     this.refs.scroll.BScroll.refresh()
 
   }
+  loadMore = () => {
+    // 加载数据时转圈
+    let loading = true
+    setTimeout(() => {
+        if (loading) {
+            this.setState({
+                
+                loadingMore: true
+            })
+        }
+    }, 1000)
+    if (this.isLoadMore) {
+      
+      searchProduct({
+        action: 'searchProduct', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          // categoryid: this.props.Id[0].id,
+        }
+      }).then(res => {
+        const { goodsList } = this.props
+
+            // 如果长度不等于得时候加载 那么是到底了
+            if (res.data.data.data.length < this.state.limit) {
+                this.isLoadMore = false
+                /* let bottomTip = document.querySelector('.bottom-tip')
+                bottomTip.style.visibility = 'visible'
+                bottomTip.innerHTML = '商品已经全部加载完成' */
+            }
+            this.setState({
+              goodsList: [...goodsList, ...res.data.data.data],
+           
+                loadingMore: false
+            }, () => {
+                let page=Number(this.state.page)
+                this.setState({
+                    page: page += 1
+                })
+
+                loading = false
+                this.refs.scroll.BScroll.finishPullUp()
+                this.refs.scroll.BScroll.refresh()
+            })
+        })
+    } else {
+        /* let bottomTip = document.querySelector('.bottom-tip')
+        bottomTip.style.visibility = 'visible'
+        bottomTip.innerHTML = '商品已经全部加载完成' */
+    }
+}
 }
 
 export default CategoryRight;

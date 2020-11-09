@@ -31,8 +31,11 @@ class Category extends Component {
       id: [],
       num: '',
       price: '',
-      inputSearch:''
+      inputSearch:'',
+
+      Id:""
     }
+    
   }
   mingxi() {
     console.log(111)
@@ -103,7 +106,7 @@ class Category extends Component {
                 </BetterScroll>}
               </ul>
             </div>
-              <CategoryRight goodsList={this.state.goods} onRef={this.onRef} id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />
+              <CategoryRight index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />
             </Fragment> : <Fragment>
               </Fragment>}
           </div>
@@ -193,7 +196,10 @@ class Category extends Component {
           action: 'searchProduct', data: {
             uniacid: store.getState().uniacid,
             uid: store.getState().uid,
+            limit:this.state.limit,
+            page:this.state.page,
             categoryid: Id[0].id,
+            Id
           }
         }).then(res => {
           console.log(res.data.msg)
@@ -222,7 +228,8 @@ class Category extends Component {
   onChangeActive = index => {
     console.log(this.state.value[index])
     this.setState({
-      indexId:this.state.id[index].id
+      indexId:this.state.id[index].id,
+      index
     })
     searchProduct({
       action: 'searchProduct', data: {
