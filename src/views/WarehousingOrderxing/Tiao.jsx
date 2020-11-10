@@ -18,7 +18,8 @@ export default class Tiao extends Component {
     render() {
         let tiao = this.props.item
         let rk=''
-        if(tiao.innum==="0.00"){
+
+        if(Number(tiao.innum)===0){
             rk=tiao.gnum
         }else{
             rk=tiao.innum

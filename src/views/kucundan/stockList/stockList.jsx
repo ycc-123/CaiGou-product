@@ -62,7 +62,7 @@ export default class stockList extends Component {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 type:"1",
-                limit:"15",
+                limit:"1000",
                 page:"1"
             }
         }).then((res) => {
@@ -134,10 +134,16 @@ export default class stockList extends Component {
         if(this.state.xian===false){
             this.setState({
                 xian:true
+            },()=>{
+
+                this.refs.scroll.BScroll.refresh()
             })
         }else{
             this.setState({
                 xian:false
+            },()=>{
+
+                this.refs.scroll.BScroll.refresh()
             })
         }
     }
@@ -244,6 +250,7 @@ export default class stockList extends Component {
                     </div>
                     <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1rem",bottom:"1.5rem"}} loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
+                    <div style={{display: this.state.xian===false?"block":"none"}}>
                     {
                         this.state.goods.map((v,k)=>{
 
@@ -252,10 +259,10 @@ export default class stockList extends Component {
                             )
                         })
                     }
-                    </BetterScroll>
+                    </div>
+                    
 
 
-                    {/* <BetterScroll config={scrollConfigs} ref='scroll' style={{ top:"1rem",bottom:"1.5rem"}}> */}
                     <div className='fenglei' style={{display: this.state.xian===false?"none":"block"}}>
                         <div>仓库名称
                             <ul>
@@ -301,7 +308,7 @@ export default class stockList extends Component {
                         
                         <div className='btn' onClick={()=>{this.queding()}}>确定</div>
                     </div>
-                    {/* </BetterScroll> */}
+                    </BetterScroll>
                 <div className='foot' >
                     <div>总库存：<span>{this.state.totalgnum?this.state.totalgnum:0}</span></div>
                     <div style={{marginLeft:".8rem"}}>总库存金额：<span>{this.state.totalcostprice?this.state.totalcostprice:0}</span></div>

@@ -16,14 +16,14 @@ export default class GoodDiscounts extends Component {
                 <ul className='wen-zi'>
                     <li className='wen-zi-t'>
                         <div className='name'>{item.goods_name}</div>
-                        <p style={{ color: "#858585" }}>{item.num}斤</p>
+                        <p style={{ color: "#858585" }}>{item.num}{item.unitname}</p>
                     </li>
                     <li className='wen-zi-f'>
-                        <div>原价：{item.posprice}元/斤</div>
+                        <div>原价：{item.posprice}元/{item.unitname}</div>
                         <p><span style={{ fontWeight: "100" }}>小计优惠: </span>{item.subtotal_fee}</p>
                     </li>
                     <li className='wen-zi-f'>
-                        <div>售价：{item.modifyprice}元/斤</div>
+                        <div>售价：{item.modifyprice}元/{item.unitname}</div>
                         <p><span style={{ fontWeight: "100" }}>订单优惠分摊: </span>{item.subtotal}</p>
                     </li>
                 </ul>

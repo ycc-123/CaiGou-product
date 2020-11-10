@@ -54,7 +54,7 @@ export default class LossReport extends Component {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 type:"1",
-                limit:"14",
+                limit:"1000",
                 page:"1"
             }
         }).then((res) => {
@@ -240,10 +240,14 @@ export default class LossReport extends Component {
         if (this.state.xian === false) {
             this.setState({
                 xian: true
+            },()=>{
+                this.refs.scroll.BScroll.refresh()
             })
         } else {
             this.setState({
                 xian: false
+            },()=>{
+                this.refs.scroll.BScroll.refresh()
             })
         }
     }
@@ -310,15 +314,16 @@ export default class LossReport extends Component {
                 </div>
                 <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1rem",bottom:"1.5rem"}} loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
+                        <div style={{ display: this.state.xian === false ? "block" : "none" }}>
                     {
                         this.state.damageList.map((v,k)=>{
                             return(
                                 <LossReportTiao item={v}/>
                             )
                         })
-                    }
+                    }</div>
                     
-                </BetterScroll>
+                
 
                 <div className='fenglei' style={{ display: this.state.xian === false ? "none" : "block" }}>
                     <div><span style={{ color: "#333333" }}>仓库名称</span>
@@ -393,7 +398,7 @@ export default class LossReport extends Component {
                     </div>
                     <div className='btn' onClick={() => { this.queding() }}>确定</div>
                 </div>
-
+                </BetterScroll>
                 <div className='foot' >
                     <div>总数量：<span>{this.state.zongnp.num ? this.state.zongnp.num : 0}</span></div>
                     <div style={{ marginLeft: ".8rem" }}>总报损金额：<span>{this.state.zongnp.total ? this.state.zongnp.total : 0}</span></div>

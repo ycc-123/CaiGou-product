@@ -18,7 +18,7 @@ export default class Youhuimxb extends Component {
             store_id:[],
             shouyinyuan:[],
             linshou:[],
-            limit: "50",
+            limit: "10",
             page: "1",
             zuantai:false,
             IDsyy:'',
@@ -180,7 +180,7 @@ export default class Youhuimxb extends Component {
                         </div>
                     </div>
 
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1.3rem",bottom:"0"}} loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1rem",bottom:"0"}} loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
                     {
                         linshou.map((v,k)=>{
                             // console.log(v.all_fee)
@@ -402,6 +402,7 @@ const YouhuimxbStyle = styled.div`
     color:#cf2424;
 }
 .foot{
+    box-shadow: -2px -2px 3px #ccc;
     padding-left:.2rem;
     font-size:.38rem;
     display:flex;

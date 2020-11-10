@@ -57,7 +57,7 @@ export default class Shouyinmxb extends Component {
                                                     <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/goods_store.png" alt=""/></div>
                                                     <p>{v.storeName}</p>
                                                 </li>
-                                                <li style={{width:"3.5rem"}}>
+                                                <li style={{width:"3.9rem"}}>
                                                     <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/goods_cashier.png" alt=""/></div>
                                                     <p style={{marginTop:".1rem"}}>收银员：{v.createName}</p>
                                                 </li>
@@ -165,12 +165,12 @@ export default class Shouyinmxb extends Component {
 const ShouyinmxbStyle = styled.div`
 .conten ul li div{
     // margin-left:2rem;
-    width:3rem;
+    width:4rem;
 }
 .conten ul li p{
     
     margin-left:.4rem;
-    width:5.9rem;
+    width:5.4rem;
 }
 .conten ul{
     padding-top:.1rem;
@@ -180,17 +180,17 @@ const ShouyinmxbStyle = styled.div`
 }
 .conten{
     color:#7d7d7d;
-    font-size:.32rem;
+    font-size:.38rem;
     width:9.4rem;
-    height:2.5rem;
-    margin:0 .2rem;
+    height:2.8rem;
+    margin:.1rem .2rem;
     background-color: #f5f5f5;
 }
 .name{
     margin-top:.2rem;
     margin-left:.8rem;
     color:#1a1a1a;
-    font-size:.35rem;
+    font-size:.38rem;
 }
 .xji{
     width:2rem;
@@ -220,7 +220,7 @@ const ShouyinmxbStyle = styled.div`
 }
 .title{
     color:#ed7913;
-    font-size:.35rem;
+    font-size:.38rem;
     display:flex;
     height:.8rem;
     line-height:.8rem;
@@ -269,12 +269,12 @@ const ShouyinmxbStyle = styled.div`
 .dan ul li div{
     margin-top:.2rem;
     // margin-left:.3rem;
-    width: .35rem;  
-    height: .3rem;
+    width: .45rem;  
+    height: .38rem;
 }
 .dan ul li p{
-    margin-top:.15rem;
-    font-size:.35rem;
+    margin-top:.18rem;
+    font-size:.38rem;
     color:#313131;
 }
 .dan ul li{
@@ -288,7 +288,7 @@ const ShouyinmxbStyle = styled.div`
     // background-color: red;
 }
 .dan{
-    margin:0rem .3rem;
+    margin:0rem .2rem;
     width: 9.4rem;  
     // height: 8rem;
     // background-color: #fff;

@@ -244,10 +244,14 @@ export default class LossReport extends Component {
         if (this.state.xian === false) {
             this.setState({
                 xian: true
+            }, () => {
+                this.refs.scroll.BScroll.refresh()
             })
         } else {
             this.setState({
                 xian: false
+            }, () => {
+                this.refs.scroll.BScroll.refresh()
             })
         }
     }
@@ -256,6 +260,8 @@ export default class LossReport extends Component {
         this.setState({
             cankuID: v.id,
             ckkey: v.id
+        }, () => {
+            this.refs.scroll.BScroll.refresh()
         })
     }
 
@@ -311,15 +317,16 @@ export default class LossReport extends Component {
                 </div>
                 <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1rem", bottom: "1.5rem" }} loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
+                        <div style={{ display: this.state.xian === false ? "block":"none" }}>
                     {
                         this.state.GoodsList.map((v, k) => {
                             return (
                                 <GoodDiscounts item={v} />
                             )
                         })
-                    }
+                    }</div>
 
-                </BetterScroll>
+                
 
                 <div className='fenglei' style={{ display: this.state.xian === false ? "none" : "block" }}>
                     <div><span style={{ color: "#333333" }}>仓库名称</span>
@@ -394,7 +401,7 @@ export default class LossReport extends Component {
                     </div>
                     <div className='btn' onClick={() => { this.queding() }}>确定</div>
                 </div>
-
+                </BetterScroll>
                 <div className='foot' >
                     <div>总数量：<span>{this.state.Goodszong.total_subtotal ? this.state.Goodszong.total_subtotal : 0}</span></div>
                     <div style={{ marginLeft: ".8rem" }}>总报损金额：<span>{this.state.Goodszong.total_fee ? this.state.Goodszong.total_fee : 0}</span></div>
@@ -551,6 +558,7 @@ const LossReportStyle = styled.div`
     font-weight:900;
 }
 .foot{
+    box-shadow: -2px -2px 1px #ccc;
     padding-left:.2rem;
     font-size:.36rem;
     display:flex;

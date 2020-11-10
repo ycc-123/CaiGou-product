@@ -11,7 +11,8 @@ export default class ApplyOrderx extends Component {
             quan: [],
             tiao: [],
             sum:'',
-            remark:''
+            remark:'',
+            inputSearch:""
         }
     }
     componentDidMount() {
@@ -57,21 +58,7 @@ export default class ApplyOrderx extends Component {
     }
 
     tijiao(e){
-        // console.log(this.state.remark)
-        // let aa = {}
-        //     let arr = []
-        //     this.state.tiao.map((v, k) => {
-        //         console.log(v, k)
-        //         aa = {
-        //             barcode: v.barcode,
-        //             gnum: v.goodsnum,
-        //             name: v.goodsname,
-        //             // innum: this.state.input[k],
-        //         }
-        //         return arr.push(aa);
-        //     })
-        //     console.log(arr)
-        //     let itemData=arr
+      
         if(e==="提交成功"){}else{
 
 
@@ -95,14 +82,42 @@ export default class ApplyOrderx extends Component {
     }
 
     }
+    seach() {
+        getPurchaseApplyDetail({
+            action: 'getPurchaseApplyDetail', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                id: this.props.match.params.id,
+                search: this.state.inputSearch,
+            }
+        }).then((res) => {
+            console.log(res)
+            if (res.data.status === 4001) {
+                this.setState({
+                    tiao: res.data.data.item ? res.data.data.item : [],
+                })
+            } else {
+                Toast.info(res.data.msg, 2)
+            }
+        })
+    }
+    inputChange(e) {
+        console.log(e.target.value)
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+
+    }
     render() {
         console.log(this.state.quan.item)
         return (
             <ApplyOrderxStyle>
                 <div>
                     <div className='search'>
-                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
-                        <div className='img'>
+                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
+                            onChange={this.inputChange.bind(this)}
+                            value={this.state.inputSearch} />
+                        <div className='img' onClick={() => { this.seach() }}>
                             <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
                         </div>
                     </div>
@@ -122,7 +137,7 @@ export default class ApplyOrderx extends Component {
                         </div>
 
                         <div className='footer'>
-                            采购备注：
+                            采购备注：{this.state.quan.remark}
                     </div>
                     </div>
 

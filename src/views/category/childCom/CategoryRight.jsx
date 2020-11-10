@@ -178,56 +178,56 @@ class CategoryRight extends Component {
     this.refs.scroll.BScroll.refresh()
 
   }
-  loadMore = () => {
-    // 加载数据时转圈
-    let loading = true
-    setTimeout(() => {
-        if (loading) {
-            this.setState({
+//   loadMore = () => {
+//     // 加载数据时转圈
+//     let loading = true
+//     setTimeout(() => {
+//         if (loading) {
+//             this.setState({
                 
-                loadingMore: true
-            })
-        }
-    }, 1000)
-    if (this.isLoadMore) {
+//                 loadingMore: true
+//             })
+//         }
+//     }, 1000)
+//     if (this.isLoadMore) {
       
-      searchProduct({
-        action: 'searchProduct', data: {
-          uniacid: store.getState().uniacid,
-          uid: store.getState().uid,
-          // categoryid: this.props.Id[0].id,
-        }
-      }).then(res => {
-        const { goodsList } = this.props
+//       searchProduct({
+//         action: 'searchProduct', data: {
+//           uniacid: store.getState().uniacid,
+//           uid: store.getState().uid,
+//           // categoryid: this.props.Id[0].id,
+//         }
+//       }).then(res => {
+//         const { goodsList } = this.props
 
-            // 如果长度不等于得时候加载 那么是到底了
-            if (res.data.data.data.length < this.state.limit) {
-                this.isLoadMore = false
-                /* let bottomTip = document.querySelector('.bottom-tip')
-                bottomTip.style.visibility = 'visible'
-                bottomTip.innerHTML = '商品已经全部加载完成' */
-            }
-            this.setState({
-              goodsList: [...goodsList, ...res.data.data.data],
+//             // 如果长度不等于得时候加载 那么是到底了
+//             if (res.data.data.data.length < this.state.limit) {
+//                 this.isLoadMore = false
+//                 /* let bottomTip = document.querySelector('.bottom-tip')
+//                 bottomTip.style.visibility = 'visible'
+//                 bottomTip.innerHTML = '商品已经全部加载完成' */
+//             }
+//             this.setState({
+//               goodsList: [...goodsList, ...res.data.data.data],
            
-                loadingMore: false
-            }, () => {
-                let page=Number(this.state.page)
-                this.setState({
-                    page: page += 1
-                })
+//                 loadingMore: false
+//             }, () => {
+//                 let page=Number(this.state.page)
+//                 this.setState({
+//                     page: page += 1
+//                 })
 
-                loading = false
-                this.refs.scroll.BScroll.finishPullUp()
-                this.refs.scroll.BScroll.refresh()
-            })
-        })
-    } else {
-        /* let bottomTip = document.querySelector('.bottom-tip')
-        bottomTip.style.visibility = 'visible'
-        bottomTip.innerHTML = '商品已经全部加载完成' */
-    }
-}
+//                 loading = false
+//                 this.refs.scroll.BScroll.finishPullUp()
+//                 this.refs.scroll.BScroll.refresh()
+//             })
+//         })
+//     } else {
+//         /* let bottomTip = document.querySelector('.bottom-tip')
+//         bottomTip.style.visibility = 'visible'
+//         bottomTip.innerHTML = '商品已经全部加载完成' */
+//     }
+// }
 }
 
 export default CategoryRight;

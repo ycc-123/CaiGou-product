@@ -61,7 +61,8 @@ class CategoryLeft extends Component {
         </div>
           {title.length !== 0 && title[defaultIndex].goods.length !== 0 && <CategoryRight goodsList={title[defaultIndex].goods} ys={ys} kc={kc} />}
         </> : <>
-            <CategoryTabBar title={title} index={defaultIndex} changeActive={this.onChangeActive} goodsList={title[defaultIndex].goods} ys={ys} kc={kc} /></>}
+            {/* <CategoryTabBar title={title} index={defaultIndex} changeActive={this.onChangeActive} goodsList={title[defaultIndex].goods} ys={ys} kc={kc} /> */}
+            </>}
         {
           goods.length === 0 && <div className='wutu' style={{ color: 'white' }}>
             <img style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '2rem', height: '' }} src='https://res.lexiangpingou.cn/images/vip/fengleiwu.png' alt="" />
