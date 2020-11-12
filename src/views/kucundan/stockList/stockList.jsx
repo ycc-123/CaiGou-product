@@ -221,6 +221,14 @@ export default class stockList extends Component {
             [e.target.name]: e.target.value
         })
     }
+    componentDidUpdate = () => {
+        // // 默认每次加载x=0，y=0 不然会有bug
+        // // console.log(this)
+        // /* console.log('进来了') */
+        // this.refs.scroll.BScroll.scrollTo(0, 0)
+        // this.refs.scroll.BScroll.refresh()
+    
+      }
     render() {
         console.log(this.state.childrens)
         const scrollConfig = {

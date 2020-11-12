@@ -141,8 +141,9 @@ const CategoryRightgoodsStyle = styled.div`
 .category-goods-info p:first-child {
   font-size: .32rem;
   margin-bottom: .24rem;
+  margin-top: .05rem;
   text-align: justify;
-  overflow: hidden;
+  // overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #4d4d4d;

@@ -17,10 +17,11 @@ import ApplyOrderx from 'views/ApplyOrderx/ApplyOrderx'
 import category from 'views/category/Category'
 import Sqcgcategory from 'views/sqcgCategory/Category'
 import Liebiao from 'views/category/childCom/CategorySwiper'
-import Mingxi from 'views/caigoudanmx/mingxi'
 import Youhuimxb from 'views/kucundan/stockList/youhuimxb'
 import Shouyinmxb from 'views/kucundan/stockList/shouyinmxb'
 import GoodDiscount from 'views/GoodDiscount/GoodDiscount'
+import Pandian from 'views/pandiandan/addInventoryList'
+import TransferOrder from 'views/TransferOrder/TransferOrder'
 // 测试
 import Text from 'views/ApplyOrderx/Text'
 
@@ -51,10 +52,11 @@ const AppRouter = () => {
         <Route path='/PurchaseOrder' exact component={PurchaseOrder} ></Route>
         <Route path='/AddPurchaseOrder' exact component={AddPurchaseOrder} ></Route>
         <Route path='/Liebiao' exact component={Liebiao} ></Route>
-        <Route path='/Mingxi' exact component={Mingxi} ></Route>
         <Route path='/Youhuimxb' exact component={Youhuimxb} ></Route>
         <Route path='/GoodDiscount' exact component={GoodDiscount} ></Route>
         <Route path='/Shouyinmxb/:id' exact component={Shouyinmxb} ></Route>
+        <Route path='/Pandian' exact component={Pandian} ></Route>
+        <Route path='/TransferOrder' exact component={TransferOrder} ></Route>
         {/* 测试 */}
         <Route path='/Text' exact component={Text} ></Route>
       </Switch>

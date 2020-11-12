@@ -139,7 +139,7 @@ export default class Shouyinmxb extends Component {
                                         v.collects.map((v, k) => {
                                             return (
                                                 <div>
-                                                    <div className='name'>{v.goods_name}</div>
+                                                    <div className='name'>{v.goods_name.length>13?v.goods_name.substring(0,13)+"...":v.goods_name}</div>
                                                     <ul className='title' style={{ color: "#1a1a1a", height: ".8rem" }}>
                                                         <li className='yuanjia'>{v.posprice}</li>
                                                         <li className='shoujia'>{v.modifyprice}</li>

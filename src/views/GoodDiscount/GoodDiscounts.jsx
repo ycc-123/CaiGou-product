@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export default class GoodDiscounts extends Component {
     render() {
         let item=this.props.item
-        // console.log(item)
+        // console.log(item.goods_name.length)
         return (
             <div className='tiao'>
             <ul className='header'>
@@ -15,7 +15,7 @@ export default class GoodDiscounts extends Component {
 
                 <ul className='wen-zi'>
                     <li className='wen-zi-t'>
-                        <div className='name'>{item.goods_name}</div>
+                        <div className='name'>{item.goods_name.length>7?item.goods_name.substring(0,7)+"...":item.goods_name}</div>
                         <p style={{ color: "#858585" }}>{item.num}{item.unitname}</p>
                     </li>
                     <li className='wen-zi-f'>

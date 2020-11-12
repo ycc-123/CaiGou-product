@@ -34,7 +34,8 @@ export default class LossReport extends Component {
             end: '',
             end_data: '',
             time: '',
-            today_time: ''
+            today_time: '',
+            kongbj:true
 
         }
         this.isLoadMore = true
@@ -123,6 +124,11 @@ export default class LossReport extends Component {
                 })
             } else {
                 Toast.info(res.data.msg, 2)
+                this.setState({
+                    kongbj:false,
+                    damageList:[],
+                    zongnp:{}
+                })
             }
         })
     }
@@ -276,7 +282,8 @@ export default class LossReport extends Component {
             if (res.data.status === 4001) {
                 this.setState({
                     damageList:res.data.data.data,
-                    zongnp:res.data.data.total
+                    zongnp:res.data.data.total,
+                    kongbj:false,
                 },()=>{
                     this.refs.scroll.BScroll.refresh()
                 })
@@ -295,6 +302,8 @@ export default class LossReport extends Component {
         const scrollConfig = {
             probeType: 1
         }
+        // let kong=
+        
         return (
             <LossReportStyle>
 
@@ -403,6 +412,10 @@ export default class LossReport extends Component {
                     <div>总数量：<span>{this.state.zongnp.num ? this.state.zongnp.num : 0}</span></div>
                     <div style={{ marginLeft: ".8rem" }}>总报损金额：<span>{this.state.zongnp.total ? this.state.zongnp.total : 0}</span></div>
                 </div>
+
+                <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
+                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
+                </div>
             </LossReportStyle>
         )
     }
@@ -460,6 +473,18 @@ export default class LossReport extends Component {
     }
 }
 const LossReportStyle = styled.div`
+.kongbj img{
+    width: 5rem;
+    height: 5rem;
+}
+.kongbj{
+    margin-top:2rem;
+    width:100%;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+
+}
 .start{
     margin-left:1.6rem;
     }

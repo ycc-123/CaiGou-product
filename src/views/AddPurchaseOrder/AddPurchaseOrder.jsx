@@ -140,13 +140,19 @@ export default class AddPurchaseOrder extends Component {
                             </Picker>
                         
                         </li>
-                        <li>预付款：<input name="inputAmount" 
+                        <li>
+                            <div>预付款：</div>
+                            <input name="inputAmount" 
                                     onChange={this.inputChange.bind(this)}
                                     value={this.state.inputAmount} type="text"/></li>
-                        <li>合同编号：<input name="inputHetong" 
+                        <li>
+                            <div>合同编号：</div>
+                            <input name="inputHetong" 
                                     onChange={this.inputChangeht.bind(this)}
                                     value={this.state.inputHetong} type="text" /></li>
-                        <li style={{ border: "none" }}>备注：<input name="inputbeiz" 
+                        <li style={{ border: "none" }}>
+                            <div>备注：</div>
+                            <input name="inputbeiz" 
                                     onChange={this.inputChangebz.bind(this)}
                                     value={this.state.inputbeiz} type="text" /></li>
                     </ul>
@@ -208,7 +214,7 @@ const AddPurchaseOrderStyle = styled.div`
 .time{
     position:absolute;
     left:2.2rem;
-    top:1.5rem;
+    top:1.4rem;
     // padding-top:.3rem;
     color: #a9a9a9;
     width:12rem;
@@ -259,20 +265,25 @@ const AddPurchaseOrderStyle = styled.div`
 .biao{
     width: 100%;
     height: 7rem;
-    background-color: #fff;
+    
 }
 .biao li input{
     border:none;
     outline:none;
-    font-size:.5rem;
+    font-size:.45rem;
     width:7rem;
-    height:.9rem;
+    height:.65rem;
     color:#646464; 
 }
 .biao li span{
     color:#e41515; 
 }
+.biao li div{
+    // background-color: pink;
+}
 .biao li{
+    display:flex;
+    background-color: #fff;
     padding-left:.3rem;
     color:#646464;
     padding-top:.3rem;
@@ -280,7 +291,8 @@ const AddPurchaseOrderStyle = styled.div`
     font-size:.45rem;
     color:#646464; 
     width: 100%;
-    height: 1.4rem;
+    height: 1.3rem;
+    line-height: .7rem;
     border-bottom: 1px solid #dbdbdb;
 
 }

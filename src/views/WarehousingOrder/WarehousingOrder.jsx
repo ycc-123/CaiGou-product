@@ -54,8 +54,8 @@ export default class WarehousingOrder extends Component {
             type:"1",
             search:this.state.inputSearch,
             // warehouseName:this.state.inputSearch,
-            limit:this.state.limit,
-            page:this.state.page
+            limit:"1000",
+            page:"1"
           } }).then((res) => {
             if(res.data.status===4001){
                 this.setState({
@@ -68,6 +68,14 @@ export default class WarehousingOrder extends Component {
             }
         })
     }
+    componentDidUpdate = () => {
+        // // 默认每次加载x=0，y=0 不然会有bug
+        // // console.log(this)
+        // /* console.log('进来了') */
+        // this.refs.scroll.BScroll.scrollTo(0, 0)
+        // this.refs.scroll.BScroll.refresh()
+    
+      }
     render() {
         const scrollConfig = {
             probeType: 1
