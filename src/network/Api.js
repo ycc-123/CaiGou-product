@@ -246,3 +246,23 @@ export function get_store(config) {
     data: config.data
   })
 }
+
+// 盘点单列表
+export function getInventoryList(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+// 盘点单明细
+export function getInventoryInfo(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
