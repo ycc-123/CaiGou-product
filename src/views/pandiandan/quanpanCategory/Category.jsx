@@ -5,7 +5,7 @@ import CategoryLeftItem from './childCom/CategoryLeftItem'
 import CategoryRight from './childCom/CategoryRight'
 import { setTitle } from 'commons/utils'
 import { store } from 'store/index'
-import { getProductCategoryAll, searchProduct ,getStockList} from 'network/Api'
+import { getProductCategoryAll, getStockList } from 'network/Api'
 import {  _categoryRight } from 'network/category'
 import { Toast } from 'antd-mobile';
 
@@ -24,9 +24,7 @@ class Category extends Component {
     this.state = {
       indexId:'',
       value: [],
-      title: [{name:this.props.match.params.name}],
-
-      // title: [],
+      title: [],
       goods: [],
       defaultIndex: 0,
       type: 'goods',
@@ -58,8 +56,8 @@ class Category extends Component {
   }
   Search(){
     console.log(this.state.inputSearch)
-    searchProduct({
-      action: 'searchProduct', data: {
+    getStockList({
+      action: 'getStockList', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         categoryid: this.state.indexId,
@@ -78,12 +76,9 @@ class Category extends Component {
   }
   render() {
     const { title, type } = this.state
-    console.log(this.props.match.params.ck)
+    console.log(this.props.match.params.id)
     let pdid = this.props.match.params.id
     let ckid = this.props.match.params.ck
-    let flid = this.props.match.params.fl
-
-
     return (
       <CategoryStyle>
         <Fragment>
@@ -112,7 +107,7 @@ class Category extends Component {
                 </BetterScroll>}
               </ul>
             </div>
-              <CategoryRight itemData={this.state.mrqunangoods} index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} ckid={ckid} pdid={pdid} aa={this.getChildValue.bind(this)} history={this.props.history} />
+              <CategoryRight itemData={this.state.mrqunangoods} ckid={ckid} pdid={pdid} index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} aa={this.getChildValue.bind(this)} history={this.props.history} />
             </Fragment> : <Fragment>
               </Fragment>}
           </div>
@@ -123,9 +118,8 @@ class Category extends Component {
 
             <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
 
-            <div className='foot_conton' onClick={() => { this.mingxi() }}>
-                    {/*总额： <span>{this.state.price ? this.state.price : 0}</span> */}
-                    </div>
+            <div className='foot_conton' onClick={() => { this.mingxi() }}>总额：
+                    <span>{this.state.price ? this.state.price : 0}</span></div>
             <div className='right' onClick={this.click}>提交</div>
 
           </div>
@@ -152,7 +146,6 @@ class Category extends Component {
       })
     }
   }
-   
 
   componentDidCache = () => {
     console.log('缓存了')
@@ -183,61 +176,57 @@ class Category extends Component {
   }
 
   componentDidMount = () => {
-    // alert(this.props.match.params.name);
 
+    // this.refs.scroll.BScroll.refresh()
     setTitle('新建采购单')
-    getStockList({
-      action: 'getStockList', data: {
+    // const { appConfig } = store.getState()
+    getProductCategoryAll({
+      action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
-        uid: store.getState().uid,
-        warehouseid:this.props.match.params.ck,
-        categoryid: this.props.match.params.fl,
-        
       }
     }).then(res => {
-      console.log(res)
-      var mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id,realnum:o.gnum} });
-                console.log(mrqunangoods)
-      // if (res.data.status === 4001) {
-      //   console.log(res.data.data.data)
+      console.log(res.data.data)
+      if (res.data.status === 4001) {
 
-        this.setState({
-          mrqunangoods,
-          goods: res.data.msg === "成功" ? res.data.data.data : [{}]
-        })
-      // } else {
-      //   Toast.info(res.data.msg, 2)
-      // }
-    })
-
-//     id: "4119"
-// uniacid: "53"
-// code: "666666"
-// name: "测试分体称33"
-// albumpath: ""
-// barcodeid: "2100"
-
-//         searchProduct({
-//           action: 'searchProduct', data: {
-//             uniacid: store.getState().uniacid,
-//             uid: store.getState().uid,
-//             limit:"1000",
-//             page:1,
-//             categoryid: this.props.match.params.fl,
+        var result = res.data.data.map(o => { return { name: o.name } });
+        console.log(result)
+        var Id = res.data.data.map(o => { return { id: o.id } });
+        console.log(Id)
+        var value = res.data.data.map(o => { return { code: o.code } });
+        console.log(value)
+        getStockList({
+          action: 'getStockList', data: {
+            uniacid: store.getState().uniacid,
+            uid: store.getState().uid,
+            warehouseid:this.props.match.params.ck,
+            categoryid: Id[0].id,
             
-//           }
-//         }).then(res => {
-//           console.log(res)
-//           if (res.data.status === 4001) {
-//             console.log(res.data.data.data)
+          }
+        }).then(res => {
+          console.log(res)
+          if (res.data.status === 4001) {
+            console.log(res.data.data.data)
+            var mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id,realnum:o.gnum} });
+            console.log(mrqunangoods)
 
-//             this.setState({
-//               goods: res.data.msg === "成功" ? res.data.data.data : [{}]
-//             })
-//           } else {
-//             Toast.info(res.data.msg, 2)
-//           }
-//         })
+            this.setState({
+              mrqunangoods,
+              goods: res.data.msg === "成功" ? res.data.data.data : [{}]
+            })
+          } else {
+            Toast.info(res.data.msg, 2)
+          }
+        })
+        this.setState({
+          title: result,
+          id: Id,
+          value
+        })
+      } else {
+        Toast.info('网络错误', 2)
+      }
+    })
+    console.log(this.state.id)
   }
 
   onChangeActive = index => {
@@ -246,20 +235,23 @@ class Category extends Component {
       indexId:this.state.id[index].id,
       index
     })
-    searchProduct({
-      action: 'searchProduct', data: {
+    getStockList({
+      action: 'getStockList', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        limit:"1000",
-        page:1,
+        warehouseid:this.props.match.params.ck,
+        // categoryid: Id[0].id,
         categoryid: this.state.id[index].id,
       }
     }).then(res => {
-      console.log(res.data.msg)
+      console.log(res)
       if (res.data.status === 4001) {
         console.log(res.data.data.data)
+        var mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id,realnum:o.gnum} });
+        console.log(mrqunangoods)
         this.setState({
-          goods: res.data.data.data
+          mrqunangoods,
+          goods: res.data.data.data===null?[]:res.data.data.data
         })
       } else {
         this.setState({
@@ -781,3 +773,6 @@ input::-webkit-input-placeholder {
 `
 
 export default Category
+
+
+

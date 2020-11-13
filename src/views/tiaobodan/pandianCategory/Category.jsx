@@ -34,7 +34,7 @@ class Category extends Component {
       num: '',
       price: '',
       inputSearch:'',
-      mrqunangoods:[],
+
       Id:""
     }
     
@@ -112,7 +112,7 @@ class Category extends Component {
                 </BetterScroll>}
               </ul>
             </div>
-              <CategoryRight itemData={this.state.mrqunangoods} index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} ckid={ckid} pdid={pdid} aa={this.getChildValue.bind(this)} history={this.props.history} />
+              <CategoryRight index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} ckid={ckid} pdid={pdid} aa={this.getChildValue.bind(this)} history={this.props.history} />
             </Fragment> : <Fragment>
               </Fragment>}
           </div>
@@ -183,61 +183,66 @@ class Category extends Component {
   }
 
   componentDidMount = () => {
-    // alert(this.props.match.params.name);
+    alert(this.props.match.params.name);
+    
+    // getStockList({
+    //   action: 'getStockList', data: {
+    //     uniacid: store.getState().uniacid,
+    //     uid: store.getState().uid,
+    //     warehouseid:this.props.match.params.ck
+    //   }
+    // }).then(res => {
 
+    // })
+    // this.refs.scroll.BScroll.refresh()
     setTitle('新建采购单')
-    getStockList({
-      action: 'getStockList', data: {
+    // const { appConfig } = store.getState()
+    getProductCategoryAll({
+      action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
-        uid: store.getState().uid,
-        warehouseid:this.props.match.params.ck,
-        categoryid: this.props.match.params.fl,
-        
+        // id:this.props.match.params.fl
       }
     }).then(res => {
-      console.log(res)
-      var mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id,realnum:o.gnum} });
-                console.log(mrqunangoods)
-      // if (res.data.status === 4001) {
-      //   console.log(res.data.data.data)
-
-        this.setState({
-          mrqunangoods,
-          goods: res.data.msg === "成功" ? res.data.data.data : [{}]
-        })
-      // } else {
-      //   Toast.info(res.data.msg, 2)
-      // }
-    })
-
-//     id: "4119"
-// uniacid: "53"
-// code: "666666"
-// name: "测试分体称33"
-// albumpath: ""
-// barcodeid: "2100"
-
-//         searchProduct({
-//           action: 'searchProduct', data: {
-//             uniacid: store.getState().uniacid,
-//             uid: store.getState().uid,
-//             limit:"1000",
-//             page:1,
-//             categoryid: this.props.match.params.fl,
+      console.log(res.data.data)
+      if (res.data.status === 4001) {
+        var result = res.data.data.map(o => { return { name: o.name } });
+        console.log(result)
+        var Id = res.data.data.map(o => { return { id: o.id } });
+        console.log(Id)
+        var value = res.data.data.map(o => { return { code: o.code } });
+        console.log(value)
+        searchProduct({
+          action: 'searchProduct', data: {
+            uniacid: store.getState().uniacid,
+            uid: store.getState().uid,
+            limit:"1000",
+            page:1,
+            categoryid: this.props.match.params.nam,
             
-//           }
-//         }).then(res => {
-//           console.log(res)
-//           if (res.data.status === 4001) {
-//             console.log(res.data.data.data)
+          }
+        }).then(res => {
+          console.log(res.data.msg)
+          if (res.data.status === 4001) {
+            console.log(res.data.data.data)
 
-//             this.setState({
-//               goods: res.data.msg === "成功" ? res.data.data.data : [{}]
-//             })
-//           } else {
-//             Toast.info(res.data.msg, 2)
-//           }
-//         })
+            this.setState({
+              goods: res.data.msg === "成功" ? res.data.data.data : [{}]
+            })
+          } else {
+            Toast.info(res.data.msg, 2)
+          }
+        })
+        console.log(result)
+        this.setState({
+          title: result,
+          id: Id,
+          value
+        })
+      } else {
+        Toast.info('网络错误', 2)
+      }
+    })
+    console.log(this.state.id)
   }
 
   onChangeActive = index => {

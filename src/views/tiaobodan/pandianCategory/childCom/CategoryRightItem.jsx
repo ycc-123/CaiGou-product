@@ -77,7 +77,7 @@ class CategoryRightgoods extends Component {
               
                 <div className='shuliang'>
                   <article>账面数量：{goods.gnum}</article>
-                  <div>实际数量：{this.state.login?this.state.login:goods.gnum}</div>
+                  <div>实际数量：{this.state.login?this.state.login:0}</div>
                 </div>
                 // <img className='category-goods-img'
                 //   src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'

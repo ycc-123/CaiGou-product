@@ -89,7 +89,7 @@ export default class AddInventoryList extends Component {
             action: 'createInventory', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                type: this.state.lxID===''?"1":this.state.lxID,
+                type: this.state.lxID,
                 warehouseid: idkc,
                 categoryid: idgy,
                 remark: this.state.inputbeiz,
@@ -97,13 +97,7 @@ export default class AddInventoryList extends Component {
         }).then(res => {
             console.log(res)
             if (res.data.status === 4001) {
-                if(Number(this.state.lxID)===2){
                 this.props.history.push(`/pandianCategory/${res.data.data}/${idkc}/${idgy}/${parame}`)
-
-                }else{
-                this.props.history.push(`/quanpanCategory/${res.data.data}/${idkc}`)
-
-                }
                 console.log(res.data.data)
                 Toast.success('新建盘点单成功', 2)
             } else {

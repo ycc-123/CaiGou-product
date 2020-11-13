@@ -159,18 +159,6 @@ export function get_cashier(config) {
 }
 
 
-// 获取仓库
-// export function get_store(config) {
-//   return requestPost({
-//     params: {
-//       action: config.action
-//     },
-//     data: config.data
-//   })
-
-// }
-
-
 // 采购申请单列表
 export function getPurchaseApplyList(config) {
   return requestPost({
@@ -279,6 +267,24 @@ export function createInventory(config) {
 
 // 提交盘点单
 export function submitInventory(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+// 调拨单列表
+export function getWarehouseChangeList(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+// 调拨单明细
+export function getWarehouseChangeDetail(config) {
   return requestPost({
     params: {
       action: config.action

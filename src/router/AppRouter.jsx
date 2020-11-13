@@ -22,10 +22,14 @@ import Shouyinmxb from 'views/kucundan/stockList/shouyinmxb'
 import GoodDiscount from 'views/GoodDiscount/GoodDiscount'
 import Pandian from 'views/pandiandan/addInventoryList'
 import pandianCategory from 'views/pandiandan/pandianCategory/Category'
+import quanpanCategory from 'views/pandiandan/quanpanCategory/Category'
 
 import TransferOrder from 'views/TransferOrder/TransferOrder'
 import InventoryList from 'views/pandiandan/InventoryList'
 import InventoryListDetails from 'views/pandiandan/InventoryListDetails'
+import allocationOrder from 'views/tiaobodan/allocationOrder'
+import allocationListDetails from 'views/tiaobodan/allocationListDetails'
+
 // 测试
 import Text from 'views/ApplyOrderx/Text'
 
@@ -62,6 +66,10 @@ const AppRouter = () => {
         <Route path='/addPandian' exact component={Pandian} ></Route>
         <Route path='/TransferOrder' exact component={TransferOrder} ></Route>
         <Route path='/Pandian' exact component={InventoryList} ></Route>
+        <Route path='/allocationListDetails' exact component={allocationListDetails} ></Route>
+        <Route path='/allocationOrder' exact component={allocationOrder} ></Route>
+        <Route path='/quanpanCategory/:id/:ck' exact component={quanpanCategory} ></Route>
+
         <Route path='/pandianCategory/:id/:ck/:fl/:name' exact component={pandianCategory} ></Route>
 
         <Route path='/InventoryListDetails/:id' exact component={InventoryListDetails} ></Route>

@@ -108,16 +108,7 @@ class CategoryRight extends Component {
 
   myName = () =>{
     if(this.state.login[0]===undefined){
-      submitInventory({ action: 'submitInventory', data: {
-        uniacid: store.getState().uniacid,
-        uid:store.getState().uid,
-        status:"2",
-        warehouseid:this.props.ckid,
-        inventoryId:this.props.pdid,
-        itemData:this.props.itemData,
-      } }).then(res=>{
-
-      })
+     Toast.info('请添加商品后提交',1.5)
     }else{
       console.log(this.state.login, this.state.password)
     let num =this.state.login
