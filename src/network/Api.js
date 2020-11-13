@@ -266,3 +266,23 @@ export function getInventoryInfo(config) {
     data: config.data
   })
 }
+
+// 新建盘点单
+export function createInventory(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+// 提交盘点单
+export function submitInventory(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

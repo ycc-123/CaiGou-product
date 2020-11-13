@@ -25,7 +25,7 @@ export default class InventoryListDetails extends Component {
         }
     }
     componentDidMount() {
-        setTitle('采购入库单')
+        setTitle('盘点单')
         getInventoryInfo({
             action: 'getInventoryInfo', data: {
                 uniacid: store.getState().uniacid,
@@ -198,7 +198,6 @@ export default class InventoryListDetails extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
-
     }
     render() {
         const scrollConfig = {
@@ -259,8 +258,8 @@ export default class InventoryListDetails extends Component {
                                                 {/* <p>{tiao.gnum}公斤</p> */}
                                             </li>
                                             <li className='wen-zi-f'>
-                                                <div>账面总数：{tiao.gnum}</div>
-                                                <p>实际总数：{tiao.realnum}</p>
+                                                <div>账面数量：{tiao.gnum}</div>
+                                                <p>实际数量：{tiao.realnum}</p>
                                             </li>
                                         </ul>
                                     </div>
@@ -270,10 +269,13 @@ export default class InventoryListDetails extends Component {
                     </BetterScroll>
                     <div className='foot'>
                         <div className='left'>
-                            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
+                            {/* <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /> */}
+                            账面总数：<span>{this.state.inventoryData.gnum}</span>
+                            <span style={{marginLeft:".8rem"}}></span>
+                            实际总数：<span>{this.state.inventoryData.realnum}</span>
                         </div>
-                        <div className='yuan'>{this.state.itemData.length}</div>
-                        <div style={{ background: this.state.inventoryData.statusname === "提交成功" ? "#B4B4B4" : '' }} className='right' onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>{this.state.inventoryData.statusname === "待提交" ? "提交" : "提交"}</div>
+                        {/* <div className='yuan'>{this.state.itemData.length}</div> */}
+                        <div style={{ background: this.state.inventoryData.statusname === "提交成功" ? "#B4B4B4" : '' }} className='right' onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>{this.state.inventoryData.statusname === "待提交" ? "提交" : "已提交"}</div>
 
                     </div>
                 </div>
@@ -315,11 +317,16 @@ const WarehousingOrderxingStyle = styled.div`
         max-width: 100%;  
         max-height: 100%;
       }
+      .left span{
+          color:rgb(217, 41, 41);
+      }
       .left{
         padding-left:.3rem;
         margin:auto;
         width: 22rem;
         height: 1rem;
+        line-height: 1rem;
+        font-size:.35rem;
       }
       .right{
         font-size:.4rem;

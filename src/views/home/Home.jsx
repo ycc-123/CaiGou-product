@@ -45,7 +45,7 @@ export default class Home extends Component {
             <li style={{ height: "1.6rem", width: "1.95rem", marginLeft: ".4rem" }} onClick={() => { this.props.history.push('/WarehousingOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/rkdan.png" alt="" /></li>
             <li onClick={()=>{this.props.history.push('/Pandian')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/pandiandan.png" alt=""/></li>
             {/* <li onClick={()=>{this.props.history.push('/LossReport')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/baosdan.png" alt=""/></li> */}
-            <li onClick={()=>{this.props.history.push('/TransferOrder')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaobodan.png" alt=""/></li>
+            <li onClick={()=>{this.props.history.push('/addPandian')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaobodan.png" alt=""/></li>
             {/* <li style={{marginTop:".8rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dabao.png" alt=""/></li> */}
           </ul>
         </div>
