@@ -195,7 +195,7 @@ export default class Youhuimxb extends Component {
                     <div className='fenglei' style={{display:this.state.zuantai===false?"none":"block"}}>
                         <div>日期
                             <ul>
-                                <p>——
+                                <p><span style={{position:"absolute",top:".85rem",left:"4.7rem"}}>~</span>
                                 <article className='articleone'></article>
                                     <DatePicker
                                         value={this.state.start}
@@ -436,7 +436,7 @@ const YouhuimxbStyle = styled.div`
 }
 .start{
     position:absolute;
-    left:0rem;
+    left:1.5rem;
     top:.5rem;
     // padding-top:.3rem;
     color: #a9a9a9;
@@ -445,7 +445,7 @@ const YouhuimxbStyle = styled.div`
 }
 .end{
     position:absolute;
-    left:5rem;
+    left:4.9rem;
     top:.5rem;
     // padding-top:.3rem;
     color: #a9a9a9;
@@ -534,7 +534,7 @@ const YouhuimxbStyle = styled.div`
     left:.2rem;
     width:4.1rem;
     height:1rem;
-    border:1px solid #dcdcdc;
+    // border:1px solid #dcdcdc;
 }
 .articletwo{
     position:absolute;
@@ -542,7 +542,7 @@ const YouhuimxbStyle = styled.div`
     left:5.4rem;
     width:4.2rem;
     height:1rem;
-    border:1px solid #dcdcdc;
+    // border:1px solid #dcdcdc;
 }
 
 

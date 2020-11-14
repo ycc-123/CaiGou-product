@@ -80,10 +80,8 @@ export default class AddInventoryList extends Component {
         })
         console.log(flname.label)
         console.log(this.state.lxID)
-       
-        // let idgy = this.state.IDgy.toString()
         let idkc = this.state.IDck.toString()
-        this.props.history.push('/pandiancategory')
+
         var parame=encodeURI(flname.label);
         createInventory({
             action: 'createInventory', data: {
@@ -98,11 +96,9 @@ export default class AddInventoryList extends Component {
             console.log(res)
             if (res.data.status === 4001) {
                 if(Number(this.state.lxID)===2){
-                this.props.history.push(`/pandianCategory/${res.data.data}/${idkc}/${idgy}/${parame}`)
-
+                    this.props.history.push(`/pandianCategory/${res.data.data}/${idkc}/${idgy}/${parame}`)
                 }else{
-                this.props.history.push(`/quanpanCategory/${res.data.data}/${idkc}`)
-
+                    this.props.history.push(`/quanpanCategory/${res.data.data}/${idkc}`)
                 }
                 console.log(res.data.data)
                 Toast.success('新建盘点单成功', 2)

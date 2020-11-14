@@ -6,8 +6,8 @@ import CategoryRight from './childCom/CategoryRight'
 import { setTitle } from 'commons/utils'
 import { store } from 'store/index'
 import { getProductCategoryAll, getStockList } from 'network/Api'
-import {  _categoryRight } from 'network/category'
-import { Toast,Button,Modal } from 'antd-mobile';
+import { _categoryRight } from 'network/category'
+import { Toast, Button, Modal } from 'antd-mobile';
 const alert = Modal.alert;
 const scollConfig = {
   probeType: 1
@@ -22,7 +22,7 @@ class Category extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      indexId:'',
+      indexId: '',
       value: [],
       title: [],
       goods: [],
@@ -31,11 +31,11 @@ class Category extends Component {
       id: [],
       num: '',
       price: '',
-      inputSearch:'',
-      mrqunangoods:[],
-      Id:""
+      inputSearch: '',
+      mrqunangoods: [],
+      Id: ""
     }
-    
+
   }
   mingxi() {
     console.log(111)
@@ -48,30 +48,30 @@ class Category extends Component {
       price: val
     })
   }
-  inputChange(e){
+  inputChange(e) {
     console.log(e.target.value)
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
-  Search(){
+  Search() {
     console.log(this.state.inputSearch)
     getStockList({
       action: 'getStockList', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         categoryid: this.state.indexId,
-        search:this.state.inputSearch
+        search: this.state.inputSearch
       }
     }).then(res => {
-      if(res.data.status===4001){
+      if (res.data.status === 4001) {
         this.setState({
-            goods: res.data.data.data
+          goods: res.data.data.data
         })
-      }else{
-        Toast.info(res.data.msg,2)
+      } else {
+        Toast.info(res.data.msg, 2)
       }
-      
+
     })
   }
   render() {
@@ -83,9 +83,9 @@ class Category extends Component {
       <CategoryStyle>
         <Fragment>
           <div className='search'>
-            <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch" 
-                                    onChange={this.inputChange.bind(this)}
-                                    value={this.state.inputSearch}/>
+            <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"
+              onChange={this.inputChange.bind(this)}
+              value={this.state.inputSearch} />
             <div className='img' onClick={() => { this.Search() }}>
               <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
@@ -112,7 +112,7 @@ class Category extends Component {
               </Fragment>}
           </div>
           <div className='foot'>
-            <div className='left' 
+            <div className='left'
             // onClick={() => { this.mingxi() }}
             >
               <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
@@ -122,7 +122,7 @@ class Category extends Component {
 
             <div className='foot_conton'
             //  onClick={() => { this.mingxi() }}
-             >总额：
+            >总额：
                     <span>{this.state.price ? this.state.price : 0}</span></div>
             {/* <div className='right' onClick={this.click}>提交</div> */}
             <div className='right' >提交</div>
@@ -215,16 +215,24 @@ class Category extends Component {
           action: 'getStockList', data: {
             uniacid: store.getState().uniacid,
             uid: store.getState().uid,
-            warehouseid:this.props.match.params.ck,
+            warehouseid: this.props.match.params.ck,
             categoryid: Id[0].id,
-            
+
           }
         }).then(res => {
           console.log(res)
           if (res.data.status === 4001) {
-            console.log(res.data.data.data)
-            var mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id,realnum:o.gnum} });
-            console.log(mrqunangoods)
+            let mrqunangoods = []
+            if (Boolean(res.data.data.data) === false) {
+              Toast.info("无商品", 1)
+              mrqunangoods = []
+            } else {
+              mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
+              console.log(mrqunangoods)
+            }
+            // console.log(res.data.data.data)
+            // var mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
+            // console.log(mrqunangoods)
 
             this.setState({
               mrqunangoods,
@@ -249,33 +257,33 @@ class Category extends Component {
   onChangeActive = index => {
     console.log(this.state.value[index])
     this.setState({
-      indexId:this.state.id[index].id,
+      indexId: this.state.id[index].id,
       index
     })
     getStockList({
       action: 'getStockList', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        warehouseid:this.props.match.params.ck,
+        warehouseid: this.props.match.params.ck,
         // categoryid: Id[0].id,
         categoryid: this.state.id[index].id,
       }
     }).then(res => {
       console.log(res)
-      let mrqunangoods=[]
+      let mrqunangoods = []
       if (res.data.status === 4001) {
-        if(Boolean(res.data.data.data)===false){
-          Toast.info("无商品",1)
-          mrqunangoods=[]
-        }else{
-          mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id,realnum:o.gnum} });
+        if (Boolean(res.data.data.data) === false) {
+          Toast.info("无商品", 1)
+          mrqunangoods = []
+        } else {
+          mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
           console.log(mrqunangoods)
         }
         console.log(res.data.data.data)
-        
+
         this.setState({
           mrqunangoods,
-          goods: res.data.data.data===null?[]:res.data.data.data
+          goods: res.data.data.data === null ? [] : res.data.data.data
         })
       } else {
         this.setState({

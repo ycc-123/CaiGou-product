@@ -45,7 +45,7 @@ class CategoryRight extends Component {
         <ul>
           <BetterScroll config={scollConfig} style={scrollStyle} ref='scroll' loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
-            {goodsList.map((item, index) => {
+            {Boolean(goodsList)===false?"":goodsList.map((item, index) => {
               return (
                 <CategoryRightItem key={item.id + index} goods={item} parent={ this }/>
               )

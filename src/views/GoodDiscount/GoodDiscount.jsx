@@ -578,7 +578,7 @@ const LossReportStyle = styled.div`
     color:#7d7d7d;
 }
 .wen-zi-f p span{
-    color:#5f5f5f;
+    color:#7d7d7d;
 }
 .wen-zi-f p{
     font-size:.35rem;
