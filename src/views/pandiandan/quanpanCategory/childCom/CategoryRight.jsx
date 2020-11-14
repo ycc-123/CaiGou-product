@@ -90,7 +90,13 @@ class CategoryRight extends Component {
         inventoryId:this.props.pdid,
         itemData:this.props.itemData,
       } }).then(res=>{
-
+        if(res.data.status===4001){
+          console.log(res)
+          Toast.success(res.data.msg, 2)
+          this.props.history.push('/home')
+        }else{
+          Toast.info(res.data.msg, 2)
+        }
       })
     }else{
       console.log(this.state.login, this.state.password)
@@ -133,18 +139,18 @@ class CategoryRight extends Component {
       itemData:itemData,
     } }).then(res=>{
       console.log(res)
-    //   if(res.data.status===4001){
-    //     Toast.success(res.data.msg, 2)
-    //     this.home()
-    //   }else{
-    //     Toast.info(res.data.msg, 2)
-    //   }
+      if(res.data.status===4001){
+        Toast.success(res.data.msg, 2)
+        this.props.history.push('/home')
+      }else{
+        Toast.info(res.data.msg, 2)
+      }
     })
     }
     
   } 
   home(){
-    this.props.history.push('/home')
+    
   }
 
   shouldComponentUpdate = (nextProps, nextState) => {

@@ -5,10 +5,10 @@ import CategoryLeftItem from './childCom/CategoryLeftItem'
 import CategoryRight from './childCom/CategoryRight'
 import { setTitle } from 'commons/utils'
 import { store } from 'store/index'
-import { getProductCategoryAll, searchProduct ,getStockList} from 'network/Api'
-import {  _categoryRight } from 'network/category'
-import { Toast } from 'antd-mobile';
-
+import { getProductCategoryAll, searchProduct, getStockList } from 'network/Api'
+import { _categoryRight } from 'network/category'
+import { Toast, Button,Modal} from 'antd-mobile';
+const alert = Modal.alert;
 const scollConfig = {
   probeType: 1
 }
@@ -22,9 +22,9 @@ class Category extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      indexId:'',
+      indexId: '',
       value: [],
-      title: [{name:this.props.match.params.name}],
+      title: [{ name: this.props.match.params.name }],
 
       // title: [],
       goods: [],
@@ -33,11 +33,11 @@ class Category extends Component {
       id: [],
       num: '',
       price: '',
-      inputSearch:'',
-      mrqunangoods:[],
-      Id:""
+      inputSearch: '',
+      mrqunangoods: [],
+      Id: ""
     }
-    
+
   }
   mingxi() {
     console.log(111)
@@ -50,30 +50,30 @@ class Category extends Component {
       price: val
     })
   }
-  inputChange(e){
+  inputChange(e) {
     console.log(e.target.value)
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
-  Search(){
+  Search() {
     console.log(this.state.inputSearch)
     searchProduct({
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         categoryid: this.state.indexId,
-        search:this.state.inputSearch
+        search: this.state.inputSearch
       }
     }).then(res => {
-      if(res.data.status===4001){
+      if (res.data.status === 4001) {
         this.setState({
-            goods: res.data.data.data
+          goods: res.data.data.data
         })
-      }else{
-        Toast.info(res.data.msg,2)
+      } else {
+        Toast.info(res.data.msg, 2)
       }
-      
+
     })
   }
   render() {
@@ -88,9 +88,9 @@ class Category extends Component {
       <CategoryStyle>
         <Fragment>
           <div className='search'>
-            <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch" 
-                                    onChange={this.inputChange.bind(this)}
-                                    value={this.state.inputSearch}/>
+            <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"
+              onChange={this.inputChange.bind(this)}
+              value={this.state.inputSearch} />
             <div className='img' onClick={() => { this.Search() }}>
               <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
@@ -117,16 +117,32 @@ class Category extends Component {
               </Fragment>}
           </div>
           <div className='foot'>
-            <div className='left' onClick={() => { this.mingxi() }}>
+            <div className='left' 
+            // onClick={() => { this.mingxi() }}
+            >
               <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
             </div>
 
             <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
 
-            <div className='foot_conton' onClick={() => { this.mingxi() }}>
-                    {/*总额： <span>{this.state.price ? this.state.price : 0}</span> */}
-                    </div>
-            <div className='right' onClick={this.click}>提交</div>
+            <div className='foot_conton' 
+            // onClick={() => { this.mingxi() }}
+            >
+              {/*总额： <span>{this.state.price ? this.state.price : 0}</span> */}
+            </div>
+            <div className='right' >提交</div>
+            <Button
+              style={{  width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
+              className="btn_modal"
+              onClick={() =>
+                alert('提交', '是否确认提交盘点单', [
+                  { text: '取消', onPress: () => console.log('cancel') },
+                  { text: '确定', onPress: () => this.click() },
+                ])
+              }
+            >
+              confirm
+                        </Button>
 
           </div>
 
@@ -152,7 +168,7 @@ class Category extends Component {
       })
     }
   }
-   
+
 
   componentDidCache = () => {
     console.log('缓存了')
@@ -185,73 +201,81 @@ class Category extends Component {
   componentDidMount = () => {
     // alert(this.props.match.params.name);
 
-    setTitle('新建采购单')
+    setTitle('新建盘点单')
     getStockList({
       action: 'getStockList', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        warehouseid:this.props.match.params.ck,
+        warehouseid: this.props.match.params.ck,
         categoryid: this.props.match.params.fl,
-        
+
       }
     }).then(res => {
+      let mrqunangoods = []
+      if (Boolean(res.data.data.data) === false) {
+        Toast.info("无商品", 1)
+        mrqunangoods = []
+      } else {
+        mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
+        console.log(mrqunangoods)
+      }
       console.log(res)
-      var mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id,realnum:o.gnum} });
-                console.log(mrqunangoods)
+      // var mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id,realnum:o.gnum} });
+      //           console.log(mrqunangoods)
       // if (res.data.status === 4001) {
       //   console.log(res.data.data.data)
 
-        this.setState({
-          mrqunangoods,
-          goods: res.data.msg === "成功" ? res.data.data.data : [{}]
-        })
+      this.setState({
+        mrqunangoods,
+        goods: res.data.msg === "成功" ? res.data.data.data : [{}]
+      })
       // } else {
       //   Toast.info(res.data.msg, 2)
       // }
     })
 
-//     id: "4119"
-// uniacid: "53"
-// code: "666666"
-// name: "测试分体称33"
-// albumpath: ""
-// barcodeid: "2100"
+    //     id: "4119"
+    // uniacid: "53"
+    // code: "666666"
+    // name: "测试分体称33"
+    // albumpath: ""
+    // barcodeid: "2100"
 
-//         searchProduct({
-//           action: 'searchProduct', data: {
-//             uniacid: store.getState().uniacid,
-//             uid: store.getState().uid,
-//             limit:"1000",
-//             page:1,
-//             categoryid: this.props.match.params.fl,
-            
-//           }
-//         }).then(res => {
-//           console.log(res)
-//           if (res.data.status === 4001) {
-//             console.log(res.data.data.data)
+    //         searchProduct({
+    //           action: 'searchProduct', data: {
+    //             uniacid: store.getState().uniacid,
+    //             uid: store.getState().uid,
+    //             limit:"1000",
+    //             page:1,
+    //             categoryid: this.props.match.params.fl,
 
-//             this.setState({
-//               goods: res.data.msg === "成功" ? res.data.data.data : [{}]
-//             })
-//           } else {
-//             Toast.info(res.data.msg, 2)
-//           }
-//         })
+    //           }
+    //         }).then(res => {
+    //           console.log(res)
+    //           if (res.data.status === 4001) {
+    //             console.log(res.data.data.data)
+
+    //             this.setState({
+    //               goods: res.data.msg === "成功" ? res.data.data.data : [{}]
+    //             })
+    //           } else {
+    //             Toast.info(res.data.msg, 2)
+    //           }
+    //         })
   }
 
   onChangeActive = index => {
     console.log(this.state.value[index])
     this.setState({
-      indexId:this.state.id[index].id,
+      indexId: this.state.id[index].id,
       index
     })
     searchProduct({
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        limit:"1000",
-        page:1,
+        limit: "1000",
+        page: 1,
         categoryid: this.state.id[index].id,
       }
     }).then(res => {

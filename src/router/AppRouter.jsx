@@ -66,7 +66,7 @@ const AppRouter = () => {
         <Route path='/addPandian' exact component={Pandian} ></Route>
         <Route path='/TransferOrder' exact component={TransferOrder} ></Route>
         <Route path='/Pandian' exact component={InventoryList} ></Route>
-        <Route path='/allocationListDetails' exact component={allocationListDetails} ></Route>
+        <Route path='/allocationListDetails/:id' exact component={allocationListDetails} ></Route>
         <Route path='/allocationOrder' exact component={allocationOrder} ></Route>
         <Route path='/quanpanCategory/:id/:ck' exact component={quanpanCategory} ></Route>
 

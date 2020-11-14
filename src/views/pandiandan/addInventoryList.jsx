@@ -25,7 +25,7 @@ export default class AddInventoryList extends Component {
         }
     }
     componentDidMount() {
-        setTitle('新建采购单')
+        setTitle('新建盘点单')
         getWarehouseList({
             action: 'getWarehouseList', data: {
                 uniacid: store.getState().uniacid,

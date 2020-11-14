@@ -4,6 +4,7 @@ import { getPurchaseApplyDetail ,submitPurchaseApply} from 'network/Api'
 import {  Toast } from 'antd-mobile';
 // import BetterScroll from 'common/betterScroll/BetterScroll'
 import { store } from "store/index";
+import { setTitle } from 'commons/utils'
 export default class ApplyOrderx extends Component {
     constructor() {
         super()
@@ -16,6 +17,7 @@ export default class ApplyOrderx extends Component {
         }
     }
     componentDidMount() {
+        setTitle('采购申请单明细')
         getPurchaseApplyDetail({
             action: 'getPurchaseApplyDetail', data: {
                 uniacid: store.getState().uniacid,

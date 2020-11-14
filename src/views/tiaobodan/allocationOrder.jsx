@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getInventoryList } from 'network/Api'
+import { getWarehouseChangeList } from 'network/Api'
 import { Toast } from 'antd-mobile';
 // import Tiao from './Tiao'
 import BetterScroll from 'common/betterScroll/BetterScroll'
@@ -18,9 +18,9 @@ export default class InventoryList extends Component {
         this.isLoadMore = true
     }
     componentDidMount() {
-        setTitle('盘点单')
-        getInventoryList({
-            action: 'getInventoryList', data: {
+        setTitle('调拨单')
+        getWarehouseChangeList({
+            action: 'getWarehouseChangeList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 // type: "1",
@@ -50,8 +50,8 @@ export default class InventoryList extends Component {
     }
     Search() {
         console.log(111)
-        getInventoryList({
-            action: 'getInventoryList', data: {
+        getWarehouseChangeList({
+            action: 'getWarehouseChangeList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 // type: "1",
@@ -110,20 +110,21 @@ export default class InventoryList extends Component {
                             }
                             return (
                                 <div className='caigoudan' >
-                                    <div className='dan' onClick={() => { this.props.history.push(`/InventoryListDetails/${data.id}`) }}>
+                                    <div className='dan' onClick={() => { this.props.history.push(`/allocationListDetails/${data.id}`) }}>
                                         <div className='dan-top'>
                                             <p>
                                                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
                                             </p>
-                                            <div className='caigoudanhao'>盘点单号：{data.docno}</div>
-                                            <div className='zuantai' style={{ color: Color }}>{data.statusname}</div>
+                                            <div className='caigoudanhao'>调拨单号：{data.docno}</div>
+                                            <div className='zuantai' style={{ color: Color }}>{data.status}</div>
                                         </div>
                                         <div className='dan-footer'>
                                             <p>单据日期：{data.docdate}</p>
-                                            <p>盘点仓库：{data.warehousename}</p>
+                                            <p>转出仓库：{data.outwarehouse}</p>
+                                            <p>转入仓库：{data.inwarehouse}</p>
                                             <div style={{ display: "flex" ,justifyContent: "space-between"}}>
-                                                <p>账面总数量：{data.gnum}</p>
-                                                <p style={{ margin: ".25rem" }}>实际总数量：{data.realnum}</p>
+                                                <p>移库总数量：{data.transfer_totalnumber}</p>
+                                                <p style={{ margin: ".25rem" }}>移库总金额：{data.transfer_totalmoney}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -148,8 +149,8 @@ export default class InventoryList extends Component {
         }, 1000)
         if (this.isLoadMore) {
             // console.log(111)
-            getInventoryList({
-                action: 'getInventoryList', data: {
+            getWarehouseChangeList({
+                action: 'getWarehouseChangeList', data: {
                     uniacid: store.getState().uniacid,
                     uid: store.getState().uid,
                     type: "1",

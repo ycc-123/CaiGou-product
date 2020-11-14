@@ -195,7 +195,7 @@ export default class PurchaseOrderDetailed extends Component {
                             <p>
                                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
                             </p>
-                            <div>CG20201009123456789</div>
+                            <div>{this.state.purchaseDetail.docno}</div>
                         </div>
 
                         <div className='conten-c'>

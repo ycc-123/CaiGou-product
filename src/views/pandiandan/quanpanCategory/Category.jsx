@@ -7,8 +7,8 @@ import { setTitle } from 'commons/utils'
 import { store } from 'store/index'
 import { getProductCategoryAll, getStockList } from 'network/Api'
 import {  _categoryRight } from 'network/category'
-import { Toast } from 'antd-mobile';
-
+import { Toast,Button,Modal } from 'antd-mobile';
+const alert = Modal.alert;
 const scollConfig = {
   probeType: 1
 }
@@ -112,15 +112,32 @@ class Category extends Component {
               </Fragment>}
           </div>
           <div className='foot'>
-            <div className='left' onClick={() => { this.mingxi() }}>
+            <div className='left' 
+            // onClick={() => { this.mingxi() }}
+            >
               <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
             </div>
 
             <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
 
-            <div className='foot_conton' onClick={() => { this.mingxi() }}>总额：
+            <div className='foot_conton'
+            //  onClick={() => { this.mingxi() }}
+             >总额：
                     <span>{this.state.price ? this.state.price : 0}</span></div>
-            <div className='right' onClick={this.click}>提交</div>
+            {/* <div className='right' onClick={this.click}>提交</div> */}
+            <div className='right' >提交</div>
+            <Button
+              style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
+              className="btn_modal"
+              onClick={() =>
+                alert('提交', '是否确认提交盘点单', [
+                  { text: '取消', onPress: () => console.log('cancel') },
+                  { text: '确定', onPress: () => this.click() },
+                ])
+              }
+            >
+              confirm
+                        </Button>
 
           </div>
 
@@ -178,7 +195,7 @@ class Category extends Component {
   componentDidMount = () => {
 
     // this.refs.scroll.BScroll.refresh()
-    setTitle('新建采购单')
+    setTitle('新建盘点单')
     // const { appConfig } = store.getState()
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
@@ -245,10 +262,17 @@ class Category extends Component {
       }
     }).then(res => {
       console.log(res)
+      let mrqunangoods=[]
       if (res.data.status === 4001) {
+        if(Boolean(res.data.data.data)===false){
+          Toast.info("无商品",1)
+          mrqunangoods=[]
+        }else{
+          mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id,realnum:o.gnum} });
+          console.log(mrqunangoods)
+        }
         console.log(res.data.data.data)
-        var mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id,realnum:o.gnum} });
-        console.log(mrqunangoods)
+        
         this.setState({
           mrqunangoods,
           goods: res.data.data.data===null?[]:res.data.data.data

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getInventoryInfo, submitPurchaseDelivery } from 'network/Api'
+import { getWarehouseChangeDetail, submitPurchaseDelivery } from 'network/Api'
 import { Toast, Modal, Button } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 // import Tiao from './Tiao'
@@ -26,12 +26,11 @@ export default class InventoryListDetails extends Component {
     }
     componentDidMount() {
         setTitle('盘点单')
-        getInventoryInfo({
-            action: 'getInventoryInfo', data: {
+        getWarehouseChangeDetail({
+            action: 'getWarehouseChangeDetail', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                inventoryId: this.props.match.params.id,
-                // type: "1",
+                id: this.props.match.params.id,
                 limit: "30",
                 page: "1"
             }
@@ -43,8 +42,8 @@ export default class InventoryListDetails extends Component {
                 this.setState({
                     // supplier,
                     count: res.data.data.count,
-                    inventoryData: res.data.data.inventoryData,
-                    itemData: res.data.data.itemData
+                    inventoryData: res.data.data.delivery,
+                    itemData: res.data.data.items
                 }, () => {
                     this.refs.scroll.BScroll.refresh()
                 })
@@ -166,11 +165,12 @@ export default class InventoryListDetails extends Component {
     //     console.log(result, msg)
     // }
     seach() {
-        getInventoryInfo({
-            action: 'getInventoryInfo', data: {
+        console.log(111)
+        getWarehouseChangeDetail({
+            action: 'getWarehouseChangeDetail', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                inventoryId: this.props.match.params.id,
+                id: this.props.match.params.id,
                 search: this.state.inputSearch,
                 limit: "30",
                 page: "1"
@@ -183,8 +183,8 @@ export default class InventoryListDetails extends Component {
                 this.setState({
                     // supplier,
                     count: res.data.data.count,
-                    inventoryData: res.data.data.inventoryData,
-                    itemData: res.data.data.itemData
+                    inventoryData: res.data.data.delivery,
+                    itemData: res.data.data.items
                 }, () => {
                     this.refs.scroll.BScroll.refresh()
                 })
@@ -228,25 +228,25 @@ export default class InventoryListDetails extends Component {
                             <p>
                                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
                             </p>
-                            <div>CG20201009123456789</div>
+                            <div>{this.state.inventoryData.docno}</div>
                         </div>
 
                         <div className='conten-c'>
                             <p>单据日期：{this.state.inventoryData.docdate}</p>
-                            <p>盘点类型：{this.state.inventoryData.typename}</p>
-                            <p>盘点仓库：{this.state.inventoryData.warehousename}</p>
+                            <p>转出仓库：{this.state.inventoryData.outwarehouseName}</p>
+                            <p>转入仓库：{this.state.inventoryData.inwarehouseName}</p>
                             <p>单据状态：<span style={{ color: Color }}>{this.state.inventoryData.statusname}</span></p>
                         </div>
 
                         <div className='footer'>
-                            采购备注：{this.state.inventoryData.remark}
+                            备注：{this.state.inventoryData.remark}
                         </div>
                     </div>
                     <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "6.6rem", bottom: "1.6rem" }}>
                         {
                             this.state.itemData.map((value, key) => {
                                 console.log(value)
-                                let tiao=value
+                                let tiao = value
                                 return (
                                     <div className='tiao'>
                                         {/* <img className='t-img-l' src={tiao.image} alt="" /> */}
@@ -255,11 +255,11 @@ export default class InventoryListDetails extends Component {
                                         <ul className='wen-zi'>
                                             <li className='wen-zi-t'>
                                                 <div className='name'>{tiao.goods_name}</div>
-                                                {/* <p>{tiao.gnum}公斤</p> */}
+                                                <p>{tiao.gnum}{tiao.unitname}</p>
                                             </li>
                                             <li className='wen-zi-f'>
-                                                <div>账面数量：{tiao.gnum}</div>
-                                                <p>实际数量：{tiao.realnum}</p>
+                                                <div>￥：{tiao.transfer_price}元/{tiao.unitname}</div>
+                                                <p>{tiao.transfer_subtotal}</p>
                                             </li>
                                         </ul>
                                     </div>
@@ -269,10 +269,11 @@ export default class InventoryListDetails extends Component {
                     </BetterScroll>
                     <div className='foot'>
                         <div className='left'>
-                            {/* <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /> */}
-                            账面总数：<span>{this.state.inventoryData.gnum}</span>
-                            <span style={{marginLeft:".8rem"}}></span>
-                            实际总数：<span>{this.state.inventoryData.realnum}</span>
+                            {/* <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt=""transfer_totalmoney: "123.00"
+transfer_totalnumber: "1.000" /> */}
+                            移库总数：<span>{this.state.inventoryData.transfer_totalnumber}</span>
+                            <span style={{ marginLeft: ".8rem" }}></span>
+                            移库总额：<span>{this.state.inventoryData.transfer_totalmoney}</span>
                         </div>
                         {/* <div className='yuan'>{this.state.itemData.length}</div> */}
                         <div style={{ background: this.state.inventoryData.statusname === "提交成功" ? "#B4B4B4" : '' }} className='right' onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>{this.state.inventoryData.statusname === "待提交" ? "提交" : "已提交"}</div>
@@ -347,14 +348,7 @@ const WarehousingOrderxingStyle = styled.div`
         bottom:0;
       }
     
-    
-    
-    
-    
-    .wen-zi-f p span{
-        color:#cf2424;
-    }
-    .wen-zi-t p{
+      .wen-zi-t p{
         color:#646464;
         font-size:.35rem;
     }
@@ -364,7 +358,7 @@ const WarehousingOrderxingStyle = styled.div`
     }
     .wen-zi-f p{
         font-size:.35rem;
-        color:#646464;
+        color:#cf2424;
     }
     .name{
         font-size:.35rem;
@@ -415,6 +409,10 @@ const WarehousingOrderxingStyle = styled.div`
         
     
     }
+    
+    
+    
+
     .footer{
         font-size:.4rem;
         margin-top: .1rem;

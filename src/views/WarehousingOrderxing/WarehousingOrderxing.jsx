@@ -25,7 +25,7 @@ export default class WarehousingOrderxing extends Component {
         }
     }
     componentDidMount() {
-        setTitle('采购入库单')
+        setTitle('采购入库单明细')
         getPurchaseDeliveryDetail({
             action: 'getPurchaseDeliveryDetail', data: {
                 uniacid: store.getState().uniacid,
@@ -225,7 +225,7 @@ export default class WarehousingOrderxing extends Component {
                             <p>
                                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
                             </p>
-                            <div>CG20201009123456789</div>
+                            <div>{this.state.purchaseDetail.docno}</div>
                         </div>
 
                         <div className='conten-c'>

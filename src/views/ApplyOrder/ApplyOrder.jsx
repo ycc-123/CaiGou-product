@@ -4,7 +4,7 @@ import { getPurchaseApplyList } from 'network/Api'
 // import { SearchBar, Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 // import Tiao from './Tiao'
-// import { setTitle } from 'commons/utils'
+import { setTitle } from 'commons/utils'
 import { store } from "store/index";
 export default class ApplyOrder extends Component {
     constructor() {
@@ -15,6 +15,7 @@ export default class ApplyOrder extends Component {
         }
     }
     componentDidMount() {
+        setTitle('采购申请单')
         getPurchaseApplyList({
             action: 'getPurchaseApplyList', data: {
                 uniacid: store.getState().uniacid,
