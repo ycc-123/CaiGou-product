@@ -117,7 +117,8 @@ export default class LossReport extends Component {
             if (res.data.status === 4001) {
                 this.setState({
                     damageList:res.data.data.data,
-                    zongnp:res.data.data.total
+                    zongnp:res.data.data.total,
+                    kongbj:true
                 },()=>{
                     this.refs.scroll.BScroll.finishPullUp()
                     this.refs.scroll.BScroll.refresh()

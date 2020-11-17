@@ -25,7 +25,8 @@ export default class Youhuimxb extends Component {
             IDsj:'',
             end_time:'',
             start_time:'',
-            today_time:""
+            today_time:"",
+            kongbj:true
         }
         this.isLoadMore = true
     }
@@ -117,12 +118,20 @@ export default class Youhuimxb extends Component {
         }).then((res) => {
             if(res.data.status===4001){
                 this.setState({
-                linshou:res.data.data.data
+                linshou:res.data.data.data,
+                total:res.data.data.total,
+                kongbj:true
             },()=>{
                 // this.refs.scroll.BScroll.refresh()
             })
             }else{
                 Toast.info(res.data.msg,1)
+                this.setState({
+                    kongbj:false,
+                    linshou:[],
+                    total:{}
+                   
+                })
             }
             
         })
@@ -198,6 +207,7 @@ export default class Youhuimxb extends Component {
                                 <p><span style={{position:"absolute",top:".85rem",left:"4.7rem"}}>~</span>
                                 <article className='articleone'></article>
                                     <DatePicker
+                                    mode="date"
                                         value={this.state.start}
                                         extra={this.state.today_time}
                                         // value={this.state.dates}
@@ -211,6 +221,7 @@ export default class Youhuimxb extends Component {
                                 
                                 <article className='articletwo'></article>
                                     <DatePicker
+                                    mode="date"
                                         extra={this.state.today_time}
                                         value={this.state.end}
                                         onChange={v => this.setState({
@@ -281,9 +292,12 @@ export default class Youhuimxb extends Component {
                             </div>
                         </div>
                     </div> */}
+                    <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
+                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
+                    </div>
                     <div className='foot'>
-                    <div>当前结果：<span>{this.state.total.total_price}</span></div>
-                    <div style={{marginLeft:".8rem"}}>总计优惠：<span>{this.state.total.total_fee}</span></div>
+                    <div>当前结果：<span>{this.state.total.total_price?this.state.total.total_price:0}</span></div>
+                    <div style={{ marginRight: ".6rem" }}>总计优惠：<span>{this.state.total.total_fee?this.state.total.total_fee:0}</span></div>
                 </div>
 
 
@@ -347,6 +361,18 @@ export default class Youhuimxb extends Component {
     }
 }
 const YouhuimxbStyle = styled.div`
+.kongbj img{
+    width: 5rem;
+    height: 5rem;
+}
+.kongbj{
+    margin-top:2rem;
+    width:100%;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+
+}
 .conten ul li article div img{
     width: auto;  
     height: auto;  
@@ -400,12 +426,14 @@ const YouhuimxbStyle = styled.div`
 // }
 .foot div span{
     color:#cf2424;
+    font-weight:900;
 }
 .foot{
     box-shadow: -2px -2px 3px #ccc;
-    padding-left:.2rem;
+    padding-left:.6rem;
     font-size:.38rem;
     display:flex;
+    justify-content: space-between;
     width:100%;
     height:1.5rem;
     line-height:1.5rem;
@@ -602,7 +630,7 @@ const YouhuimxbStyle = styled.div`
     margin-top:.15rem;
     margin-left:.2rem;
     width:7.5rem;
-    font-size:.35rem;
+    font-size:.3rem;
     color: #333333;
 }
 

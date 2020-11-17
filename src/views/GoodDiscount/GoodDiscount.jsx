@@ -33,6 +33,7 @@ export default class LossReport extends Component {
             today_time: '',
             limit:"10",
             page:1,
+            kongbj:true
         }
         this.isLoadMore = true
     }
@@ -113,12 +114,19 @@ export default class LossReport extends Component {
             if (res.data.status === 4001) {
                 this.setState({
                     GoodsList: res.data.data.data,
-                    Goodszong: res.data.data.total
+                    Goodszong: res.data.data.total,
+                    kongbj:true,
                 }, () => {
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
                 Toast.info(res.data.msg, 1)
+                this.setState({
+                    kongbj:false,
+                    GoodsList: [],
+                    Goodszong: {}
+                })
+                
             }
         })
     }
@@ -401,10 +409,13 @@ export default class LossReport extends Component {
                     </div>
                     <div className='btn' onClick={() => { this.queding() }}>确定</div>
                 </div>
+                <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
+                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
+                </div>
                 </BetterScroll>
                 <div className='foot' >
                     <div>总数量：<span>{this.state.Goodszong.total_subtotal ? this.state.Goodszong.total_subtotal : 0}</span></div>
-                    <div style={{ marginLeft: ".8rem" }}>总报损金额：<span>{this.state.Goodszong.total_fee ? this.state.Goodszong.total_fee : 0}</span></div>
+                    <div style={{ marginRight: ".6rem" }}>总报损金额：<span>{this.state.Goodszong.total_fee ? this.state.Goodszong.total_fee : 0}</span></div>
                 </div>
             </LossReportStyle>
         )
@@ -467,6 +478,18 @@ export default class LossReport extends Component {
     }
 }
 const LossReportStyle = styled.div`
+.kongbj img{
+    width: 5rem;
+    height: 5rem;
+}
+.kongbj{
+    margin-top:2rem;
+    width:100%;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+
+}
 .start{
     margin-left:1.6rem;
     }
@@ -558,10 +581,11 @@ const LossReportStyle = styled.div`
     font-weight:900;
 }
 .foot{
-    box-shadow: -2px -2px 1px #ccc;
-    padding-left:.2rem;
-    font-size:.36rem;
+    box-shadow: -2px -2px 3px #ccc;
+    padding-left:.6rem;
+    font-size:.38rem;
     display:flex;
+    justify-content: space-between;
     width:100%;
     height:1.5rem;
     line-height:1.5rem;

@@ -45,13 +45,13 @@ export default class Home extends Component {
             <li style={{ height: "1.6rem", width: "1.95rem", marginLeft: ".4rem" }} onClick={() => { this.props.history.push('/WarehousingOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/rkdan.png" alt="" /></li>
             <li onClick={()=>{this.props.history.push('/Pandian')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/pandiandan.png" alt=""/></li>
             {/* <li onClick={()=>{this.props.history.push('/LossReport')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/baosdan.png" alt=""/></li> */}
-            <li onClick={()=>{this.props.history.push('/addPandian')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaobodan.png" alt=""/></li>
+            {/* <li onClick={()=>{this.props.history.push('/addPandian')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaobodan.png" alt=""/></li> */}
             {/* <li style={{marginTop:".8rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dabao.png" alt=""/></li> */}
           </ul>
         </div>
 
         <div className='sujubaobiao' >
-          <div style={{ marginLeft: ".35rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shujubaobiao.png" alt="" /></div>
+          <div style={{ marginLeft: ".3rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shujubaobiao.png" alt="" /></div>
           <ul>
             <li style={{ marginLeft: ".3rem" }} >
               <img onClick={()=>{this.props.history.push('/youhuimxb')}} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/yhmxb.png" alt=""/>
@@ -61,7 +61,7 @@ export default class Home extends Component {
           </ul>
         </div>
         <div className="banben">
-          版本号：1.1.1
+          1.1.1
       </div>
       </HomeStyle>
 
@@ -170,7 +170,7 @@ const HomeStyle = styled.div`
 }
 
 .footer{
-  height: 4.5rem;
+  height: 4rem;
   width:  9.3rem;
   background-color: #fff;
   margin-left: .35rem;

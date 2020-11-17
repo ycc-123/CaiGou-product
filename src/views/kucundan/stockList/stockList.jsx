@@ -27,7 +27,8 @@ export default class stockList extends Component {
             panduan:false,
             quankey:'',
             limit:"10",
-            page:1
+            page:1,
+            kongbj:true
         }
         this.isLoadMore = true
     }
@@ -181,12 +182,19 @@ export default class stockList extends Component {
                 this.setState({
                     goods: res.data.data.data!==null?res.data.data.data:[],
                     totalcostprice: res.data.data.totalcostprice,
-                    totalgnum: res.data.data.totalgnum
+                    totalgnum: res.data.data.totalgnum,
+                    kongbj: true,
                 }, () => {
                     this.refs.scroll.BScroll.refresh()
                 })
             }else{
                 Toast.info(res.data.msg,2)
+                this.setState({
+                    kongbj: false,
+                    goods:[],
+                    totalcostprice: 0,
+                    totalgnum: 0
+                })
             }
         })
     }
@@ -319,7 +327,10 @@ export default class stockList extends Component {
                     </BetterScroll>
                 <div className='foot' >
                     <div>总库存：<span>{this.state.totalgnum?this.state.totalgnum:0}</span></div>
-                    <div style={{marginLeft:".8rem"}}>总库存金额：<span>{this.state.totalcostprice?this.state.totalcostprice:0}</span></div>
+                    <div style={{ marginRight: ".6rem" }}>总库存金额：<span>{this.state.totalcostprice?this.state.totalcostprice:0}</span></div>
+                </div>
+                <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
+                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
                 </div>
             </StockListStyle>
         )
@@ -378,6 +389,18 @@ export default class stockList extends Component {
     }
 }
 const StockListStyle = styled.div`
+.kongbj img{
+    width: 5rem;
+    height: 5rem;
+}
+.kongbj{
+    margin-top:2rem;
+    width:100%;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+
+}
 .fenglei div ul li{
     width:2.8rem;
     height:.8rem;
@@ -415,12 +438,14 @@ const StockListStyle = styled.div`
 }
 .foot div span{
     color:#cf2424;
+    font-weight:900;
 }
 .foot{
     box-shadow: -2px -2px 3px #ccc;
-    padding-left:.9rem;
+    padding-left:.6rem;
     font-size:.38rem;
     display:flex;
+    justify-content: space-between;
     width:100%;
     height:1.5rem;
     line-height:1.5rem;

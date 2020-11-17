@@ -390,7 +390,7 @@ input::-webkit-input-placeholder {
   color:#cf2424;
 }
 .foot_conton{
-  width: 10rem;
+  width: 12rem;
   // height: 100%rem;
   line-height:1.6rem;
   text-align:center;
