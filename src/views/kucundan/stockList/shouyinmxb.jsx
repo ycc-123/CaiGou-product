@@ -57,9 +57,9 @@ export default class Shouyinmxb extends Component {
                                                     <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/goods_store.png" alt=""/></div>
                                                     <p>{v.storeName}</p>
                                                 </li>
-                                                <li style={{width:"3.9rem"}}>
+                                                <li >
                                                     <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/goods_cashier.png" alt=""/></div>
-                                                    <p style={{marginTop:".1rem"}}>收银员：{v.createName}</p>
+                                                    <p >收银员：{v.createName}</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -168,7 +168,6 @@ const ShouyinmxbStyle = styled.div`
     width:4rem;
 }
 .conten ul li p{
-    
     margin-left:.4rem;
     width:5.4rem;
 }
@@ -267,13 +266,14 @@ const ShouyinmxbStyle = styled.div`
     max-height: 100%;
 }
 .dan ul li div{
-    margin-top:.2rem;
+    margin-top:.1rem;
     // margin-left:.3rem;
     width: .45rem;  
     height: .38rem;
 }
 .dan ul li p{
-    margin-top:.18rem;
+    // background-color: pink;
+
     font-size:.38rem;
     color:#313131;
 }
@@ -285,6 +285,7 @@ const ShouyinmxbStyle = styled.div`
     justify-content:space-between;
     width:100%;
     height:.7rem;
+    line-height:.7rem;
     // background-color: red;
 }
 .dan{

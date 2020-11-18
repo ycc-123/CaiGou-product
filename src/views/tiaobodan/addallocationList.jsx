@@ -1,25 +1,21 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getWarehouseList, getProductCategoryAll, createInventory } from 'network/Api'
+import { getWarehouseList, createWarehouseChange } from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
 import { setTitle } from 'commons/utils'
 import { store } from "store/index";
+import { saveCanku} from 'store/actionCreators'
 
 export default class AddInventoryList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            Value: '',
             sValue: '',
             data: [],
-            supplier: [],
             IDck: [],
-            IDgy: [],
             inputbeiz: '',
-            leixing:[{label:"全盘",value:"1"},{label:"抽盘",value:"2"},{label:"随机盘点",value:"3"}],
-            lxValue:'',
-            lxID:''
+            lxValue: '',
 
 
         }
@@ -47,63 +43,49 @@ export default class AddInventoryList extends Component {
                 Toast.info('网络错误', 2)
             }
         })
-        getProductCategoryAll({
-            action: 'getProductCategoryAll', data: {
-                uniacid: store.getState().uniacid,
-                // uid: store.getState().uid,
-                // limit: "1000",
-                // page: "1"
-            }
-        }).then(res => {
-            console.log(res)
-            if (res.data.status === 4001) {
-                console.log(res.data.data)
-                var supplier = res.data.data.map(o => { return { value: o.id, label: o.name } });
-                console.log(supplier)
-                this.setState({
-                    supplier
-                })
-            } else {
-                Toast.info('网络错误', 2)
-            }
-        })
+
     }
     createPurchase() {
-        // console.log(this.state.IDgy)
-        let idgy = this.state.IDgy.toString()
-        let flname={}
-        this.state.supplier.map((v,k)=>{
-            // console.log(v)
-            if(v.value===idgy){
-                flname=v
+
+        //    in
+        let idgy = this.state.IDck === '' ? '' : this.state.IDck.toString()
+        // out
+        let idkc = this.state.lxID === '' ? '' : this.state.lxID.toString()
+        console.log(idkc)
+
+
+        // createWarehouseChange({
+        //     action: 'createWarehouseChange', data: {
+        //         uniacid: store.getState().uniacid,
+        //         uid: store.getState().uid,
+        //         outwarehouseid: this.state.lxID,
+        //         inwarehouseid: idkc,
+        //         remark: this.state.inputbeiz,
+        //     }
+        // }).then(res => {
+        //     console.log(res)
+        //     if (res.data.status === 4001) {
+        //         this.props.history.push(`/tiaoboCategory/${res.data.data}/${idkc}`)
+        //         Toast.success(res.data.msg, 2)
+        //     } else {
+        //         Toast.info(res.data.msg, 2)
+        //     }
+        // })
+        let arr = []
+        let aa = {}
+        this.state.data.map((v, k) => {
+            if (v.value === idgy) {
+                aa = v
+                return arr.push(aa);
+            }
+            if (v.value === idkc) {
+                aa = v
+                return arr.push(aa);
             }
         })
-        console.log(flname.label)
-        console.log(this.state.lxID)
-       
-        // let idgy = this.state.IDgy.toString()
-        let idkc = this.state.IDck.toString()
-        this.props.history.push('/pandiancategory')
-        var parame=encodeURI(flname.label);
-        createInventory({
-            action: 'createInventory', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                type: this.state.lxID,
-                warehouseid: idkc,
-                categoryid: idgy,
-                remark: this.state.inputbeiz,
-            }
-        }).then(res => {
-            console.log(res)
-            if (res.data.status === 4001) {
-                this.props.history.push(`/pandianCategory/${res.data.data}/${idkc}/${idgy}/${parame}`)
-                console.log(res.data.data)
-                Toast.success('新建盘点单成功', 2)
-            } else {
-                Toast.info(res.data.msg, 2)
-            }
-        })
+        const tiaoboxqck = saveCanku(arr)
+        store.dispatch(tiaoboxqck)
+        console.log(arr)
     }
 
     inputChangebz(e) {
@@ -117,12 +99,12 @@ export default class AddInventoryList extends Component {
             <AddPurchaseOrderStyle>
                 <div>
                     <ul className='biao'>
-                        <li><span>*</span>盘点仓库：
+                        <li><span>*</span>转出仓库：
                                 <Picker
                                 data={this.state.data}
                                 cols={1}
                                 className="forss"
-                                extra="请选择对应盘点仓库"
+                                extra="请选择转出仓库"
                                 value={this.state.sValue}
                                 onChange={v => this.setState({ sValue: v })}
                                 onOk={v => this.setState({ IDck: v })}
@@ -130,32 +112,18 @@ export default class AddInventoryList extends Component {
                                 <List.Item className='times' arrow="horizontal"></List.Item>
                             </Picker>
                         </li>
-                        <li><span>*</span>盘点类型：
+                        <li><span>*</span>转入仓库：
                                 <Picker
-                                data={this.state.leixing}
+                                data={this.state.data}
                                 cols={1}
                                 className="forss"
-                                extra="全盘"
+                                extra="请选择转入仓库"
                                 value={this.state.lxValue}
                                 onChange={v => this.setState({ lxValue: v })}
                                 onOk={v => this.setState({ lxID: v.toString() })}
                             >
                                 <List.Item className='pdlx' arrow="horizontal"></List.Item>
                             </Picker>
-                        </li>
-                        <li style={{display:this.state.lxID==="2"?"block":"none"}}><span>*</span>商品分类：
-                            <Picker
-                                data={this.state.supplier}
-                                cols={1}
-                                className="forss"
-                                extra="请选择分类"
-                                value={this.state.Value}
-                                onChange={v => this.setState({ Value: v })}
-                                onOk={v => this.setState({ IDgy: v })}
-                            >
-                                <List.Item className='time' arrow="horizontal"></List.Item>
-                            </Picker>
-
                         </li>
 
                         <li style={{ border: "none" }}>
@@ -201,7 +169,7 @@ const AddPurchaseOrderStyle = styled.div`
         // padding-top:.5rem;
         color:#a9a9a9;
         text-align: left;
-        font-size:.45rem;
+        font-size:.35rem;
         padding-left:.1rem;
         width:3rem;
     }
@@ -216,15 +184,6 @@ const AddPurchaseOrderStyle = styled.div`
         top:-.2rem;
         // padding-top:.3rem;
         color: red;
-        width:12rem;
-        background-color: transparent;
-    }
-    .time{
-        position:absolute;
-        left:2.2rem;
-        top:2.65rem;
-        // padding-top:.3rem;
-        color: #a9a9a9;
         width:12rem;
         background-color: transparent;
     }
@@ -260,7 +219,7 @@ const AddPurchaseOrderStyle = styled.div`
         background-color: #fff;
     }
     .right{
-        font-size:.4rem;
+        font-size:.35rem;
         color:#fff;
         text-align:center;
         width: 100%;
@@ -287,7 +246,7 @@ const AddPurchaseOrderStyle = styled.div`
     .biao li input{
         border:none;
         outline:none;
-        font-size:.45rem;
+        font-size:.35rem;
         width:7rem;
         height:.65rem;
         color:#646464; 
@@ -305,7 +264,7 @@ const AddPurchaseOrderStyle = styled.div`
         color:#646464;
         padding-top:.3rem;
         // text-align:center;
-        font-size:.45rem;
+        font-size:.35rem;
         color:#646464; 
         width: 100%;
         height: 1.3rem;

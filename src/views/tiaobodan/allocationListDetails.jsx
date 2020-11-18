@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getWarehouseChangeDetail, submitPurchaseDelivery } from 'network/Api'
+import { getWarehouseChangeDetail, submitWarehouseChange } from 'network/Api'
 import { Toast, Modal, Button } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 // import Tiao from './Tiao'
@@ -52,26 +52,24 @@ export default class InventoryListDetails extends Component {
             }
         })
     }
-    // shengHe(e) {
-    //     console.log(e)
-    //     if (e === "审核通过") {
+    shengHe(e) {
+        console.log(e)
+        // if (e === "提交成功") {
 
-    //     } else {
+        // } else {
     //         if (this.state.input.length === 0) {
     //             // 默认
-    //             let aa = {}
-    //             let arr = []
-    //             this.state.purchaseItem.map((v, k) => {
-    //                 aa = {
-    //                     id: this.state.purchaseItem[k].id,
-    //                     barcodeid: this.state.purchaseItem[k].barcodeid,
-    //                     diffnum: this.state.purchaseItem[k].price - this.state.purchaseItem[k].price,
-    //                     innum: this.state.purchaseItem[k].gnum,
-    //                     goodsid: this.state.purchaseItem[k].goodsid
-    //                 }
-    //                 return arr.push(aa);
-    //             })
-    //             let itemData = arr
+                let aa = {}
+                let arr = []
+                this.state.itemData.map((v, k) => {
+                    console.log(v)
+                    aa = {
+                        stockid: v.stockid,
+                        realnum: v.gnum,
+                    }
+                    return arr.push(aa);
+                })
+                
     //             let in_out_num = []
     //             this.state.purchaseItem.map((v, k) => {
     //                 let innum = this.state.purchaseItem[k].gnum
@@ -87,24 +85,23 @@ export default class InventoryListDetails extends Component {
     //                 in_out_num: sum
     //             }
     //             console.log("默认", deliveryData, itemData)
-    //             submitPurchaseDelivery({
-    //                 action: 'submitPurchaseDelivery', data: {
-    //                     uniacid: store.getState().uniacid,
-    //                     uid: store.getState().uid,
-    //                     itemData: itemData,
-    //                     deliveryData: deliveryData,
-    //                     type: "1",
-    //                     status: "4"
-    //                 }
-    //             }).then((res) => {
+                submitWarehouseChange({
+                    action: 'submitWarehouseChange', data: {
+                        uniacid: store.getState().uniacid,
+                        uid: store.getState().uid,
+                        status:"2",
+                        warehouseChangeId: this.props.match.params.id,
+                        itemData: arr,
+                    }
+                }).then((res) => {
     //                 console.log(res.data)
-    //                 if (res.data.status === 4001) {
-    //                     window.location.reload();
-    //                     Toast.success(res.data.msg, 2)
-    //                 } else {
-    //                     Toast.info(res.data.msg, 2)
-    //                 }
-    //             })
+                    if (res.data.status === 4001) {
+                        window.location.reload();
+                        Toast.success(res.data.msg, 2)
+                    } else {
+                        Toast.info(res.data.msg, 2)
+                    }
+                })
     //         } else {
     //             let aa = {}
     //             let arr = []
@@ -146,7 +143,7 @@ export default class InventoryListDetails extends Component {
     //                 }
     //             })
     //         }
-    //     }
+        }
 
     // }
     // getChildrenMsg = (result, msg) => {
@@ -276,7 +273,7 @@ transfer_totalnumber: "1.000" /> */}
                             移库总额：<span>{this.state.inventoryData.transfer_totalmoney}</span>
                         </div>
                         {/* <div className='yuan'>{this.state.itemData.length}</div> */}
-                        <div style={{ background: this.state.inventoryData.statusname === "提交成功" ? "#B4B4B4" : '' }} className='right' onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>{this.state.inventoryData.statusname === "待提交" ? "提交" : "已提交"}</div>
+                        <div style={{ background: this.state.inventoryData.statusname === "提交成功" ? "#B4B4B4" : '' }} className='right' onClick={(e) => { this.shengHe(this.state.inventoryData.statusname) }}>{this.state.inventoryData.statusname === "待提交" ? "提交" : "已提交"}</div>
 
                     </div>
                 </div>

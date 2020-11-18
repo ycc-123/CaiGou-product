@@ -292,3 +292,23 @@ export function getWarehouseChangeDetail(config) {
     data: config.data
   })
 }
+
+// 调拨单提交
+export function submitWarehouseChange(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+// 创建调拨单
+export function createWarehouseChange(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

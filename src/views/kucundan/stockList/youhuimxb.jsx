@@ -297,7 +297,7 @@ export default class Youhuimxb extends Component {
                     </div>
                     <div className='foot'>
                     <div>当前结果：<span>{this.state.total.total_price?this.state.total.total_price:0}</span></div>
-                    <div style={{ marginRight: ".6rem" }}>总计优惠：<span>{this.state.total.total_fee?this.state.total.total_fee:0}</span></div>
+                    <div style={{ marginRight: ".3rem" }}>总计优惠：<span>{this.state.total.total_fee?this.state.total.total_fee:0}</span></div>
                 </div>
 
 
@@ -382,7 +382,7 @@ const YouhuimxbStyle = styled.div`
 .conten ul li article div{
     margin-top:.1rem;
     width:.55rem;
-    height:1.25em;
+    height:1.15em;
 }
 .conten ul li article span{
     font-size:.35rem;
@@ -402,6 +402,7 @@ const YouhuimxbStyle = styled.div`
     width:6rem;
     // background-color: pink;
     height:1.2rem;
+    // line-height:1.2rem;
 
 }
 .conten ul{
@@ -429,8 +430,8 @@ const YouhuimxbStyle = styled.div`
     font-weight:900;
 }
 .foot{
-    box-shadow: -2px -2px 3px #ccc;
-    padding-left:.6rem;
+    box-shadow: -1px -1px 2px #ccc;
+    padding-left:.3rem;
     font-size:.38rem;
     display:flex;
     justify-content: space-between;

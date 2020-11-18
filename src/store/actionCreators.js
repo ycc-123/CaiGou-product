@@ -1,5 +1,5 @@
 import {
-  SAVE_UID, SAVE_UNIACID,SAVE_GOODS
+  SAVE_UID, SAVE_UNIACID,SAVE_GOODS,SAVE_CANKU
 } from './actionTypes'
 
 
@@ -25,6 +25,18 @@ export const saveGoodsAction = (data) => ({
   type: SAVE_GOODS,
   data
 })
+export const saveCankuAction = (data) => ({
+  type: SAVE_CANKU,
+  data
+})
+export const saveCankuAction = (data) => ({
+  type: SAVE_CANKU,
+  data
+})
+export const saveCankuAction = (data) => ({
+  type: SAVE_CANKU,
+  data
+})
 
 
 // saveUserUid, saveUserUniacid
@@ -34,6 +46,12 @@ export const saveGoodsAction = (data) => ({
 *
 *
 */
+export const saveCanku = (data) => {
+  return dispatch => {
+    const action = saveCankuAction(data)
+    dispatch(action)
+  }
+}
 
 export const saveUserUid = (data) => {
   return dispatch => {

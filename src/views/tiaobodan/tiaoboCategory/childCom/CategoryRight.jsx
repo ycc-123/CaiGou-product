@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import CategoryRightItem from './CategoryRightItem'
 
 import BetterScroll from 'common/betterScroll/BetterScroll'
-import { submitInventory,searchProduct } from 'network/Api'
+import { submitPurchase,searchProduct,submitWarehouseChange } from 'network/Api'
 // import { store } from 'store/index'
 import {  Toast } from 'antd-mobile';
 
@@ -56,51 +56,53 @@ class CategoryRight extends Component {
     );
   }
   getChildrenMsg = (result,login, password,ww) => {
-  //   let num=Number(this.state.num)+Number(login)
-  //   let price=Number(this.state.price)+Number(login)*Number(password)
-   this.props.aa(login, password)
-    console.log(login, password)
-  //   let arr  = []
-  //   arr.push(ww);
+    let num=Number(this.state.num)+Number(login)
+    let price=Number(this.state.price)+Number(login)*Number(password)
+   this.props.aa(num,price)
+    console.log(num,price,login, password)
+    let arr  = []
+    arr.push(ww);
+
     let nums  = []
     nums.push(login);
 
     let prices  = []
     prices.push(password);
     this.setState({
-      // num,
-      // price,
+      num,
+      price,
       login:[...this.state.login, ...nums],
-      password:[...this.state.password, ...prices]
+      password:[...this.state.password, ...prices],
 
-      // goods:[...this.state.goods, ...arr]
+      goods:[...this.state.goods, ...arr]
     },()=>{
-      // let num =this.state.login
-    // let price =this.state.password
+      let num =this.state.login
+    let price =this.state.password
     // console.log(this.props.id)
     // console.log(num.length)
 
-    // let aa = {}
-    // let arr =[]
-    // console.log(this.state.goods)
+    let aa = {}
+    let arr =[]
+    console.log(this.state.goods)
 
-    // num.map((v,k)=>{
-    //   console.log(v,k)
-    //    aa={
-    //       amount:num[k]*price[k],
-    //       barcodeid:this.state.goods[k].barcodeid,
-    //       barcode:this.state.goods[k].code,
-    //       img:this.state.goods[k].albumpath,
-    //       gnum:num[k],
-    //       num:num[k],
-    //       price:price[k],
-    //       name:this.state.goods[k].name,
-    //     }
-    //    return arr.push(aa);
-    // })
-    // const goodsList = saveGoods(arr)
-    // store.dispatch(goodsList)
+    num.map((v,k)=>{
+      console.log(v,k)
+       aa={
+          amount:num[k]*price[k],
+          barcodeid:this.state.goods[k].barcodeid,
+          barcode:this.state.goods[k].code,
+          img:this.state.goods[k].albumpath,
+          gnum:num[k],
+          num:num[k],
+          price:price[k],
+          name:this.state.goods[k].name,
+        }
+       return arr.push(aa);
     })
+    const goodsList = saveGoods(arr)
+    store.dispatch(goodsList)
+    })
+    
 }
   componentDidMount(){
     this.props.onRef(this)
@@ -108,14 +110,12 @@ class CategoryRight extends Component {
 
   myName = () =>{
     if(this.state.login[0]===undefined){
-     Toast.info('请添加商品后提交',1.5)
+     Toast.info('请调拨商品后提交',1.5)
     }else{
-      console.log(this.state.login, this.state.password)
+      // console.log(this.state.login[0], this.state.password,this.state.goods)
     let num =this.state.login
     let price =this.state.password
-    console.log(this.props.pdid)
-    console.log(this.props.ckid)
-
+    // console.log(this.props.id)
     // console.log(num.length)
 
     let aa = {}
@@ -125,15 +125,14 @@ class CategoryRight extends Component {
     num.map((v,k)=>{
       console.log(v,k)
        aa={
-        stockid:this.state.password[k].id,
-        realnum:v,
-  
+          stockid:this.state.goods[k].id,
+          realnum:num[k],
         }
        return arr.push(aa);
     })
     // const goodsList = saveGoods(arr)
     // store.dispatch(goodsList)
-    console.log(arr)
+    // console.log(arr)
     let itemData=arr
     console.log(itemData)
     // let purchaseData={
@@ -141,21 +140,20 @@ class CategoryRight extends Component {
     //   subtotal:this.state.price,
     //   snum:this.state.num
     // }
-    submitInventory({ action: 'submitInventory', data: {
+    submitWarehouseChange({ action: 'submitWarehouseChange', data: {
       uniacid: store.getState().uniacid,
       uid:store.getState().uid,
       status:"2",
-      warehouseid:this.props.ckid,
-      inventoryId:this.props.pdid,
+      warehouseChangeId:this.props.pdid,
       itemData:itemData,
     } }).then(res=>{
       console.log(res)
-    //   if(res.data.status===4001){
-    //     Toast.success(res.data.msg, 2)
-    //     this.home()
-    //   }else{
-    //     Toast.info(res.data.msg, 2)
-    //   }
+      if(res.data.status===4001){
+        Toast.success(res.data.msg, 2)
+        // this.home()
+      }else{
+        Toast.info(res.data.msg, 2)
+      }
     })
     }
     

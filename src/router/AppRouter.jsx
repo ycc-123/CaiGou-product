@@ -29,6 +29,9 @@ import InventoryList from 'views/pandiandan/InventoryList'
 import InventoryListDetails from 'views/pandiandan/InventoryListDetails'
 import allocationOrder from 'views/tiaobodan/allocationOrder'
 import allocationListDetails from 'views/tiaobodan/allocationListDetails'
+import addallocationList from 'views/tiaobodan/addallocationList'
+import tiaoboCategory from 'views/tiaobodan/tiaoboCategory/Category'
+import AddGoods from 'views/addGoods/AddGoods'
 
 // 测试
 import Text from 'views/ApplyOrderx/Text'
@@ -69,11 +72,13 @@ const AppRouter = () => {
         <Route path='/allocationListDetails/:id' exact component={allocationListDetails} ></Route>
         <Route path='/allocationOrder' exact component={allocationOrder} ></Route>
         <Route path='/quanpanCategory/:id/:ck' exact component={quanpanCategory} ></Route>
+        <Route path='/addallocationList' exact component={addallocationList} ></Route>
+        <Route path='/tiaoboCategory/:id/:ck' exact component={tiaoboCategory} ></Route>
 
         <Route path='/pandianCategory/:id/:ck/:fl/:name' exact component={pandianCategory} ></Route>
 
         <Route path='/InventoryListDetails/:id' exact component={InventoryListDetails} ></Route>
-
+        <Route path='/AddGoods' exact component={AddGoods} ></Route>
         {/* 测试 */}
         <Route path='/Text' exact component={Text} ></Route>
       </Switch>

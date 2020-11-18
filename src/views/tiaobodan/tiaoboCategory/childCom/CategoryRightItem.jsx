@@ -15,16 +15,18 @@ class CategoryRightgoods extends Component {
     }
     this.click = true
   }
-  zjian = (login, goods) => {
+  zjian = (login, password, goods) => {
     if (login === '' ) {
-      Toast.info('请填写实际账面数量')
-    } else{
-      console.log(login, goods)
+      Toast.info('请填写调拨数量')
+    } else if(password === ''){
+      Toast.info('请填写调拨单价')
+    }else{
+      console.log(login, password, goods)
       this.setState({
         login,
-      
+        password
       })
-      this.props.parent.getChildrenMsg(this, login, goods)
+      this.props.parent.getChildrenMsg(this, login, password, goods)
     }
   }
 
@@ -39,49 +41,29 @@ class CategoryRightgoods extends Component {
         >
 
 
-          <img className='category-img' src={goods.image?goods.image:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+          <img className='category-img' src={goods.albumpath?goods.albumpath:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
           <div className='category-goods-info'>
             <p>{goods.name}</p>
 
-            {/* <Button
-              style={{ position: "absolute",width:"3rem", top: ".3rem", left: "3.2rem", color: "transparent", background: "transparent" }}
+            <Button
+              style={{ position: "absolute", top: ".3rem", left: "4.6rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
               onClick={() => prompt(
                 '添加',
-                '请填写采购数量与单价',
+                '请填写调拨数量与单价',
                 (login, text) => this.zjian(login, text, goods),
                 'login-password',
                 null,
-                ['请填写采购数量', '请填写采购单价'],
+                ['请填写调拨数量', '请填写调拨单价'],
               )}
               visible={false}
-            >111111</Button> */}
-            <Button
-              style={{ position: "absolute",width:"3rem", top: ".3rem", left: "3.2rem", color: "transparent", background: "transparent" }}
-              className="btn_modal"
-              onClick={() => prompt('填写', '请输入商品实际账面数量',
-              [
-                {
-                  text: '取消',
-                  onPress: value => console.log(`value:${value}`)
-                },
-                {
-                  text: '确定',
-                  onPress: value =>this.zjian(value,goods)
-                },
-              ]
-              )}
             >111111</Button>
             {
-              
-                <div className='shuliang'>
-                  <article>账面数量：{goods.gnum}</article>
-                  <div>实际数量：{this.state.login?this.state.login:0}</div>
-                </div>
-                // <img className='category-goods-img'
-                //   src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
-                //   alt="" />
+              this.state.login ? <div className='category-goods-img' style={{ textAlign: "center", width: "2rem", height: ".5rem", marginTop: ".8rem", marginLeft: "4rem", color: "#d54343", fontSize: ".4rem" }}>{this.state.login}</div> :
+                <img className='category-goods-img'
+                  src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
+                  alt="" />
             }
 
 
@@ -97,14 +79,6 @@ class CategoryRightgoods extends Component {
 }
 
 const CategoryRightgoodsStyle = styled.div`
-.shuliang span{
-  margin-left:1.5rem;
-}
-.shuliang{
-  margin-top:.8rem;
-  display:flex;
-  justify-content: space-between;
-}
 .am-button::before{
   border:none !important;
 }
@@ -160,7 +134,7 @@ const CategoryRightgoodsStyle = styled.div`
 }
 .category-goods-info {
   position: relative;
-  width: calc(100% - 1.8rem);
+  width: calc(100% - 2.3704rem);
   height: 100%;
   float: left;
 }

@@ -15,16 +15,16 @@ import 'assets/css/basic.css'
 // let vConsole = new VConsole();
 localStorage.clear()
 
-let uniacid = getParamsString('uniacid')
-let uid = getParamsString('uid')
+// let uniacid = getParamsString('uniacid')
+// let uid = getParamsString('uid')
 
 // 正式站
 // let uid = "5372"
 // let uniacid = "826"
 
 // 测试站
-// let uid ="2271"
-// let uniacid = "53"
+let uid ="2271"
+let uniacid = "53"
 
 
 const actionuid = saveUserUid(uid)

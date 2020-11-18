@@ -577,7 +577,7 @@ const LossReportStyle = styled.div`
     font-weight:900;
 }
 .foot{
-    box-shadow: -2px -2px 3px #ccc;
+    box-shadow: -1px -1px 2px #ccc;
     padding-left:.6rem;
     font-size:.38rem;
     display:flex;

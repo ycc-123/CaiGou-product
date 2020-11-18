@@ -415,7 +415,7 @@ export default class LossReport extends Component {
                 </BetterScroll>
                 <div className='foot' >
                     <div>总数量：<span>{this.state.Goodszong.total_subtotal ? this.state.Goodszong.total_subtotal : 0}</span></div>
-                    <div style={{ marginRight: ".6rem" }}>总报损金额：<span>{this.state.Goodszong.total_fee ? this.state.Goodszong.total_fee : 0}</span></div>
+                    <div style={{ marginRight: ".3rem" }}>总报损金额：<span>{this.state.Goodszong.total_fee ? this.state.Goodszong.total_fee : 0}</span></div>
                 </div>
             </LossReportStyle>
         )
@@ -581,8 +581,8 @@ const LossReportStyle = styled.div`
     font-weight:900;
 }
 .foot{
-    box-shadow: -2px -2px 3px #ccc;
-    padding-left:.6rem;
+    box-shadow: -1px -1px 2px #ccc;
+    padding-left:.3rem;
     font-size:.38rem;
     display:flex;
     justify-content: space-between;
