@@ -3,43 +3,48 @@ import styled from 'styled-components'
 import { store } from "store/index";
 import { Toast } from 'antd-mobile';
 import DocumentTitle from 'react-document-title'
-import BetterScroll from 'common/betterScroll/BetterScroll'
+// import BetterScroll from 'common/betterScroll/BetterScroll'
 
 
 export default class Home extends Component {
 
   componentDidMount() {
-    this.bt_ref.current.BScroll.refresh()
+    // this.bt_ref.current.BScroll.refresh()
     // <Title title="" />
     console.log("uid=====")
     console.log("uid=====", store.getState().uid)
     console.log("uniacid=====", store.getState().uniacid)
     localStorage.clear()
     // Toast.loading('Loading...', 1);
-    console.log( this.bt_ref.current.BScroll.refresh() )
+    // console.log( this.bt_ref.current.BScroll.refresh() )
   }
-  componentUpdate(){
-    console.log( this.bt_ref.current.BScroll.refresh() )
-  }
-  bt_ref = createRef();
+  // componentUpdate(){
+  //   console.log( this.bt_ref.current.BScroll.refresh() )
+  // }
+  // bt_ref = createRef();
+  // caigoudan(e){
+  //   console.log(111)
+  //   this.props.history.push('/PurchaseOrder')
+  // }
   render() {
     const scrollConfig = {
       probeType: 1
   }
+  
     return (
       
       
       <HomeStyle>
-        <BetterScroll config={scrollConfig} style={{ height: "100vh" }} ref={this.bt_ref}>
-        <div className='top'>
-        <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/base.png" alt=""/></div>
-        <ul>
+        {/* <BetterScroll config={scrollConfig} style={{ height: "100vh" }} ref={this.bt_ref}> */}
+        {/* <div className='top'> */}
+        {/* <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/base.png" alt=""/></div> */}
+        {/* <ul> */}
           {/* <li onClick={()=>{this.props.history.push('/AddGoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/add.png" alt=""/></li> */}
-          <li onClick={()=>{this.props.history.push('/addgoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/bianji.png" alt=""/></li>
+          {/* <li onClick={()=>{this.props.history.push('/addgoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/bianji.png" alt=""/></li> */}
           {/* <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaojia.png" alt=""/></li> */}
           {/* <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dabao.png" alt=""/></li> */}
-        </ul>
-      </div>
+        {/* </ul> */}
+      {/* </div> */}
         <DocumentTitle title={'进销存'} />
 
         <div className='conten'>
@@ -47,7 +52,7 @@ export default class Home extends Component {
           <ul>
             <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/ApplyOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shengqing.png" alt="" /></li>
             <li style={{ marginLeft: ".4rem" }} onClick={() => { this.props.history.push('/AddPurchaseOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/addcaigou.png" alt="" /></li>
-            <li style={{ marginLeft: ".3rem" }} onClick={() => { this.props.history.push('/PurchaseOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigoudan.png" alt="" /></li>
+            <li style={{ marginLeft: ".3rem" }} onClick={() => { this.props.history.push('/PurchaseOrder')} }><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigoudan.png" alt="" /></li>
           </ul>
         </div>
 
@@ -73,9 +78,9 @@ export default class Home extends Component {
           </ul>
         </div>
         <div className="banben">
-          v1.1.1.3
+          v1.1.1.5
       </div>
-      </BetterScroll>
+      {/* </BetterScroll> */}
       </HomeStyle>
       
     )
@@ -85,10 +90,10 @@ const HomeStyle = styled.div`
 .banben{
   opacity: .2;
   color: #3E3E3E;
-  font-size: .4rem;
+  font-size: .45rem;
   position: absolute;
-  // right: 0px;
-  // bottom: .4rem;
+  right: 0px;
+  bottom: .2rem;
   width: 100%;
   text-align: center;
 }

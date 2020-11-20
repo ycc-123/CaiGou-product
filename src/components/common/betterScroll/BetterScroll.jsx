@@ -35,7 +35,7 @@ class BetterScroll extends Component {
       probeType,
       // better-sroll 默认不监听按钮点击
       click: true,
-      taps: true,
+      // tap: false,
       // 监听上来加载更多
       pullUpLoad: true,
       // 监听下拉事件

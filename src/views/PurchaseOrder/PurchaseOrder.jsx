@@ -90,7 +90,7 @@ export default class PurchaseOrder extends Component {
                         this.state.data.map((value,key)=>{
                             return(
                                 <div >
-                                <Tiao item={value} key={key} history={this.props.history}/>
+                                <Tiao item={value} key={key} />
                                 </div>
                             )
                         })

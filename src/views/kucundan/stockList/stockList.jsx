@@ -90,7 +90,7 @@ export default class stockList extends Component {
             console.log(res)
             if(res.data.status===4001){
                 var bb = res.data.data.map(o=>{return{id:o.id,name:o.name}});
-                let aa=[{id:"",name:"全部分类"}]
+                let aa=[{id:"1",name:"全部分类"}]
                     let result=[...aa,...bb]
                     console.log(result)
                 this.setState({
@@ -106,6 +106,35 @@ export default class stockList extends Component {
     // 获取二级分类
     yijifenlei(v,k){
         console.log(v,k)
+        this.setState({
+            yikey:v.id
+        })
+        v.id==="1"?
+        getStockList({
+            action: 'getStockList', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                limit:this.state.limit,
+                page:this.state.page
+            }
+        }).then((res) => {
+            console.log(res)
+            if(res.data.status===4001){
+                var result = res.data.data.data.map(o=>{return{id:o.warehouseid,name:o.name}});
+                    console.log(result)
+                this.setState({
+                    goods: res.data.data.data,
+                    totalcostprice: res.data.data.totalcostprice,
+                    totalgnum: res.data.data.totalgnum,
+                    
+                }, () => {
+                    this.refs.scroll.BScroll.refresh()
+                })
+            }else{
+                Toast.info(res.data.msg,2)
+            }
+        })
+        :
         showProductCategory({
             action: 'showProductCategory', data: {
                 uniacid: store.getState().uniacid,
@@ -121,7 +150,7 @@ export default class stockList extends Component {
                     childrens:result,
                     erji:true,
                     quankey:v.id,
-                    yikey:v.id
+                    // yikey:v.id
                 },()=>{
 
                     this.refs.scroll.BScroll.refresh()

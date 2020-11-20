@@ -312,3 +312,26 @@ export function createWarehouseChange(config) {
     data: config.data
   })
 }
+
+
+
+// 创建商品
+export function createProduct(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+// 获取单位列表
+
+export function getUnitList(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

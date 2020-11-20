@@ -15,7 +15,7 @@ class Tiao extends Component {
             Color="#d92929"
         }
         return (
-            <div className='caigoudan'  onClick={() => { this.aa(item) }}>
+            <div className='caigoudan'  onClick={(e) => { this.aa(item) }}>
                     <div className='dan'>
                         <div className='dan-top'>
                             <p>

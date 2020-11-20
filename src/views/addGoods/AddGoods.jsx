@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
-import { Toast, List, Switch } from 'antd-mobile';
+import {Picker, Toast, List, Switch } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
+import { createProduct ,getUnitList,getProductCategoryAll} from 'network/Api'
+import { store } from "store/index";
+// import { Picker, List, Toast } from 'antd-mobile';
+
+
 const Into = (props) => {
 
 
@@ -17,25 +22,42 @@ const Into = (props) => {
     const [sellUnit, setSellUnit] = useState('');
     const [retailPrice, setRetailPrice] = useState('');
     const [setPrice, setSetPrice] = useState('');
-
     const [memberInterests, setMemberInterests] = useState(false)
     const [isProduct, setisProduct] = useState(false)
     const [memberPrice, setMemberPrice] = useState(false)
     // const [retailPrice, setRetailPrice] = useState(false)
     const [matchGood, setMatchGood] = useState(false);
     const [matchCode, setMatchCode] = useState('')
-
-
-
-
-
-
     const [goodSort, setGoodSort] = useState('');
+    const [unit, setUnit] = useState([]);
+    const [classification, setClassification] = useState([]);
+
     const scrollConfig = {
         probeType: 1
     }
 
     useEffect(() => {
+        getProductCategoryAll({ action: 'getProductCategoryAll', data: {
+            uniacid: store.getState().uniacid,
+            // uid:store.getState().uid,
+            
+          } }).then((res) => {
+              console.log(res) 
+            var result = res.data.data.map(o=>{return{value:o.id,label:o.name}});
+            console.log(result)
+            setClassification(result)
+          })
+
+
+        getUnitList({ action: 'getUnitList', data: {
+            uniacid: store.getState().uniacid,
+            uid:store.getState().uid,
+            
+          } }).then((res) => {
+            var result = res.data.data.map(o=>{return{value:o.id,label:o.name}});
+            console.log(result)
+            setUnit(result)
+          })
 
         try {
             bt_ref.current.BScroll.refresh()
@@ -82,12 +104,17 @@ const Into = (props) => {
                                 <span>商品分类: </span>
                             </div>
                             <div className="right">
-                                <input
-                                    value={goodCategory}
-                                    type="text"
-                                    placeholder='选择商品分类'
-                                    onChange={e => { setGoodCategory(e.target.value) }}
-                                />
+                            <Picker
+                             data={classification} 
+                             cols={1}  
+                             className="forss"
+                             extra="选择商品分类"
+                             value={goodCategory}
+                             onChange={e => { setGoodCategory(e)}}
+                             onOk={v => setGoodCategory(v)}
+                             >
+                                <List.Item className='time'  arrow="horizontal"></List.Item>
+                            </Picker>
                             </div>
                         </div>
                     </div>
@@ -108,7 +135,7 @@ const Into = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="type flex-column">
+                    {/* <div className="type flex-column">
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
                         }}>
@@ -116,15 +143,26 @@ const Into = (props) => {
                                 <span>库存单位: </span>
                             </div>
                             <div className="right">
-                                <input
+                            <Picker
+                             data={unit} 
+                             cols={1}  
+                             className="forss"
+                             extra="选择库存单位"
+                             value={stockUnit}
+                             onChange={e => { setStockUnit(e)}}
+                             onOk={v => setStockUnit(v)}
+                             >
+                                <List.Item className='kcdwtimes'  arrow="horizontal"></List.Item>
+                            </Picker> */}
+                                {/* <input
                                     value={stockUnit}
                                     type="text"
                                     placeholder='选择库存单位'
                                     onChange={e => { setStockUnit(e.target.value) }}
-                                />
-                            </div>
+                                /> */}
+                            {/* </div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="type flex-column">
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
@@ -133,12 +171,23 @@ const Into = (props) => {
                                 <span>售出单位: </span>
                             </div>
                             <div className="right">
-                                <input
+                            <Picker
+                             data={unit} 
+                             cols={1}
+                             className="forss"
+                             extra="选择售出单位"
+                             value={sellUnit}
+                             onChange={e => { setSellUnit(e)}}
+                             onOk={v => setSellUnit(v)}
+                             >
+                                <List.Item className='scdwtimes'  arrow="horizontal"></List.Item>
+                            </Picker>
+                                {/* <input
                                     value={sellUnit}
                                     type="text"
                                     placeholder='选择售出单位'
                                     onChange={e => { setSellUnit(e.target.value) }}
-                                />
+                                /> */}
                             </div>
                         </div>
                     </div>
@@ -256,51 +305,64 @@ const Into = (props) => {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </List>
 
+
+                    <div className='foot'>
+                        <div className='lbb'></div>
+                        <div className='raa' onClick={e => { check() }}>下一步</div>
+                    </div>
                 </AddGoodsStyle>
             </BetterScroll>
         </>
 
     )
 
-    // function findLabel(val) {
 
-    //   let aa = productList.find((item, key) => {
-    //      return item.value === val
-    //   })
-    //   let bb = aa.label
-    //   setproductType( bb )
-    //   setisProduct(!isProduct)
-    // }
 
-    function check() {
+     function check() {
+        console.log(memberPrice)
 
-        if (setGoodSort === "") {
-            Toast.info('请填写店铺名称', 1)
-        } else {
-
-            // let params = {
-            //   action: 'platform_apply',
-            //   uniacid: store.getState().appConfig.uniacid,
-            //   manage_cate_id: productType,
-            //   professional_identity: profeesion,
-            //   name_of_business: storeName,
-            //   scope_of_business: businessScope
+        createProduct({ action: 'createProduct', data: {
+            uniacid: store.getState().uniacid,
+            uid:store.getState().uid,
+            categoryid: goodCategory.toString(),
+            code: goodCode,
+            posprice:retailPrice,
+            memberprice: setPrice,
+            name: goodName,
+            unit: sellUnit.toString(),
+            is_membership:memberInterests===true?"2":"1",
+            is_memberprice:memberPrice===true?"2":"1",
+            is_plu_goods:matchGood===true?"2":"1",
+            plu_goods_keyboard_id:matchCode,
+            sequence:goodSort,
+          } }).then((res) => {
+            console.log(res)
+            // if(res.data.status===4001){
+            //     console.log(0)
+            //     var result = res.data.data.data.map(o=>{return{value:o.id,label:o.name}});
+            //         console.log(result)
+            //     this.setState({
+            //         data: result
+            //     })
+            // }else{
+            //     Toast.info('网络错误', 2)
             // }
+        })
+        // if (productType === "") {
+        //   Toast.info('请选择营业类目', 1)
+        // } else if (profeesion === "") {
+        //   Toast.info('请选择职业', 1)
+        // } else if (storeName === "") {
+        //   Toast.info('请填写店铺名称', 1)
+        // } else {
+    
 
-            // let res = await platformApply(params)
-            // if (res.status === 200) {
-            //   Toast.success(res.msg, 1)
-            //   window.location.reload()
-
-            // } else {
-            //   Toast.fail(res.msg, 1)
-            // }
-        }
-    }
+            
+     }
+        
 
 }
 
@@ -308,12 +370,127 @@ const AddGoodsStyle = styled.div`
   height: 100%;
   background: #F5F5F5;
   color: #474747;
+
+
+
+  .wrapper .CommissionHeader{
+    height:1.09rem;
+}
+.wrapper .CommissionHeader .navbar li{
+    // height:1.09rem;
+    padding-top:.15rem;
+}
+.wrapper .CommissionHeader .navbar .active{
+    padding-bottom: .28rem;
+}
+.stor_name{
+    font-size:0.32rem;
+    height:1.17rem;
+    line-height:1.17rem;
+}
+.am-list-item .am-list-line{
+    width:6rem;
+}
+.am-list-item .am-list-line .am-list-arrow{
+    display:none;
+}
+.am-list-item .am-list-line .am-list-extra{
+    // padding-top:.5rem;
+    color:#E6E6E6;
+    text-align: left;
+    font-size:.35rem;
+    padding-left:.1rem;
+    text-align: right;
+    width:3rem;
+}
+.am-list-item .am-list-line .am-list-arrow{
+    margin-left:2.5rem !important;
+    // background-image: none;
+    // opacity:0;
+}
+.kcdwtimes{
+    position:absolute;
+    left:1.8rem;
+    top:2.9rem;
+    // padding-top:.3rem;
+    color: red;
+    width:12rem;
+    background-color: transparent;
+}
+.scdwtimes{
+    position:absolute;
+    left:1.8rem;
+    top:3.9rem;
+    // padding-top:.3rem;
+    color: red;
+    width:12rem;
+    background-color: transparent;
+}
+.time{
+    position:absolute;
+    left:2.2rem;
+    top:.9rem;
+    text-align: left !important;
+    // padding-top:.3rem;
+    color: #E6E6E6;
+    width:12rem;
+    background-color: transparent;
+}
+
+.am-list-arrow am-list-arrow-horizontal{
+    background-image: none;
+    opacity:0;
+    // 
+}
+
+
+
+
+
+
+
+  .lbb{
+    width: 25rem;
+    height: 1.6rem;
+    background-color: #fff;
+}
+.raa{
+    font-size:.4rem;
+    color:#fff;
+    text-align:center;
+    width: 100%;
+    margin:auto;
+    height: 1.6rem;
+    line-height:1.6rem;
+    background-color: #ED7913;
+}
+.foot{
+    display:flex;
+    width: 100%;
+    height: 1.6rem;
+    background-color: #fff;
+    position:absolute;
+    bottom:0;
+}
+
+
+
+
+
+
+
+
   .xian{
       width:100%;
       height:1px;
       background: #ddd;
 
   }
+
+
+
+
+
 
  .am-list-line::after {
     background-color: transparent !important;
