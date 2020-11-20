@@ -5,7 +5,7 @@ import { Toast, List, DatePicker } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import LossReportTiao from './LossReportTiao'
 import { store } from "store/index";
-import { setTitle } from 'commons/utils'
+import DocumentTitle from 'react-document-title'
 import axios from 'axios';
 export default class LossReport extends Component {
     constructor() {
@@ -41,7 +41,7 @@ export default class LossReport extends Component {
         this.isLoadMore = true
     }
     componentDidMount() {
-        setTitle('报损汇总')
+
         var day2 = new Date();
         day2.setTime(day2.getTime());
         var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
@@ -307,6 +307,7 @@ export default class LossReport extends Component {
         
         return (
             <LossReportStyle>
+    <DocumentTitle title={'报损汇总'} />
 
 
                 <div style={{ display: "flex" }}>

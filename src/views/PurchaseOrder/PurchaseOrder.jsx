@@ -4,7 +4,7 @@ import { getPurchaseList } from 'network/Api'
 import {  Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiao'
-import { setTitle } from 'commons/utils'
+import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 export default class PurchaseOrder extends Component {
     constructor(){
@@ -19,7 +19,7 @@ export default class PurchaseOrder extends Component {
     }
 
     componentDidMount(){
-        setTitle('采购单')
+
         getPurchaseList({ action: 'getPurchaseList', data: {
             uniacid: store.getState().uniacid,
             uid:store.getState().uid,
@@ -74,6 +74,7 @@ export default class PurchaseOrder extends Component {
         }
         return (
             <PurchaseOrderStyle>
+    <DocumentTitle title={'采购单'} />
                 
                 <div className='search' >
                     <input type="search" className='input' placeholder="请输入采购单号/仓库名称" name="inputSearch" 

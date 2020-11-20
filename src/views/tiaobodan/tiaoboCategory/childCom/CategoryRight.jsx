@@ -11,7 +11,7 @@ import {  Toast } from 'antd-mobile';
 import { store} from 'store/index'
 
 
-import { saveGoods} from 'store/actionCreators'
+import { savetiaoboGoods} from 'store/actionCreators'
 
 class CategoryRight extends Component {
   constructor(){
@@ -91,16 +91,19 @@ class CategoryRight extends Component {
           amount:num[k]*price[k],
           barcodeid:this.state.goods[k].barcodeid,
           barcode:this.state.goods[k].code,
-          img:this.state.goods[k].albumpath,
+          img:this.state.goods[k].image,
           gnum:num[k],
           num:num[k],
           price:price[k],
           name:this.state.goods[k].name,
+          unit_name:this.state.goods[k].unit_name,
+
         }
        return arr.push(aa);
     })
-    const goodsList = saveGoods(arr)
-    store.dispatch(goodsList)
+    console.log(arr)
+    const tiaobogoods = savetiaoboGoods(arr)
+    store.dispatch(tiaobogoods)
     })
     
 }
@@ -115,8 +118,10 @@ class CategoryRight extends Component {
       // console.log(this.state.login[0], this.state.password,this.state.goods)
     let num =this.state.login
     let price =this.state.password
-    // console.log(this.props.id)
-    // console.log(num.length)
+    
+    console.log(price)
+
+    console.log(this.state.goods)
 
     let aa = {}
     let arr =[]
@@ -140,6 +145,8 @@ class CategoryRight extends Component {
     //   subtotal:this.state.price,
     //   snum:this.state.num
     // }
+
+
     submitWarehouseChange({ action: 'submitWarehouseChange', data: {
       uniacid: store.getState().uniacid,
       uid:store.getState().uid,
@@ -172,56 +179,7 @@ class CategoryRight extends Component {
     this.refs.scroll.BScroll.refresh()
 
   }
-//   loadMore = () => {
-//     // 加载数据时转圈
-//     let loading = true
-//     setTimeout(() => {
-//         if (loading) {
-//             this.setState({
-                
-//                 loadingMore: true
-//             })
-//         }
-//     }, 1000)
-//     if (this.isLoadMore) {
-      
-//       searchProduct({
-//         action: 'searchProduct', data: {
-//           uniacid: store.getState().uniacid,
-//           uid: store.getState().uid,
-//           // categoryid: this.props.Id[0].id,
-//         }
-//       }).then(res => {
-//         const { goodsList } = this.props
 
-//             // 如果长度不等于得时候加载 那么是到底了
-//             if (res.data.data.data.length < this.state.limit) {
-//                 this.isLoadMore = false
-//                 /* let bottomTip = document.querySelector('.bottom-tip')
-//                 bottomTip.style.visibility = 'visible'
-//                 bottomTip.innerHTML = '商品已经全部加载完成' */
-//             }
-//             this.setState({
-//               goodsList: [...goodsList, ...res.data.data.data],
-           
-//                 loadingMore: false
-//             }, () => {
-//                 let page=Number(this.state.page)
-//                 this.setState({
-//                     page: page += 1
-//                 })
-
-//                 loading = false
-//                 this.refs.scroll.BScroll.finishPullUp()
-//                 this.refs.scroll.BScroll.refresh()
-//             })
-//         })
-//     } else {
-//         /* let bottomTip = document.querySelector('.bottom-tip')
-//         bottomTip.style.visibility = 'visible'
-//         bottomTip.innerHTML = '商品已经全部加载完成' */
-//     }
-// }
 }
 
 export default CategoryRight;

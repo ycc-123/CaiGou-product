@@ -29,6 +29,8 @@ import InventoryList from 'views/pandiandan/InventoryList'
 import InventoryListDetails from 'views/pandiandan/InventoryListDetails'
 import allocationOrder from 'views/tiaobodan/allocationOrder'
 import allocationListDetails from 'views/tiaobodan/allocationListDetails'
+import tiaoboxq from 'views/tiaobodan/tiaoboCategory/childCom/CategorySwiper'
+
 import addallocationList from 'views/tiaobodan/addallocationList'
 import tiaoboCategory from 'views/tiaobodan/tiaoboCategory/Category'
 import AddGoods from 'views/addGoods/AddGoods'
@@ -74,6 +76,8 @@ const AppRouter = () => {
         <Route path='/quanpanCategory/:id/:ck' exact component={quanpanCategory} ></Route>
         <Route path='/addallocationList' exact component={addallocationList} ></Route>
         <Route path='/tiaoboCategory/:id/:ck' exact component={tiaoboCategory} ></Route>
+        <Route path='/tiaoboxq' exact component={tiaoboxq} ></Route>
+
 
         <Route path='/pandianCategory/:id/:ck/:fl/:name' exact component={pandianCategory} ></Route>
 

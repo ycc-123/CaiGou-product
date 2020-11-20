@@ -1,262 +1,76 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getWarehouseChangeDetail, submitWarehouseChange } from 'network/Api'
-import { Toast, Modal, Button } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
-// import Tiao from './Tiao'
-import { setTitle } from 'commons/utils'
 import { store } from "store/index";
-const alert = Modal.alert;
 export default class InventoryListDetails extends Component {
     constructor() {
         super()
         this.state = {
-            result: [],
-            arr: 0,
-            data: {},
-            inventoryData: [],
-            itemData: [],
-            goods: [],
-            num: '',
-            count: '',
-            input: [],
-            inputSearch: '',
-            supplier: []
+            zcck:store.getState().tiaoboxqck[0].label?store.getState().tiaoboxqck[0].label:"",
+            zrvk:store.getState().tiaoboxqck[2].label?store.getState().tiaoboxqck[2].label:"",
+            danhao:store.getState().tiaoboxqck[3]?store.getState().tiaoboxqck[3]:"",
+            beiz:store.getState().tiaoboxqck[1]?store.getState().tiaoboxqck[1]:""
         }
     }
     componentDidMount() {
-        setTitle('盘点单')
-        getWarehouseChangeDetail({
-            action: 'getWarehouseChangeDetail', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                id: this.props.match.params.id,
-                limit: "30",
-                page: "1"
-            }
-        }).then((res) => {
-            console.log(res.data.data)
-            if (res.data.status === 4001) {
-                // var supplier = res.data.data.purchaseDeliveryItem.map(o => { return { gnum: o.gnum } });
-                // console.log(supplier)
-                this.setState({
-                    // supplier,
-                    count: res.data.data.count,
-                    inventoryData: res.data.data.delivery,
-                    itemData: res.data.data.items
-                }, () => {
-                    this.refs.scroll.BScroll.refresh()
-                })
-            } else {
-                Toast.info(res.data.msg, 2)
-            }
-        })
+        console.log(store.getState().tiaoboxqck)
+        console.log(store.getState().tiaobogoods)
     }
-    shengHe(e) {
-        console.log(e)
-        // if (e === "提交成功") {
-
-        // } else {
-    //         if (this.state.input.length === 0) {
-    //             // 默认
-                let aa = {}
-                let arr = []
-                this.state.itemData.map((v, k) => {
-                    console.log(v)
-                    aa = {
-                        stockid: v.stockid,
-                        realnum: v.gnum,
-                    }
-                    return arr.push(aa);
-                })
-                
-    //             let in_out_num = []
-    //             this.state.purchaseItem.map((v, k) => {
-    //                 let innum = this.state.purchaseItem[k].gnum
-    //                 return in_out_num.push(innum);
-    //             })
-    //             let sum = 0;
-    //             in_out_num.forEach(item => {
-    //                 sum = Number(sum) + parseInt(item)
-    //             })
-    //             let deliveryData = {
-    //                 id: this.props.match.params.id,
-    //                 snum: this.state.count,
-    //                 in_out_num: sum
-    //             }
-    //             console.log("默认", deliveryData, itemData)
-                submitWarehouseChange({
-                    action: 'submitWarehouseChange', data: {
-                        uniacid: store.getState().uniacid,
-                        uid: store.getState().uid,
-                        status:"2",
-                        warehouseChangeId: this.props.match.params.id,
-                        itemData: arr,
-                    }
-                }).then((res) => {
-    //                 console.log(res.data)
-                    if (res.data.status === 4001) {
-                        window.location.reload();
-                        Toast.success(res.data.msg, 2)
-                    } else {
-                        Toast.info(res.data.msg, 2)
-                    }
-                })
-    //         } else {
-    //             let aa = {}
-    //             let arr = []
-    //             this.state.goods.map((v, k) => {
-    //                 console.log(v, k)
-    //                 aa = {
-    //                     id: this.state.goods[k].id,
-    //                     barcodeid: this.state.goods[k].barcodeid,
-    //                     diffnum: this.state.goods[k].price - this.state.input[k],
-    //                     innum: this.state.input[k],
-    //                     goodsid: this.state.goods[k].goodsid
-    //                 }
-    //                 return arr.push(aa);
-    //             })
-    //             let itemData = arr
-    //             console.log(itemData)
-    //             let deliveryData = {
-    //                 id: this.props.match.params.id,
-    //                 snum: this.state.count,
-    //                 in_out_num: this.state.num
-    //             }
-    //             console.log("22222", deliveryData, itemData)
-    //             submitPurchaseDelivery({
-    //                 action: 'submitPurchaseDelivery', data: {
-    //                     uniacid: store.getState().uniacid,
-    //                     uid: store.getState().uid,
-    //                     itemData: itemData,
-    //                     deliveryData: deliveryData,
-    //                     type: "1",
-    //                     status: "4"
-    //                 }
-    //             }).then((res) => {
-    //                 console.log(res.data)
-    //                 if (res.data.status === 4001) {
-    //                     window.location.reload();
-    //                     Toast.success(res.data.msg, 2)
-    //                 } else {
-    //                     Toast.info(res.data.msg, 2)
-    //                 }
-    //             })
-    //         }
-        }
-
-    // }
-    // getChildrenMsg = (result, msg) => {
-    //     let input = []
-    //     input.push(result)
-    //     let ww = []
-    //     ww.push(msg)
-    //     let arr = Number(result) + Number(this.state.arr)
-    //     this.setState({
-    //         result,
-    //         arr,
-    //         goods: [...this.state.goods, ...ww],
-    //         num: arr,
-    //         input: [...this.state.input, ...input]
-    //     })
-    //     console.log(result, msg)
-    // }
-    seach() {
-        console.log(111)
-        getWarehouseChangeDetail({
-            action: 'getWarehouseChangeDetail', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                id: this.props.match.params.id,
-                search: this.state.inputSearch,
-                limit: "30",
-                page: "1"
-            }
-        }).then((res) => {
-            console.log(res.data.data)
-            if (res.data.status === 4001) {
-                // var supplier = res.data.data.purchaseDeliveryItem.map(o => { return { gnum: o.gnum } });
-                // console.log(supplier)
-                this.setState({
-                    // supplier,
-                    count: res.data.data.count,
-                    inventoryData: res.data.data.delivery,
-                    itemData: res.data.data.items
-                }, () => {
-                    this.refs.scroll.BScroll.refresh()
-                })
-            } else {
-                Toast.info(res.data.msg, 2)
-            }
-        })
-    }
-    inputChange(e) {
-        console.log(e.target.value)
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
+   
     render() {
         const scrollConfig = {
             probeType: 1
         }
-        let Color = ''
-        if (this.state.inventoryData.statusname === "提交成功") {
-            Color = "#22a31b"
-        } else if (this.state.inventoryData.statusname === "待提交") {
-            Color = "#d92929"
-        } else if (this.state.inventoryData.statusname === "待审核") {
-            Color = "#ed5f21"
-        }
+        var day2 = new Date();
+        day2.setTime(day2.getTime());
+        var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
         return (
             <WarehousingOrderxingStyle>
                 <div>
-                    <div className='search'>
-                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
-                            onChange={this.inputChange.bind(this)}
-                            value={this.state.inputSearch} />
-                        <div className='img' onClick={() => { this.seach() }}>
+                <div className='search'>
+                        <input type="search" className='input' placeholder="请输入商品名称或商品编码"  />
+                        <div className='img' onClick={() => { }}>
                             <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
                         </div>
                     </div>
+
+
 
                     <div className='conten'>
                         <div className='conten-top'>
                             <p>
                                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
                             </p>
-                            <div>{this.state.inventoryData.docno}</div>
+                            <div>{this.state.danhao}</div>
                         </div>
 
                         <div className='conten-c'>
-                            <p>单据日期：{this.state.inventoryData.docdate}</p>
-                            <p>转出仓库：{this.state.inventoryData.outwarehouseName}</p>
-                            <p>转入仓库：{this.state.inventoryData.inwarehouseName}</p>
-                            <p>单据状态：<span style={{ color: Color }}>{this.state.inventoryData.statusname}</span></p>
+                            <p>单据日期：{s2}</p>
+                            <p>转出仓库：{this.state.zcck}</p>
+                            <p>转入仓库：{this.state.zrvk}</p>
+                            <p>单据状态：<span style={{ color: "#d92929" }}>待提交</span></p>
                         </div>
 
                         <div className='footer'>
-                            备注：{this.state.inventoryData.remark}
+                            备注：{this.state.beiz}
                         </div>
                     </div>
                     <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "6.6rem", bottom: "1.6rem" }}>
                         {
-                            this.state.itemData.map((value, key) => {
+                            store.getState().tiaobogoods.map((value, key) => {
                                 console.log(value)
                                 let tiao = value
                                 return (
                                     <div className='tiao'>
-                                        {/* <img className='t-img-l' src={tiao.image} alt="" /> */}
-                                        <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-
+                                        <img className='t-img-l' src={tiao.img ? tiao.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
                                         <ul className='wen-zi'>
                                             <li className='wen-zi-t'>
-                                                <div className='name'>{tiao.goods_name}</div>
-                                                <p>{tiao.gnum}{tiao.unitname}</p>
+                                                <div className='name'>{tiao.name}</div>
+                                                <p>{tiao.gnum}{tiao.unit_name}</p>
                                             </li>
                                             <li className='wen-zi-f'>
-                                                <div>￥：{tiao.transfer_price}元/{tiao.unitname}</div>
-                                                <p>{tiao.transfer_subtotal}</p>
+                                                <div>￥：{tiao.price}元/{tiao.unit_name}</div>
+                                                <p>{tiao.price*tiao.gnum}</p>
                                             </li>
                                         </ul>
                                     </div>

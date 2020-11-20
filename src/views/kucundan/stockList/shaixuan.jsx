@@ -6,7 +6,7 @@ import BetterScroll from 'common/betterScroll/BetterScroll'
 // import Shaixuan from './shaixuan'
 import StockListTiao from './stockListTiao'
 import { store } from "store/index";
-import { setTitle } from 'commons/utils'
+import DocumentTitle from 'react-document-title'
 export default class shaixuan extends Component {
     constructor(){
         super()

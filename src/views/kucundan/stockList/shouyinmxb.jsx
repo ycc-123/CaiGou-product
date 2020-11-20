@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { getRetailList } from 'network/Api'
 // import { Toast } from 'antd-mobile';
 // import BetterScroll from 'common/betterScroll/BetterScroll'
-import { setTitle } from 'commons/utils'
+import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 export default class Shouyinmxb extends Component {
     constructor() {
@@ -13,7 +13,7 @@ export default class Shouyinmxb extends Component {
         }
     }
     componentDidMount() {
-        setTitle('收银明细表')
+
         getRetailList({
             action: 'getRetailList', data: {
                 uniacid: store.getState().uniacid,
@@ -33,6 +33,8 @@ export default class Shouyinmxb extends Component {
         console.log(this.state)
         return (
             <ShouyinmxbStyle>
+    <DocumentTitle title={'收银明细表'} />
+
                 {
                     this.state.linshou.map((v, k) => {
                         if (v.id === this.props.match.params.id) {

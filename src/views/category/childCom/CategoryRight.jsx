@@ -92,6 +92,7 @@ class CategoryRight extends Component {
           barcodeid:this.state.goods[k].barcodeid,
           barcode:this.state.goods[k].code,
           img:this.state.goods[k].albumpath,
+          danwei:this.state.goods[k].unitname,
           gnum:num[k],
           num:num[k],
           price:price[k],

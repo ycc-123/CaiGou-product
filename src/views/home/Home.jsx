@@ -1,33 +1,46 @@
-import React, { Component } from 'react'
+import React, { Component,createRef } from 'react'
 import styled from 'styled-components'
 import { store } from "store/index";
 import { Toast } from 'antd-mobile';
-
+import DocumentTitle from 'react-document-title'
+import BetterScroll from 'common/betterScroll/BetterScroll'
 
 
 export default class Home extends Component {
 
   componentDidMount() {
+    this.bt_ref.current.BScroll.refresh()
+    // <Title title="" />
     console.log("uid=====")
     console.log("uid=====", store.getState().uid)
     console.log("uniacid=====", store.getState().uniacid)
     localStorage.clear()
-
     // Toast.loading('Loading...', 1);
+    console.log( this.bt_ref.current.BScroll.refresh() )
   }
+  componentUpdate(){
+    console.log( this.bt_ref.current.BScroll.refresh() )
+  }
+  bt_ref = createRef();
   render() {
+    const scrollConfig = {
+      probeType: 1
+  }
     return (
+      
+      
       <HomeStyle>
+        <BetterScroll config={scrollConfig} style={{ height: "100vh" }} ref={this.bt_ref}>
         <div className='top'>
         <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/base.png" alt=""/></div>
         <ul>
-          <li onClick={()=>{this.props.history.push('/AddGoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/add.png" alt=""/></li>
-          <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/bianji.png" alt=""/></li>
-          <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaojia.png" alt=""/></li>
-          <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dabao.png" alt=""/></li>
+          {/* <li onClick={()=>{this.props.history.push('/AddGoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/add.png" alt=""/></li> */}
+          <li onClick={()=>{this.props.history.push('/addgoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/bianji.png" alt=""/></li>
+          {/* <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaojia.png" alt=""/></li> */}
+          {/* <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dabao.png" alt=""/></li> */}
         </ul>
       </div>
-
+        <DocumentTitle title={'进销存'} />
 
         <div className='conten'>
           <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigou.png" alt="" /></div>
@@ -44,9 +57,8 @@ export default class Home extends Component {
             <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/stockList') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kucundan.png" alt="" /></li>
             <li style={{ height: "1.6rem", width: "1.95rem", marginLeft: ".4rem" }} onClick={() => { this.props.history.push('/WarehousingOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/rkdan.png" alt="" /></li>
             <li onClick={()=>{this.props.history.push('/Pandian')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/pandiandan.png" alt=""/></li>
-            <li onClick={()=>{this.props.history.push('/allocationOrder')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/baosdan.png" alt=""/></li>
-            {/* <li onClick={()=>{this.props.history.push('/addPandian')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaobodan.png" alt=""/></li> */}
-            {/* <li style={{marginTop:".8rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dabao.png" alt=""/></li> */}
+            {/* <li onClick={()=>{this.props.history.push('/allocationOrder')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/baosdan.png" alt=""/></li> */}
+            <li onClick={()=>{this.props.history.push('/allocationOrder')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaobodan.png" alt=""/></li>
           </ul>
         </div>
 
@@ -61,10 +73,11 @@ export default class Home extends Component {
           </ul>
         </div>
         <div className="banben">
-          1.1.1
+          v1.1.1.3
       </div>
+      </BetterScroll>
       </HomeStyle>
-
+      
     )
   }
 }
@@ -72,10 +85,10 @@ const HomeStyle = styled.div`
 .banben{
   opacity: .2;
   color: #3E3E3E;
-  font-size: 15px;
+  font-size: .4rem;
   position: absolute;
-  right: 0px;
-  bottom: 5px;
+  // right: 0px;
+  // bottom: .4rem;
   width: 100%;
   text-align: center;
 }

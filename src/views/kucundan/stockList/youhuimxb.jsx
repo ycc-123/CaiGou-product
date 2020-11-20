@@ -5,7 +5,7 @@ import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { Picker, List, DatePicker } from 'antd-mobile';
 import Youhuimxbs from './youhuimxbs'
-import { setTitle } from 'commons/utils'
+import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 export default class Youhuimxb extends Component {
     constructor() {
@@ -31,7 +31,7 @@ export default class Youhuimxb extends Component {
         this.isLoadMore = true
     }
     componentDidMount() {
-        setTitle('优惠明细表')
+
         var day2 = new Date();
         day2.setTime(day2.getTime());
         var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
@@ -174,6 +174,8 @@ export default class Youhuimxb extends Component {
         // console.log(this.state.store_id)
         return (
             <YouhuimxbStyle>
+    <DocumentTitle title={'优惠明细表'} />
+
                 <div>
                     <div style={{ display: "flex" }}>
                         <div className='search' >

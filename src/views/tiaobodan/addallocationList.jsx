@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getWarehouseList, createWarehouseChange } from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
-import { setTitle } from 'commons/utils'
+import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
-import { saveCanku} from 'store/actionCreators'
+import { saveCanku } from 'store/actionCreators'
 
 export default class AddInventoryList extends Component {
     constructor(props) {
@@ -21,7 +21,7 @@ export default class AddInventoryList extends Component {
         }
     }
     componentDidMount() {
-        setTitle('新建采购单')
+
         getWarehouseList({
             action: 'getWarehouseList', data: {
                 uniacid: store.getState().uniacid,
@@ -53,39 +53,42 @@ export default class AddInventoryList extends Component {
         let idkc = this.state.lxID === '' ? '' : this.state.lxID.toString()
         console.log(idkc)
 
-
-        // createWarehouseChange({
-        //     action: 'createWarehouseChange', data: {
-        //         uniacid: store.getState().uniacid,
-        //         uid: store.getState().uid,
-        //         outwarehouseid: this.state.lxID,
-        //         inwarehouseid: idkc,
-        //         remark: this.state.inputbeiz,
-        //     }
-        // }).then(res => {
-        //     console.log(res)
-        //     if (res.data.status === 4001) {
-        //         this.props.history.push(`/tiaoboCategory/${res.data.data}/${idkc}`)
-        //         Toast.success(res.data.msg, 2)
-        //     } else {
-        //         Toast.info(res.data.msg, 2)
-        //     }
-        // })
-        let arr = []
-        let aa = {}
-        this.state.data.map((v, k) => {
-            if (v.value === idgy) {
-                aa = v
-                return arr.push(aa);
+     
+        createWarehouseChange({
+            action: 'createWarehouseChange', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                outwarehouseid: idgy,
+                inwarehouseid: idkc,
+                remark: this.state.inputbeiz,
             }
-            if (v.value === idkc) {
-                aa = v
-                return arr.push(aa);
+        }).then(res => {
+            console.log(res.data.data.docno)
+            if (res.data.status === 4001) {
+                this.props.history.push(`/tiaoboCategory/${res.data.data.id}/${idkc}`)
+                Toast.success(res.data.msg, 2)
+         
+                    let arr = []
+                    let aa = {}
+                    this.state.data.map((v, k) => {
+                        if (v.value === idgy) {
+                            aa = v
+                            return arr.push(aa, this.state.inputbeiz);
+                        }
+                        if (v.value === idkc) {
+                            aa = v
+                            return arr.push(aa, res.data.data.docno);
+                        }
+                        // return arr.push(this.state.inputbeiz);
+                    })
+                    const tiaoboxqck = saveCanku(arr)
+                    store.dispatch(tiaoboxqck)
+                    console.log(arr)
+               
+            } else {
+                Toast.info(res.data.msg, 2)
             }
         })
-        const tiaoboxqck = saveCanku(arr)
-        store.dispatch(tiaoboxqck)
-        console.log(arr)
     }
 
     inputChangebz(e) {
@@ -97,6 +100,8 @@ export default class AddInventoryList extends Component {
     render() {
         return (
             <AddPurchaseOrderStyle>
+    <DocumentTitle title={'新建调拨单'} />
+
                 <div>
                     <ul className='biao'>
                         <li><span>*</span>转出仓库：

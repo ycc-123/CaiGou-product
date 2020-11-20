@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getWarehouseList,getSupplierList,createPurchase} from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
-import { setTitle } from 'commons/utils'
+import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 
 
@@ -25,7 +25,7 @@ export default class AddPurchaseOrder extends Component {
         }
     }
     componentDidMount() {
-        setTitle('新建采购单')
+        
         getWarehouseList({ action: 'getWarehouseList', data: {
             uniacid: store.getState().uniacid,
             uid:store.getState().uid,
@@ -111,6 +111,7 @@ export default class AddPurchaseOrder extends Component {
     render() {
         return (
             <AddPurchaseOrderStyle>
+                <DocumentTitle title={'新建采购单'} />
                 <div>
                     <ul className='biao'>
                         <li><span>*</span>采购仓库：

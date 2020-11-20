@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getWarehouseChangeList } from 'network/Api'
 import { Toast } from 'antd-mobile';
-// import Tiao from './Tiao'
 import BetterScroll from 'common/betterScroll/BetterScroll'
-import { setTitle } from 'commons/utils'
+import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 export default class InventoryList extends Component {
     constructor() {
@@ -18,7 +17,7 @@ export default class InventoryList extends Component {
         this.isLoadMore = true
     }
     componentDidMount() {
-        setTitle('调拨单')
+
         getWarehouseChangeList({
             action: 'getWarehouseChangeList', data: {
                 uniacid: store.getState().uniacid,
@@ -72,24 +71,18 @@ export default class InventoryList extends Component {
             }
         })
     }
-    componentDidUpdate = () => {
-        // // 默认每次加载x=0，y=0 不然会有bug
-        // // console.log(this)
-        // /* console.log('进来了') */
-        // this.refs.scroll.BScroll.scrollTo(0, 0)
-        // this.refs.scroll.BScroll.refresh()
 
-    }
     render() {
         const scrollConfig = {
             probeType: 1
         }
         return (
             <WarehousingOrderStyle>
+    <DocumentTitle title={'调拨单'} />
 
                 {/* <div style={{width:"100%"}}> */}
                 <div className='search'>
-                    <input type="search" className='input' placeholder="请输入盘点单单号" name="inputSearch"
+                    <input type="search" className='input' placeholder="请输入调拨单单号" name="inputSearch"
                         onChange={this.inputChange.bind(this)}
                         value={this.state.inputSearch} />
                     <div className='img' onClick={() => { this.Search() }}>

@@ -5,7 +5,7 @@ import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import StockListTiao from './stockListTiao'
 import { store } from "store/index";
-import { setTitle } from 'commons/utils'
+import DocumentTitle from 'react-document-title'
 export default class stockList extends Component {
     constructor(){
         super()
@@ -33,7 +33,7 @@ export default class stockList extends Component {
         this.isLoadMore = true
     }
     componentDidMount(){
-        setTitle('库存单')
+
         getStockList({
             action: 'getStockList', data: {
                 uniacid: store.getState().uniacid,
@@ -249,6 +249,7 @@ export default class stockList extends Component {
         console.log(this.state.goods)
         return (
             <StockListStyle>
+    <DocumentTitle title={'库存单'} />
                 
                 
                     <div style={{ display: "flex" }}>

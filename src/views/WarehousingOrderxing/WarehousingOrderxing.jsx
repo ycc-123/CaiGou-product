@@ -4,7 +4,7 @@ import { getPurchaseDeliveryDetail, submitPurchaseDelivery } from 'network/Api'
 import { Toast, Modal, Button } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiao'
-import { setTitle } from 'commons/utils'
+import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 const alert = Modal.alert;
 export default class WarehousingOrderxing extends Component {
@@ -25,7 +25,7 @@ export default class WarehousingOrderxing extends Component {
         }
     }
     componentDidMount() {
-        setTitle('采购入库单明细')
+
         getPurchaseDeliveryDetail({
             action: 'getPurchaseDeliveryDetail', data: {
                 uniacid: store.getState().uniacid,
@@ -210,6 +210,8 @@ export default class WarehousingOrderxing extends Component {
         }
         return (
             <WarehousingOrderxingStyle>
+    <DocumentTitle title={'采购入库单明细'} />
+
                 <div>
                     <div className='search'>
                         <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"

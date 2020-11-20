@@ -3,7 +3,6 @@ export const SAVE_UNIACID = 'save_uniacid'
 export const SAVE_GOODS = 'save_goods'
 export const SAVE_CANKU = 'save_canku'
 export const SAVE_TIAOBOGOODS = 'save_tiaobogoods'
-export const SAVE_TIAOBOINPUT = 'save_tiaoboinput'
 
 
 

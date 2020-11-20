@@ -32,7 +32,7 @@ class CategoryRightgoods extends Component {
 
   render() {
     const { goods } = this.props
-    console.log(goods)
+    // console.log(goods)
 
     return (
       <CategoryRightgoodsStyle>

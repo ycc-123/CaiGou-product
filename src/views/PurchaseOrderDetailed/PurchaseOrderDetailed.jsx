@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { getPurchaseDetail, changePurchaseStatus, submitPurchase } from 'network/Api'
 import { Toast, Modal, Button} from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
-import { setTitle } from 'commons/utils'
+import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 
 const alert = Modal.alert;
@@ -18,7 +18,7 @@ function Tiao(value) {
             <ul className='wen-zi'>
                 <li className='wen-zi-t'>
                     <div className='name'>{tiao.goods_name}</div>
-                    <p>{tiao.gnum}公斤</p>
+                    <p>{tiao.gnum}{tiao.unitname}</p>
                 </li>
                 <li className='wen-zi-f'>
                     <div>￥：{tiao.price}元/{tiao.unitname}</div>
@@ -43,7 +43,7 @@ export default class PurchaseOrderDetailed extends Component {
 
     }
     componentDidMount() {
-        setTitle('采购单明细')
+
         getPurchaseDetail({
             action: 'getPurchaseDetail', data: {
                 uniacid: store.getState().uniacid,
@@ -180,6 +180,8 @@ export default class PurchaseOrderDetailed extends Component {
         }
         return (
             <PurchaseOrderDetailedStyle>
+    <DocumentTitle title={'采购单明细'} />
+
                 <div>
                     <div className='search'>
                         <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="goodsSearch"

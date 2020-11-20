@@ -1,5 +1,5 @@
 import {
-    SAVE_UID, SAVE_UNIACID, SAVE_GOODS, SAVE_CANKU,SAVE_TIAOBOGOODS,SAVE_TIAOBOINPUT
+    SAVE_UID, SAVE_UNIACID, SAVE_GOODS, SAVE_CANKU,SAVE_TIAOBOGOODS,
 } from './actionTypes'
 
 
@@ -9,7 +9,6 @@ const defaultState = {
     goodsList: [],
     tiaoboxqck: [],
     tiaobogoods: [],
-    tiaoboinput: ""
 
 
 }
@@ -39,9 +38,6 @@ export default (state = defaultState, action) => {
             newState.tiaobogoods = action.data
             return newState
 
-        case SAVE_TIAOBOINPUT:
-            newState.tiaoboinput = action.data
-            return newState
 
         default:
             break

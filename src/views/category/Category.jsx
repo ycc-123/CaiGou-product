@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import CategoryLeftItem from './childCom/CategoryLeftItem'
 import CategoryRight from './childCom/CategoryRight'
-import { setTitle } from 'commons/utils'
+import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
 import { getProductCategoryAll, searchProduct } from 'network/Api'
 import {  _categoryRight } from 'network/category'
@@ -80,6 +80,8 @@ class Category extends Component {
     let ida = this.props.match.params.id
     return (
       <CategoryStyle>
+    <DocumentTitle title={'新建采购单'} />
+
         <Fragment>
           <div className='search'>
             <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch" 
@@ -177,7 +179,6 @@ class Category extends Component {
   componentDidMount = () => {
 
     // this.refs.scroll.BScroll.refresh()
-    setTitle('新建采购单')
     // const { appConfig } = store.getState()
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {

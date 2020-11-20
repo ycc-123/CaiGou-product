@@ -38,17 +38,17 @@ export default class Liebiao extends Component {
             </div>
             {
                 this.state.goodsList.map((v,k)=>{
-                    // console.log(v)
+                    console.log(v)
                     return(
                         <div className='tiao'>
                         <img className='t-img-l' src={v.img?v.img :"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"}  alt="网络卡" />
                         <ul className='wen-zi'>
                             <li className='wen-zi-t'>
                                 <div className='name'>{v.name}</div>
-                                <p>{v.num}公斤</p>
+                                <p>{v.num}{v.danwei}</p>
                             </li>
                             <li className='wen-zi-f'>
-                                <div>￥：{v.price}元/盒</div>
+                                <div>￥：{v.price}元/{v.danwei}</div>
 
                                 <p>{v.amount}
                                 </p>

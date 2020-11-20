@@ -5,7 +5,7 @@ import { Toast, List, DatePicker } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import GoodDiscounts from './GoodDiscounts'
 import { store } from "store/index";
-import { setTitle } from 'commons/utils'
+import DocumentTitle from 'react-document-title'
 import axios from 'axios';
 export default class LossReport extends Component {
     constructor() {
@@ -42,7 +42,7 @@ export default class LossReport extends Component {
         return GMT
     }
     componentDidMount() {
-        setTitle('商品优惠汇总')
+
         getRetailGoodsList({
             action: 'getRetailGoodsList', data: {
                 uniacid: store.getState().uniacid,
@@ -310,6 +310,8 @@ export default class LossReport extends Component {
         }
         return (
             <LossReportStyle>
+    <DocumentTitle title={'商品优惠汇总'} />
+
                 <div style={{ display: "flex" }}>
                     <div className='search'  >
                         <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"

@@ -4,7 +4,7 @@ import { getInventoryInfo, submitInventory } from 'network/Api'
 import { Toast, Modal, Button } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiao'
-import { setTitle } from 'commons/utils'
+import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 const alert = Modal.alert;
 const prompt = Modal.prompt;
@@ -44,7 +44,7 @@ export default class InventoryListDetails extends Component {
         console.log(result, msg)
     }
     componentDidMount() {
-        setTitle('盘点单明细')
+
         getInventoryInfo({
             action: 'getInventoryInfo', data: {
                 uniacid: store.getState().uniacid,
@@ -195,6 +195,8 @@ export default class InventoryListDetails extends Component {
         }
         return (
             <WarehousingOrderxingStyle>
+    <DocumentTitle title={'盘点单明细'} />
+
                 <div>
                     <div className='search'>
                         <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"

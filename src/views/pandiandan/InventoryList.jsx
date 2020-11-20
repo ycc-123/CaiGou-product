@@ -4,7 +4,7 @@ import { getInventoryList } from 'network/Api'
 import { Toast } from 'antd-mobile';
 // import Tiao from './Tiao'
 import BetterScroll from 'common/betterScroll/BetterScroll'
-import { setTitle } from 'commons/utils'
+import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 export default class InventoryList extends Component {
     constructor() {
@@ -18,7 +18,7 @@ export default class InventoryList extends Component {
         this.isLoadMore = true
     }
     componentDidMount() {
-        setTitle('盘点单')
+
         getInventoryList({
             action: 'getInventoryList', data: {
                 uniacid: store.getState().uniacid,
@@ -86,6 +86,7 @@ export default class InventoryList extends Component {
         }
         return (
             <WarehousingOrderStyle>
+    <DocumentTitle title={'盘点单'} />
 
                 {/* <div style={{width:"100%"}}> */}
                 <div className='search'>
