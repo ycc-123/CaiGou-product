@@ -83,6 +83,7 @@ class Category extends Component {
     <DocumentTitle title={'新建采购单'} />
 
         <Fragment>
+          <div style={{display:"flex"}}>
           <div className='search'>
             <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch" 
                                     onChange={this.inputChange.bind(this)}
@@ -90,7 +91,16 @@ class Category extends Component {
             <div className='img' onClick={() => { this.Search() }}>
               <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
+            
           </div>
+          <div
+          onClick={()=>{this.props.history.push('/addgoods')}}
+           className='add'>新增<span style={{fontSize:".4rem"}}>+</span></div>
+          </div>
+
+          
+
+
           <div className='category-main'>
             {type === 'goods' ? <Fragment><div className='categoryLeft'>
               <ul>
@@ -112,7 +122,7 @@ class Category extends Component {
             </Fragment> : <Fragment>
               </Fragment>}
           </div>
-          <div className='foot'>
+          {/* <div className='foot'>
             <div className='left' onClick={() => { this.mingxi() }}>
               <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
             </div>
@@ -123,7 +133,7 @@ class Category extends Component {
                     <span>{this.state.price ? this.state.price : 0}</span></div>
             <div className='right' onClick={this.click}>提交</div>
 
-          </div>
+          </div> */}
 
         </Fragment>
       </CategoryStyle>
@@ -289,16 +299,31 @@ class Category extends Component {
 
 }
 const CategoryStyle = styled.div`
+.add{
+  width: 1.6rem;
+  height: 0.75rem;
+  line-height: 0.75rem;
+  text-align:center;
+  color:#fff;
+  background: #ED7A14;
+  border-radius: .1rem;
+  margin-top:.21rem;
+  margin-left:.32rem;
+  font-size:.37rem;
+}
+
 input::-webkit-input-placeholder {
   color: #c9c9c9;
   font-size:.35rem;
 }
 .img{
-  width: .8rem;  
-  height: .6rem; 
+  width: .55rem;  
+  height: .55rem; 
+  // line-height: .5rem; 
+  margin-left:2.45rem;
 }
 .img-search{
-  margin-top:.1rem;
+  margin-top:.12rem;
   width: auto;  
   height: auto;  
   max-width: 100%;  
@@ -306,21 +331,23 @@ input::-webkit-input-placeholder {
 }
   
 .input{
-  font-size:.35rem;
+  font-size:.37rem;
   border:none;
-  width:8.3rem;
-  margin-top:.1rem;
-  margin-left:.3rem;
-  height: .6rem;
+  // width:8.3rem;
+  // margin-top:.21rem;
+  margin-left:.17rem;
+  height: .75rem;
+  line-height: .75rem;
   // background-color: red;
 
 }
 .search{
   display:flex;
-  margin: .15rem .2rem;
-  width:9.5rem;
-  height: .8rem;
-  border-radius:.5rem;
+  margin-top:.21rem;
+  margin-left:.32rem;
+  width:7.44rem;
+  height: .75rem;
+  border-radius:.15rem;
   background-color: #fff;
 
 }
@@ -426,13 +453,14 @@ input::-webkit-input-placeholder {
 
 .category-main {
   width: 100%;
+  margin-top:.21rem;
 }
 
 .categoryLeft {
   position: relative;
   float: left;
   width: 2.46rem;
-  height: calc(100vh - 2.7rem);
+  height: calc(100vh - 1.2rem);
   overflow: hidden;
   background: #F7F7F7;;
 }
@@ -451,7 +479,7 @@ input::-webkit-input-placeholder {
   display: inline-block;
   // left: .16rem;
   width: 7.5rem;
-  height: calc(100vh - 2.7rem);
+  height: calc(100vh - 1.2rem);
   overflow: hidden;
 }
 

@@ -335,3 +335,14 @@ export function getUnitList(config) {
     data: config.data
   })
 }
+
+// 商品编辑默认数据
+
+export function getProductDetail(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

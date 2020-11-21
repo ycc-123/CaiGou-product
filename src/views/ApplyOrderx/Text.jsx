@@ -55,7 +55,8 @@ export default class text extends Component {
     render() {
         return (
             <TextStyle>
-                <button class="show-btn" onClick={() => { this.showDialogBtn() }}>1111111111111111111111111111111</button>
+              <div style={{width:"10rem",height:"100vh",background:'red'}}></div>
+                {/* <button class="show-btn" onClick={() => { this.showDialogBtn() }}>1111111111111111111111111111111</button>
                 <div className="modal-mask"
                     //   onClick={()=>{this.hideModal()}} 
                     style={{ display: this.state.showModal === false ? "none" : "block" }}
@@ -85,7 +86,7 @@ export default class text extends Component {
                         <div className="btn-cancel" onClick={() => { this.onCancel() }} >取消</div>
                         <div className="btn-confirm" onClick={() => { this.onConfirm() }} >确定</div>
                     </div>
-                </div>
+                </div> */}
             </TextStyle>
         )
     }

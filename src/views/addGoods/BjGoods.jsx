@@ -5,14 +5,16 @@ import { createForm } from 'rc-form';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { createProduct, getUnitList, getProductCategoryAll } from 'network/Api'
+import { createProduct, getUnitList, getProductCategoryAll,getProductDetail } from 'network/Api'
 import { store } from "store/index";
+import { useParams  } from 'react-router-dom';
 // import { Picker, List, Toast } from 'antd-mobile';
 
 
 const Into = (props) => {
 
-
+    const params=useParams().id
+    console.log(params.id)
     const bt_ref = useRef()
 
     const [goodName, setgoodName] = useState('');
@@ -37,11 +39,21 @@ const Into = (props) => {
     }
 
     useEffect(() => {
+        getProductDetail({
+            action: 'getProductDetail', data: {
+                uniacid: store.getState().uniacid,
+                uid:store.getState().uid,
+                id: params
+            }
+        }).then((res) => {
+            console.log(res)
+            if(res.status===4001){
+                Toast.success()
+            }
+        })
         getProductCategoryAll({
             action: 'getProductCategoryAll', data: {
                 uniacid: store.getState().uniacid,
-                // uid:store.getState().uid,
-
             }
         }).then((res) => {
             console.log(res)
@@ -253,18 +265,17 @@ const Into = (props) => {
                     <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1rem" }}>是否启用会员权益</span>
                             </List.Item>
                             <div className='xian'></div>
-                            <div style={{ display: memberInterests ? "none" : "block" }}>
-                            <List.Item 
-                                extra={<Switch 
+                            <List.Item
+                                extra={<Switch
                                     checked={memberPrice}
                                     onChange={() => { setMemberPrice(!memberPrice) }}
                                 />}
                             >启用会员价
                     <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>是否启用会员价</span>
                             </List.Item>
-                            <div className='xian'></div></div>
+                            <div className='xian'></div>
 
-                            <div className="type flex-column" style={{ display: memberPrice ? "block" : "none" }}>
+                            <div className="type flex-column">
                                 <div className="item flex-row" style={{
                                     justifyContent: 'space-between'
                                 }}>
@@ -346,17 +357,16 @@ const Into = (props) => {
             }
         }).then((res) => {
             console.log(res)
-            if(res.data.status===4001){
-                // console.log(0)
-                // var result = res.data.data.data.map(o=>{return{value:o.id,label:o.name}});
-                //     console.log(result)
-                // this.setState({
-                //     data: result
-                // })
-                Toast.success(res.data.msg, 2)
-            }else{
-                Toast.info(res.data.msg, 2)
-            }
+            // if(res.data.status===4001){
+            //     console.log(0)
+            //     var result = res.data.data.data.map(o=>{return{value:o.id,label:o.name}});
+            //         console.log(result)
+            //     this.setState({
+            //         data: result
+            //     })
+            // }else{
+            //     Toast.info('网络错误', 2)
+            // }
         })
         // if (productType === "") {
         //   Toast.info('请选择营业类目', 1)

@@ -33,6 +33,9 @@ export default class Tiao extends Component {
                 <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
                 <ul className='wen-zi'>
+                <li className='wen-zi-c'>
+                        <div >{tiao.barcode}</div>
+                        <p>{tiao.goods_cost}元/{tiao.unitname}</p></li>
                     <li className='wen-zi-t'>
                         <div className='name'>{tiao.goods_name}</div>
                         {/* <p>{tiao.gnum}公斤</p> */}

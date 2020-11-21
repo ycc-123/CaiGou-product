@@ -198,6 +198,7 @@ export default class InventoryListDetails extends Component {
     <DocumentTitle title={'盘点单明细'} />
 
                 <div>
+                <div style={{display:"flex"}}>
                     <div className='search'>
                         <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
                             onChange={this.inputChange.bind(this)}
@@ -206,6 +207,7 @@ export default class InventoryListDetails extends Component {
                             <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
                         </div>
                     </div>
+                </div>
 
                     <div className='conten'>
                         <div className='conten-top'>
@@ -215,7 +217,7 @@ export default class InventoryListDetails extends Component {
                             <div>{this.state.inventoryData.docno}</div>
                         </div>
 
-                        <div className='conten-c'>
+                        <div className='conten-c' style={{paddingTop:".25rem"}}>
                             <p>单据日期：{this.state.inventoryData.docdate}</p>
                             <p>盘点类型：{this.state.inventoryData.typename}</p>
                             <p>盘点仓库：{this.state.inventoryData.warehousename}</p>
@@ -223,10 +225,10 @@ export default class InventoryListDetails extends Component {
                         </div>
 
                         <div className='footer'>
-                            采购备注：{this.state.inventoryData.remark}
+                            备注：{this.state.inventoryData.remark}
                         </div>
                     </div>
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "6.6rem", bottom: "1.6rem" }}>
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "5.9rem", bottom: "1.6rem" }}>
                         {
                             this.state.itemData.map((value, key) => {
                                 // console.log(value)
@@ -241,7 +243,7 @@ export default class InventoryListDetails extends Component {
                         <div className='left'>
                             {/* <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /> */}
                             账面总数：<span>{this.state.inventoryData.gnum}</span>
-                            <span style={{ marginLeft: ".8rem" }}></span>
+                            <span style={{ marginLeft: ".75rem" }}></span>
                             实际总数：<span>{this.state.inventoryData.realnum}</span>
                         </div>
                         {/* <div className='yuan'>{this.state.itemData.length}</div> */}
@@ -291,25 +293,26 @@ const WarehousingOrderxingStyle = styled.div`
           color:rgb(217, 41, 41);
       }
       .left{
-        padding-left:.3rem;
-        margin:auto;
-        width: 22rem;
-        height: 1rem;
-        line-height: 1rem;
-        font-size:.35rem;
+        padding-left:.39rem;
+        // margin:auto;
+        width: 7rem;
+        height: 1.6rem;
+        line-height: 1.6rem;
+        font-size:.32rem;
       }
       .right{
         font-size:.4rem;
         color:#fff;
         text-align:center;
-        width: 100%;
-        margin:auto;
+        width: 2.76rem;
+        // margin:auto;
         height: 1.6rem;
         line-height:1.6rem;
         background-color: #ED7913;
       }
       .foot{
         display:flex;
+        justify-content: space-between;
         width: 100%;
         height: 1.6rem;
         background-color: #fff;
@@ -326,22 +329,21 @@ const WarehousingOrderxingStyle = styled.div`
     }
     .wen-zi-t p{
         color:#646464;
-        font-size:.35rem;
+        font-size:.29rem;
     }
     .wen-zi-f div{
-        font-size:.35rem;
+        font-size:.29rem;
         color:#646464;
     }
     .wen-zi-f p{
-        font-size:.35rem;
+        font-size:.29rem;
         color:#646464;
     }
     .name{
         font-size:.35rem;
         width: 3.2rem;
-        height: 100%;
         color:#1a1a1a;
-        // background-color: pink;
+        margin: .1rem 0;
     }
     .wen-zi-f{
         display:flex;
@@ -351,22 +353,28 @@ const WarehousingOrderxingStyle = styled.div`
         display:flex;
         justify-content: space-between;
         width: 7.5rem;
-        height: 1.1rem;
+        // height: 1.1rem;
         // background-color: yellow;
+    }
+    .wen-zi-c{
+        display:flex;
+        justify-content: space-between;
+        font-size:.29rem;
+        // margin-bottom:.27rem;
     }
     .wen-zi{
         
-        padding-top:.2rem;
-        margin-left: .2rem;
+        padding-top:.25rem;
+        margin-left: .32rem;
         width: 7.5rem;
-        height: 1.7rem;
-        // background-color: red;
     }
     .t-img-l{
-        margin-left: .2rem;
-        margin-top:.2rem;
-        width: 1.5rem;
-        height: 1.5rem;
+
+        margin-left: .37rem;
+        margin-top:.24rem;
+        margin-bottom:.24rem;
+        width: 1.33rem;
+        height: 1.33rem;
         // background-color: orange;
     }
     .t-img{
@@ -379,29 +387,31 @@ const WarehousingOrderxingStyle = styled.div`
     .tiao{
         display:flex;
         width: 100%;
-        height: 2rem;
+        // height: 2rem;
         background-color: #fff;
         border-bottom:2px solid #dadada;
         
     
     }
     .footer{
-        font-size:.4rem;
-        margin-top: .1rem;
-        margin-left: .3rem;
-        color:#969696;
+        font-size:.35rem;
+        margin-top: .33rem;
+        margin-left: .45rem;
+        color:#646464;
+        margin-bottom: .32rem;
+
     
     }
     .conten-c p{ 
-        color:#8f8f8f;
-        font-size:.4rem;
-        padding-top:.2rem;
-        margin-left: .3rem;
+        color:#646464;
+        font-size:.32rem;
+        padding-bottom:.25rem;
+        margin-left: .35rem;
     }
     .conten-c{
         width: 9.3rem;  
-        height: 3.4rem;  
-        margin:0 .3rem;
+        // height: 3.4rem;  
+        margin:0 .37rem;
         background-color: #f8f8f8;
     
     }
@@ -412,63 +422,72 @@ const WarehousingOrderxingStyle = styled.div`
         max-height: 100%;
     }
     .conten-top div{
-        font-size:.45rem;
-        margin-top: .25rem;
+        height:.89rem;
+        line-height:.89rem;
+        font-size:.35rem;
+        color:#646464;
+        // margin-top: .25rem;
         margin-left:.2rem;
     }
     .conten-top p{
-        margin-top: .3rem;
-        margin-left:.3rem;
-        width:.4rem;
-        height:.7rem;
+        margin-top: .28rem;
+        margin-left:.45rem;
+        width:.33rem;
+        height:.37rem;
     }
     .conten-top{
         display:flex;
+        height:.89rem;
     
     }
     .conten{
         border-bottom:2px solid #dadada;
         margin-top:.2rem;
         width:100%;
-        height:5.3rem;
         background-color: #fff;
     
     }
-    input::-webkit-input-placeholder {
+
+      
+      input::-webkit-input-placeholder {
         color: #c9c9c9;
         font-size:.35rem;
-    }
-    .img{
-        width: .8rem;  
-        height: .6rem; 
-    }
-    .img-search{
-        margin-top:.1rem;
+      }
+      .img{
+        width: .55rem;  
+        height: .55rem; 
+        // line-height: .5rem; 
+        margin-left:2.45rem;
+      }
+      .img-search{
+        margin-top:.12rem;
         width: auto;  
         height: auto;  
         max-width: 100%;  
         max-height: 100%;
-    }
+      }
         
-    .input{
-        font-size:.35rem;
+      .input{
+        font-size:.37rem;
         border:none;
-        width:8.3rem;
-        margin-top:.1rem;
-        margin-left:.3rem;
-        height: .6rem;
+        width:6rem;
+        // margin-top:.21rem;
+        margin-left:.17rem;
+        height: .75rem;
+        line-height: .75rem;
         // background-color: red;
-    
-    }
-    .search{
+      
+      }
+      .search{
         display:flex;
-        margin: .3rem .2rem 0;
-        width:9.5rem;
-        height: .8rem;
-        border-radius:.5rem;
+        margin-top:.21rem;
+        margin-left:.32rem;
+        width:9.36rem;
+        height: .75rem;
+        border-radius:.15rem;
         background-color: #fff;
-    
-    }
+      
+      }
     
     
     

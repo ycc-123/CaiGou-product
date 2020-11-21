@@ -34,6 +34,7 @@ import tiaoboxq from 'views/tiaobodan/tiaoboCategory/childCom/CategorySwiper'
 import addallocationList from 'views/tiaobodan/addallocationList'
 import tiaoboCategory from 'views/tiaobodan/tiaoboCategory/Category'
 import AddGoods from 'views/addGoods/AddGoods'
+import BjGoods from 'views/addGoods/BjGoods'
 import bjgoods from 'views/addGoods/category/Category'
 
 // 测试
@@ -82,8 +83,10 @@ const AppRouter = () => {
         <Route path='/pandianCategory/:id/:ck/:fl/:name' exact component={pandianCategory} ></Route>
 
         <Route path='/InventoryListDetails/:id' exact component={InventoryListDetails} ></Route>
-        <Route path='/AddGoods/:id' exact component={AddGoods} ></Route>
-        <Route path='/bjgoods' exact component={bjgoods} ></Route>
+        <Route path='/AddGoods' exact component={AddGoods} ></Route>
+        <Route path='/bjsygoods' exact component={bjgoods} ></Route>
+        <Route path='/BjGoods/:id' exact component={BjGoods} ></Route>
+
 
         {/* 测试 */}
         <Route path='/Text' exact component={Text} ></Route>

@@ -81,6 +81,7 @@ export default class InventoryList extends Component {
     <DocumentTitle title={'调拨单'} />
 
                 {/* <div style={{width:"100%"}}> */}
+                <div style={{display:"flex"}}>
                 <div className='search'>
                     <input type="search" className='input' placeholder="请输入调拨单单号" name="inputSearch"
                         onChange={this.inputChange.bind(this)}
@@ -89,7 +90,11 @@ export default class InventoryList extends Component {
                         <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
                     </div>
                 </div>
-                <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.3rem", bottom: "0" }} loadMore={this.loadMore}
+                <div
+          onClick={()=>{this.props.history.push('/addallocationList')}}
+           className='add'>新增<span style={{fontSize:".4rem"}}>+</span></div>
+          </div>
+                <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0" }} loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
                     {
                         this.state.data.map((value, key) => {
@@ -108,8 +113,10 @@ export default class InventoryList extends Component {
                                             <p>
                                                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
                                             </p>
-                                            <div className='caigoudanhao'>调拨单号：{data.docno}</div>
-                                            <div className='zuantai' style={{ color: Color }}>{data.status}</div>
+                                            <div className='t-right'>
+                                                <div className='caigoudanhao'>调拨单号：{data.docno}</div>
+                                                <div className='zuantai' style={{ color: Color }}>{data.status}</div>
+                                            </div>
                                         </div>
                                         <div className='dan-footer'>
                                             <p>单据日期：{data.docdate}</p>
@@ -117,7 +124,7 @@ export default class InventoryList extends Component {
                                             <p>转入仓库：{data.inwarehouse}</p>
                                             <div style={{ display: "flex" ,justifyContent: "space-between"}}>
                                                 <p>移库总数量：{data.transfer_totalnumber}</p>
-                                                <p style={{ margin: ".25rem" }}>移库总金额：{data.transfer_totalmoney}</p>
+                                                <p style={{ marginRight: ".4rem" }}>移库总金额：{data.transfer_totalmoney}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -177,26 +184,35 @@ export default class InventoryList extends Component {
 
 }
 const WarehousingOrderStyle = styled.div`
-.dan-footer{
+.t-right{
     width:100%;
+    display:flex;
+    justify-content: space-between;
+}
+.dan-footer{
+    margin-top:.27rem;
 }
 .dan-footer p{
-    margin-top:.28rem;
-    margin-left:.4rem;
-    font-size:.38rem;
+    margin-bottom:.25rem;
+    margin-left:.48rem;
+    font-size:.35rem;
     color: #969696;
 }
 .zuantai{
-        margin-top:.15rem;
-        // margin-left:2.1rem;
-        font-size:.38rem;
+        // margin-top:.27rem;
+        margin-right:.27rem;
+        height:.85rem;
+        line-height:.85rem;
+        font-size:.35rem;
         color: #ed5f21;
     }
     .caigoudanhao{
-        margin-top:.15rem;
-        margin-left:.2rem;
-        width:6.4rem;
-        font-size:.38rem;
+        // margin-top:.25rem;
+        margin-left:.31rem;
+        // width:7.09rem;
+        height:.85rem;
+        line-height:.85rem;
+        font-size:.35rem;
         color: #333333;
     }
     .dan-top p img{
@@ -206,21 +222,22 @@ const WarehousingOrderStyle = styled.div`
         max-height: 100%;
     }
     .dan-top p{
-        margin-top:.24rem;
-        margin-left:.3rem;
-        width: .4rem;  
-        height: .4rem;
+        margin-top:.25rem;
+        margin-left:.37rem;
+        width: .29rem;  
+        height: .35rem;
     }
     .dan-top{
         display:flex;
         width: 100%;  
-        height: .9rem;
+        height: .85rem;
         border-bottom:1px solid #dddddd;
     }
     .dan{
-        margin:.4rem .4rem;
-        width: 9.1rem;  
-        // height: 3rem;
+        margin-bottom:.23rem;
+        margin-left: .32rem;
+        width: 9.36rem;  
+        // height: 2.89rem;
         background-color: #fff;
         border-radius:.2rem;
         border:1px solid #dddddd;
@@ -228,40 +245,57 @@ const WarehousingOrderStyle = styled.div`
     
     
     }
-    input::-webkit-input-placeholder {
+    .add{
+        width: 1.6rem;
+        height: 0.75rem;
+        line-height: 0.75rem;
+        text-align:center;
+        color:#fff;
+        background: #ED7A14;
+        border-radius: .1rem;
+        margin-top:.21rem;
+        margin-left:.32rem;
+        font-size:.37rem;
+      }
+      
+      input::-webkit-input-placeholder {
         color: #c9c9c9;
         font-size:.35rem;
-    }
-    .img{
-        width: .8rem;  
-        height: .6rem; 
-    }
-    .img-search{
-        margin-top:.1rem;
+      }
+      .img{
+        width: .55rem;  
+        height: .55rem; 
+        // line-height: .5rem; 
+        margin-left:2.45rem;
+      }
+      .img-search{
+        margin-top:.12rem;
         width: auto;  
         height: auto;  
         max-width: 100%;  
         max-height: 100%;
-    }
+      }
         
-    .input{
-        font-size:.35rem;
+      .input{
+        font-size:.37rem;
         border:none;
-        width:8.3rem;
-        margin-top:.1rem;
-        margin-left:.3rem;
-        height: .6rem;
+        // width:8.3rem;
+        // margin-top:.21rem;
+        margin-left:.17rem;
+        height: .75rem;
+        line-height: .75rem;
         // background-color: red;
-    
-    }
-    .search{
+      
+      }
+      .search{
         display:flex;
-        margin: .3rem .2rem;
-        width:9.5rem;
-        height: .8rem;
-        border-radius:.5rem;
+        margin-top:.21rem;
+        margin-left:.32rem;
+        width:7.44rem;
+        height: .75rem;
+        border-radius:.15rem;
         background-color: #fff;
-    
-    }
+      
+      }
     
     `

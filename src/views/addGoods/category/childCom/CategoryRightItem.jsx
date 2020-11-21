@@ -38,7 +38,7 @@ class CategoryRightgoods extends Component {
       <CategoryRightgoodsStyle>
         <div className="rrr"></div>
         <li className='category-goods clearfix'
-        onClick={()=>{this.props.history.push(`/AddGoods/${goods.id}`)}}
+        onClick={()=>{this.props.history.push(`/BjGoods/${goods.id}`)}}
         >
 
 
@@ -47,7 +47,9 @@ class CategoryRightgoods extends Component {
           <div className='category-goods-info'>
             <p>{goods.name}</p>
 
-            <Button
+            <div className='price'>¥：{goods.posprice}元/{goods.unitname}</div>
+
+            {/* <Button
               style={{ position: "absolute", top: ".3rem", left: "4.6rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
               onClick={() => prompt(
@@ -65,7 +67,7 @@ class CategoryRightgoods extends Component {
                 <img className='category-goods-img'
                   src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
                   alt="" />
-            }
+            } */}
 
 
           </div>
@@ -120,8 +122,8 @@ const CategoryRightgoodsStyle = styled.div`
   // width: 7.17rem;
   height: 1.85rem;
   line-height: 1;
-  padding: .17rem;
-  border-bottom:1px solid #ccc;
+  padding: .24rem .37rem;
+  border-bottom:1px solid #dadada;
   // margin-bottom: .17rem;
   // border-radius: .2rem;
   background-color: #fff;
@@ -129,9 +131,9 @@ const CategoryRightgoodsStyle = styled.div`
 .category-img {
   display: block;
   float: left;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-right: .15rem;
+  width: 1.33rem;
+  height: 1.33rem;
+  margin-right: .33rem;
 }
 .category-goods-info {
   position: relative;
@@ -140,15 +142,26 @@ const CategoryRightgoodsStyle = styled.div`
   float: left;
 }
 .category-goods-info p:first-child {
-  font-size: .32rem;
-  margin-bottom: .24rem;
-  margin-top: .05rem;
-  text-align: justify;
+  font-size: 0.37rem;
+  // margin-bottom: .24rem;
+  // margin-top: .05rem;
+  // text-align: justify;
   // overflow: hidden;
-  text-overflow: ellipsis;
+  // text-overflow: ellipsis;
   white-space: nowrap;
-  color: #4d4d4d;
-  font-weight: bold;
+  color: #1a1a1a;
+  font-family: PingFang SC;
+  font-weight: 400;
+  height:.95rem;
+}
+.price{
+  // width: 1.9rem;
+  height: 0.32rem;
+  font-size: 0.35rem;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: #CF2424;
+  line-height: 0.4rem;
 }
 .category-goods-info p:nth-child(2) {
   position: relative;
