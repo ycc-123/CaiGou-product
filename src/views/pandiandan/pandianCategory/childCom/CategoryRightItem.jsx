@@ -42,23 +42,18 @@ class CategoryRightgoods extends Component {
           <img className='category-img' src={goods.image?goods.image:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
           <div className='category-goods-info'>
-            <p>{goods.name}</p>
-
-            {/* <Button
-              style={{ position: "absolute",width:"3rem", top: ".3rem", left: "3.2rem", color: "transparent", background: "transparent" }}
-              className="btn_modal"
-              onClick={() => prompt(
-                '添加',
-                '请填写采购数量与单价',
-                (login, text) => this.zjian(login, text, goods),
-                'login-password',
-                null,
-                ['请填写采购数量', '请填写采购单价'],
-              )}
-              visible={false}
-            >111111</Button> */}
+          <div className='shuliang' style={{color:'#1a1a1a'}}>
+                   <article>{goods.barcode}</article>
+                   <div>{goods.costprice}元/{goods.unit_name}</div>
+                 </div>
+            <div style={{fontSize:".35rem",padding:".2rem 0",color:'#1a1a1a'}}>{goods.name}</div>
+            <div className='shuliang' style={{color:'#4c4c4c'}}>
+                   <article>账面数量：{goods.gnum}</article>
+                   <div>实际数量：{this.state.login?this.state.login:goods.gnum}</div>
+                 </div>
+   
             <Button
-              style={{ position: "absolute",width:"3rem", top: ".3rem", left: "3.2rem", color: "transparent", background: "transparent" }}
+              style={{ position: "absolute",width:"3rem", top: ".3rem", left: "3.2rem", color: "transparent", background: "transparent",border:"none" }}
               className="btn_modal"
               onClick={() => prompt('填写', '请输入商品实际账面数量',
               [
@@ -75,13 +70,11 @@ class CategoryRightgoods extends Component {
             >111111</Button>
             {
               
-                <div className='shuliang'>
-                  <article>账面数量：{goods.gnum}</article>
-                  <div>实际数量：{this.state.login?this.state.login:goods.gnum}</div>
-                </div>
-                // <img className='category-goods-img'
-                //   src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
-                //   alt="" />
+                // <div className='shuliang'>
+                //   <article>账面数量：{goods.gnum}</article>
+                //   <div>实际数量：{this.state.login?this.state.login:goods.gnum}</div>
+                // </div>
+    
             }
 
 
@@ -101,7 +94,8 @@ const CategoryRightgoodsStyle = styled.div`
   margin-left:1.5rem;
 }
 .shuliang{
-  margin-top:.8rem;
+  // margin-top:.8rem;
+  font-size:.29rem;
   display:flex;
   justify-content: space-between;
 }
@@ -145,7 +139,7 @@ const CategoryRightgoodsStyle = styled.div`
   // width: 7.17rem;
   height: 1.85rem;
   line-height: 1;
-  padding: .17rem;
+  padding: .24rem .37rem;
   border-bottom:1px solid #ccc;
   // margin-bottom: .17rem;
   // border-radius: .2rem;
@@ -154,20 +148,20 @@ const CategoryRightgoodsStyle = styled.div`
 .category-img {
   display: block;
   float: left;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-right: .15rem;
+  width: 1.33rem;
+  height: 1.33rem;
+  margin-right: .32rem;
 }
 .category-goods-info {
   position: relative;
-  width: calc(100% - 1.8rem);
+  width: calc(100% - 1.65rem);
   height: 100%;
   float: left;
 }
 .category-goods-info p:first-child {
   font-size: .32rem;
-  margin-bottom: .24rem;
-  margin-top: .05rem;
+  // margin-bottom: .24rem;
+  // margin-top: .05rem;
   text-align: justify;
   // overflow: hidden;
   text-overflow: ellipsis;

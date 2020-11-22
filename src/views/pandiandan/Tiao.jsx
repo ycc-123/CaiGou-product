@@ -29,7 +29,6 @@ export default class Tiao extends Component {
         let tiao=this.props.item
         return (
             <div className='tiao'>
-                {/* <img className='t-img-l' src={tiao.image} alt="" /> */}
                 <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
                 <ul className='wen-zi'>
@@ -38,7 +37,6 @@ export default class Tiao extends Component {
                         <p>{tiao.goods_cost}元/{tiao.unitname}</p></li>
                     <li className='wen-zi-t'>
                         <div className='name'>{tiao.goods_name}</div>
-                        {/* <p>{tiao.gnum}公斤</p> */}
                     </li>
                     <li className='wen-zi-f'>
                         <div>账面数量：{tiao.gnum}</div>
@@ -62,7 +60,6 @@ export default class Tiao extends Component {
                                     },
                                 ], 'default', null, [''])}
                         >111111</Button>
-
                     </li>
                 </ul>
             </div>

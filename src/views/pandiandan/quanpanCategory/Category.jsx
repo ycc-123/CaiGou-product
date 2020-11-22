@@ -114,20 +114,16 @@ class Category extends Component {
               </Fragment>}
           </div>
           <div className='foot'>
+            <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
             <div className='left'
             // onClick={() => { this.mingxi() }}
             >
-              <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
-            </div>
-
+             <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
             <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
-
-            <div className='foot_conton'
-            //  onClick={() => { this.mingxi() }}
-            >总额：
-                    <span>{this.state.price ? this.state.price : 0}</span></div>
-            {/* <div className='right' onClick={this.click}>提交</div> */}
+            </div>
             <div className='right' >提交</div>
+            </div>
+           
             <Button
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
@@ -139,9 +135,9 @@ class Category extends Component {
               }
             >
               confirm
-                        </Button>
+                        </Button> </div>
 
-          </div>
+          
 
         </Fragment>
       </CategoryStyle>
@@ -331,11 +327,13 @@ input::-webkit-input-placeholder {
   font-size:.35rem;
 }
 .img{
-  width: .8rem;  
-  height: .6rem; 
+  width: .55rem;  
+  height: .55rem; 
+  // line-height: .5rem; 
+  margin-left:2.45rem;
 }
 .img-search{
-  margin-top:.1rem;
+  margin-top:.12rem;
   width: auto;  
   height: auto;  
   max-width: 100%;  
@@ -343,25 +341,28 @@ input::-webkit-input-placeholder {
 }
   
 .input{
-  font-size:.35rem;
+  font-size:.37rem;
   border:none;
-  width:8.3rem;
-  margin-top:.1rem;
-  margin-left:.3rem;
-  height: .6rem;
+  width:6rem;
+  // margin-top:.21rem;
+  margin-left:.17rem;
+  height: .75rem;
+  line-height: .75rem;
   // background-color: red;
 
 }
 .search{
   display:flex;
-  margin: .15rem .2rem;
-  width:9.5rem;
-  height: .8rem;
-  border-radius:.5rem;
+  margin-top:.21rem;
+  margin-left:.32rem;
+  margin-bottom:.21rem;
+
+  width:9.36rem;
+  height: .75rem;
+  border-radius:.15rem;
   background-color: #fff;
 
 }
-
 
 
 
@@ -376,14 +377,14 @@ input::-webkit-input-placeholder {
   // margin:auto;
   position:absolute;
   top: .2rem;
-  left:1.5rem;
+  left:1.3rem;
   color:#fff;
-  width:.5rem;
-  height:.5rem;
-  line-height:.5rem;
+  width:.51rem;
+  height:.51rem;
+  line-height:.51rem;
   border-radius:.5rem;
-  background-color: red;
-
+  background-color: #E01616;
+  font-size:.24rem;
 }
 .foot_conton span{
   color:#cf2424;
@@ -402,17 +403,16 @@ input::-webkit-input-placeholder {
   max-height: 100%;
 }
 .left{
-  padding-left:.3rem;
-  margin:auto;
-  width: 10rem;
-  height: 1rem;
+  padding-left:.48rem;
+  padding-top:.45rem;
+  width:3rem;
+  
 }
 .right{
   font-size:.4rem;
   color:#fff;
   text-align:center;
-  width: 100%;
-  margin:auto;
+  width: 2.76rem;
   height: 1.6rem;
   line-height:1.6rem;
   background-color: #ED7913;

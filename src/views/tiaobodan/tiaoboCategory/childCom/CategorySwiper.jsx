@@ -10,6 +10,10 @@ export default class InventoryListDetails extends Component {
             zrvk:store.getState().tiaoboxqck[2].label?store.getState().tiaoboxqck[2].label:"",
             danhao:store.getState().tiaoboxqck[3]?store.getState().tiaoboxqck[3]:"",
             beiz:store.getState().tiaoboxqck[1]?store.getState().tiaoboxqck[1]:""
+            // zcck:1111,
+            // zrvk:222,
+            // danhao:333,
+            // beiz:444
         }
     }
     componentDidMount() {
@@ -44,7 +48,7 @@ export default class InventoryListDetails extends Component {
                             <div>{this.state.danhao}</div>
                         </div>
 
-                        <div className='conten-c'>
+                        <div className='conten-c' style={{ paddingTop: ".25rem" }}>
                             <p>单据日期：{s2}</p>
                             <p>转出仓库：{this.state.zcck}</p>
                             <p>转入仓库：{this.state.zrvk}</p>
@@ -55,29 +59,37 @@ export default class InventoryListDetails extends Component {
                             备注：{this.state.beiz}
                         </div>
                     </div>
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "6.6rem", bottom: "1.6rem" }}>
+                    {/* <BetterScroll config={scrollConfig} ref='scroll' style={{ }}> */}
                         {
                             store.getState().tiaobogoods.map((value, key) => {
                                 console.log(value)
                                 let tiao = value
                                 return (
                                     <div className='tiao'>
-                                        <img className='t-img-l' src={tiao.img ? tiao.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-                                        <ul className='wen-zi'>
-                                            <li className='wen-zi-t'>
-                                                <div className='name'>{tiao.name}</div>
-                                                <p>{tiao.gnum}{tiao.unit_name}</p>
-                                            </li>
-                                            <li className='wen-zi-f'>
-                                                <div>￥：{tiao.price}元/{tiao.unit_name}</div>
-                                                <p>{tiao.price*tiao.gnum}</p>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    {/* <img className='t-img-l' src={tiao.image} alt="" /> */}
+                                    <img className='t-img-l' src={tiao.img ? tiao.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+
+                                    <ul className='wen-zi'>
+                                        <li className='wen-zi-c'>
+                                            <div >{tiao.barcode}</div>
+                                            <p>{tiao.price}元/{tiao.unit_name}</p></li>
+                                        <li className='wen-zi-t'>
+                                            <div className='name'>{tiao.name}</div>
+                                            {/* <p>{tiao.gnum}公斤</p> */}
+                                        </li>
+                                        <li className='wen-zi-f'>
+                                            <div>数量：{tiao.gnum}</div>
+                                            <p>总价：{tiao.price*tiao.gnum}</p>
+
+
+                                        </li>
+                                    </ul>
+                                </div>
+                     
                                 )
                             })
                         }
-                    </BetterScroll>
+                    {/* </BetterScroll> */}
                     </div>
             </WarehousingOrderxingStyle>
         )
@@ -121,25 +133,26 @@ const WarehousingOrderxingStyle = styled.div`
           color:rgb(217, 41, 41);
       }
       .left{
-        padding-left:.3rem;
-        margin:auto;
-        width: 22rem;
-        height: 1rem;
-        line-height: 1rem;
-        font-size:.35rem;
+        padding-left:.39rem;
+        // margin:auto;
+        width: 7rem;
+        height: 1.6rem;
+        line-height: 1.6rem;
+        font-size:.32rem;
       }
       .right{
         font-size:.4rem;
         color:#fff;
         text-align:center;
-        width: 100%;
-        margin:auto;
+        width: 2.76rem;
+        // margin:auto;
         height: 1.6rem;
         line-height:1.6rem;
         background-color: #ED7913;
       }
       .foot{
         display:flex;
+        justify-content: space-between;
         width: 100%;
         height: 1.6rem;
         background-color: #fff;
@@ -147,24 +160,30 @@ const WarehousingOrderxingStyle = styled.div`
         bottom:0;
       }
     
-      .wen-zi-t p{
+    
+    
+    
+    
+    .wen-zi-f p span{
+        color:#cf2424;
+    }
+    .wen-zi-t p{
         color:#646464;
-        font-size:.35rem;
+        font-size:.29rem;
     }
     .wen-zi-f div{
-        font-size:.35rem;
+        font-size:.29rem;
         color:#646464;
     }
     .wen-zi-f p{
-        font-size:.35rem;
-        color:#cf2424;
+        font-size:.29rem;
+        color:#646464;
     }
     .name{
         font-size:.35rem;
         width: 3.2rem;
-        height: 100%;
         color:#1a1a1a;
-        // background-color: pink;
+        margin: .1rem 0;
     }
     .wen-zi-f{
         display:flex;
@@ -174,22 +193,28 @@ const WarehousingOrderxingStyle = styled.div`
         display:flex;
         justify-content: space-between;
         width: 7.5rem;
-        height: 1.1rem;
+        // height: 1.1rem;
         // background-color: yellow;
+    }
+    .wen-zi-c{
+        display:flex;
+        justify-content: space-between;
+        font-size:.29rem;
+        // margin-bottom:.27rem;
     }
     .wen-zi{
         
-        padding-top:.2rem;
-        margin-left: .2rem;
+        padding-top:.25rem;
+        margin-left: .32rem;
         width: 7.5rem;
-        height: 1.7rem;
-        // background-color: red;
     }
     .t-img-l{
-        margin-left: .2rem;
-        margin-top:.2rem;
-        width: 1.5rem;
-        height: 1.5rem;
+
+        margin-left: .37rem;
+        margin-top:.24rem;
+        margin-bottom:.24rem;
+        width: 1.33rem;
+        height: 1.33rem;
         // background-color: orange;
     }
     .t-img{
@@ -202,33 +227,31 @@ const WarehousingOrderxingStyle = styled.div`
     .tiao{
         display:flex;
         width: 100%;
-        height: 2rem;
+        // height: 2rem;
         background-color: #fff;
         border-bottom:2px solid #dadada;
         
     
     }
-    
-    
-    
-
     .footer{
-        font-size:.4rem;
-        margin-top: .1rem;
-        margin-left: .3rem;
-        color:#969696;
+        font-size:.35rem;
+        margin-top: .33rem;
+        margin-left: .45rem;
+        color:#646464;
+        margin-bottom: .32rem;
+
     
     }
     .conten-c p{ 
-        color:#8f8f8f;
-        font-size:.4rem;
-        padding-top:.2rem;
-        margin-left: .3rem;
+        color:#646464;
+        font-size:.32rem;
+        padding-bottom:.25rem;
+        margin-left: .35rem;
     }
     .conten-c{
         width: 9.3rem;  
-        height: 3.4rem;  
-        margin:0 .3rem;
+        // height: 3.4rem;  
+        margin:0 .37rem;
         background-color: #f8f8f8;
     
     }
@@ -239,63 +262,72 @@ const WarehousingOrderxingStyle = styled.div`
         max-height: 100%;
     }
     .conten-top div{
-        font-size:.45rem;
-        margin-top: .25rem;
+        height:.89rem;
+        line-height:.89rem;
+        font-size:.35rem;
+        color:#646464;
+        // margin-top: .25rem;
         margin-left:.2rem;
     }
     .conten-top p{
-        margin-top: .3rem;
-        margin-left:.3rem;
-        width:.4rem;
-        height:.7rem;
+        margin-top: .28rem;
+        margin-left:.45rem;
+        width:.33rem;
+        height:.37rem;
     }
     .conten-top{
         display:flex;
+        height:.89rem;
     
     }
     .conten{
         border-bottom:2px solid #dadada;
         margin-top:.2rem;
         width:100%;
-        height:5.3rem;
         background-color: #fff;
     
     }
-    input::-webkit-input-placeholder {
+
+      
+      input::-webkit-input-placeholder {
         color: #c9c9c9;
         font-size:.35rem;
-    }
-    .img{
-        width: .8rem;  
-        height: .6rem; 
-    }
-    .img-search{
-        margin-top:.1rem;
+      }
+      .img{
+        width: .55rem;  
+        height: .55rem; 
+        // line-height: .5rem; 
+        margin-left:2.45rem;
+      }
+      .img-search{
+        margin-top:.12rem;
         width: auto;  
         height: auto;  
         max-width: 100%;  
         max-height: 100%;
-    }
+      }
         
-    .input{
-        font-size:.35rem;
+      .input{
+        font-size:.37rem;
         border:none;
-        width:8.3rem;
-        margin-top:.1rem;
-        margin-left:.3rem;
-        height: .6rem;
+        width:6rem;
+        // margin-top:.21rem;
+        margin-left:.17rem;
+        height: .75rem;
+        line-height: .75rem;
         // background-color: red;
-    
-    }
-    .search{
+      
+      }
+      .search{
         display:flex;
-        margin: .3rem .2rem 0;
-        width:9.5rem;
-        height: .8rem;
-        border-radius:.5rem;
+        margin-top:.21rem;
+        margin-left:.32rem;
+        width:9.36rem;
+        height: .75rem;
+        border-radius:.15rem;
         background-color: #fff;
-    
-    }
+      
+      }
     
     
     

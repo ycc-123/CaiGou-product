@@ -126,7 +126,7 @@ export default class AddInventoryList extends Component {
                                 data={this.state.data}
                                 cols={1}
                                 className="forss"
-                                extra="请选择对应盘点仓库"
+                                extra="请选择盘点仓库"
                                 value={this.state.sValue}
                                 onChange={v => this.setState({ sValue: v })}
                                 onOk={v => this.setState({ IDck: v })}
@@ -198,6 +198,9 @@ const AddPurchaseOrderStyle = styled.div`
         height:1.17rem;
         line-height:1.17rem;
     }
+    .am-list-item{
+        padding-left: 1.45rem;
+    }
     .am-list-item .am-list-line{
         width:6rem;
     }
@@ -205,14 +208,15 @@ const AddPurchaseOrderStyle = styled.div`
         // padding-top:.5rem;
         color:#a9a9a9;
         text-align: left;
-        font-size:.45rem;
+        font-size:.35rem;
         padding-left:.1rem;
         width:3rem;
     }
     .am-list-item .am-list-line .am-list-arrow{
-        margin-left:2.5rem !important;
-        // background-image: none;
-        // opacity:0;
+        margin-left:2rem !important;
+        width:11px;
+        height:11px;
+
     }
     .onetimes{
         position:absolute;
@@ -226,7 +230,7 @@ const AddPurchaseOrderStyle = styled.div`
     .time{
         position:absolute;
         left:2.2rem;
-        top:2.65rem;
+        top:2.4rem;
         // padding-top:.3rem;
         color: #a9a9a9;
         width:12rem;
@@ -235,7 +239,7 @@ const AddPurchaseOrderStyle = styled.div`
     .pdlx{
         position:absolute;
         left:2.2rem;
-        top:1.4rem;
+        top:1.2rem;
         // padding-top:.3rem;
         color: #a9a9a9;
         width:12rem;
@@ -244,7 +248,7 @@ const AddPurchaseOrderStyle = styled.div`
     .times{
         position:absolute;
         left:2.2rem;
-        top:.1rem;
+        // top:.1rem;
         // padding-top:.3rem;
         color: #a9a9a9;
         width:12rem;
@@ -305,15 +309,15 @@ const AddPurchaseOrderStyle = styled.div`
     .biao li{
         display:flex;
         background-color: #fff;
-        padding-left:.3rem;
+        padding-left:.43rem;
         color:#646464;
-        padding-top:.3rem;
+        // padding-top:.3rem;
         // text-align:center;
-        font-size:.45rem;
-        color:#646464; 
+        font-size:.35rem;
+        color:#787878; 
         width: 100%;
-        height: 1.3rem;
-        line-height: .7rem;
+        height: 1.2rem;
+        line-height: 1.2rem;
         border-bottom: 1px solid #dbdbdb;
     
     }

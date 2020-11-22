@@ -57,93 +57,93 @@ export default class InventoryListDetails extends Component {
         // if (e === "提交成功") {
 
         // } else {
-    //         if (this.state.input.length === 0) {
-    //             // 默认
-                let aa = {}
-                let arr = []
-                this.state.itemData.map((v, k) => {
-                    console.log(v)
-                    aa = {
-                        stockid: v.stockid,
-                        realnum: v.gnum,
-                    }
-                    return arr.push(aa);
-                })
-                
-    //             let in_out_num = []
-    //             this.state.purchaseItem.map((v, k) => {
-    //                 let innum = this.state.purchaseItem[k].gnum
-    //                 return in_out_num.push(innum);
-    //             })
-    //             let sum = 0;
-    //             in_out_num.forEach(item => {
-    //                 sum = Number(sum) + parseInt(item)
-    //             })
-    //             let deliveryData = {
-    //                 id: this.props.match.params.id,
-    //                 snum: this.state.count,
-    //                 in_out_num: sum
-    //             }
-    //             console.log("默认", deliveryData, itemData)
-                submitWarehouseChange({
-                    action: 'submitWarehouseChange', data: {
-                        uniacid: store.getState().uniacid,
-                        uid: store.getState().uid,
-                        status:"2",
-                        warehouseChangeId: this.props.match.params.id,
-                        itemData: arr,
-                    }
-                }).then((res) => {
-    //                 console.log(res.data)
-                    if (res.data.status === 4001) {
-                        window.location.reload();
-                        Toast.success(res.data.msg, 2)
-                    } else {
-                        Toast.info(res.data.msg, 2)
-                    }
-                })
-    //         } else {
-    //             let aa = {}
-    //             let arr = []
-    //             this.state.goods.map((v, k) => {
-    //                 console.log(v, k)
-    //                 aa = {
-    //                     id: this.state.goods[k].id,
-    //                     barcodeid: this.state.goods[k].barcodeid,
-    //                     diffnum: this.state.goods[k].price - this.state.input[k],
-    //                     innum: this.state.input[k],
-    //                     goodsid: this.state.goods[k].goodsid
-    //                 }
-    //                 return arr.push(aa);
-    //             })
-    //             let itemData = arr
-    //             console.log(itemData)
-    //             let deliveryData = {
-    //                 id: this.props.match.params.id,
-    //                 snum: this.state.count,
-    //                 in_out_num: this.state.num
-    //             }
-    //             console.log("22222", deliveryData, itemData)
-    //             submitPurchaseDelivery({
-    //                 action: 'submitPurchaseDelivery', data: {
-    //                     uniacid: store.getState().uniacid,
-    //                     uid: store.getState().uid,
-    //                     itemData: itemData,
-    //                     deliveryData: deliveryData,
-    //                     type: "1",
-    //                     status: "4"
-    //                 }
-    //             }).then((res) => {
-    //                 console.log(res.data)
-    //                 if (res.data.status === 4001) {
-    //                     window.location.reload();
-    //                     Toast.success(res.data.msg, 2)
-    //                 } else {
-    //                     Toast.info(res.data.msg, 2)
-    //                 }
-    //             })
-    //         }
-        }
+        //         if (this.state.input.length === 0) {
+        //             // 默认
+        let aa = {}
+        let arr = []
+        this.state.itemData.map((v, k) => {
+            console.log(v)
+            aa = {
+                stockid: v.stockid,
+                realnum: v.gnum,
+            }
+            return arr.push(aa);
+        })
+
+        //             let in_out_num = []
+        //             this.state.purchaseItem.map((v, k) => {
+        //                 let innum = this.state.purchaseItem[k].gnum
+        //                 return in_out_num.push(innum);
+        //             })
+        //             let sum = 0;
+        //             in_out_num.forEach(item => {
+        //                 sum = Number(sum) + parseInt(item)
+        //             })
+        //             let deliveryData = {
+        //                 id: this.props.match.params.id,
+        //                 snum: this.state.count,
+        //                 in_out_num: sum
+        //             }
+        //             console.log("默认", deliveryData, itemData)
+        submitWarehouseChange({
+            action: 'submitWarehouseChange', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                status: "2",
+                warehouseChangeId: this.props.match.params.id,
+                itemData: arr,
+            }
+        }).then((res) => {
+            //                 console.log(res.data)
+            if (res.data.status === 4001) {
+                window.location.reload();
+                Toast.success(res.data.msg, 2)
+            } else {
+                Toast.info(res.data.msg, 2)
+            }
+        })
+        //         } else {
+        //             let aa = {}
+        //             let arr = []
+        //             this.state.goods.map((v, k) => {
+        //                 console.log(v, k)
+        //                 aa = {
+        //                     id: this.state.goods[k].id,
+        //                     barcodeid: this.state.goods[k].barcodeid,
+        //                     diffnum: this.state.goods[k].price - this.state.input[k],
+        //                     innum: this.state.input[k],
+        //                     goodsid: this.state.goods[k].goodsid
+        //                 }
+        //                 return arr.push(aa);
+        //             })
+        //             let itemData = arr
+        //             console.log(itemData)
+        //             let deliveryData = {
+        //                 id: this.props.match.params.id,
+        //                 snum: this.state.count,
+        //                 in_out_num: this.state.num
+        //             }
+        //             console.log("22222", deliveryData, itemData)
+        //             submitPurchaseDelivery({
+        //                 action: 'submitPurchaseDelivery', data: {
+        //                     uniacid: store.getState().uniacid,
+        //                     uid: store.getState().uid,
+        //                     itemData: itemData,
+        //                     deliveryData: deliveryData,
+        //                     type: "1",
+        //                     status: "4"
+        //                 }
+        //             }).then((res) => {
+        //                 console.log(res.data)
+        //                 if (res.data.status === 4001) {
+        //                     window.location.reload();
+        //                     Toast.success(res.data.msg, 2)
+        //                 } else {
+        //                     Toast.info(res.data.msg, 2)
+        //                 }
+        //             })
+        //         }
+    }
 
     // }
     // getChildrenMsg = (result, msg) => {
@@ -210,7 +210,7 @@ export default class InventoryListDetails extends Component {
         }
         return (
             <WarehousingOrderxingStyle>
-    <DocumentTitle title={'新建调拨单'} />
+                <DocumentTitle title={'新建调拨单'} />
 
                 <div>
                     <div className='search'>
@@ -230,7 +230,7 @@ export default class InventoryListDetails extends Component {
                             <div>{this.state.inventoryData.docno}</div>
                         </div>
 
-                        <div className='conten-c' style={{paddingTop:".25rem"}}>
+                        <div className='conten-c' style={{ paddingTop: ".25rem" }}>
                             <p>单据日期：{this.state.inventoryData.docdate}</p>
                             <p>转出仓库：{this.state.inventoryData.outwarehouseName}</p>
                             <p>转入仓库：{this.state.inventoryData.inwarehouseName}</p>
@@ -252,13 +252,18 @@ export default class InventoryListDetails extends Component {
                                         <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
                                         <ul className='wen-zi'>
+                                            <li className='wen-zi-c'>
+                                                <div >{tiao.barcode}</div>
+                                                <p>{tiao.transfer_price}元/{tiao.unitname}</p></li>
                                             <li className='wen-zi-t'>
                                                 <div className='name'>{tiao.goods_name}</div>
-                                                <p>{tiao.gnum}{tiao.unitname}</p>
+                                                {/* <p>{tiao.gnum}公斤</p> */}
                                             </li>
                                             <li className='wen-zi-f'>
-                                                <div>￥：{tiao.transfer_price}元/{tiao.unitname}</div>
-                                                <p>{tiao.transfer_subtotal}</p>
+                                                <div>数量：{tiao.gnum}</div>
+                                                <p>总价：{tiao.transfer_price * tiao.gnum}</p>
+
+
                                             </li>
                                         </ul>
                                     </div>
