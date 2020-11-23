@@ -33,6 +33,9 @@ store.dispatch(actionuid)
 const actionuniacid = saveUserUniacid(uniacid)
 store.dispatch(actionuniacid)
 
+let environment = window.__wxjs_environment === 'miniprogram'
+console.log(environment)
+localStorage.setItem('user',environment);
 
 // window.location.reload()
 

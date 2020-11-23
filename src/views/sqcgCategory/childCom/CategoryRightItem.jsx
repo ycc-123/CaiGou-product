@@ -38,7 +38,20 @@ class CategoryRightgoods extends Component {
           <img className='category-img' src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png" alt="" />
 
           <div className='category-goods-info'>
-            <p>{goods.name}</p>
+          <div className='shuliang' style={{color:'#1a1a1a'}}>
+                   <article>{goods.code}</article>
+                   <div>{goods.posprice}元/{goods.unitname}</div>
+                 </div>
+            <div style={{display:"flex",justifyContent:"space-between"}}>
+            <div style={{fontSize:".35rem",paddingTop:".2rem",color:'#1a1a1a',width:"4rem"}}>{goods.name}</div>
+            {
+              this.state.login ? <div  style={{ marginTop:'.79rem',textAlign: "center", color: "#CD2323", fontSize: ".35rem" }}>{this.state.login}</div> :
+                <img className='category-goods-img'
+                  src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
+                  alt="" />
+            }
+            </div>
+            {/* <p>{goods.name}</p> */}
             
             <Button
               style={{position:"absolute",top:".3rem",left:"4.6rem",color:"transparent",background:"transparent"}} 
@@ -56,12 +69,12 @@ class CategoryRightgoods extends Component {
               ]
               )}
             >111111</Button>
-            {
+            {/* {
               this.state.login?<div className='category-goods-img' style={{textAlign:"center",width:"2rem",height:".5rem",marginTop: ".8rem",marginLeft: "4rem",color:"#d54343",fontSize:".4rem"}}>{this.state.login}</div>:
             <img className='category-goods-img'
               src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
               alt=""/>
-            }
+            } */}
             
 
           </div>
@@ -76,6 +89,15 @@ class CategoryRightgoods extends Component {
 }
 
 const CategoryRightgoodsStyle = styled.div`
+.shuliang span{
+  margin-left:1.5rem;
+}
+.shuliang{
+  // margin-top:.8rem;
+  font-size:.29rem;
+  display:flex;
+  justify-content: space-between;
+}
 .am-button::before{
   border:none !important;
 }
@@ -88,14 +110,12 @@ const CategoryRightgoodsStyle = styled.div`
   font-size: .33rem;
   right: 0;
 }
-
 .team-img {
   position: absolute;
   right: 1rem;
   width: .35rem;
   height: auto;
 }
-
 .__--__ {
   position: absolute;
   z-index: 10;
@@ -104,7 +124,6 @@ const CategoryRightgoodsStyle = styled.div`
   width: 1.87rem;
   height: auto
 }
-
 .categoryRight {
   position: relative;
   float: left;
@@ -113,46 +132,42 @@ const CategoryRightgoodsStyle = styled.div`
   width: 7.5rem;
   overflow: hidden;
 }
-
 .category-goods {
   position: relative;
   overflow: hidden;
   // width: 7.17rem;
   height: 1.85rem;
   line-height: 1;
-  padding: .17rem;
+  padding: .24rem .37rem;
   border-bottom:1px solid #ccc;
   // margin-bottom: .17rem;
   // border-radius: .2rem;
   background-color: #fff;
 }
-
 .category-img {
   display: block;
   float: left;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-right: .15rem;
+  width: 1.33rem;
+  height: 1.33rem;
+  margin-right: .32rem;
 }
-
 .category-goods-info {
   position: relative;
-  width: calc(100% - 2.3704rem);
+  width: calc(100% - 1.65rem);
   height: 100%;
   float: left;
 }
-
 .category-goods-info p:first-child {
   font-size: .32rem;
-  margin-bottom: .24rem;
+  // margin-bottom: .24rem;
+  // margin-top: .05rem;
   text-align: justify;
-  overflow: hidden;
+  // overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #4d4d4d;
   font-weight: bold;
 }
-
 .category-goods-info p:nth-child(2) {
   position: relative;
   align-items: center;
@@ -162,7 +177,6 @@ const CategoryRightgoodsStyle = styled.div`
   font-size: .3rem;
   color: #c2c2c2;
 }
-
 .category-goods-info p:nth-child(3) {
   position: relative;
   display: flex;
@@ -170,7 +184,6 @@ const CategoryRightgoodsStyle = styled.div`
   color: #f5702a;
   height: .5rem;
 }
-
 .category-button-left, .category-button-right {
   position: absolute;
   left: 1.5rem;
@@ -178,7 +191,6 @@ const CategoryRightgoodsStyle = styled.div`
   border: none;
   font-size: .26rem !important;
 }
-
 .category-button-left {
   background: #f5702a;
   width: .8rem;
@@ -186,7 +198,6 @@ const CategoryRightgoodsStyle = styled.div`
   border-bottom-left-radius: .08rem;
   color: white;
 }
-
 .category-button-right {
   left: 2.3rem;
   width: .93rem;
@@ -197,12 +208,10 @@ const CategoryRightgoodsStyle = styled.div`
   color: #ff762e;
   background: #ffe4d5;
 }
-
 .category-goods-info p:nth-child(3) span {
   font-size: .3rem;
   margin-top: .09rem;
 }
-
 .category-goods-info p:nth-child(4) {
   width: 100%;
   position: absolute;
@@ -211,22 +220,17 @@ const CategoryRightgoodsStyle = styled.div`
   opacity: .8;
   font-size: .24rem;
 }
-
 .category-goods-info p:nth-child(4) span {
   margin-right: .2rem;
 }
-
 .category-goods-img {
-  margin-top:.4rem;
-  margin-left:4.7rem;
-  width: .5rem;
-  height: .5rem;
+  margin-top:.65rem;
+  width: 0.43rem;
+  height: 0.43rem;
 }
-
 .category-goods .goods-img img {
   margin-left: 1.2rem;
 }
-
 .goods-button {
   position: absolute;
   display: flex;
@@ -244,7 +248,6 @@ const CategoryRightgoodsStyle = styled.div`
     border-top-left-radius: .4rem;
     border-bottom-left-radius: .4rem;
 }
-
 .goods-button::after {
   content: '';
     position: absolute;
@@ -258,7 +261,6 @@ const CategoryRightgoodsStyle = styled.div`
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
-
 .calculate {
   line-height: .6rem;
   text-align: center;

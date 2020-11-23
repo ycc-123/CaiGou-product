@@ -98,7 +98,7 @@ export default class InventoryList extends Component {
                     isLoadMore={this.isLoadMore}>
                     {
                         this.state.data.map((value, key) => {
-                            console.log(value)
+                            // console.log(value)
                             let data = value
                             let Color = ''
                             if (data.statusname === "提交成功") {

@@ -241,7 +241,7 @@ export default class InventoryListDetails extends Component {
                             备注：{this.state.inventoryData.remark}
                         </div>
                     </div>
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "5.9rem", bottom: "1.6rem" }}>
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)"}}>
                         {
                             this.state.itemData.map((value, key) => {
                                 console.log(value)
@@ -376,7 +376,7 @@ const WarehousingOrderxingStyle = styled.div`
         font-size:.35rem;
         width: 3.2rem;
         color:#1a1a1a;
-        margin: .1rem 0;
+        // margin: .1rem 0;
     }
     .wen-zi-f{
         display:flex;

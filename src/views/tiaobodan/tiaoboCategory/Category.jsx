@@ -113,6 +113,8 @@ class Category extends Component {
             </Fragment> : <Fragment>
               </Fragment>}
           </div>
+
+          
           <div className='foot'>
             <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
             <div className='left'
@@ -124,7 +126,7 @@ class Category extends Component {
             <div className='right' >提交</div>
             </div>
            
-            <Button
+            <div
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
               onClick={() =>
@@ -135,7 +137,7 @@ class Category extends Component {
               }
             >
               confirm
-                        </Button> </div>
+                        </div></div>
 
         </Fragment>
       </CategoryStyle>

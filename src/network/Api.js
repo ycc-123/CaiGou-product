@@ -346,3 +346,16 @@ export function getProductDetail(config) {
     data: config.data
   })
 }
+
+
+
+// 商品编辑提交
+
+export function editProduct(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

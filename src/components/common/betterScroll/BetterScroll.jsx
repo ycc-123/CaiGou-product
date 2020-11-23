@@ -23,6 +23,7 @@ class BetterScroll extends Component {
     )
   }
   componentDidMount() {
+    console.log(localStorage.getItem('user'))
     // const ver = navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/);
     /* alert(ver) */
     // 判断ios是否大于13.4
@@ -34,7 +35,7 @@ class BetterScroll extends Component {
       // 3 只要是滚动都侦测
       probeType,
       // better-sroll 默认不监听按钮点击
-      click: true,
+      click: localStorage.getItem('user')===true?false:true,
       // tap: false,
       // 监听上来加载更多
       pullUpLoad: true,

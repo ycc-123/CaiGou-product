@@ -264,7 +264,7 @@ const Into = (props) => {
                             </List.Item>
                             <div className='xian'></div></div>
 
-                            <div className="type flex-column" style={{ display: memberPrice ? "block" : "none" }}>
+                            <div className="type flex-column" style={(memberInterests)? { display:  "none" }:{ display:memberPrice? "block": "none" }}>
                                 <div className="item flex-row" style={{
                                     justifyContent: 'space-between'
                                 }}>
@@ -292,7 +292,7 @@ const Into = (props) => {
                             <div className='xian'></div>
 
 
-                            <div className="type flex-column">
+                            <div className="type flex-column" style={{display: matchGood === false? "none": "block"}}>
                                 <div className="item flex-row" style={{
                                     justifyContent: 'space-between'
                                 }}>
@@ -405,10 +405,11 @@ const AddGoodsStyle = styled.div`
     flex-basis:auto;
     // padding-top:.5rem;
     color:#b4b4b4;
-    text-align: left;
+    // text-align: left;
     font-size:.35rem;
     padding-left:.1rem;
     text-align: right;
+    // padding-right: 3rem;
     width:3rem;
 }
 .am-list-item .am-list-line .am-list-arrow{

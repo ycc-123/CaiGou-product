@@ -124,9 +124,9 @@ class Category extends Component {
             <div className='right' >提交</div>
             </div>
            
-            <Button
-              style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
-              className="btn_modal"
+            <div
+              style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent",border:"none" }}
+              
               onClick={() =>
                 alert('提交', '是否确认提交盘点单', [
                   { text: '取消', onPress: () => console.log('cancel') },
@@ -135,7 +135,7 @@ class Category extends Component {
               }
             >
               confirm
-                        </Button> </div>
+                        </div> </div>
 
           
 

@@ -11,6 +11,7 @@ export default class Home extends Component {
   componentDidMount() {
     // this.bt_ref.current.BScroll.refresh()
     // <Title title="" />
+    console.log(localStorage.getItem('user'))
     console.log("uid=====")
     console.log("uid=====", store.getState().uid)
     console.log("uniacid=====", store.getState().uniacid)
@@ -78,7 +79,7 @@ export default class Home extends Component {
           </ul>
         </div>
         <div className="banben">
-          v1.1.1.5
+          v1.1.1.8
       </div>
       {/* </BetterScroll> */}
       </HomeStyle>

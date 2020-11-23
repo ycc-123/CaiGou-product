@@ -5,7 +5,7 @@ import { createForm } from 'rc-form';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { createProduct, getUnitList, getProductCategoryAll,getProductDetail } from 'network/Api'
+import { createProduct, getUnitList, getProductCategoryAll,getProductDetail ,editProduct} from 'network/Api'
 import { store } from "store/index";
 import { useParams  } from 'react-router-dom';
 // import { Picker, List, Toast } from 'antd-mobile';
@@ -24,15 +24,16 @@ const Into = (props) => {
     const [sellUnit, setSellUnit] = useState('');
     const [retailPrice, setRetailPrice] = useState('');
     const [setPrice, setSetPrice] = useState('');
-    const [memberInterests, setMemberInterests] = useState(false)
-    const [isProduct, setisProduct] = useState(false)
-    const [memberPrice, setMemberPrice] = useState(false)
+    const [memberInterests, setMemberInterests] = useState()
+    const [isProduct, setisProduct] = useState()
+    const [memberPrice, setMemberPrice] = useState()
     // const [retailPrice, setRetailPrice] = useState(false)
-    const [matchGood, setMatchGood] = useState(false);
+    const [matchGood, setMatchGood] = useState();
     const [matchCode, setMatchCode] = useState('')
     const [goodSort, setGoodSort] = useState('');
     const [unit, setUnit] = useState([]);
     const [classification, setClassification] = useState([]);
+    const [morengoods,setMorengoods]=useState({});
 
     const scrollConfig = {
         probeType: 1
@@ -46,9 +47,18 @@ const Into = (props) => {
                 id: params
             }
         }).then((res) => {
-            console.log(res)
-            if(res.status===4001){
-                Toast.success()
+            console.log(res.data.data)
+            if(res.data.status===4001){
+                
+                setMorengoods(res.data.data);
+                // setMemberInterests(res.data.data.is_membership==="2"?"false":"true");
+                // setMemberPrice(res.data.data.is_memberprice==="1"?"false":"true");
+
+
+
+
+            }else{
+                Toast.fail(res.data.msg,2)
             }
         })
         getProductCategoryAll({
@@ -95,7 +105,7 @@ const Into = (props) => {
 
                     <DocumentTitle title={'新增商品'} />
 
-                    <div className="type flex-column">
+                    <div className="type flex-column" style={{background:"#F8F8F8"}}>
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
                         }}>
@@ -103,10 +113,11 @@ const Into = (props) => {
                                 <span>商品名称:</span>
                             </div>
                             <div className="right">
-                                <input
+                                <input style={{background:"#F8F8F8"}}
+                                    readonly="readonly"
                                     value={goodName}
                                     type="text"
-                                    placeholder='请输入商品名称'
+                                    placeholder={morengoods.name}
                                     onChange={e => { setgoodName(e.target.value) }}
                                 />
                             </div>
@@ -124,7 +135,7 @@ const Into = (props) => {
                                     data={classification}
                                     cols={1}
                                     className="forss"
-                                    extra="选择商品分类"
+                                    extra={morengoods.category_name}
                                     value={goodCategory}
                                     onChange={e => { setGoodCategory(e) }}
                                     onOk={v => setGoodCategory(v)}
@@ -145,7 +156,7 @@ const Into = (props) => {
                                 <input
                                     value={goodCode}
                                     type="text"
-                                    placeholder='条码唯一,提交后不支持修改'
+                                    placeholder={morengoods.code}
                                     onChange={e => { setGoodCode(e.target.value) }}
                                 />
                             </div>
@@ -191,7 +202,7 @@ const Into = (props) => {
                                     data={unit}
                                     cols={1}
                                     className="forss"
-                                    extra="选择售出单位"
+                                    extra={morengoods.unit_name}
                                     value={sellUnit}
                                     onChange={e => { setSellUnit(e) }}
                                     onOk={v => setSellUnit(v)}
@@ -219,7 +230,7 @@ const Into = (props) => {
                                 <input
                                     value={goodSort}
                                     type="text"
-                                    placeholder='数字越大越靠前'
+                                    placeholder={morengoods.sequence}
                                     onChange={e => { setGoodSort(e.target.value) }}
                                 />
                             </div>
@@ -236,7 +247,7 @@ const Into = (props) => {
                                 <input
                                     value={retailPrice}
                                     type="text"
-                                    placeholder='收银端零售价'
+                                    placeholder={morengoods.posprice}
                                     onChange={e => { setRetailPrice(e.target.value) }}
                                 />
                             </div>
@@ -255,10 +266,10 @@ const Into = (props) => {
                         >更多信息</List.Item>
                         <div className='xian'></div>
 
-                        <div style={{ display: isProduct ? "block" : "none" }}>
+                        <div style={{ display: isProduct? "block" : "none" }}>
                             <List.Item
                                 extra={<Switch
-                                    checked={memberInterests}
+                                    checked={memberInterests?memberInterests:morengoods.is_membership==="1"?false:true}
                                     onChange={() => { setMemberInterests(!memberInterests) }}
                                 />}
                             >启用会员权益
@@ -267,7 +278,7 @@ const Into = (props) => {
                             <div className='xian'></div>
                             <List.Item
                                 extra={<Switch
-                                    checked={memberPrice}
+                                    checked={memberPrice?memberPrice:morengoods.is_memberprice==="1"?false:true}
                                     onChange={() => { setMemberPrice(!memberPrice) }}
                                 />}
                             >启用会员价
@@ -275,7 +286,7 @@ const Into = (props) => {
                             </List.Item>
                             <div className='xian'></div>
 
-                            <div className="type flex-column">
+                            <div className="type flex-column" >
                                 <div className="item flex-row" style={{
                                     justifyContent: 'space-between'
                                 }}>
@@ -286,7 +297,7 @@ const Into = (props) => {
                                         <input
                                             value={setPrice}
                                             type="text"
-                                            placeholder='设置会员价'
+                                            placeholder={morengoods.memberprice}
                                             onChange={e => { setSetPrice(e.target.value) }}
                                         />
                                     </div>
@@ -294,7 +305,7 @@ const Into = (props) => {
                             </div>
                             <List.Item
                                 extra={<Switch style={{ border: "none" }}
-                                    checked={matchGood}
+                                    checked={matchGood?matchGood:morengoods.is_plu_goods==="1"?false:true}
                                     onChange={() => { setMatchGood(!matchGood) }}
                                 />}
                             >分体称商品
@@ -314,7 +325,7 @@ const Into = (props) => {
                                         <input
                                             value={matchCode}
                                             type="text"
-                                            placeholder='设置分体称PLU编号'
+                                            placeholder={morengoods.plu_goods_keyboard_id}
 
                                             onChange={e => { setMatchCode(e.target.value) }}
                                         />
@@ -338,43 +349,41 @@ const Into = (props) => {
 
     function check() {
         console.log(memberPrice)
+        let aa={}
+        unit.map((v,k)=>{
+            console.log(v)
+            if(v.label===morengoods.unit_name){
+                aa=v 
+            }
+        })
+        let cc=aa.value
 
-        createProduct({
-            action: 'createProduct', data: {
+        editProduct({
+            action: 'editProduct', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                categoryid: goodCategory.toString(),
-                code: goodCode,
-                posprice: retailPrice,
-                memberprice: setPrice,
-                name: goodName,
-                unit: sellUnit.toString(),
-                is_membership: memberInterests === true ? "2" : "1",
-                is_memberprice: memberPrice === true ? "2" : "1",
-                is_plu_goods: matchGood === true ? "2" : "1",
-                plu_goods_keyboard_id: matchCode,
-                sequence: goodSort,
+                id:params,
+                categoryid: goodCategory.toString()?goodCategory.toString():morengoods.categoryid,
+                code:goodCode?goodCode:morengoods.code,
+                posprice:retailPrice?retailPrice:morengoods.posprice,
+                memberprice:setPrice?setPrice:morengoods.memberprice,
+                name:goodName?goodName:morengoods.name,
+                unit:sellUnit.toString()?sellUnit.toString():cc,
+                is_membership:memberInterests === true ? "2" : "1"?memberInterests === true ? "2" : "1":morengoods.is_membership,
+                is_memberprice:memberPrice === true ? "2" : "1"?memberPrice === true ? "2" : "1":morengoods.is_memberprice,
+                is_plu_goods:matchGood === true ? "2" : "1"?matchGood === true ? "2" : "1":morengoods.is_plu_goods,
+                plu_goods_keyboard_id:matchCode?matchCode:morengoods.plu_goods_keyboard_id,
+                sequence:goodSort?goodSort:morengoods.sequence,
             }
         }).then((res) => {
             console.log(res)
-            // if(res.data.status===4001){
-            //     console.log(0)
-            //     var result = res.data.data.data.map(o=>{return{value:o.id,label:o.name}});
-            //         console.log(result)
-            //     this.setState({
-            //         data: result
-            //     })
-            // }else{
-            //     Toast.info('网络错误', 2)
-            // }
+            if(res.data.status===4001){
+                this.props.history.push('/bjsygoods')
+            }else{
+                Toast.info(res.data.msg, 2)
+            }
         })
-        // if (productType === "") {
-        //   Toast.info('请选择营业类目', 1)
-        // } else if (profeesion === "") {
-        //   Toast.info('请选择职业', 1)
-        // } else if (storeName === "") {
-        //   Toast.info('请填写店铺名称', 1)
-        // } else {
+   
 
 
 
