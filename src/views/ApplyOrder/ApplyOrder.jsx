@@ -74,7 +74,7 @@ export default class ApplyOrder extends Component {
                             </div>
                 </div>
                 <div
-          onClick={()=>{this.props.history.push('/Sqcgcategory')}}
+          onClick={()=>{this.props.history.push('/addApplyOrder')}}
            className='add'>新增<span style={{fontSize:".4rem"}}>+</span></div>
           </div>
 

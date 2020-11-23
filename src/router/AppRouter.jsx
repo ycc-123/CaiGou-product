@@ -13,6 +13,7 @@ import LossReport from 'views/LossReport/LossReport'
 import LossReportm from 'views/LossReportm/LossReportm'
 import LossReportf from 'views/LossReportf/LossReportf'
 import ApplyOrder from 'views/ApplyOrder/ApplyOrder'
+import addApplyOrder from 'views/ApplyOrder/addApplyOrder'
 import ApplyOrderx from 'views/ApplyOrderx/ApplyOrderx'
 import category from 'views/category/Category'
 import Sqcgcategory from 'views/sqcgCategory/Category'
@@ -55,9 +56,10 @@ const AppRouter = () => {
         <Route path='/PurchaseOrderDetailed/:id' exact component={PurchaseOrderDetailed} ></Route>
         <Route path='/home' exact component={Home} ></Route>
         <Route path='/' exact component={Home} ></Route>
-        <Route path='/Sqcgcategory' exact component={Sqcgcategory} ></Route>
+        <Route path='/Sqcgcategory/:id/:bz' exact component={Sqcgcategory} ></Route>
         <Route path='/ApplyOrderx/:id' exact component={ApplyOrderx} ></Route>
         <Route path='/ApplyOrder' exact component={ApplyOrder} ></Route>
+        <Route path='/addApplyOrder' exact component={addApplyOrder} ></Route>
         <Route path='/LossReportf' exact component={LossReportf} ></Route>
         <Route path='/LossReportm' exact component={LossReportm} ></Route>
         <Route path='/LossReport' exact component={LossReport} ></Route>

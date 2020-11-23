@@ -7,8 +7,8 @@ import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
 import { getProductCategoryAll, searchProduct } from 'network/Api'
 import {  _categoryRight } from 'network/category'
-import { Toast } from 'antd-mobile';
-
+import { Toast ,Modal } from 'antd-mobile';
+const alert = Modal.alert;
 const scollConfig = {
   probeType: 1
 }
@@ -77,6 +77,7 @@ class Category extends Component {
     // const { cartGoods } = store.getState()
     console.log(this.props.match.params.id)
     let ida = this.props.match.params.id
+    let bz = this.props.match.params.bz
     return (
       <CategoryStyle>
     <DocumentTitle title={'新建采购单'} />
@@ -107,7 +108,7 @@ class Category extends Component {
                 </BetterScroll>}
               </ul>
             </div>
-              <CategoryRight goodsList={this.state.goods} onRef={this.onRef} id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />
+              <CategoryRight goodsList={this.state.goods} onRef={this.onRef} bz={bz} id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />
             </Fragment> : <Fragment>
               </Fragment>}
           </div>

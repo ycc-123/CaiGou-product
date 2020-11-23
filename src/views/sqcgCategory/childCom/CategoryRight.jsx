@@ -99,8 +99,8 @@ class CategoryRight extends Component {
       uniacid: store.getState().uniacid,
       uid:store.getState().uid,
       totalnum:this.state.num,
-      // purchaseId:this.props.id,
-      remark:"",
+      remark:this.props.bz==="1"?"":this.props.bz,
+      warehouseid:this.props.id,
       itemData:itemData,
       // purchaseData:purchaseData
     } }).then(res=>{
