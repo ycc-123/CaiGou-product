@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseApplyList } from 'network/Api'
+import { getDamageList } from 'network/Api'
 // import { SearchBar, Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 // import Tiao from './Tiao'
@@ -11,17 +11,19 @@ export default class ApplyOrder extends Component {
         super()
         this.state = {
             tiao: [],
-            inputSearch:''
+            inputSearch:'',
+            limit: "10",
+            page: 1
         }
+        this.isLoadMore = true
     }
     componentDidMount() {
-        getPurchaseApplyList({
-            action: 'getPurchaseApplyList', data: {
+        getDamageList({
+            action: 'getDamageList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                // type:"1",
-                limit: "1000",
-                page: "1"
+                limit: this.state.limit,
+                page: this.state.page
             }
         }).then((res) => {
             console.log(res)
@@ -39,8 +41,8 @@ export default class ApplyOrder extends Component {
         })
     }
     search(){
-        getPurchaseApplyList({
-            action: 'getPurchaseApplyList', data: {
+        getDamageList({
+            action: 'getDamageList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 search: this.state.inputSearch,
@@ -59,6 +61,58 @@ export default class ApplyOrder extends Component {
     submit(){
         console.log(1111)
     }
+    loadMore = () => {
+        // 加载数据时转圈
+        let loading = true
+        setTimeout(() => {
+            if (loading) {
+                this.setState({
+                    
+                    loadingMore: true
+                })
+            }
+        }, 1000)
+        if (this.isLoadMore) {
+          
+            getDamageList({
+                action: 'getDamageList', data: {
+                    uniacid: store.getState().uniacid,
+                    uid: store.getState().uid,
+                    search:this.state.inputSearch,
+                    limit:this.state.limit,
+                    page:this.state.page
+                }
+            }).then((res) => {
+               
+
+                // 如果长度不等于得时候加载 那么是到底了
+                if (res.data.data.data.length < this.state.limit) {
+                    this.isLoadMore = false
+                    /* let bottomTip = document.querySelector('.bottom-tip')
+                    bottomTip.style.visibility = 'visible'
+                    bottomTip.innerHTML = '商品已经全部加载完成' */
+                }
+                this.setState({
+                    tiao: [...this.state.tiao, ...res.data.data.data],
+                    // zongnp:res.data.data.total,
+                    loadingMore: false
+                }, () => {
+                    let page=Number(this.state.page)
+                    this.setState({
+                        page: page += 1
+                    })
+
+                    loading = false
+                    this.refs.scroll.BScroll.finishPullUp()
+                    this.refs.scroll.BScroll.refresh()
+                })
+            })
+        } else {
+            /* let bottomTip = document.querySelector('.bottom-tip')
+            bottomTip.style.visibility = 'visible'
+            bottomTip.innerHTML = '商品已经全部加载完成' */
+        }
+    }
     render() {
         const scrollConfig = {
             probeType: 1
@@ -69,7 +123,7 @@ export default class ApplyOrder extends Component {
         <div>
         <div style={{display:"flex"}}>
                 <div className='search'>
-                        <input type="search" className='input' placeholder="请输入采购申请单号" name="inputSearch" 
+                        <input type="search" className='input' placeholder="请输入报损单号" name="inputSearch" 
                                     onChange={this.inputChange.bind(this)}
                                     value={this.state.inputSearch}/>
                         <div className='img' onClick={()=>{this.search()}}>
@@ -77,31 +131,33 @@ export default class ApplyOrder extends Component {
                             </div>
                 </div>
                 <div
-          onClick={()=>{this.props.history.push('/addApplyOrder')}}
+          onClick={()=>{this.props.history.push('/addLossReport')}}
            className='add'>新增<span style={{fontSize:".4rem"}}>+</span></div>
           </div>
 
                     <div className='caigoudan' >
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0" }}>
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0" }} loadMore={this.loadMore}
+                    isLoadMore={this.isLoadMore}>
                         {
                             this.state.tiao.map((v, k) => {
+                                console.log(v)
                                 return (
                                     <div className='dan' >
-                                        <div onClick={()=>{this.props.history.push(`/ApplyOrderx/${v.id}`)}}>
+                                        <div onClick={()=>{this.props.history.push(`/LossReportDetail/${v.id}`)}}>
                                         <div className='dan-top'>
                                             <p>
                                                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
                                             </p>
                                             <div className='t-right'>
-                                            <div className='caigoudanhao'>采购单号：{v.docno}</div>
-                                            <div className='zuantai'>{v.statusname}</div>
+                                            <div className='caigoudanhao'>报损单号：{v.ydocno}</div>
+                                            <div className='zuantai'>{v.statusName}</div>
                                             </div>
                                         </div>
                                         <div className='dan-footer'>
                                         <div >
                                             <div >
-                                                <p>单据日期：{v.docdate}</p>
-                                                <p>申请数量：{v.totalnum}</p>
+                                                <p>单据日期：{v.createtime}</p>
+                                                <p>报损仓库：{v.warehouseName}</p>
                                             </div>
                                             
                                             </div>
@@ -109,8 +165,8 @@ export default class ApplyOrder extends Component {
                                         </div>
                                         
                                         <div className='btn_sh' onClick={() => { this.submit() }}
-                                            style={{display:v.statusname==="提交成功"?"none":''}}
-                                            >提交</div>
+                                            style={{display:v.statusName==="已审核"?"none":''}}
+                                            >审核</div>
                                     </div>
                                 )
                             })

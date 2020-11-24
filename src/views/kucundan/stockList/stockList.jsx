@@ -433,8 +433,8 @@ const StockListStyle = styled.div`
 }
 .fenglei div ul li{
     width:2.8rem;
-    height:.8rem;
-    line-height:.8rem;
+    // height:.8rem;
+    line-height:.58rem;
     text-align:center;
     background-color: #f6f6f6;
     margin:.2rem .2rem;

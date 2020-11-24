@@ -158,7 +158,7 @@ class CategoryRight extends Component {
       console.log(res)
       if(res.data.status===4001){
         Toast.success(res.data.msg, 2)
-        // this.home()
+        this.props.history.push('/home')
       }else{
         Toast.info(res.data.msg, 2)
       }

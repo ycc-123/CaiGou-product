@@ -5,19 +5,24 @@ import CacheRoute, { CacheSwitch } from 'react-router-cache-route'
 import Home from 'views/home/Home'
 import AddPurchaseOrder from 'views/AddPurchaseOrder/AddPurchaseOrder'
 import PurchaseOrder from 'views/PurchaseOrder/PurchaseOrder'
-import PurchaseOrderDetailed from 'views/PurchaseOrderDetailed/PurchaseOrderDetailed'
+import PurchaseOrderDetailed from 'views/PurchaseOrder/PurchaseOrderDetailed'
 import WarehousingOrder from 'views/WarehousingOrder/WarehousingOrder'
-import WarehousingOrderxing from 'views/WarehousingOrderxing/WarehousingOrderxing'
+import WarehousingOrderxing from 'views/WarehousingOrder/WarehousingOrderxing'
 import stockList from 'views/kucundan/stockList/stockList'
 import LossReport from 'views/LossReport/LossReport'
-import LossReportm from 'views/LossReportm/LossReportm'
-import LossReportf from 'views/LossReportf/LossReportf'
+import LossReportDetail from 'views/LossReport/LossReportDetail'
+import LossReportList from 'views/LossReport/LossReportList'
+import addLossReport from 'views/LossReport/addLossReport'
+import bsCategory from 'views/LossReport/Category'
+
+
+
 import ApplyOrder from 'views/ApplyOrder/ApplyOrder'
 import addApplyOrder from 'views/ApplyOrder/addApplyOrder'
-import ApplyOrderx from 'views/ApplyOrderx/ApplyOrderx'
-import category from 'views/category/Category'
-import Sqcgcategory from 'views/sqcgCategory/Category'
-import Liebiao from 'views/category/childCom/CategorySwiper'
+import ApplyOrderx from 'views/ApplyOrder/ApplyOrderx'
+import category from 'views/AddPurchaseOrder/Category'
+import Sqcgcategory from 'views/ApplyOrder/Category'
+import Liebiao from 'views/AddPurchaseOrder/childCom/CategorySwiper'
 import Youhuimxb from 'views/kucundan/stockList/youhuimxb'
 import Shouyinmxb from 'views/kucundan/stockList/shouyinmxb'
 import GoodDiscount from 'views/GoodDiscount/GoodDiscount'
@@ -39,7 +44,7 @@ import BjGoods from 'views/addGoods/BjGoods'
 import bjgoods from 'views/addGoods/category/Category'
 
 // 测试
-import Text from 'views/ApplyOrderx/Text'
+import Text from 'views/ApplyOrder/Text'
 
 
 
@@ -60,8 +65,12 @@ const AppRouter = () => {
         <Route path='/ApplyOrderx/:id' exact component={ApplyOrderx} ></Route>
         <Route path='/ApplyOrder' exact component={ApplyOrder} ></Route>
         <Route path='/addApplyOrder' exact component={addApplyOrder} ></Route>
-        <Route path='/LossReportf' exact component={LossReportf} ></Route>
-        <Route path='/LossReportm' exact component={LossReportm} ></Route>
+        <Route path='/LossReportList' exact component={LossReportList} ></Route>
+        <Route path='/LossReportDetail/:id' exact component={LossReportDetail} ></Route>
+        <Route path='/addLossReport' exact component={addLossReport} ></Route>
+        <Route path='/bsCategory/:id/:bz/:bsid' exact component={bsCategory} ></Route>
+
+
         <Route path='/LossReport' exact component={LossReport} ></Route>
         <Route path='/stockList' exact component={stockList} ></Route>
         <Route path='/WarehousingOrderxing/:id' exact component={WarehousingOrderxing} ></Route>

@@ -14,7 +14,7 @@ import { useParams  } from 'react-router-dom';
 const Into = (props) => {
 
     const params=useParams().id
-    console.log(params.id)
+    // console.log(params.id)
     const bt_ref = useRef()
 
     const [goodName, setgoodName] = useState('');
@@ -34,6 +34,7 @@ const Into = (props) => {
     const [unit, setUnit] = useState([]);
     const [classification, setClassification] = useState([]);
     const [morengoods,setMorengoods]=useState({});
+    const [erji,seterji]=useState([]);
 
     const scrollConfig = {
         probeType: 1
@@ -47,7 +48,7 @@ const Into = (props) => {
                 id: params
             }
         }).then((res) => {
-            console.log(res.data.data)
+            // console.log(res.data.data)
             if(res.data.status===4001){
                 
                 setMorengoods(res.data.data);
@@ -66,9 +67,28 @@ const Into = (props) => {
                 uniacid: store.getState().uniacid,
             }
         }).then((res) => {
+            var result = res.data.data.map(o => {
+                return { value: o.id, label: o.name } });
             console.log(res)
-            var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
-            console.log(result)
+            let aa=[]
+            let bb={}
+            res.data.data.map((v,k)=>{
+                console.log(v.children)
+                if(v.children===undefined){
+                   return aa.push({1:"1"})
+                }else{
+                    aa.push(v.children)
+                }
+            })
+            console.log(aa)
+            let yierji=[]
+            
+            yierji.push(result)
+            yierji.push(aa)
+            console.log(yierji)
+            seterji(res.data.data)
+            
+            // console.log(result)
             setClassification(result)
         })
 
@@ -81,7 +101,7 @@ const Into = (props) => {
             }
         }).then((res) => {
             var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
-            console.log(result)
+            // console.log(result)
             setUnit(result)
         })
 
@@ -132,8 +152,8 @@ const Into = (props) => {
                             </div>
                             <div className="right">
                                 <Picker
-                                    data={classification}
-                                    cols={1}
+                                    data={erji}
+                                    cols={2}
                                     className="forss"
                                     extra={morengoods.category_name}
                                     value={goodCategory}
@@ -342,16 +362,12 @@ const Into = (props) => {
                 </div>
             </AddGoodsStyle>
         </>
-
     )
-
-
-
     function check() {
-        console.log(memberPrice)
+        // console.log(memberPrice)
         let aa={}
         unit.map((v,k)=>{
-            console.log(v)
+            // console.log(v)
             if(v.label===morengoods.unit_name){
                 aa=v 
             }
@@ -376,20 +392,14 @@ const Into = (props) => {
                 sequence:goodSort?goodSort:morengoods.sequence,
             }
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             if(res.data.status===4001){
                 this.props.history.push('/bjsygoods')
             }else{
                 Toast.info(res.data.msg, 2)
             }
         })
-   
-
-
-
     }
-
-
 }
 
 const AddGoodsStyle = styled.div`

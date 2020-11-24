@@ -589,8 +589,8 @@ const YouhuimxbStyle = styled.div`
 }
 .fenglei div ul li{
     width:9.3rem;
-    height:.9rem;
-    line-height:.9rem;
+    // height:.9rem;
+    line-height:.58rem;
     text-align:center;
     
     margin:.2rem 0rem;

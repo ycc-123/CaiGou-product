@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { getPurchaseDeliveryDetail, submitPurchaseDelivery } from 'network/Api'
 import { Toast, Modal, Button } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
-import Tiao from './Tiao'
+import Tiao from './Tiaomx'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 const alert = Modal.alert;

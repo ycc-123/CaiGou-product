@@ -1,27 +1,25 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getWarehouseList, createWarehouseChange } from 'network/Api'
+import { getWarehouseList, getProductCategoryAll, createDamage } from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
-import { saveCanku } from 'store/actionCreators'
 
 export default class AddInventoryList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            sValue: '',
-            data: [],
-            IDck: [],
-            inputbeiz: '',
-            lxValue: '',
+            data:[],
+            inputbeiz:'',
+            sValue:'',
+            IDck:""
+
 
 
         }
     }
     componentDidMount() {
-
         getWarehouseList({
             action: 'getWarehouseList', data: {
                 uniacid: store.getState().uniacid,
@@ -43,54 +41,36 @@ export default class AddInventoryList extends Component {
                 Toast.info('网络错误', 2)
             }
         })
-
     }
-    createPurchase() {
-
-        //    in
-        let idgy = this.state.IDck === '' ? '' : this.state.IDck.toString()
-        // out
-        let idkc = this.state.lxID === '' ? '' : this.state.lxID.toString()
-        console.log(idkc)
-
-     
-        createWarehouseChange({
-            action: 'createWarehouseChange', data: {
+    createPurchase(){
+       
+       
+        // console.log(this.state.IDgy)
+        let idgy = this.state.sValue.toString()
+        let flname={}
+        
+        console.log(idgy)
+        console.log(this.state.lxID)
+        let bz='1'
+        
+        // let idkc = this.state.IDck.toString()
+        
+        createDamage({
+            action: 'createDamage', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                outwarehouseid: idgy,
-                inwarehouseid: idkc,
-                remark: this.state.inputbeiz,
+                warehouseid:idgy,
+                remark:this.state.inputbeiz
             }
-        }).then(res => {
-            console.log(res.data.data.docno)
-            if (res.data.status === 4001) {
-                this.props.history.push(`/tiaoboCategory/${res.data.data.id}/${idgy}`)
-                Toast.success(res.data.msg, 2)
-         
-                    let arr = []
-                    let aa = {}
-                    this.state.data.map((v, k) => {
-                        if (v.value === idgy) {
-                            aa = v
-                            return arr.push(aa, this.state.inputbeiz);
-                        }
-                        if (v.value === idkc) {
-                            aa = v
-                            return arr.push(aa, res.data.data.docno);
-                        }
-                        // return arr.push(this.state.inputbeiz);
-                    })
-                    const tiaoboxqck = saveCanku(arr)
-                    store.dispatch(tiaoboxqck)
-                    console.log(arr)
-               
-            } else {
-                Toast.info(res.data.msg, 2)
+        }).then((res) => {
+            console.log(res)
+            if(res.data.status===4001){
+                this.props.history.push(`/bsCategory/${idgy}/${this.state.inputbeiz?this.state.inputbeiz:bz}/${res.data.data}`)
+            }else{
+                Toast(res.data.msg,2)
             }
         })
     }
-
     inputChangebz(e) {
         // console.log(e.target.value)
         this.setState({
@@ -100,16 +80,16 @@ export default class AddInventoryList extends Component {
     render() {
         return (
             <AddPurchaseOrderStyle>
-    <DocumentTitle title={'新建调拨单'} />
+    <DocumentTitle title={'新建盘点单'} />
 
                 <div>
                     <ul className='biao'>
-                        <li><span>*</span>转出仓库：
+                        <li><span>*</span>报损仓库：
                                 <Picker
                                 data={this.state.data}
                                 cols={1}
                                 className="forss"
-                                extra="请选择转出仓库"
+                                extra="请选择盘点仓库"
                                 value={this.state.sValue}
                                 onChange={v => this.setState({ sValue: v })}
                                 onOk={v => this.setState({ IDck: v })}
@@ -117,20 +97,7 @@ export default class AddInventoryList extends Component {
                                 <List.Item className='times' arrow="horizontal"></List.Item>
                             </Picker>
                         </li>
-                        <li><span>*</span>转入仓库：
-                                <Picker
-                                data={this.state.data}
-                                cols={1}
-                                className="forss"
-                                extra="请选择转入仓库"
-                                value={this.state.lxValue}
-                                onChange={v => this.setState({ lxValue: v })}
-                                onOk={v => this.setState({ lxID: v.toString() })}
-                            >
-                                <List.Item className='pdlx' arrow="horizontal"></List.Item>
-                            </Picker>
-                        </li>
-
+                    
                         <li style={{ border: "none" }}>
                             <div>备注：</div>
                             <input name="inputbeiz"
@@ -167,6 +134,9 @@ const AddPurchaseOrderStyle = styled.div`
         height:1.17rem;
         line-height:1.17rem;
     }
+    .am-list-item{
+        padding-left: 1.45rem;
+    }
     .am-list-item .am-list-line{
         width:6rem;
     }
@@ -179,9 +149,10 @@ const AddPurchaseOrderStyle = styled.div`
         width:3rem;
     }
     .am-list-item .am-list-line .am-list-arrow{
-        margin-left:2.5rem !important;
-        // background-image: none;
-        // opacity:0;
+        margin-left:2rem !important;
+        width:11px;
+        height:11px;
+
     }
     .onetimes{
         position:absolute;
@@ -192,10 +163,19 @@ const AddPurchaseOrderStyle = styled.div`
         width:12rem;
         background-color: transparent;
     }
+    .time{
+        position:absolute;
+        left:2.2rem;
+        top:2.4rem;
+        // padding-top:.3rem;
+        color: #a9a9a9;
+        width:12rem;
+        background-color: transparent;
+    }
     .pdlx{
         position:absolute;
         left:2.2rem;
-        top:1.4rem;
+        top:1.2rem;
         // padding-top:.3rem;
         color: #a9a9a9;
         width:12rem;
@@ -204,7 +184,7 @@ const AddPurchaseOrderStyle = styled.div`
     .times{
         position:absolute;
         left:2.2rem;
-        top:.1rem;
+        // top:.1rem;
         // padding-top:.3rem;
         color: #a9a9a9;
         width:12rem;
@@ -224,7 +204,7 @@ const AddPurchaseOrderStyle = styled.div`
         background-color: #fff;
     }
     .right{
-        font-size:.35rem;
+        font-size:.4rem;
         color:#fff;
         text-align:center;
         width: 100%;
@@ -251,7 +231,7 @@ const AddPurchaseOrderStyle = styled.div`
     .biao li input{
         border:none;
         outline:none;
-        font-size:.35rem;
+        font-size:.45rem;
         width:7rem;
         height:.65rem;
         color:#646464; 
@@ -265,15 +245,15 @@ const AddPurchaseOrderStyle = styled.div`
     .biao li{
         display:flex;
         background-color: #fff;
-        padding-left:.3rem;
+        padding-left:.43rem;
         color:#646464;
-        padding-top:.3rem;
+        // padding-top:.3rem;
         // text-align:center;
         font-size:.35rem;
-        color:#646464; 
+        color:#787878; 
         width: 100%;
-        height: 1.3rem;
-        line-height: .7rem;
+        height: 1.2rem;
+        line-height: 1.2rem;
         border-bottom: 1px solid #dbdbdb;
     
     }

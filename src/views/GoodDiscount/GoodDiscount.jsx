@@ -544,8 +544,8 @@ const LossReportStyle = styled.div`
 .fenglei div ul li{
     color:#6f6f6f;
     width:2.8rem;
-    height:.8rem;
-    line-height:.8rem;
+    // height:.8rem;
+    line-height:.58rem;
     text-align:center;
     background-color: #f0f0f0;
     margin:.2rem .2rem;

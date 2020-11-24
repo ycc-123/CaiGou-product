@@ -205,14 +205,14 @@ export function submitPurchaseApply(config) {
 }
 
 // 报损单列表
-export function getDamageList(config) {
-  return requestPost({
-    params: {
-      action: config.action
-    },
-    data: config.data
-  })
-}
+// export function getDamageList(config) {
+//   return requestPost({
+//     params: {
+//       action: config.action
+//     },
+//     data: config.data
+//   })
+// }
 // 商品优惠明细列表
 export function getRetailGoodsList(config) {
   return requestPost({
@@ -352,6 +352,59 @@ export function getProductDetail(config) {
 // 商品编辑提交
 
 export function editProduct(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+// 报损单汇总列表
+export function getDamageDetailList(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+
+// 报损单列表
+export function getDamageList(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+// 报损单明细
+
+export function getDamageDetail(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+// 提交报损单
+
+
+export function submitDamage(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+// 创建报损单
+
+
+export function createDamage(config) {
   return requestPost({
     params: {
       action: config.action

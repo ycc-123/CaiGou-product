@@ -4,7 +4,7 @@ import BScroll from 'better-scroll'
 
 class BetterScroll extends Component {
   render() {
-    console.log( 'better 样式', this.props.style )
+    // console.log( 'better 样式', this.props.style )
     return (
       <div className='wrapper' ref='wrapper'  style={{
           ...this.props.style,

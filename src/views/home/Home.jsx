@@ -63,8 +63,9 @@ export default class Home extends Component {
             <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/stockList') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kucundan.png" alt="" /></li>
             <li style={{ height: "1.6rem", width: "1.95rem", marginLeft: ".4rem" }} onClick={() => { this.props.history.push('/WarehousingOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/rkdan.png" alt="" /></li>
             <li onClick={()=>{this.props.history.push('/Pandian')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/pandiandan.png" alt=""/></li>
-            {/* <li onClick={()=>{this.props.history.push('/allocationOrder')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/baosdan.png" alt=""/></li> */}
             <li onClick={()=>{this.props.history.push('/allocationOrder')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaobodan.png" alt=""/></li>
+            {/* <li onClick={()=>{this.props.history.push('/LossReportList')}} style={{marginLeft:".5rem",marginTop:".6rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/baosdan.png" alt=""/></li> */}
+         
           </ul>
         </div>
 
@@ -79,7 +80,7 @@ export default class Home extends Component {
           </ul>
         </div>
         <div className="banben">
-          v1.1.1.8
+          v1.1.1.6.1
       </div>
       {/* </BetterScroll> */}
       </HomeStyle>
@@ -189,7 +190,9 @@ const HomeStyle = styled.div`
 }
 
 .footer{
+  // height: 4rem;
   height: 4rem;
+
   width:  9.3rem;
   background-color: #fff;
   margin-left: .35rem;

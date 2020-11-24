@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import {  getWarehouseList, getDamageList } from 'network/Api'
+import {  getWarehouseList, getDamageList ,getDamageDetailList} from 'network/Api'
 import { Toast, List, DatePicker } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import LossReportTiao from './LossReportTiao'
@@ -74,8 +74,8 @@ export default class LossReport extends Component {
         })
        
         // 报损列表
-        getDamageList({
-            action: 'getDamageList', data: {
+        getDamageDetailList({
+            action: 'getDamageDetailList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 // type: "1",
@@ -101,8 +101,8 @@ export default class LossReport extends Component {
         this.setState({
             xian: false
         })
-        getDamageList({
-            action: 'getDamageList', data: {
+        getDamageDetailList({
+            action: 'getDamageDetailList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 warehouseid: this.state.cankuID,
@@ -269,8 +269,8 @@ export default class LossReport extends Component {
 
     search() {
         console.log(this.state.inputSearch)
-        getDamageList({
-            action: 'getDamageList', data: {
+        getDamageDetailList({
+            action: 'getDamageDetailList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 // type: "1",
@@ -434,8 +434,8 @@ export default class LossReport extends Component {
         }, 1000)
         if (this.isLoadMore) {
           
-            getDamageList({
-                action: 'getDamageList', data: {
+            getDamageDetailList({
+                action: 'getDamageDetailList', data: {
                     uniacid: store.getState().uniacid,
                     uid: store.getState().uid,
                     search:this.state.inputSearch,
@@ -539,8 +539,8 @@ const LossReportStyle = styled.div`
 .fenglei div ul li{
     color:#6f6f6f;
     width:2.8rem;
-    height:.8rem;
-    line-height:.8rem;
+    // height:.8rem;
+    line-height:.58rem;
     text-align:center;
     background-color: #f0f0f0;
     margin:.2rem .2rem;
