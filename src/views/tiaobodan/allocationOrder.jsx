@@ -101,10 +101,10 @@ export default class InventoryList extends Component {
                             // console.log(value)
                             let data = value
                             let Color = ''
-                            if (data.statusname === "提交成功") {
+                            if (data.status === "提交成功") {
                                 Color = "#22a31b"
-                            } else if (data.statusname === "待提交") {
-                                Color = "#d92929"
+                            } else if (data.status === "待提交") {
+                                Color = "#E80D0D"
                             }
                             return (
                                 <div className='caigoudan' >

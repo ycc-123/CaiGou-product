@@ -52,10 +52,37 @@ export default class text extends Component {
             [e.target.name]: e.target.value
         })
     }
+
+    componentDidMount(){
+      let drawing = document.getElementById("drawing");
+      if (drawing.getContext) {    
+        var ctx = drawing.getContext('2d');
+   
+        ctx.beginPath();
+        var height = 100*Math.sin(Math.PI/3);
+        ctx.moveTo(100,20);
+        ctx.lineTo(10,height);
+        ctx.lineTo(200,height); 
+        var grd = ctx.createLinearGradient(0,0,200,0);
+        grd.addColorStop(0,"#000"); 
+        grd.addColorStop(1,"#000"); 
+        ctx.fillStyle=grd;
+        ctx.fill();
+        ctx.fillStyle = "#000";   
+        ctx.fillRect(100, 0, 180, 87); 
+        ctx.arcTo(11, 11, 11, 11, radius)
+  
+    }
+  }
+
+
+
+
     render() {
         return (
             <TextStyle>
-              <div style={{width:"10rem",height:"100vh",background:'red'}}></div>
+              <canvas id="drawing" width="200" height="200">A drawing of something.</canvas> 
+              {/* <div style={{width:"10rem",height:"1rem",background:'red'}}></div> */}
                 {/* <button class="show-btn" onClick={() => { this.showDialogBtn() }}>1111111111111111111111111111111</button>
                 <div className="modal-mask"
                     //   onClick={()=>{this.hideModal()}} 

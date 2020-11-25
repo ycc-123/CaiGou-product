@@ -412,3 +412,15 @@ export function createDamage(config) {
     data: config.data
   })
 }
+
+// 创建报损单
+
+
+export function getProductCategoryAllChildren(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

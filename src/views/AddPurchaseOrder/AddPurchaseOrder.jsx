@@ -137,7 +137,7 @@ export default class AddPurchaseOrder extends Component {
                              onChange={v => this.setState({Value: v})}
                              onOk={v => this.setState({ IDgy: v })}
                              >
-                                <List.Item className='time' arrow="horizontal"></List.Item>
+                                <List.Item className='pdlx' arrow="horizontal"></List.Item>
                             </Picker>
                         
                         </li>
@@ -194,7 +194,7 @@ const AddPurchaseOrderStyle = styled.div`
     // padding-top:.5rem;
     color:#a9a9a9;
     text-align: left;
-    font-size:.45rem;
+    font-size:.35rem;
     padding-left:.1rem;
     width:3rem;
 }
@@ -203,16 +203,8 @@ const AddPurchaseOrderStyle = styled.div`
     // background-image: none;
     // opacity:0;
 }
-.onetimes{
-    position:absolute;
-    left:1.8rem;
-    top:-.2rem;
-    // padding-top:.3rem;
-    color: red;
-    width:12rem;
-    background-color: transparent;
-}
-.time{
+
+.pdlx{
     position:absolute;
     left:2.2rem;
     top:1.4rem;
@@ -244,7 +236,7 @@ const AddPurchaseOrderStyle = styled.div`
     background-color: #fff;
 }
 .right{
-    font-size:.4rem;
+    font-size:.35rem;
     color:#fff;
     text-align:center;
     width: 100%;
@@ -271,7 +263,7 @@ const AddPurchaseOrderStyle = styled.div`
 .biao li input{
     border:none;
     outline:none;
-    font-size:.45rem;
+    font-size:.35rem;
     width:7rem;
     height:.65rem;
     color:#646464; 
@@ -289,7 +281,7 @@ const AddPurchaseOrderStyle = styled.div`
     color:#646464;
     padding-top:.3rem;
     // text-align:center;
-    font-size:.45rem;
+    font-size:.35rem;
     color:#646464; 
     width: 100%;
     height: 1.3rem;

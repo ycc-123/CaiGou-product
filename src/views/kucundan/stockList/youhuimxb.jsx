@@ -7,6 +7,8 @@ import { Picker, List, DatePicker } from 'antd-mobile';
 import Youhuimxbs from './youhuimxbs'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
+import { LoadingMore } from 'common/loading'
+
 export default class Youhuimxb extends Component {
     constructor() {
         super()
@@ -191,7 +193,7 @@ export default class Youhuimxb extends Component {
                         </div>
                     </div>
 
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1rem",bottom:"0"}} loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ height:"calc(100vh - 2.5rem)"}} loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
                     {
                         linshou.map((v,k)=>{
                             // console.log(v.all_fee)
@@ -199,6 +201,11 @@ export default class Youhuimxb extends Component {
                                 <Youhuimxbs item={v} history={this.props.history}></Youhuimxbs>
                             )
                         })
+                    }
+                    {
+
+                        linshou.length > 0 &&
+                        <LoadingMore isLoading={this.isLoadMore} />
                     }
                     </BetterScroll>
 
@@ -588,9 +595,10 @@ const YouhuimxbStyle = styled.div`
     // background-color: #f6f6f6;
 }
 .fenglei div ul li{
+    overflow: hidden;
     width:9.3rem;
-    // height:.9rem;
-    line-height:.58rem;
+    height:.9rem;
+    line-height:.9rem;
     text-align:center;
     
     margin:.2rem 0rem;

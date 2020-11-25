@@ -7,6 +7,7 @@ import GoodDiscounts from './GoodDiscounts'
 import { store } from "store/index";
 import DocumentTitle from 'react-document-title'
 import axios from 'axios';
+import { LoadingMore } from 'common/loading'
 export default class LossReport extends Component {
     constructor() {
         super()
@@ -334,7 +335,13 @@ export default class LossReport extends Component {
                                 <GoodDiscounts item={v} />
                             )
                         })
-                    }</div>
+                    }
+                    {
+
+                    this.state.GoodsList.length > 0 &&
+                    <LoadingMore isLoading={this.isLoadMore} />
+                    }
+                    </div>
 
                 
 
@@ -542,10 +549,11 @@ const LossReportStyle = styled.div`
     padding:.2rem .2rem;
 }
 .fenglei div ul li{
+    overflow: hidden;
     color:#6f6f6f;
     width:2.8rem;
-    // height:.8rem;
-    line-height:.58rem;
+    height:.8rem;
+    line-height:.8rem;
     text-align:center;
     background-color: #f0f0f0;
     margin:.2rem .2rem;

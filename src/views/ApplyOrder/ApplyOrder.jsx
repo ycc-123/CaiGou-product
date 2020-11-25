@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseApplyList } from 'network/Api'
-// import { SearchBar, Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
-// import Tiao from './Tiao'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 export default class ApplyOrder extends Component {
@@ -11,17 +9,19 @@ export default class ApplyOrder extends Component {
         super()
         this.state = {
             tiao: [],
-            inputSearch:''
+            inputSearch:'',
+            limit: "10",
+            page: "1"
         }
+        this.isLoadMore = true
     }
     componentDidMount() {
         getPurchaseApplyList({
             action: 'getPurchaseApplyList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                // type:"1",
-                limit: "1000",
-                page: "1"
+                limit: this.state.limit,
+                page: this.state.page
             }
         }).then((res) => {
             console.log(res)
@@ -56,6 +56,58 @@ export default class ApplyOrder extends Component {
             })
         })
     }
+    loadMore = () => {
+        // 加载数据时转圈
+        let loading = true
+        setTimeout(() => {
+            if (loading) {
+                this.setState({
+                    
+                    loadingMore: true
+                })
+            }
+        }, 1000)
+        if (this.isLoadMore) {
+          
+            getPurchaseApplyList({
+                action: 'getPurchaseApplyList', data: {
+                    uniacid: store.getState().uniacid,
+                    uid: store.getState().uid,
+                    limit: this.state.limit,
+                    page: this.state.page
+                }
+            }).then((res) => {
+               
+                let good=res.data.data.data.length
+                // 如果长度不等于得时候加载 那么是到底了
+                if (good < this.state.limit ) {
+                    this.isLoadMore = false
+                    /* let bottomTip = document.querySelector('.bottom-tip')
+                    bottomTip.style.visibility = 'visible'
+                    bottomTip.innerHTML = '商品已经全部加载完成' : res.data.data.data,*/
+                    // : res.data.data.total
+                }
+                this.setState({
+                    tiao: [...this.state.tiao, ...res.data.data.data],
+                    // Goodszong:res.data.data.total,
+                    loadingMore: false
+                }, () => {
+                    let page=Number(this.state.page)
+                    this.setState({
+                        page: page += 1
+                    })
+
+                    loading = false
+                    this.refs.scroll.BScroll.finishPullUp()
+                    this.refs.scroll.BScroll.refresh()
+                })
+            })
+        } else {
+            /* let bottomTip = document.querySelector('.bottom-tip')
+            bottomTip.style.visibility = 'visible'
+            bottomTip.innerHTML = '商品已经全部加载完成' */
+        }
+    }
     submit(){
         console.log(1111)
     }
@@ -82,9 +134,16 @@ export default class ApplyOrder extends Component {
           </div>
 
                     <div className='caigoudan' >
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0" }}>
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0" }} loadMore={this.loadMore}
+                    isLoadMore={this.isLoadMore}>
                         {
                             this.state.tiao.map((v, k) => {
+                                let Color=''
+                                if (v.statusname === "提交成功") {
+                                    Color = "#22a31b"
+                                } else if (v.statusname === "待提交") {
+                                    Color = "#ED5F21"
+                                }
                                 return (
                                     <div className='dan' >
                                         <div onClick={()=>{this.props.history.push(`/ApplyOrderx/${v.id}`)}}>
@@ -94,7 +153,7 @@ export default class ApplyOrder extends Component {
                                             </p>
                                             <div className='t-right'>
                                             <div className='caigoudanhao'>采购单号：{v.docno}</div>
-                                            <div className='zuantai'>{v.statusname}</div>
+                                            <div className='zuantai' style={{color:Color}}>{v.statusname}</div>
                                             </div>
                                         </div>
                                         <div className='dan-footer'>

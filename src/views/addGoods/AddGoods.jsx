@@ -5,13 +5,14 @@ import { createForm } from 'rc-form';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { createProduct, getUnitList, getProductCategoryAll } from 'network/Api'
+import { createProduct, getUnitList, getProductCategoryAll,getProductCategoryAllChildren} from 'network/Api'
 import { store } from "store/index";
 // import { Picker, List, Toast } from 'antd-mobile';
+import { useHistory  } from 'react-router-dom';
 
 
 const Into = (props) => {
-
+    const history =useHistory()
 
     const bt_ref = useRef()
 
@@ -37,15 +38,15 @@ const Into = (props) => {
     }
 
     useEffect(() => {
-        getProductCategoryAll({
-            action: 'getProductCategoryAll', data: {
+        getProductCategoryAllChildren({
+            action: 'getProductCategoryAllChildren', data: {
                 uniacid: store.getState().uniacid,
                 // uid:store.getState().uid,
 
             }
         }).then((res) => {
             console.log(res)
-            var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
+            var result = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
             console.log(result)
             setClassification(result)
         })
@@ -77,9 +78,9 @@ const Into = (props) => {
 
     return (
         <>
-            <AddGoodsStyle>
+            
                 <BetterScroll config={scrollConfig} style={{ height: 'calc(100vh - 1.6rem)' }} ref={bt_ref}>
-
+                <TAddGoodsStyle>
 
                     <DocumentTitle title={'新增商品'} />
 
@@ -195,6 +196,8 @@ const Into = (props) => {
                             </div>
                         </div>
                     </div>
+                    </TAddGoodsStyle>
+                    <AddGoodsStyle>
                     <div className="type flex-column">
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
@@ -312,13 +315,16 @@ const Into = (props) => {
                             </div>
                         </div>
                     </List>
-
+                </AddGoodsStyle>
                 </BetterScroll>
+
+                <FAddGoodsStyle>
                 <div className='foot'>
                     <div className='lbb'></div>
                     <div className='raa' onClick={e => { check() }}>提交</div>
                 </div>
-            </AddGoodsStyle>
+                </FAddGoodsStyle>
+            
         </>
 
     )
@@ -347,31 +353,200 @@ const Into = (props) => {
         }).then((res) => {
             console.log(res)
             if(res.data.status===4001){
-                // console.log(0)
-                // var result = res.data.data.data.map(o=>{return{value:o.id,label:o.name}});
-                //     console.log(result)
-                // this.setState({
-                //     data: result
-                // })
+                history.push('/bjsygoods') 
                 Toast.success(res.data.msg, 2)
             }else{
                 Toast.info(res.data.msg, 2)
             }
         })
-        // if (productType === "") {
-        //   Toast.info('请选择营业类目', 1)
-        // } else if (profeesion === "") {
-        //   Toast.info('请选择职业', 1)
-        // } else if (storeName === "") {
-        //   Toast.info('请填写店铺名称', 1)
-        // } else {
-
-
-
     }
-
-
 }
+const FAddGoodsStyle = styled.div`
+.lbb{
+    width: 2rem;
+    height: 1.6rem;
+    background-color: #fff;
+}
+.raa{
+    font-size:.4rem;
+    color:#fff;
+    text-align:center;
+    width: 2.76rem;
+    height: 1.6rem;
+    line-height:1.6rem;
+    background-color: #ED7913;
+}
+.foot{
+    display:flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 1.6rem;
+    background-color: #fff;
+    position:absolute;
+    bottom:0;
+}
+
+`
+
+
+
+
+
+const TAddGoodsStyle = styled.div`
+  height: 100%;
+  background: #F5F5F5;
+  color: #787878;
+
+  .wrapper .CommissionHeader{
+    height:1.09rem;
+}
+.wrapper .CommissionHeader .navbar li{
+    padding-top:.15rem;
+}
+.wrapper .CommissionHeader .navbar .active{
+    padding-bottom: .28rem;
+}
+.stor_name{
+    font-size:0.32rem;
+    height:1.17rem;
+    line-height:1.17rem;
+}
+.am-list-item .am-list-line{
+    width:6rem;
+}
+.am-list-item .am-list-line .am-list-arrow{
+    display:none;
+}
+.am-list-item .am-list-line .am-list-extra{
+    flex-basis:auto;
+    color:#b4b4b4;
+    text-align: left;
+    font-size:.35rem;
+    padding-left:.1rem;
+    text-align: left;
+    width:3rem;
+}
+.am-list-item .am-list-line .am-list-arrow{
+    margin-left:2.5rem !important;
+}
+.kcdwtimes{
+    position:absolute;
+    left:1.8rem;
+    top:2.9rem;
+    color: red;
+    width:12rem;
+    background-color: transparent;
+}
+.scdwtimes{
+    position:absolute;
+    left:3rem;
+    top:3.6rem;
+    color: red;
+    width:12rem;
+    background-color: transparent;
+}
+.time{
+    position:absolute;
+    left:2.9rem;
+    top:1.2rem;
+    text-align: left !important;
+    color: #b4b4b4;
+    font-size:.35rem;
+    width:12rem;
+    background-color: transparent;
+}
+
+.am-list-arrow am-list-arrow-horizontal{
+    background-image: none;
+    opacity:0;
+  
+}
+
+  .lbb{
+    width: 2rem;
+    height: 1.6rem;
+    background-color: #fff;
+}
+.raa{
+    font-size:.4rem;
+    color:#fff;
+    text-align:center;
+    width: 2.76rem;
+    height: 1.6rem;
+    line-height:1.6rem;
+    background-color: #ED7913;
+}
+.foot{
+    display:flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 1.6rem;
+    background-color: #fff;
+    position:absolute;
+    bottom:0;
+}
+  .xian{
+      width:100%;
+      height:1px;
+      background: #ddd;
+
+  }
+ .am-list-line::after {
+    background-color: transparent !important;
+}
+  .am-list-item .am-list-line .am-list-content{
+      font-size:.35rem;
+      color: #787878;
+  }
+
+  .type {
+
+    background-color: white;
+  }
+  .type .item {
+    font-size:.35rem;
+    justify-content: unset;
+    width: 100%;
+    height:1.2rem;
+    box-sizing: border-box;
+    padding: .47rem .43rem;
+    border-bottom: solid #E6E6E6 1px;
+  }
+  .type .item .left span {
+    font-size: .35rem;
+  }
+  .type .item .left span::before {
+    content: '*';
+    color: #DE0000;
+  }
+  .type .item .right {
+    margin-right: .3rem;
+
+  }
+  .type .item .right input {
+    width: 5.82rem;
+    border: none;
+    font-size: .35rem;
+    font-weight: 500;
+  }
+  .type .item .right input::-webkit-input-placeholder {
+    color: #B4B4B4;
+    font-size: .35rem;
+  }
+  .flex-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .flex-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+`
 
 const AddGoodsStyle = styled.div`
   height: 100%;

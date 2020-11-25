@@ -5,14 +5,14 @@ import { createForm } from 'rc-form';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { createProduct, getUnitList, getProductCategoryAll,getProductDetail ,editProduct} from 'network/Api'
+import { createProduct, getUnitList, getProductCategoryAllChildren,getProductDetail ,editProduct} from 'network/Api'
 import { store } from "store/index";
-import { useParams  } from 'react-router-dom';
+import { useHistory, useParams  } from 'react-router-dom';
 // import { Picker, List, Toast } from 'antd-mobile';
 
 
 const Into = (props) => {
-
+    const history =useHistory()
     const params=useParams().id
     // console.log(params.id)
     const bt_ref = useRef()
@@ -62,32 +62,15 @@ const Into = (props) => {
                 Toast.fail(res.data.msg,2)
             }
         })
-        getProductCategoryAll({
-            action: 'getProductCategoryAll', data: {
+        getProductCategoryAllChildren({
+            action: 'getProductCategoryAllChildren', data: {
                 uniacid: store.getState().uniacid,
             }
         }).then((res) => {
-            var result = res.data.data.map(o => {
+            // console.log(res)
+   
+            var result = res.data.data.data.map(o => {
                 return { value: o.id, label: o.name } });
-            console.log(res)
-            let aa=[]
-            let bb={}
-            res.data.data.map((v,k)=>{
-                console.log(v.children)
-                if(v.children===undefined){
-                   return aa.push({1:"1"})
-                }else{
-                    aa.push(v.children)
-                }
-            })
-            console.log(aa)
-            let yierji=[]
-            
-            yierji.push(result)
-            yierji.push(aa)
-            console.log(yierji)
-            seterji(res.data.data)
-            
             // console.log(result)
             setClassification(result)
         })
@@ -119,9 +102,9 @@ const Into = (props) => {
 
     return (
         <>
-            <AddGoodsStyle>
+            
                 <BetterScroll config={scrollConfig} style={{ height: 'calc(100vh - 1.6rem)' }} ref={bt_ref}>
-
+                <TAddGoodsStyle>
 
                     <DocumentTitle title={'新增商品'} />
 
@@ -152,8 +135,8 @@ const Into = (props) => {
                             </div>
                             <div className="right">
                                 <Picker
-                                    data={erji}
-                                    cols={2}
+                                    data={classification}
+                                    cols={1}
                                     className="forss"
                                     extra={morengoods.category_name}
                                     value={goodCategory}
@@ -238,6 +221,8 @@ const Into = (props) => {
                             </div>
                         </div>
                     </div>
+                    </TAddGoodsStyle>
+                    <AddGoodsStyle>
                     <div className="type flex-column">
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
@@ -334,7 +319,7 @@ const Into = (props) => {
                             <div className='xian'></div>
 
 
-                            <div className="type flex-column">
+                            <div className="type flex-column" style={{display:matchGood?"none":"block"}}>
                                 <div className="item flex-row" style={{
                                     justifyContent: 'space-between'
                                 }}>
@@ -354,13 +339,16 @@ const Into = (props) => {
                             </div>
                         </div>
                     </List>
-
+                </AddGoodsStyle>
                 </BetterScroll>
+
+                <FAddGoodsStyle>
                 <div className='foot'>
                     <div className='lbb'></div>
                     <div className='raa' onClick={e => { check() }}>提交</div>
                 </div>
-            </AddGoodsStyle>
+                </FAddGoodsStyle>
+            
         </>
     )
     function check() {
@@ -394,13 +382,174 @@ const Into = (props) => {
         }).then((res) => {
             // console.log(res)
             if(res.data.status===4001){
-                this.props.history.push('/bjsygoods')
+                history.push('/bjsygoods')
+                Toast.success(res.data.msg, 2)
             }else{
                 Toast.info(res.data.msg, 2)
             }
         })
     }
 }
+const FAddGoodsStyle = styled.div`
+.lbb{
+    width: 2rem;
+    height: 1.6rem;
+    background-color: #fff;
+}
+.raa{
+    font-size:.4rem;
+    color:#fff;
+    text-align:center;
+    width: 2.76rem;
+    height: 1.6rem;
+    line-height:1.6rem;
+    background-color: #ED7913;
+}
+.foot{
+    display:flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 1.6rem;
+    background-color: #fff;
+    position:absolute;
+    bottom:0;
+}
+
+`
+
+const TAddGoodsStyle = styled.div`
+  height: 100%;
+  background: #F5F5F5;
+  color: #787878;
+
+  .wrapper .CommissionHeader{
+    height:1.09rem;
+}
+.wrapper .CommissionHeader .navbar li{
+    padding-top:.15rem;
+}
+.wrapper .CommissionHeader .navbar .active{
+    padding-bottom: .28rem;
+}
+.stor_name{
+    font-size:0.32rem;
+    height:1.17rem;
+    line-height:1.17rem;
+}
+.am-list-item .am-list-line{
+    width:6rem;
+}
+.am-list-item .am-list-line .am-list-arrow{
+    display:none;
+}
+.am-list-item .am-list-line .am-list-extra{
+    flex-basis:auto;
+    color:#b4b4b4;
+    text-align: left;
+    font-size:.35rem;
+    padding-left:.1rem;
+    text-align: left;
+    width:3rem;
+}
+.am-list-item .am-list-line .am-list-arrow{
+    margin-left:2.5rem !important;
+}
+.kcdwtimes{
+    position:absolute;
+    left:1.8rem;
+    top:2.9rem;
+    color: red;
+    width:12rem;
+    background-color: transparent;
+}
+.scdwtimes{
+    position:absolute;
+    left:3rem;
+    top:3.6rem;
+    color: red;
+    width:12rem;
+    background-color: transparent;
+}
+.time{
+    position:absolute;
+    left:2.9rem;
+    top:1.2rem;
+    text-align: left !important;
+    color: #b4b4b4;
+    font-size:.35rem;
+    width:12rem;
+    background-color: transparent;
+}
+
+.am-list-arrow am-list-arrow-horizontal{
+    background-image: none;
+    opacity:0;
+  
+}
+
+
+  .xian{
+      width:100%;
+      height:1px;
+      background: #ddd;
+
+  }
+ .am-list-line::after {
+    background-color: transparent !important;
+}
+  .am-list-item .am-list-line .am-list-content{
+      font-size:.35rem;
+      color: #787878;
+  }
+
+  .type {
+
+    background-color: white;
+  }
+  .type .item {
+    font-size:.35rem;
+    justify-content: unset;
+    width: 100%;
+    height:1.2rem;
+    box-sizing: border-box;
+    padding: .47rem .43rem;
+    border-bottom: solid #E6E6E6 1px;
+  }
+  .type .item .left span {
+    font-size: .35rem;
+  }
+  .type .item .left span::before {
+    content: '*';
+    color: #DE0000;
+  }
+  .type .item .right {
+    margin-right: .3rem;
+
+  }
+  .type .item .right input {
+    width: 5.82rem;
+    border: none;
+    font-size: .35rem;
+    font-weight: 500;
+  }
+  .type .item .right input::-webkit-input-placeholder {
+    color: #B4B4B4;
+    font-size: .35rem;
+  }
+  .flex-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .flex-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+`
 
 const AddGoodsStyle = styled.div`
   height: 100%;
@@ -480,46 +629,6 @@ const AddGoodsStyle = styled.div`
     opacity:0;
     // 
 }
-
-
-
-
-
-
-
-  .lbb{
-    // float:left;
-    width: 2rem;
-    height: 1.6rem;
-    background-color: #fff;
-}
-.raa{
-    // float:right;
-    font-size:.4rem;
-    color:#fff;
-    text-align:center;
-    width: 2.76rem;
-    // margin-right:0rem;
-    height: 1.6rem;
-    line-height:1.6rem;
-    background-color: #ED7913;
-}
-.foot{
-    display:flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 1.6rem;
-    background-color: #fff;
-    position:absolute;
-    bottom:0;
-}
-
-
-
-
-
-
-
 
   .xian{
       width:100%;

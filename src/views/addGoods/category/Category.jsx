@@ -268,32 +268,11 @@ class Category extends Component {
 
 
 
-    const { appConfig } = store.getState()
-    let { title } = this.state
-    if (!this.state.goods) {
-      const right_config = {
-        action: 'getGoodsByCategory',
-        data: {
-          uniacid: appConfig.uniacid,
-          openid: appConfig.wxUserInfo.openid,
-          cid: this.state.title[index].id,
-          pagesize: 100
-        }
-      }
-      _categoryRight(right_config).then(res => {
-        title[index].goods = (res.data && res.data.data && res.data.data.list) || []
-        this.setState({
-          ys: res.data.data.issell,
-          kc: res.data.data.showPubStock,
-          title,
-          defaultIndex: index
-        })
-      })
-    } else {
+   
       this.setState({
         defaultIndex: index
       })
-    }
+
   }
 
 
