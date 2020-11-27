@@ -21,8 +21,10 @@ class Tiao extends Component {
                             <p>
                             <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt=""/>
                             </p>
+                            <div className='t-right'>
                             <div className='caigoudanhao'>采购单号：{item.docno}</div>
                             <div className='zuantai' style={{color:Color}}>{item.statusname}</div>
+                            </div>
                         </div>
                         <div className='dan-footer'>
                             <p>单据日期：{item.docdate}</p>

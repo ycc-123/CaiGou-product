@@ -58,7 +58,7 @@ export default class LossReport extends Component {
                     GoodsList: res.data.data.data,
                     Goodszong: res.data.data.total
                 }, () => {
-                    this.refs.scroll.BScroll.refresh()
+                    this.refs.aaa.BScroll.refresh()
                 })
             } else {
                 Toast.info(res.data.msg, 1)
@@ -254,13 +254,13 @@ export default class LossReport extends Component {
             this.setState({
                 xian: true
             }, () => {
-                this.refs.scroll.BScroll.refresh()
+                this.refs.bbb.BScroll.refresh()
             })
         } else {
             this.setState({
                 xian: false
             }, () => {
-                this.refs.scroll.BScroll.refresh()
+                this.refs.bbb.BScroll.refresh()
             })
         }
     }
@@ -270,7 +270,7 @@ export default class LossReport extends Component {
             cankuID: v.id,
             ckkey: v.id
         }, () => {
-            this.refs.scroll.BScroll.refresh()
+            // this.refs.scroll.BScroll.refresh()
         })
     }
 
@@ -326,7 +326,7 @@ export default class LossReport extends Component {
                         <img className='sximg-search' onClick={() => { this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
                     </div>
                 </div>
-                <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1rem", bottom: "1.5rem" }} loadMore={this.loadMore}
+                <BetterScroll config={scrollConfig} ref='aaa' style={{ top: "1.2rem", bottom: "1.5rem" }} loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
                         <div style={{ display: this.state.xian === false ? "block":"none" }}>
                     {
@@ -342,9 +342,10 @@ export default class LossReport extends Component {
                     <LoadingMore isLoading={this.isLoadMore} />
                     }
                     </div>
+                    </BetterScroll>
 
                 
-
+                    <BetterScroll config={scrollConfig} ref='bbb'>
                 <div className='fenglei' style={{ display: this.state.xian === false ? "none" : "block" }}>
                     <div><span style={{ color: "#333333" }}>仓库名称</span>
                         <ul>
@@ -475,8 +476,8 @@ export default class LossReport extends Component {
                     })
 
                     loading = false
-                    this.refs.scroll.BScroll.finishPullUp()
-                    this.refs.scroll.BScroll.refresh()
+                    this.refs.aaa.BScroll.finishPullUp()
+                    this.refs.aaa.BScroll.refresh()
                 })
             })
         } else {
@@ -672,7 +673,7 @@ const LossReportStyle = styled.div`
 
 .sximg{
     margin-left:.2rem;
-    margin-top:.2rem;
+    margin-top:.3rem;
     width: .8rem;  
     height: .6rem; 
 }
@@ -685,38 +686,44 @@ const LossReportStyle = styled.div`
 input::-webkit-input-placeholder {
     color: #c9c9c9;
     font-size:.35rem;
-}
-.img{
-    width: .8rem;  
-    height: .6rem; 
-}
-.img-search{
-    margin-top:.1rem;
+  }
+  .img{
+    width: .55rem;  
+    height: .55rem; 
+    // line-height: .5rem; 
+    margin-left:3.8rem;
+  }
+  .img-search{
+    margin-top:.12rem;
     width: auto;  
     height: auto;  
     max-width: 100%;  
     max-height: 100%;
-}
+  }
     
-.input{
-    font-size:.35rem;
+  .input{
+    font-size:.37rem;
     border:none;
-    width:8.3rem;
-    margin-top:.1rem;
-    margin-left:.3rem;
-    height: .6rem;
+    // width:8.3rem;
+    // margin-top:.21rem;
+    margin-left:.17rem;
+    height: .75rem;
+    line-height: .75rem;
     // background-color: red;
-
-}
-.search{
+  
+  }
+  .search{
     display:flex;
-    margin: .1rem .2rem;
-    width:8.5rem;
-    height: .8rem;
-    border-radius:.5rem;
-    background-color: #fff;
+    margin-top:.21rem;
+    margin-bottom:.21rem;
 
-}
+    margin-left:.32rem;
+    width:8.6rem;
+    height: .75rem;
+    border-radius:.15rem;
+    background-color: #fff;
+  
+  }
 
 
 

@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { createProduct, getUnitList, getProductCategoryAll,getProductCategoryAllChildren} from 'network/Api'
+
+import { Cascader ,Divider} from 'antd';
+import 'antd/dist/antd.css';
+
+
 
 export default class text extends Component {
     constructor() {
@@ -7,7 +13,8 @@ export default class text extends Component {
         this.state = {
             showModal: false,
             inputsl: '',
-            inputjg: ''
+            inputjg: '',
+            aa:[]
         }
     }
     /*
@@ -54,71 +61,110 @@ export default class text extends Component {
     }
 
     componentDidMount(){
-      let drawing = document.getElementById("drawing");
-      if (drawing.getContext) {    
-        var ctx = drawing.getContext('2d');
-   
-        ctx.beginPath();
-        var height = 100*Math.sin(Math.PI/3);
-        ctx.moveTo(100,20);
-        ctx.lineTo(10,height);
-        ctx.lineTo(200,height); 
-        var grd = ctx.createLinearGradient(0,0,200,0);
-        grd.addColorStop(0,"#000"); 
-        grd.addColorStop(1,"#000"); 
-        ctx.fillStyle=grd;
-        ctx.fill();
-        ctx.fillStyle = "#000";   
-        ctx.fillRect(100, 0, 180, 87); 
-        ctx.arcTo(11, 11, 11, 11, radius)
   
-    }
+      getProductCategoryAll({
+        action: 'getProductCategoryAll', data: {
+            uniacid: "53",
+            // uid:store.getState().uid,
+
+        }
+    }).then((res) => {
+      console.log(res.data.data)
+      this.setState({
+        aa:res.data.data
+      })
+    })
   }
 
+  onsortChange = (value,selectedOptions) => {
+
+    var date = new Date();
+    this.setState({
+      value_sort: value ? value[value.length-1] : '',
+    })
+  }
+
+  dropdownRender(menus) {
+    return (
+      <div>
+        {menus}
+        <Divider style={{ margin: 0 }} />
+        <div style={{ padding: 8 }}>The footer is not very short.</div>
+      </div>
+    );
+  }
 
 
 
     render() {
         return (
             <TextStyle>
-              <canvas id="drawing" width="200" height="200">A drawing of something.</canvas> 
-              {/* <div style={{width:"10rem",height:"1rem",background:'red'}}></div> */}
-                {/* <button class="show-btn" onClick={() => { this.showDialogBtn() }}>1111111111111111111111111111111</button>
-                <div className="modal-mask"
-                    //   onClick={()=>{this.hideModal()}} 
-                    style={{ display: this.state.showModal === false ? "none" : "block" }}
-                ></div>
-                <div className="modal-dialog"
-                    style={{ display: this.state.showModal === false ? "none" : "block" }}
-                >
-                    <div className="modal-title">邮箱</div>
-                    <div className="centen-m-t">请填写采购数量与单价</div>
-                    <div className="modal-content">
-                        <div className="modal-input">
-                            <p>
-                                <input className="input" placeholder="请填写采购数量" name="inputsl"
-                                    onChange={this.inputChangesl.bind(this)}
-                                    value={this.state.inputsl} type="text" />
-                            </p>
-                            <div style={{ width: "100%", height: ".2rem" }}></div>
-                            <p>
-                                <input className="input" placeholder="请填写采购单价" name="inputjg"
-                                    onChange={this.inputChangejg.bind(this)}
-                                    value={this.state.inputjg} type="text" />
-                            </p>
-                            <div style={{ width: "100%", height: ".1rem" }}></div>
-                        </div>
-                    </div>
-                    <div className="modal-footer">
-                        <div className="btn-cancel" onClick={() => { this.onCancel() }} >取消</div>
-                        <div className="btn-confirm" onClick={() => { this.onConfirm() }} >确定</div>
-                    </div>
-                </div> */}
-            </TextStyle>
+              <div className='ss'>
+             <Cascader className="ant-cascader-menu" style={{
+                  width: '5rem',
+                  border:"none"
+                }}
+                
+                options={this.state.aa}
+                fieldNames={{
+                  label: 'name',
+                  value: 'id',
+                  children: 'children',
+                }}
+                
+                onChange={this.onsortChange}
+                placeholder="请选择分类"
+                expandTrigger="hover"
+              /></div>
+              </TextStyle>
+
+              // {/* <canvas id="drawing" width="200" height="200">A drawing of something.</canvas>  */}
+              // {/* <div style={{width:"10rem",height:"1rem",background:'red'}}></div> */}
+              //   {/* <button class="show-btn" onClick={() => { this.showDialogBtn() }}>1111111111111111111111111111111</button>
+              //   <div className="modal-mask"
+              //       //   onClick={()=>{this.hideModal()}} 
+              //       style={{ display: this.state.showModal === false ? "none" : "block" }}
+              //   ></div>
+              //   <div className="modal-dialog"
+              //       style={{ display: this.state.showModal === false ? "none" : "block" }}
+              //   >
+              //       <div className="modal-title">邮箱</div>
+              //       <div className="centen-m-t">请填写采购数量与单价</div>
+              //       <div className="modal-content">
+              //           <div className="modal-input">
+              //               <p>
+              //                   <input className="input" placeholder="请填写采购数量" name="inputsl"
+              //                       onChange={this.inputChangesl.bind(this)}
+              //                       value={this.state.inputsl} type="text" />
+              //               </p>
+              //               <div style={{ width: "100%", height: ".2rem" }}></div>
+              //               <p>
+              //                   <input className="input" placeholder="请填写采购单价" name="inputjg"
+              //                       onChange={this.inputChangejg.bind(this)}
+              //                       value={this.state.inputjg} type="text" />
+              //               </p>
+              //               <div style={{ width: "100%", height: ".1rem" }}></div>
+              //           </div>
+              //       </div>
+              //       <div className="modal-footer">
+              //           <div className="btn-cancel" onClick={() => { this.onCancel() }} >取消</div>
+              //           <div className="btn-confirm" onClick={() => { this.onConfirm() }} >确定</div>
+              //       </div>
+              //   </div> */}
+            
         )
     }
 }
 const TextStyle = styled.div`
+.aa{
+  height:100px;
+}
+.ant-cascader-menu {
+  height: 300px;
+}
+.ant-input {
+  border: 1px solid transparent;
+}
 .show-btn {
     margin: 0 0.64rem;
     background-color: #2E5BFF;

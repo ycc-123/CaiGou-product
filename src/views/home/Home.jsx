@@ -3,12 +3,15 @@ import styled from 'styled-components'
 import { store } from "store/index";
 import { Toast } from 'antd-mobile';
 import DocumentTitle from 'react-document-title'
+import BetterScroll from 'common/betterScroll/BetterScroll'
+
 // import BetterScroll from 'common/betterScroll/BetterScroll'
 
 
 export default class Home extends Component {
 
   componentDidMount() {
+    this.refs.scroll.BScroll.refresh()
     // this.bt_ref.current.BScroll.refresh()
     // <Title title="" />
     console.log(localStorage.getItem('user'))
@@ -36,16 +39,16 @@ export default class Home extends Component {
       
       
       <HomeStyle>
-        {/* <BetterScroll config={scrollConfig} style={{ height: "100vh" }} ref={this.bt_ref}> */}
-        {/* <div className='top'> */}
-        {/* <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/base.png" alt=""/></div> */}
-        {/* <ul> */}
+        <BetterScroll config={scrollConfig} style={{ height: "100vh" }} ref='scroll'>
+        <div className='top'>
+        <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/base.png" alt=""/></div>
+        <ul>
           {/* <li onClick={()=>{this.props.history.push('/AddGoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/add.png" alt=""/></li> */}
-          {/* <li onClick={()=>{this.props.history.push('/addgoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/bianji.png" alt=""/></li> */}
+          <li onClick={()=>{this.props.history.push('/bjsygoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/bianji.png" alt=""/></li>
           {/* <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaojia.png" alt=""/></li> */}
           {/* <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dabao.png" alt=""/></li> */}
-        {/* </ul> */}
-      {/* </div> */}
+        </ul>
+      </div>
         <DocumentTitle title={'进销存'} />
 
         <div className='conten'>
@@ -82,7 +85,7 @@ export default class Home extends Component {
         <div className="banben">
           v1.1.1.7
       </div>
-      {/* </BetterScroll> */}
+      </BetterScroll>
       </HomeStyle>
       
     )
@@ -93,9 +96,10 @@ const HomeStyle = styled.div`
   opacity: .2;
   color: #3E3E3E;
   font-size: .45rem;
-  position: absolute;
-  right: 0px;
-  bottom: .2rem;
+  // position: absolute;
+  // right: 0px;
+  // bottom: .2rem;
+  margin: .3rem 0;
   width: 100%;
   text-align: center;
 }

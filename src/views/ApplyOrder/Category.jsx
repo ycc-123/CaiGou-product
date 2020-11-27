@@ -290,8 +290,6 @@ class Category extends Component {
       })
     }
   }
-
-
 }
 const CategoryStyle = styled.div`
 input::-webkit-input-placeholder {

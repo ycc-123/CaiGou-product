@@ -193,7 +193,7 @@ export default class Youhuimxb extends Component {
                         </div>
                     </div>
 
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ height:"calc(100vh - 2.5rem)"}} loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "1.5rem" }} loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
                     {
                         linshou.map((v,k)=>{
                             // console.log(v.all_fee)
@@ -370,6 +370,20 @@ export default class Youhuimxb extends Component {
     }
 }
 const YouhuimxbStyle = styled.div`
+.sximg{
+    height:.5rem;
+    width:.5rem;
+    margin-top:.37rem;
+    margin-left:.27rem;
+
+}
+.sximg img{
+    width: auto;  
+        height: auto;  
+        max-width: 100%;  
+        max-height: 100%;
+}
+
 .kongbj img{
     width: 5rem;
     height: 5rem;
@@ -381,6 +395,183 @@ const YouhuimxbStyle = styled.div`
     vertical-align: middle;
     text-align: center;
 
+}
+.btn_sh{
+    position:absolute;
+    top:1.6rem;
+    left:7.8rem;
+    width: 1.33rem;
+    height: 0.67rem;
+    line-height: 0.67rem;
+    // margin-top:.4rem;
+    // margin-right:.11rem;
+    color:#fff;
+    text-align:center;
+    background: #ED7913;
+    border-radius: .1rem;
+}
+.t-right{
+    width:100%;
+    display:flex;
+    justify-content: space-between;
+}
+.dan-footer{
+    margin-top:.27rem;
+}
+.dan-footer p{
+    margin-bottom:.25rem;
+    margin-left:.48rem;
+    font-size:.35rem;
+    color: #969696;
+}
+.zuantai{
+        // margin-top:.27rem;
+        margin-right:.27rem;
+        height:.85rem;
+        line-height:.85rem;
+        font-size:.35rem;
+        color: #ed5f21;
+    }
+    .caigoudanhao{
+        // margin-top:.25rem;
+        margin-left:.31rem;
+        // width:7.09rem;
+        height:.85rem;
+        line-height:.85rem;
+        font-size:.35rem;
+        color: #333333;
+    }
+    .dan-top p img{
+        width: auto;  
+        height: auto;  
+        max-width: 100%;  
+        max-height: 100%;
+    }
+    .dan-top p{
+        margin-top:.25rem;
+        margin-left:.37rem;
+        width: .29rem;  
+        height: .35rem;
+    }
+    .dan-top{
+        display:flex;
+        width: 100%;  
+        height: .85rem;
+        border-bottom:1px solid #dddddd;
+    }
+    .dan{
+        position:relative;
+        margin-bottom:.23rem;
+        margin-left: .32rem;
+        width: 9.36rem;  
+        // height: 2.89rem;
+        background-color: #fff;
+        border-radius:.2rem;
+        border:1px solid #dddddd;
+    
+    
+    
+    }
+    .add{
+        width: 1.6rem;
+        height: 0.75rem;
+        line-height: 0.75rem;
+        text-align:center;
+        color:#fff;
+        background: #ED7A14;
+        border-radius: .1rem;
+        margin-top:.21rem;
+        margin-left:.32rem;
+        font-size:.37rem;
+      }
+      
+      input::-webkit-input-placeholder {
+        color: #c9c9c9;
+        font-size:.35rem;
+      }
+      .img{
+        width: .55rem;  
+        height: .55rem; 
+        // line-height: .5rem; 
+        margin-left:3.8rem;
+      }
+      .img-search{
+        margin-top:.12rem;
+        width: auto;  
+        height: auto;  
+        max-width: 100%;  
+        max-height: 100%;
+      }
+        
+      .input{
+        font-size:.37rem;
+        border:none;
+        // width:8.3rem;
+        // margin-top:.21rem;
+        margin-left:.17rem;
+        height: .75rem;
+        line-height: .75rem;
+        // background-color: red;
+      
+      }
+      .search{
+        display:flex;
+        margin-top:.21rem;
+        margin-left:.32rem;
+        width:8.6rem;
+        height: .75rem;
+        border-radius:.15rem;
+        background-color: #fff;
+      
+      }
+
+
+.foot div span{
+    color:#cf2424;
+    font-weight:900;
+}
+.foot{
+    box-shadow: -1px -1px 2px #ccc;
+    padding-left:.3rem;
+    font-size:.38rem;
+    display:flex;
+    justify-content: space-between;
+    width:100%;
+    height:1.5rem;
+    line-height:1.5rem;
+    position:absolute;
+    bottom:0rem;
+    background-color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.kongbj img{
+    width: 5rem;
+    height: 5rem;
+}
+.kongbj{
+    margin-top:2rem;
+    width:100%;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
 }
 .conten ul li article div img{
     width: auto;  
@@ -412,7 +603,6 @@ const YouhuimxbStyle = styled.div`
     // background-color: pink;
     height:1.2rem;
     // line-height:1.2rem;
-
 }
 .conten ul{
     display:flex;
@@ -459,7 +649,6 @@ const YouhuimxbStyle = styled.div`
     padding-left:.1rem;
 }
 .am-list-item .am-list-line .am-list-arrow{
-
     background-image: none;
     opacity:0;
 }
@@ -489,16 +678,11 @@ const YouhuimxbStyle = styled.div`
     color: #a9a9a9;
     width:12rem;
     background-color: transparent;
-
 }
 .am-list-arrow am-list-arrow-horizontal{
     background-image: none;
     opacity:0;
 }
-
-
-
-
 // .wrapper .CommissionHeader{
 //     height:1.09rem;
 // }
@@ -565,7 +749,6 @@ const YouhuimxbStyle = styled.div`
     opacity:0;
     // 
 }
-
 .articleone{
     position:absolute;
     top:.85rem;
@@ -582,8 +765,6 @@ const YouhuimxbStyle = styled.div`
     height:1rem;
     // border:1px solid #dcdcdc;
 }
-
-
 .fenglei div ul p{
     width:9.3rem;
     height:.9rem;
@@ -637,82 +818,6 @@ const YouhuimxbStyle = styled.div`
 
 
 
-.caigoudanhao{
-    margin-top:.15rem;
-    margin-left:.2rem;
-    width:7.5rem;
-    font-size:.3rem;
-    color: #333333;
-}
-
-.dan-top{
-    display:flex;
-    width: 100%;  
-    height: .9rem;
-    // border-bottom:1px solid #dddddd;
-}
-.dan{
-    margin:.3rem .25rem;
-    width: 9.5rem;  
-    // height: rem;
-    background-color: #fff;
-    border-radius:.2rem;
-    // border:1px solid #dddddd;
-}
-
-
-
-.sximg{
-    margin-left:.2rem;
-    margin-top:.2rem;
-    width: .8rem;  
-    height: .6rem; 
-}
-.sximg-search{
-    width: auto;  
-    height: auto;  
-    max-width: 100%;  
-    max-height: 100%;
-}
-input::-webkit-input-placeholder {
-    color: #c9c9c9;
-    font-size:.35rem;
-}
-.img{
-    width: .8rem;  
-    height: .6rem; 
-}
-.img-search{
-    margin-top:.1rem;
-    width: auto;  
-    height: auto;  
-    max-width: 100%;  
-    max-height: 100%;
-}
-    
-.input{
-    font-size:.35rem;
-    border:none;
-    width:8.3rem;
-    margin-top:.1rem;
-    margin-left:.3rem;
-    height: .6rem;
-    // background-color: red;
-
-}
-.search{
-    display:flex;
-    margin: .1rem .2rem;
-    width:8.5rem;
-    height: .8rem;
-    border-radius:.5rem;
-    background-color: #fff;
-
-}
-
-
-
 
 `
-
 

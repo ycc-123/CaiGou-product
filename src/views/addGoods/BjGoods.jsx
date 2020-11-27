@@ -65,11 +65,12 @@ const Into = (props) => {
         getProductCategoryAllChildren({
             action: 'getProductCategoryAllChildren', data: {
                 uniacid: store.getState().uniacid,
+                uid:store.getState().uid,
             }
         }).then((res) => {
             // console.log(res)
    
-            var result = res.data.data.data.map(o => {
+            var result = res.data.data.map(o => {
                 return { value: o.id, label: o.name } });
             // console.log(result)
             setClassification(result)

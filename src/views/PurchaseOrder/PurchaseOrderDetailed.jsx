@@ -200,7 +200,7 @@ export default class PurchaseOrderDetailed extends Component {
                             <div>{this.state.purchaseDetail.docno}</div>
                         </div>
 
-                        <div className='conten-c'>
+                        <div className='conten-c' style={{ paddingTop: ".25rem" }}>
                             <p>单据日期：{this.state.purchaseDetail.docdate}</p>
                             <p>单据仓库：{this.state.purchaseDetail.warehousename}</p>
                             <p>单据状态：<span style={{ color: Color }}>{this.state.purchaseDetail.statusname}</span></p>
@@ -210,7 +210,7 @@ export default class PurchaseOrderDetailed extends Component {
                             采购备注：{this.state.purchaseDetail.remark}
                         </div>
                     </div>
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "5.8rem", bottom: "1.6rem" }}>
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)"}}>
                         {
                             this.state.purchaseItem.map((value, key) => {
                                 console.log(value)
@@ -221,10 +221,12 @@ export default class PurchaseOrderDetailed extends Component {
                         }
                     </BetterScroll>
                     <div className='foot'>
+                    <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
                         <div className='left'>
-                            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
+                        <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                                <div className='yuan'>{this.state.purchaseItem.length}</div>
                         </div>
-                        <div className='yuan'>{this.state.purchaseItem.length}</div>
+                        {/* <div className='yuan'>{this.state.purchaseItem.length}</div> */}
                         {/* <div className='foot_conton'>总额：<span>0</span></div> */}
                         <div style={{ background: this.state.purchaseDetail.statusname === "审核成功" ? "#B4B4B4" : '' }}
                             className='right'
@@ -258,34 +260,37 @@ export default class PurchaseOrderDetailed extends Component {
                             visible={false}
                         >111111</Button> */}
                     </div>
+                    </div>
                 </div>
+           
             </PurchaseOrderDetailedStyle>
         )
     }
 }
 const PurchaseOrderDetailedStyle = styled.div`
-.am-button::before{
-    border:none !important;
-  }
+.am-button::before {
+    border: none !important;
+}
 .yuan{
     // padding-top:.1rem;
     text-align:center;
     // margin:auto;
     position:absolute;
     top: .2rem;
-    left:1.6rem;
+    left:1.3rem;
     color:#fff;
-    width:.5rem;
-    height:.5rem;
-    line-height:.5rem;
+    width:.51rem;
+    height:.51rem;
+    line-height:.51rem;
     border-radius:.5rem;
-    background-color: red;
+    background-color: #E01616;
+    font-size:.24rem;
   }
   .foot_conton span{
     color:#cf2424;
   }
   .foot_conton{
-    width: 10rem;
+    width: 12rem;
     // height: 100%rem;
     line-height:1.6rem;
     text-align:center;
@@ -298,17 +303,16 @@ const PurchaseOrderDetailedStyle = styled.div`
     max-height: 100%;
   }
   .left{
-    padding-left:.3rem;
-    margin:auto;
-    width: 22rem;
-    height: 1rem;
+    padding-left:.48rem;
+    padding-top:.45rem;
+    width:3rem;
+    
   }
   .right{
     font-size:.4rem;
     color:#fff;
     text-align:center;
-    width: 100%;
-    margin:auto;
+    width: 2.76rem;
     height: 1.6rem;
     line-height:1.6rem;
     background-color: #ED7913;
@@ -321,153 +325,176 @@ const PurchaseOrderDetailedStyle = styled.div`
     position:absolute;
     bottom:0;
   }
-
-
-.wen-zi-t p{
-    color:#646464;
-    font-size:.35rem;
-}
-.wen-zi-f div{
-    font-size:.35rem;
-    color:#646464;
-}
-.wen-zi-f p{
-    font-size:.35rem;
-    color:#cf2424;
-}
-.name{
-    font-size:.35rem;
-    width: 3.2rem;
-    height: 100%;
-    color:#1a1a1a;
-    // background-color: pink;
-}
-.wen-zi-f{
-    display:flex;
-    justify-content: space-between;
-}
-.wen-zi-t{
-    display:flex;
-    justify-content: space-between;
-    width: 7.5rem;
-    height: 1.1rem;
-    // background-color: yellow;
-}
-.wen-zi{
     
-    padding-top:.2rem;
-    margin-left: .2rem;
-    width: 7.5rem;
-    height: 1.7rem;
-    // background-color: red;
-}
-.t-img-l{
-    margin-left: .2rem;
-    margin-top:.2rem;
-    width: 1.5rem;
-    height: 1.5rem;
-    // background-color: orange;
-}
-.t-img{
-    // padding-top: .2rem;
-    margin-left: .2rem;
-    width: 1.5rem;
-    height: 1.8rem;
-    background-color: red;
-}
-.tiao{
-    display:flex;
-    width: 100%;
-    height: 2rem;
-    background-color: #fff;
-    border-bottom:2px solid #dadada;
     
-
-}
-.footer{
-    font-size:.4rem;
-    margin-top: .1rem;
-    margin-left: .3rem;
-    color:#969696;
-
-}
-.conten-c p{ 
-    color:#8f8f8f;
-    font-size:.4rem;
-    padding-top:.2rem;
-    margin-left: .3rem;
-}
-.conten-c{
-    width: 9.3rem;  
-    height: 2.6rem;  
-    margin:0 .3rem;
-    background-color: #f8f8f8;
-
-}
-.conten-top p img{ 
-    width: auto;  
-    height: auto;  
-    max-width: 100%;  
-    max-height: 100%;
-}
-.conten-top div{
-    font-size:.45rem;
-    margin-top: .25rem;
-    margin-left:.2rem;
-}
-.conten-top p{
-    margin-top: .3rem;
-    margin-left:.3rem;
-    width:.4rem;
-    height:.7rem;
-}
-.conten-top{
-    display:flex;
-
-}
-.conten{
-    border-bottom:2px solid #dadada;
-    margin-top:.2rem;
-    width:100%;
-    height:4.5rem;
-    background-color: #fff;
-
-}
-input::-webkit-input-placeholder {
-    color: #c9c9c9;
-    font-size:.35rem;
-}
-.img{
-    width: .8rem;  
-    height: .6rem; 
-}
-.img-search{
-    margin-top:.1rem;
-    width: auto;  
-    height: auto;  
-    max-width: 100%;  
-    max-height: 100%;
-}
     
-.input{
-    font-size:.35rem;
-    border:none;
-    width:8.3rem;
-    margin-top:.1rem;
-    margin-left:.3rem;
-    height: .6rem;
-    // background-color: red;
+    
+    
+    .wen-zi-f p span{
+        color:#cf2424;
+    }
+    .wen-zi-t p{
+        color:#646464;
+        font-size:.29rem;
+    }
+    .wen-zi-f div{
+        font-size:.29rem;
+        color:#646464;
+    }
+    .wen-zi-f p{
+        font-size:.29rem;
+        color:#646464;
+    }
+    .name{
+        font-size:.35rem;
+        width: 3.2rem;
+        color:#1a1a1a;
+        // margin: .1rem 0;
+    }
+    .wen-zi-f{
+        margin-top:.6rem;
+        display:flex;
+        justify-content: space-between;
+    }
+    .wen-zi-t{
+        display:flex;
+        justify-content: space-between;
+        width: 7.5rem;
+        // height: 1.1rem;
+        // background-color: yellow;
+    }
+    .wen-zi-c{
+        display:flex;
+        justify-content: space-between;
+        font-size:.29rem;
+        // margin-bottom:.27rem;
+    }
+    .wen-zi{
+        
+        padding-top:.25rem;
+        margin-left: .32rem;
+        width: 7.5rem;
+    }
+    .t-img-l{
 
-}
-.search{
-    display:flex;
-    margin: .3rem .2rem 0;
-    width:9.5rem;
-    height: .8rem;
-    border-radius:.5rem;
-    background-color: #fff;
+        margin-left: .37rem;
+        margin-top:.24rem;
+        margin-bottom:.24rem;
+        width: 1.33rem;
+        height: 1.33rem;
+        // background-color: orange;
+    }
+    .t-img{
+        // padding-top: .2rem;
+        margin-left: .2rem;
+        width: 1.5rem;
+        height: 1.8rem;
+        background-color: red;
+    }
+    .tiao{
+        display:flex;
+        width: 100%;
+        // height: 2rem;
+        background-color: #fff;
+        border-bottom:2px solid #dadada;
+        
+    
+    }
+    .footer{
+        font-size:.35rem;
+        margin-top: .33rem;
+        margin-left: .45rem;
+        color:#646464;
+        margin-bottom: .32rem;
 
-}
+    
+    }
+    .conten-c p{ 
+        color:#646464;
+        font-size:.32rem;
+        padding-bottom:.25rem;
+        margin-left: .35rem;
+    }
+    .conten-c{
+        width: 9.3rem;  
+        // height: 3.4rem;  
+        margin:0 .37rem;
+        background-color: #f8f8f8;
+    
+    }
+    .conten-top p img{ 
+        width: auto;  
+        height: auto;  
+        max-width: 100%;  
+        max-height: 100%;
+    }
+    .conten-top div{
+        height:.89rem;
+        line-height:.89rem;
+        font-size:.35rem;
+        color:#646464;
+        // margin-top: .25rem;
+        margin-left:.2rem;
+    }
+    .conten-top p{
+        margin-top: .28rem;
+        margin-left:.45rem;
+        width:.33rem;
+        height:.37rem;
+    }
+    .conten-top{
+        display:flex;
+        height:.89rem;
+    
+    }
+    .conten{
+        border-bottom:2px solid #dadada;
+        margin-top:.2rem;
+        width:100%;
+        background-color: #fff;
+    
+    }
+
+      
+      input::-webkit-input-placeholder {
+        color: #c9c9c9;
+        font-size:.35rem;
+      }
+      .img{
+        width: .55rem;  
+        height: .55rem; 
+        // line-height: .5rem; 
+        margin-left:2.45rem;
+      }
+      .img-search{
+        margin-top:.12rem;
+        width: auto;  
+        height: auto;  
+        max-width: 100%;  
+        max-height: 100%;
+      }
+        
+      .input{
+        font-size:.37rem;
+        border:none;
+        width:6rem;
+        // margin-top:.21rem;
+        margin-left:.17rem;
+        height: .75rem;
+        line-height: .75rem;
+        // background-color: red;
+      
+      }
+      .search{
+        display:flex;
+        margin-top:.21rem;
+        margin-left:.32rem;
+        width:9.36rem;
+        height: .75rem;
+        border-radius:.15rem;
+        background-color: #fff;
+      
+      }
 
 
 

@@ -93,10 +93,7 @@ export default class AddInventoryList extends Component {
                         <div className='left'></div>
                         <div></div>
                         <div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
-
                     </div>
-
-
                 </div>
             </AddPurchaseOrderStyle>
         )

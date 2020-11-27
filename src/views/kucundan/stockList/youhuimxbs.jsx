@@ -7,14 +7,31 @@ export default class youhuimxbs extends Component {
         return (
             <div className='caigoudan' onClick={()=>{this.props.history.push(`/shouyinmxb/${item.id}`)}}>
                 <div className='dan'>
-                    <div className='dan-top'>
+                        <div className='dan-top'>
+                            <p>
+                            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt=""/>
+                            </p>
+                            <div className='t-right'>
+                            <div className='caigoudanhao'>零售单号：{item.orderno}</div>
+                            {/* <div className='zuantai' style={{color:Color}}>{item.statusname}</div> */}
+                            </div>
+                        </div>
+                        <div className='dan-footer'>
+                            <p>单据日期：{item.createtime}</p>
+                            <p>所属门店：{item.storeName}</p>
+                            <p>优惠总额：{item.all_fee}</p>
+
+                        </div>
+                    </div>
+                {/* <div className='dan'> */}
+                    {/* <div className='dan-top'> */}
                         {/* <p>
                             <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
                         </p> */}
-                        <div className='caigoudanhao'>零售单号：{item.orderno}</div>
-                    </div>
+                        {/* <div className='caigoudanhao'>零售单号：{item.orderno}</div> */}
+                    {/* </div> */}
 
-                    <div className='conten'>
+                    {/* <div className='conten'>
                             <ul>
                                 <li style={{width:"6.5rem"}}>
                                     <article>
@@ -39,13 +56,13 @@ export default class youhuimxbs extends Component {
                                     <p>{item.all_fee}</p>
                                 </li>
                             </ul>
-                        </div>
+                        </div> */}
                         {/* <p>单据日期：{item.createtime}</p>
                         <p>所属商家：{item.storeName}</p>
                         <p>收银员：{item.createName}</p>
                         <p>优惠总额：{item.all_fee}</p> */}
-                </div>
-            </div>
+                {/* </div> */}
+             </div>
         )
     }
 }
