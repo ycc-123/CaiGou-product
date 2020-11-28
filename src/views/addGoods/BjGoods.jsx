@@ -52,8 +52,10 @@ const Into = (props) => {
             if(res.data.status===4001){
                 
                 setMorengoods(res.data.data);
-                // setMemberInterests(res.data.data.is_membership==="2"?"false":"true");
-                // setMemberPrice(res.data.data.is_memberprice==="1"?"false":"true");
+                setMemberInterests(res.data.data.is_membership==="2"?true:false);
+                setMemberPrice(res.data.data.is_memberprice==="1"?false:true);
+                setMatchGood(res.data.data.is_plu_goods==="1"?false:true);
+
 
 
 
@@ -114,19 +116,21 @@ const Into = (props) => {
                             justifyContent: 'space-between'
                         }}>
                             <div className="left">
-                                <span>商品名称:</span>
+                                <span>商品编码: </span>
                             </div>
                             <div className="right">
                                 <input style={{background:"#F8F8F8"}}
                                     readonly="readonly"
-                                    value={goodName}
+                                    value={goodCode}
                                     type="text"
-                                    placeholder={morengoods.name}
-                                    onChange={e => { setgoodName(e.target.value) }}
+                                    placeholder={morengoods.code}
+                                    onChange={e => { setGoodCode(e.target.value) }}
                                 />
                             </div>
                         </div>
                     </div>
+
+                    
                     <div className="type flex-column">
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
@@ -149,23 +153,27 @@ const Into = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="type flex-column">
+                    
+
+                    <div className="type flex-column" >
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
                         }}>
                             <div className="left">
-                                <span>商品编码: </span>
+                                <span>商品名称:</span>
                             </div>
                             <div className="right">
-                                <input
-                                    value={goodCode}
+                                <input 
+                                    value={goodName}
                                     type="text"
-                                    placeholder={morengoods.code}
-                                    onChange={e => { setGoodCode(e.target.value) }}
+                                    placeholder={morengoods.name}
+                                    onChange={e => { setgoodName(e.target.value) }}
                                 />
                             </div>
                         </div>
                     </div>
+
+
                     {/* <div className="type flex-column">
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
@@ -275,16 +283,16 @@ const Into = (props) => {
                         <div style={{ display: isProduct? "block" : "none" }}>
                             <List.Item
                                 extra={<Switch
-                                    checked={memberInterests?memberInterests:morengoods.is_membership==="1"?false:true}
+                                    checked={ memberInterests}
                                     onChange={() => { setMemberInterests(!memberInterests) }}
                                 />}
                             >启用会员权益
                     <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1rem" }}>是否启用会员权益</span>
                             </List.Item>
                             <div className='xian'></div>
-                            <List.Item
+                            <List.Item 
                                 extra={<Switch
-                                    checked={memberPrice?memberPrice:morengoods.is_memberprice==="1"?false:true}
+                                    checked={memberPrice}
                                     onChange={() => { setMemberPrice(!memberPrice) }}
                                 />}
                             >启用会员价
@@ -292,7 +300,7 @@ const Into = (props) => {
                             </List.Item>
                             <div className='xian'></div>
 
-                            <div className="type flex-column" >
+                            <div className="type flex-column" style={{display:memberPrice===true?"block":"none"}}>
                                 <div className="item flex-row" style={{
                                     justifyContent: 'space-between'
                                 }}>
@@ -311,7 +319,7 @@ const Into = (props) => {
                             </div>
                             <List.Item
                                 extra={<Switch style={{ border: "none" }}
-                                    checked={matchGood?matchGood:morengoods.is_plu_goods==="1"?false:true}
+                                    checked={matchGood}
                                     onChange={() => { setMatchGood(!matchGood) }}
                                 />}
                             >分体称商品
@@ -320,7 +328,7 @@ const Into = (props) => {
                             <div className='xian'></div>
 
 
-                            <div className="type flex-column" style={{display:matchGood?"none":"block"}}>
+                            <div className="type flex-column" style={{display:matchGood?"block":"none"}}>
                                 <div className="item flex-row" style={{
                                     justifyContent: 'space-between'
                                 }}>
@@ -353,7 +361,11 @@ const Into = (props) => {
         </>
     )
     function check() {
-        // console.log(memberPrice)
+        if(memberInterests && memberPrice){
+            Toast.info("会员价和会员权益不能同时开启",2)
+
+        }else{
+        console.log(matchGood)
         let aa={}
         unit.map((v,k)=>{
             // console.log(v)
@@ -389,6 +401,7 @@ const Into = (props) => {
                 Toast.info(res.data.msg, 2)
             }
         })
+    }
     }
 }
 const FAddGoodsStyle = styled.div`

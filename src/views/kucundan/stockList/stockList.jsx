@@ -57,6 +57,9 @@ export default class stockList extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             }else{
+                this.setState({
+                    kongbj:false
+                })
                 Toast.info(res.data.msg,2)
             }
         })
@@ -294,7 +297,7 @@ export default class stockList extends Component {
                             </div>
                         </div>
                         <div className='sximg' >
-                            <img className='sximg-search' onClick={()=>{ this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
+                            <img className='sximg-search' onClick={()=>{this.state.kongbj===false? console.log(): this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
                         </div>
                     </div>
                     <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1.15rem",bottom:"1.5rem"}} loadMore={this.loadMore}

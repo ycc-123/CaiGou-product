@@ -127,7 +127,7 @@ class Category extends Component {
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
               onClick={() =>
-                alert('提交', '是否确认提交盘点单', [
+                alert('提交', '是否确认提交采购申请单', [
                   { text: '取消', onPress: () => console.log('cancel') },
                   { text: '确定', onPress: () => this.click() },
                 ])

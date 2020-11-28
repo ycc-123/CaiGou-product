@@ -1,5 +1,5 @@
 import {
-  SAVE_UID, SAVE_UNIACID,SAVE_GOODS,SAVE_CANKU,SAVE_TIAOBOGOODS
+  SAVE_UID, SAVE_UNIACID,SAVE_GOODS,SAVE_CANKU,SAVE_TIAOBOGOODS,SAVE_YOUHUIMINGXB
 } from './actionTypes'
 
 
@@ -33,10 +33,10 @@ export const savetiaoboGoodsAction = (data) => ({
   type: SAVE_TIAOBOGOODS,
   data
 })
-// export const SAVE_TIAOBOGOODS = (data) => ({
-//   type: SAVE_TIAOBOGOODS,
-//   data
-// })
+export const saveyouhuimxbiaoAction = (data) => ({
+  type: SAVE_YOUHUIMINGXB,
+  data
+})
 
 
 // saveUserUid, saveUserUniacid
@@ -77,6 +77,13 @@ export const saveGoods = (data) => {
 export const savetiaoboGoods = (data) => {
   return dispatch => {
     const action = savetiaoboGoodsAction(data)
+    dispatch(action)
+  }
+}
+
+export const saveyouhuimxbiao = (data) => {
+  return dispatch => {
+    const action = saveyouhuimxbiaoAction(data)
     dispatch(action)
   }
 }

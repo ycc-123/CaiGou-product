@@ -63,9 +63,10 @@ export default class Youhuimxb extends Component {
             }
         }).then((res) => {
             console.log(res)
-            var shouyinyuan = res.data.data.map(o=>{return{value:o.id,label:o.nick_name}});
+            
                     // console.log(shouyinyuan)
             if(res.data.status===4001){
+                var shouyinyuan = res.data.data.map(o=>{return{value:o.id,label:o.nick_name}});
                 this.setState({
                     shouyinyuan
                 })
@@ -88,12 +89,20 @@ export default class Youhuimxb extends Component {
             }
         }).then((res) => {
             // console.log(res)
-            this.setState({
+            if(res.data.status===4001){
+                this.setState({
                 linshou:res.data.data.data,
                 total:res.data.data.total
             },()=>{
                 this.refs.scroll.BScroll.refresh()
             })
+            }else{
+                this.setState({
+                    kongbj:false
+                })
+                Toast.info(res.data.msg,2)
+            }
+            
         })
     }
     shaixuan(){
@@ -198,7 +207,7 @@ export default class Youhuimxb extends Component {
                         linshou.map((v,k)=>{
                             // console.log(v.all_fee)
                             return(
-                                <Youhuimxbs item={v} history={this.props.history}></Youhuimxbs>
+                                <Youhuimxbs item={v} page={this.state.page} history={this.props.history}></Youhuimxbs>
                             )
                         })
                     }
@@ -334,8 +343,8 @@ export default class Youhuimxb extends Component {
                     // endtime:"2020-10-24 13:41:08",
                     // createid:'59',
                     // store_id:"38",
-                    limit: "10",
-                    page: "1"
+                    limit: this.state.limit,
+                    page: this.state.page
                 }
             }).then((res) => {
                 // console.log(res.data.data.data)
@@ -351,9 +360,9 @@ export default class Youhuimxb extends Component {
                     linshou: [...this.state.linshou, ...res.data.data.data],
                     loadingMore: false
                 }, () => {
-                    let page=this.state.page
+                    let page=Number(this.state.page)
                     this.setState({
-                        page: page += 1
+                        page: page  += 1
                     })
 
 
@@ -389,7 +398,8 @@ const YouhuimxbStyle = styled.div`
     height: 5rem;
 }
 .kongbj{
-    margin-top:2rem;
+    margin-top:3rem;
+
     width:100%;
     height: 100%;
     vertical-align: middle;
@@ -433,12 +443,15 @@ const YouhuimxbStyle = styled.div`
         color: #ed5f21;
     }
     .caigoudanhao{
-        // margin-top:.25rem;
+
+        width: 6.49rem;
+        height: 0.33rem;
+        margin-top:.25rem;
         margin-left:.31rem;
         // width:7.09rem;
         height:.85rem;
-        line-height:.85rem;
-        font-size:.35rem;
+        // line-height:.85rem;
+        font-size:.33rem;
         color: #333333;
     }
     .dan-top p img{
@@ -562,17 +575,7 @@ const YouhuimxbStyle = styled.div`
 
 
 
-.kongbj img{
-    width: 5rem;
-    height: 5rem;
-}
-.kongbj{
-    margin-top:2rem;
-    width:100%;
-    height: 100%;
-    vertical-align: middle;
-    text-align: center;
-}
+
 .conten ul li article div img{
     width: auto;  
     height: auto;  

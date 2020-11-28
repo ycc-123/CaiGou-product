@@ -84,7 +84,8 @@ export default class Home extends Component {
         </div>
         <div className="banben">
           v1.1.1.7
-      </div>
+        </div>
+        <div style={{width:"100%",height:".2rem"}}></div>
       </BetterScroll>
       </HomeStyle>
       

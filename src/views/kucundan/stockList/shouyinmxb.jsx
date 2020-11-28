@@ -1,38 +1,47 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getRetailList } from 'network/Api'
+import { getRetailDetail } from 'network/Api'
 // import { Toast } from 'antd-mobile';
 // import BetterScroll from 'common/betterScroll/BetterScroll'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
+import { Toast } from 'antd-mobile';
 export default class Shouyinmxb extends Component {
     constructor() {
         super()
         this.state = {
             linshou: [],
-            goodsSearch:''
+            goodsSearch:'',
+            data:[],
+            order:{}
         }
     }
     componentDidMount() {
+        console.log() 
         // setTitle('收银明细表')
-        getRetailList({
-            action: 'getRetailList', data: {
+        getRetailDetail({
+            action: 'getRetailDetail', data: {
                 uniacid: "53",
                 uid: "2271",
                 // starttime:"2020-10-1 13:41:08",
                 // endtime:"2020-10-24 13:41:08",
                 // createid:'59',
                 // store_id:"38",
-                limit: "50",
-                page: "1"
+                // limit: "10",
+                orderid: this.props.match.params.id
             }
         }).then((res) => {
             console.log(res)
-            this.setState({
-                linshou: res.data.data.data
-            }, () => {
-                // this.refs.scroll.BScroll.refresh()
-            })
+            if(res.data.status===4001){
+                this.setState({
+                    data: res.data.data.data,
+                    order:res.data.data.order
+                }, () => {
+                    // this.refs.scroll.BScroll.refresh()
+                })
+            }else{
+                Toast.info(res.data.msg,2)
+            }            
         })
     }
     goodsChange(e) {
@@ -41,31 +50,39 @@ export default class Shouyinmxb extends Component {
             [e.target.name]: e.target.value
         })
     }
-    // search(){
-    //     getRetailList({
-    //         action: 'getRetailList', data: {
-    //             uniacid: "53",
-    //             uid: "2271",
-    //             // starttime:"2020-10-1 13:41:08",
-    //             // endtime:"2020-10-24 13:41:08",
-    //             // createid:'59',
-    //             search:this.state.goodsSearch,
-    //             limit: "50",
-    //             page: "1"
-    //         }
-    //     }).then((res) => {
-    //         this.setState({
-    //             linshou: res.data.data.data
-    //         }, () => {
-    //             // this.refs.scroll.BScroll.refresh()
-    //         })
-    //     })
+    search(){
+        getRetailDetail({
+            action: 'getRetailDetail', data: {
+                uniacid: "53",
+                uid: "2271",
+                // starttime:"2020-10-1 13:41:08",
+                // endtime:"2020-10-24 13:41:08",
+                // createid:'59',
+                // store_id:"38",
+                // limit: "10",
+                search:this.state.goodsSearch,
+                orderid: this.props.match.params.id
+            }
+        }).then((res) => {
+            console.log(res)
+            if(res.data.status===4001){
+                this.setState({
+                    data: res.data.data.data,
+                    order:res.data.data.order
+                }, () => {
+                    // this.refs.scroll.BScroll.refresh()
+                })
+            }else{
+                Toast.info(res.data.msg,2)
+            }            
+        })
 
-    // }
+    }
     render() {
         console.log(this.state)
         return (
             <ShouyinmxbStyle>
+                <DocumentTitle title={'优惠明细表'} />
                 <div className='search'>
                     <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="goodsSearch"
                         onChange={this.goodsChange.bind(this)}
@@ -75,26 +92,26 @@ export default class Shouyinmxb extends Component {
                     </div>
                 </div>
                 {
-                    this.state.linshou.map((v, k) => {
-                        if (v.id === this.props.match.params.id) {
-                            return (
+                    // this.state.linshou.map((v, k) => {
+                    //     if (v.id === this.props.match.params.id) {
+                    //         return (
                                 <div className='bj'>
                                     <div className='dan'>
                                         <div className='dan-top'>
                                             <p>
-                                                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
+                                                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
                                             </p>
-                                                <div className='caigoudanhao'>{v.orderno}</div>
+                                                <div className='caigoudanhao'>{this.state.order.orderno}</div>
                                         </div>
                                         <div className='dan-footer' style={{paddingTop:".25rem"}}>
-                                                <p >单据日期：{v.createtime}</p>
-                                                <p>所属商家：{v.storeName}</p>
-                                                <p>支付方式：{v.pay_type_name}</p>
-                                                <p>订单状态：{v.statusName}</p>
-                                                <p>原价总额：{v.totalmoney}</p>
-                                                <p>总价优惠：{v.all_fee}</p>
-                                                <p>小计优惠：{v.small_discount_fee}</p>
-                                                <p style={{paddingBottom:".25rem",marginBottom:"0"}}>实收金额：{v.price}</p>
+                                                <p >单据日期：{this.state.order.createtime}</p>
+                                                <p>所属商家：{this.state.order.storeName}</p>
+                                                <p>支付方式：{this.state.order.pay_type_name}</p>
+                                                <p>订单状态：{this.state.order.statusName}</p>
+                                                <p>原价总额：{this.state.order.totalmoney}</p>
+                                                <p>总价优惠：{this.state.order.all_fee}</p>
+                                                <p>小计优惠：{this.state.order.total_discount_fee}</p>
+                                                <p style={{paddingBottom:".25rem",marginBottom:"0"}}>实收金额：{this.state.order.price}</p>
                                         </div>
                                     </div>
 
@@ -130,7 +147,7 @@ export default class Shouyinmxb extends Component {
                                         </ul>
                                     </div>
                                     {
-                                        v.collects.map((v, k) => {
+                                        this.state.data.map((v, k) => {
                                             return (
                                                 <div>
                                                     <div className='name'>{v.goods_name.length > 13 ? v.goods_name.substring(0, 13) + "..." : v.goods_name}</div>
@@ -146,12 +163,12 @@ export default class Shouyinmxb extends Component {
                                         })
                                     }
                                 </div>
-                            )
-                        } else {
-                            return ''
-                        }
+                            // )
+                        // } else {
+                        //     return ''
+                        // }
                     })
-                }
+                
             </ShouyinmxbStyle>
         )
     }

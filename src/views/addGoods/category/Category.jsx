@@ -22,6 +22,7 @@ class Category extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      jj:true,
       indexId:'',
       value: [],
       title: [],
@@ -94,7 +95,7 @@ class Category extends Component {
             
           </div>
           <div
-          onClick={()=>{this.props.history.push('/addgoods')}}
+          onClick={()=>{this.state.jj===false?console.log(): this.props.history.push('/addgoods')}}
            className='add'>新增<span style={{fontSize:".4rem"}}>+</span></div>
           </div>
 
@@ -230,7 +231,11 @@ class Category extends Component {
           value
         })
       } else {
-        Toast.info('网络错误', 2)
+      this.setState({
+        jj:false
+      })
+        Toast.info(res.data.msg, 2)
+        // Toast.info("无商品",2)
       }
     })
     console.log(this.state.id)
@@ -299,7 +304,7 @@ input::-webkit-input-placeholder {
   width: .55rem;  
   height: .55rem; 
   // line-height: .5rem; 
-  margin-left:2.45rem;
+  margin-left:.45rem;
 }
 .img-search{
   margin-top:.12rem;
@@ -310,6 +315,7 @@ input::-webkit-input-placeholder {
 }
   
 .input{
+  width:6rem;
   font-size:.37rem;
   border:none;
   // width:8.3rem;

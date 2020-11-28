@@ -6,6 +6,7 @@ import BetterScroll from 'common/betterScroll/BetterScroll'
 // import Tiao from './Tiao'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
+import { Toast } from 'antd-mobile'
 export default class ApplyOrder extends Component {
     constructor() {
         super()
@@ -13,7 +14,8 @@ export default class ApplyOrder extends Component {
             tiao: [],
             inputSearch:'',
             limit: "10",
-            page: 1
+            page: 1,
+            kongbj:true
         }
         this.isLoadMore = true
     }
@@ -27,11 +29,20 @@ export default class ApplyOrder extends Component {
             }
         }).then((res) => {
             console.log(res)
-            this.setState({
-                tiao: res.data.data.data
-            }, () => {
-                this.refs.scroll.BScroll.refresh()
-            })
+            if(res.data.status===4001){
+                
+                this.setState({
+                    tiao: res.data.data.data
+                }, () => {
+                    this.refs.scroll.BScroll.refresh()
+                })
+            }else{
+                this.setState({
+                    kongbj:false
+                })
+                Toast.info(res.data.msg,2)
+            }
+            
         })
     }
     inputChange(e){
@@ -39,6 +50,9 @@ export default class ApplyOrder extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
+    }
+    add(){
+        this.state.kongbj===false?console.log():this.props.history.push('/addLossReport')
     }
     search(){
         getDamageList({
@@ -51,11 +65,13 @@ export default class ApplyOrder extends Component {
             }
         }).then((res) => {
             console.log(res)
+            if(res.data.status===4001){
             this.setState({
                 tiao: res.data.data.data
             }, () => {
                 this.refs.scroll.BScroll.refresh()
             })
+        }
         })
     }
     submit(){
@@ -131,7 +147,7 @@ export default class ApplyOrder extends Component {
                             </div>
                 </div>
                 <div
-          onClick={()=>{this.props.history.push('/addLossReport')}}
+          onClick={()=>{this.add()}}
            className='add'>新增<span style={{fontSize:".4rem"}}>+</span></div>
           </div>
 
@@ -174,11 +190,26 @@ export default class ApplyOrder extends Component {
                         </BetterScroll>
                     </div>
                 </div>
+                <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
+                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
+                </div>
             </ApplyOrderStyle>
         )
     }
 }
 const ApplyOrderStyle = styled.div`
+.kongbj img{
+    width: 5rem;
+    height: 5rem;
+}
+.kongbj{
+    margin-top:3rem;
+    width:100%;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+
+}
 .btn_sh{
     position:absolute;
     top:1.6rem;

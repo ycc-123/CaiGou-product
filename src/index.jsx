@@ -27,6 +27,10 @@ let uid ="2271"
 let uniacid = "53"
 
 
+// let  uid= "5664"
+// let  uniacid= "4038"
+
+
 
 const actionuid = saveUserUid(uid)
 store.dispatch(actionuid)

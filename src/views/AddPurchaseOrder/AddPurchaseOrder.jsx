@@ -19,7 +19,8 @@ export default class AddPurchaseOrder extends Component {
             IDgy:[],
             inputAmount:'',
             inputHetong:'',
-            inputbeiz:''
+            inputbeiz:'',
+            jj:true
 
 
         }
@@ -42,7 +43,7 @@ export default class AddPurchaseOrder extends Component {
                     data: result
                 })
             }else{
-                Toast.info('网络错误', 2)
+                Toast.info(res.data.msg, 2)
             }
         })
         getSupplierList({ action: 'getSupplierList', data: {
@@ -60,7 +61,10 @@ export default class AddPurchaseOrder extends Component {
                         supplier
                     })
             }else{
-                Toast.info('网络错误', 2)
+                this.setState({
+                    jj:false
+                })
+                Toast.info(res.data.msg, 2)
             }
         }) 
     }
@@ -161,7 +165,7 @@ export default class AddPurchaseOrder extends Component {
                     <div className='foot'>
                         <div className='left'></div>
                         <div></div>
-                        <div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
+                        <div className='right' onClick={() => { this.state.jj===false?console.log(): this.createPurchase() }}>下一步</div>
 
                     </div>
 

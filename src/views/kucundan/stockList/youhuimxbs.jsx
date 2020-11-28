@@ -1,11 +1,29 @@
 import React, { Component } from 'react'
-
+import { store} from 'store/index'
+import { 
+    saveyouhuimxbiao
+    } from 'store/actionCreators'
 export default class youhuimxbs extends Component {
+    constructor(){
+        super()
+        this.state={
+
+        }
+    }
+    componentDidMount(){
+        // console.log(this.props.item)
+    }
+    click(item){
+        // console.log(item)
+        const actionuid = saveyouhuimxbiao(item)
+        store.dispatch(actionuid)
+        this.props.history.push(`/shouyinmxb/${this.props.item.id}/${this.props.page}`)
+    }
     render() {
         // console.log(this.props)
         let item = this.props.item
         return (
-            <div className='caigoudan' onClick={()=>{this.props.history.push(`/shouyinmxb/${item.id}`)}}>
+            <div className='caigoudan' onClick={()=>{this.click(item)}}>
                 <div className='dan'>
                         <div className='dan-top'>
                             <p>

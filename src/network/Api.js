@@ -424,3 +424,15 @@ export function getProductCategoryAllChildren(config) {
     data: config.data
   })
 }
+
+
+
+// 优惠明细
+export function getRetailDetail(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

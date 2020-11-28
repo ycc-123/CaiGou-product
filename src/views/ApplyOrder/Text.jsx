@@ -102,6 +102,7 @@ export default class text extends Component {
               <div className='ss'>
              <Cascader className="ant-cascader-menu" style={{
                   width: '5rem',
+                  height:"1rem",
                   border:"none"
                 }}
                 
@@ -156,11 +157,9 @@ export default class text extends Component {
     }
 }
 const TextStyle = styled.div`
-.aa{
-  height:100px;
-}
+
 .ant-cascader-menu {
-  height: 300px;
+  // height: 300px;
 }
 .ant-input {
   border: 1px solid transparent;

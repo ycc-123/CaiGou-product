@@ -328,7 +328,7 @@ const ApplyOrderxStyle = styled.div`
         // margin-bottom:.27rem;
     }
     .wen-zi{
-        
+        margin-bottom: .24rem;
         padding-top:.25rem;
         margin-left: .32rem;
         width: 7.5rem;

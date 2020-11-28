@@ -12,7 +12,8 @@ export default class InventoryList extends Component {
             data: [],
             limit: 10,
             page: 1,
-            inputSearch: ''
+            inputSearch: '',
+            kongbj:true
         }
         this.isLoadMore = true
     }
@@ -36,7 +37,10 @@ export default class InventoryList extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
-                Toast.info('网络错误', 2)
+                this.setState({
+                    kongbj:false
+                })
+                Toast.info(res.data.msg, 2)
             }
         })
     }
@@ -91,7 +95,7 @@ export default class InventoryList extends Component {
                     </div>
                 </div>
                 <div
-          onClick={()=>{this.props.history.push('/addallocationList')}}
+          onClick={()=>{this.state.kongbj===false?Toast.info("新增不可用",2):this.props.history.push('/addallocationList')}}
            className='add'>新增<span style={{fontSize:".4rem"}}>+</span></div>
           </div>
                 <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0" }} loadMore={this.loadMore}
@@ -134,6 +138,9 @@ export default class InventoryList extends Component {
                     }
                     {/* </div> */}
                 </BetterScroll>
+                <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
+                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
+                </div>
             </WarehousingOrderStyle>
         )
     }
@@ -184,6 +191,18 @@ export default class InventoryList extends Component {
 
 }
 const WarehousingOrderStyle = styled.div`
+.kongbj img{
+    width: 5rem;
+    height: 5rem;
+}
+.kongbj{
+    margin-top:3rem;
+    width:100%;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+
+}
 .t-right{
     width:100%;
     display:flex;

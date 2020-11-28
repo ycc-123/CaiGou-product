@@ -80,7 +80,7 @@ const AppRouter = () => {
         <Route path='/Liebiao' exact component={Liebiao} ></Route>
         <Route path='/Youhuimxb' exact component={Youhuimxb} ></Route>
         <Route path='/GoodDiscount' exact component={GoodDiscount} ></Route>
-        <Route path='/Shouyinmxb/:id' exact component={Shouyinmxb} ></Route>
+        <Route path='/Shouyinmxb/:id/:page' exact component={Shouyinmxb} ></Route>
         <Route path='/addPandian' exact component={Pandian} ></Route>
         <Route path='/TransferOrder' exact component={TransferOrder} ></Route>
         <Route path='/Pandian' exact component={InventoryList} ></Route>

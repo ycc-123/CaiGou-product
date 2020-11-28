@@ -58,9 +58,13 @@ export default class LossReport extends Component {
                     GoodsList: res.data.data.data,
                     Goodszong: res.data.data.total
                 }, () => {
+                    
                     this.refs.aaa.BScroll.refresh()
                 })
             } else {
+                this.setState({
+                kongbj:false
+            })
                 Toast.info(res.data.msg, 1)
             }
         })
@@ -493,7 +497,7 @@ const LossReportStyle = styled.div`
     height: 5rem;
 }
 .kongbj{
-    margin-top:2rem;
+    margin-top:3rem;
     width:100%;
     height: 100%;
     vertical-align: middle;

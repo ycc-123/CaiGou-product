@@ -93,6 +93,9 @@ export default class LossReport extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
+                this.setState({
+                    kongbj:false
+                })
                 Toast.info(res.data.msg, 2)
             }
         })
@@ -245,6 +248,7 @@ export default class LossReport extends Component {
         }
     }
     xianyin() {
+        if(this.state.kongbj===false){}else{
         if (this.state.xian === false) {
             this.setState({
                 xian: true
@@ -258,6 +262,7 @@ export default class LossReport extends Component {
                 this.refs.scroll.BScroll.refresh()
             })
         }
+    }
     }
     canku(v, k) {
         console.log(v.id)
@@ -487,7 +492,7 @@ const LossReportStyle = styled.div`
     height: 5rem;
 }
 .kongbj{
-    margin-top:2rem;
+    margin-top:3rem;
     width:100%;
     height: 100%;
     vertical-align: middle;
@@ -685,7 +690,7 @@ input::-webkit-input-placeholder {
     width: .55rem;  
     height: .55rem; 
     // line-height: .5rem; 
-    margin-left:3.8rem;
+    // margin-left:3.8rem;
   }
   .img-search{
     margin-top:.12rem;
@@ -698,7 +703,7 @@ input::-webkit-input-placeholder {
   .input{
     font-size:.37rem;
     border:none;
-    // width:8.3rem;
+    width:7.7rem;
     // margin-top:.21rem;
     margin-left:.17rem;
     height: .75rem;

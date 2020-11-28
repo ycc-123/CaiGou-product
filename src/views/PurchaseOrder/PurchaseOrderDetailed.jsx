@@ -352,7 +352,8 @@ const PurchaseOrderDetailedStyle = styled.div`
         // margin: .1rem 0;
     }
     .wen-zi-f{
-        margin-top:.6rem;
+        margin-bottom:0rem;
+
         display:flex;
         justify-content: space-between;
     }
@@ -370,10 +371,14 @@ const PurchaseOrderDetailedStyle = styled.div`
         // margin-bottom:.27rem;
     }
     .wen-zi{
-        
+        margin-bottom: .24rem;
         padding-top:.25rem;
         margin-left: .32rem;
         width: 7.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: space-between;
     }
     .t-img-l{
 

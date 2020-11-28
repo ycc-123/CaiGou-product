@@ -6,6 +6,8 @@ import Tiao from './Tiao'
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
+import { LoadingMore } from 'common/loading'
+
 export default class WarehousingOrder extends Component {
     constructor(){
         super()
@@ -13,7 +15,8 @@ export default class WarehousingOrder extends Component {
             data:[],
             limit:10,
             page:1,
-            inputSearch:''
+            inputSearch:'',
+            kongbj:true
         }
         this.isLoadMore = true
     }
@@ -35,7 +38,10 @@ export default class WarehousingOrder extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             }else{
-                Toast.info('网络错误', 2)
+                this.setState({
+                    kongbj:false
+                })
+                Toast.info(res.data.msg, 2)
             }
         })
     }
@@ -105,8 +111,16 @@ export default class WarehousingOrder extends Component {
                             )
                         })
                     }
+                    {
+
+                        this.state.data.length > 0 &&
+                        <LoadingMore isLoading={this.isLoadMore} />
+                    }
             {/* </div> */}
             </BetterScroll>
+            <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
+                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
+                </div>
             </WarehousingOrderStyle>
         )
     }
@@ -155,6 +169,18 @@ export default class WarehousingOrder extends Component {
 
 }
 const WarehousingOrderStyle = styled.div`
+.kongbj img{
+    width: 5rem;
+    height: 5rem;
+}
+.kongbj{
+    margin-top:3rem;
+    width:100%;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+
+}
 .btn_sh{
     position:absolute;
     top:1.6rem;

@@ -365,11 +365,18 @@ const WarehousingOrderxingStyle = styled.div`
         font-size:.29rem;
         // margin-bottom:.27rem;
     }
+    .aaa{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: space-between;
+    }
     .wen-zi{
-        
+        margin-bottom: .24rem;
         padding-top:.25rem;
         margin-left: .32rem;
-        width: 7.5rem;
+       
     }
     .t-img-l{
 

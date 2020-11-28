@@ -6,6 +6,8 @@ import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiao'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
+import { LoadingMore } from 'common/loading'
+
 export default class PurchaseOrder extends Component {
     constructor(){
         super()
@@ -13,7 +15,8 @@ export default class PurchaseOrder extends Component {
             data:[],
             limit: 10,
             page: 1,
-            inputSearch:''
+            inputSearch:'',
+            kongbj:true
         }
         this.isLoadMore = true
     }
@@ -34,7 +37,10 @@ export default class PurchaseOrder extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             }else{
-                Toast.info('网络错误', 2)
+                this.setState({
+                    kongbj:false
+                })
+                Toast.info(res.data.msg, 2)
             }
         })
     }
@@ -84,7 +90,7 @@ export default class PurchaseOrder extends Component {
                     <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search"/>
                     </div>
                 </div>
-                <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0" }} loadMore={this.loadMore}
+                <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0rem" }} loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
                     {
                         this.state.data.map((value,key)=>{
@@ -95,7 +101,15 @@ export default class PurchaseOrder extends Component {
                             )
                         })
                     }
+                    {
+
+                        this.state.data.length > 0 &&
+                        <LoadingMore isLoading={this.isLoadMore} />
+                    }
             </BetterScroll>
+            <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
+                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
+                </div>
             </PurchaseOrderStyle>
         )
     }
@@ -150,6 +164,18 @@ export default class PurchaseOrder extends Component {
     }
 }
 const PurchaseOrderStyle = styled.div`
+.kongbj img{
+    width: 5rem;
+    height: 5rem;
+}
+.kongbj{
+    margin-top:3rem;
+    width:100%;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+
+}
 .btn_sh{
     position:absolute;
     top:1.6rem;
