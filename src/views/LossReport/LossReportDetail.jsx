@@ -153,6 +153,7 @@ export default class ApplyOrderx extends Component {
 
                         <div className='conten-c' style={{ paddingTop: ".25rem" }}>
                             <p>单据日期：{this.state.quan.createtime}</p>
+                            <p>报损仓库：cc</p>
                             <p>报损数量：{this.state.sum}</p>
                             <p>单据状态：<span style={{ color: "#ed5f21" }}>{this.state.quan.statusName}</span></p>
                         </div>
@@ -170,15 +171,17 @@ export default class ApplyOrderx extends Component {
                                     <img className='t-img-l' src={v.image ? v.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
                                     <ul className='wen-zi'>
-                                        <li className='wen-zi-c'>
-                                            <div >{v.barcode}</div>
-                                            <p>{v.costprice}元/{v.unitname}</p></li>
                                         <li className='wen-zi-t'>
                                             <div className='name'>{v.goods_name}</div>
                                         </li>
+                                        <li className='wen-zi-c' style={{margin:" .1rem 0 "}}>
+                                            <div >商品编码：{v.barcode}</div>
+                                            <p>{v.costprice}元/{v.unitname}</p>
+                                        </li>
+                                        
                                         <li className='wen-zi-f'>
                                             <div></div>
-                                            <p>报损数量：<span>{v.num}</span></p>
+                                            <p style={{fontSize:".3rem"}}>报损数量：<span>{v.num}</span></p>
                                             {/* <Button
                             style={{ position: "absolute", left: "6.6rem", color: "transparent", background: "transparent", width: "9rem" }}
                             className="btn_modal"
@@ -210,14 +213,18 @@ export default class ApplyOrderx extends Component {
 
                     <div className='foot'>
                         <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-                            <div className='left'
-                            >
+                            <div className='left'>
                                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                                 <div className='yuan'>{this.state.tiao.length}</div>
                             </div>
-                            <div className='right' style={{ background: this.state.quan.statusName === "已审核" ? "#B4B4B4" : '' }}
-                                onClick={(e) => { this.tijiao(this.state.quan.statusName) }}
-                            >{this.state.quan.statusName === "已审核" ? "已审核" : '审核'}</div>
+
+                            <div className="foot_c">总额：<span style={{color:"#cf2424"}}>0</span></div>
+
+                            <div className='right' 
+                            style={{ background: this.state.quan.statusName === "已审核" ? "#B4B4B4" : '' }}
+                            onClick={(e) => { this.tijiao(this.state.quan.statusName) }}>
+                                {this.state.quan.statusName === "已审核" ? "已审核" : '审核'}
+                            </div>
                         </div>
                     </div>
 
@@ -267,13 +274,23 @@ const ApplyOrderxStyle = styled.div`
     width:3rem;
     
   }
+  .foot_c{
+    text-align: center;
+    font-size:0.37rem;
+    height:1.6rem;
+    line-height:1.6rem;
+    width:4rem;                      
+  }
   .right{
+    margin-top:.2rem;
+    margin-right:.2rem;
+    border-radius:.2rem;
     font-size:.4rem;
     color:#fff;
     text-align:center;
-    width: 2.76rem;
-    height: 1.6rem;
-    line-height:1.6rem;
+    width: 2.04rem;
+    height: 1.17rem;
+    line-height:1.17rem;
     background-color: #ED7913;
   }
   .foot{
@@ -308,7 +325,7 @@ const ApplyOrderxStyle = styled.div`
         font-size:.35rem;
         width: 3.2rem;
         color:#1a1a1a;
-        margin: .1rem 0;
+        // margin: .1rem 0;
     }
     .wen-zi-f{
         display:flex;

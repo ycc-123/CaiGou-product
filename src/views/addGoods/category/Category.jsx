@@ -33,7 +33,7 @@ class Category extends Component {
       num: '',
       price: '',
       inputSearch:'',
-
+      Bj:true,
       Id:""
     }
     
@@ -61,7 +61,9 @@ class Category extends Component {
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        categoryid: this.state.indexId,
+        // categoryid: this.state.indexId,
+        limit:"1000",
+        page:1,
         search:this.state.inputSearch
       }
     }).then(res => {
@@ -119,7 +121,11 @@ class Category extends Component {
                 </BetterScroll>}
               </ul>
             </div>
-              <CategoryRight index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />
+             { <CategoryRight index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} 
+             id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />}
+             <div className='Bj' style={{display:this.state.Bj===false?"block":"none"}}>
+                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
+                </div>
             </Fragment> : <Fragment>
               </Fragment>}
           </div>
@@ -135,8 +141,9 @@ class Category extends Component {
             <div className='right' onClick={this.click}>提交</div>
 
           </div> */}
-
+     
         </Fragment>
+        
       </CategoryStyle>
     )
   }
@@ -260,13 +267,16 @@ class Category extends Component {
       if (res.data.status === 4001) {
         console.log(res.data.data.data)
         this.setState({
-          goods: res.data.data.data
+          goods: res.data.data.data,
+          Bj: true
         })
       } else {
         this.setState({
-          goods: []
+          goods: [],
+          Bj: false  
         })
         Toast.info(res.data.msg, 2)
+        
       }
     })
 
@@ -283,6 +293,19 @@ class Category extends Component {
 
 }
 const CategoryStyle = styled.div`
+.Bj img{
+  width: 5rem;
+  height: 5rem;
+}
+.Bj{
+  position:absolute;
+  top:4.5rem;
+  left:3.6rem;
+  vertical-align: middle;
+  text-align: center;
+}
+
+
 .add{
   width: 1.6rem;
   height: 0.75rem;

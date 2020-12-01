@@ -428,8 +428,8 @@ export default class LossReport extends Component {
                 </div>
                 </BetterScroll>
                 <div className='foot' >
-                    <div>总数量：<span>{this.state.Goodszong.total_subtotal ? this.state.Goodszong.total_subtotal : 0}</span></div>
-                    <div style={{ marginRight: ".3rem" }}>总报损金额：<span>{this.state.Goodszong.total_fee ? this.state.Goodszong.total_fee : 0}</span></div>
+                    <div>小计总额：<span>{this.state.Goodszong.total_subtotal ? this.state.Goodszong.total_subtotal : 0}</span></div>
+                    <div style={{ marginRight: ".2rem" }}>小计优惠总额：<span>{this.state.Goodszong.total_fee ? this.state.Goodszong.total_fee : 0}</span></div>
                 </div>
             </LossReportStyle>
         )
@@ -597,7 +597,7 @@ const LossReportStyle = styled.div`
 }
 .foot{
     box-shadow: -1px -1px 2px #ccc;
-    padding-left:.3rem;
+    padding-left:.2rem;
     font-size:.38rem;
     display:flex;
     justify-content: space-between;
@@ -695,7 +695,7 @@ input::-webkit-input-placeholder {
     width: .55rem;  
     height: .55rem; 
     // line-height: .5rem; 
-    margin-left:3.8rem;
+    // margin-left:3.8rem;
   }
   .img-search{
     margin-top:.12rem;
@@ -708,7 +708,7 @@ input::-webkit-input-placeholder {
   .input{
     font-size:.37rem;
     border:none;
-    // width:8.3rem;
+    width:7.7rem;
     // margin-top:.21rem;
     margin-left:.17rem;
     height: .75rem;

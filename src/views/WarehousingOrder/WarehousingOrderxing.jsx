@@ -250,13 +250,20 @@ export default class WarehousingOrderxing extends Component {
                         }
                     </BetterScroll>
                     <div className='foot'>
-                    <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+                    <div className="foot_t">
+                            <p>采购总量：111</p>
+                            <p>入库总量：222</p>
+                        </div>
+                        <div className="foot_c">差异数量：<span style={{color:"#cf2424"}}>0</span></div>
+                        <div className="btn" style={{ background: this.state.purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }} 
+                        onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
+                    {/* <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
                         <div className='left' >
                            <div style={{ width: "1.28rem", height: ".68rem" }}> <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                         </div>
                         <div className='yuan'>{this.state.purchaseItem.length}</div>
-                        <div style={{ background: this.state.purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }} className='right' onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
-                        </div>
+                        <div  className='right' onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
+                        </div> */}
                     </div>
                 </div>
             </WarehousingOrderxingStyle>
@@ -264,6 +271,28 @@ export default class WarehousingOrderxing extends Component {
     }
 }
 const WarehousingOrderxingStyle = styled.div`
+.foot_c{
+    height:1.6rem;
+    line-height:1.6rem;
+}
+.btn{
+    margin-top:.2rem;
+    margin-right:.2rem;
+    border-radius:.2rem;
+    font-size:.4rem;
+    color:#fff;
+    text-align:center;
+    width: 2.04rem;
+    height: 1.17rem;
+    line-height:1.17rem;
+    background-color: #ED7913;
+}
+.foot_t p{
+    margin-top:.25rem;
+}
+.foot_t{
+    margin-left:.5rem;
+}
 .am-button::before {
     border: none !important;
 }
@@ -292,29 +321,12 @@ const WarehousingOrderxingStyle = styled.div`
     text-align:center;
     font-size:.4rem;
   }
-  .left img{
-    width: auto;  
-    height: auto;  
-    max-width: 100%;  
-    max-height: 100%;
-  }
-  .left{
-    padding-left:.48rem;
-    padding-top:.45rem;
-    width:3rem;
-    
-  }
-  .right{
-    font-size:.4rem;
-    color:#fff;
-    text-align:center;
-    width: 2.76rem;
-    height: 1.6rem;
-    line-height:1.6rem;
-    background-color: #ED7913;
-  }
+
+
   .foot{
+    font-size:0.35rem;
     display:flex;
+    justify-content: space-between;
     width: 100%;
     height: 1.6rem;
     background-color: #fff;
@@ -348,8 +360,9 @@ const WarehousingOrderxingStyle = styled.div`
         // margin: .1rem 0;
     }
     .wen-zi-f{
-        margin-top:.6rem;
+        margin-top:.1rem;
         display:flex;
+        
         justify-content: space-between;
     }
     .wen-zi-t{

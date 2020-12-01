@@ -15,7 +15,6 @@ export default class Home extends Component {
     // this.bt_ref.current.BScroll.refresh()
     // <Title title="" />
     console.log(localStorage.getItem('user'))
-    console.log("uid=====")
     console.log("uid=====", store.getState().uid)
     console.log("uniacid=====", store.getState().uniacid)
     localStorage.clear()
@@ -30,6 +29,10 @@ export default class Home extends Component {
   //   console.log(111)
   //   this.props.history.push('/PurchaseOrder')
   // }
+  aa(){
+    localStorage.clear()
+    window.location.reload()
+  }
   render() {
     const scrollConfig = {
       probeType: 1
@@ -39,7 +42,9 @@ export default class Home extends Component {
       
       
       <HomeStyle>
+
         <BetterScroll config={scrollConfig} style={{ height: "100vh" }} ref='scroll'>
+        <div style={{height:".05rem",width:"100%"}}></div>
         <div className='top'>
         <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/base.png" alt=""/></div>
         <ul>
@@ -65,9 +70,11 @@ export default class Home extends Component {
           <ul>
             <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/stockList') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kucundan.png" alt="" /></li>
             <li style={{ height: "1.6rem", width: "1.95rem", marginLeft: ".4rem" }} onClick={() => { this.props.history.push('/WarehousingOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/rkdan.png" alt="" /></li>
+           
             <li onClick={()=>{this.props.history.push('/Pandian')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/pandiandan.png" alt=""/></li>
-            <li onClick={()=>{this.props.history.push('/allocationOrder')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaobodan.png" alt=""/></li>
-            <li onClick={()=>{this.props.history.push('/LossReportList')}} style={{marginLeft:".5rem",marginTop:".6rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/baosdan.png" alt=""/></li>
+            <li onClick={()=>{this.props.history.push('/LossReportList')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/baosdan.png" alt=""/></li>
+            
+            <li onClick={()=>{this.props.history.push('/allocationOrder')}} style={{marginLeft:".5rem",marginTop:".6rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaobodan.png" alt=""/></li>
          
           </ul>
         </div>
@@ -82,10 +89,23 @@ export default class Home extends Component {
             </li>
           </ul>
         </div>
-        <div className="banben">
-          v1.1.1.7
+
+        <div className='sujubaobiao' style={{position:"relative",marginBottom:".2rem"}}>
+          <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>版本信息</div>
+          <ul>
+            <li style={{ marginLeft: ".3rem" }} onClick={()=>{this.aa()}}>
+              <div style={{position:"absolute",top:"1rem",left:"0rem"}}>
+              <img  src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/bb.jpg" alt=""/>
+              </div>
+              <div style={{position:"absolute",top:"2.2rem",left:".5rem"}}>版本信息</div>
+              <div className="banben">
+                  v1.1.1.7.3
+              </div>
+            </li>
+          </ul>
         </div>
-        <div style={{width:"100%",height:".2rem"}}></div>
+  
+        <div style={{width:"100%",height:".1rem"}}></div>
       </BetterScroll>
       </HomeStyle>
       
@@ -95,16 +115,13 @@ export default class Home extends Component {
 const HomeStyle = styled.div`
 .banben{
   opacity: .2;
-  color: #3E3E3E;
-  font-size: .45rem;
-  // position: absolute;
-  // right: 0px;
-  // bottom: .2rem;
-  margin: .3rem 0;
-  width: 100%;
+  color: #000;
+  font-size: .3rem;
+  position: absolute;
+  top: 2.7rem;
+  left:.1rem;
   text-align: center;
 }
-
 
 .sujubaobiao{
   height: 4rem;

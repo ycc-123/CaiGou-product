@@ -436,3 +436,15 @@ export function getRetailDetail(config) {
     data: config.data
   })
 }
+
+// 生成商品编码
+
+
+export function getProductCode(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

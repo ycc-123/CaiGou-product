@@ -35,6 +35,10 @@ export default class Tiao extends Component {
                     <p></p>
                 </li>
                 <li className='wen-zi-f'>
+                    <div>商品编码：{tiao.gnum}</div>
+                    <p>2元/单位</p>
+                </li>
+                <li className='wen-zi-f'>
                     <div>采购数量：{tiao.gnum}</div>
                     <p>入库数量：<span>{this.state.value!==''? this.state.value : rk}</span></p>
                     <Button

@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components'
 import { Picker, Toast, List, Switch } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { createProduct, getUnitList, getProductCategoryAll,getProductCategoryAllChildren} from 'network/Api'
+import { createProduct, getUnitList, getProductCategoryAll, getProductCategoryAllChildren, getProductCode } from 'network/Api'
 import { store } from "store/index";
 // import { Picker, List, Toast } from 'antd-mobile';
-import { useHistory  } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 
 const Into = (props) => {
-    const history =useHistory()
+    const history = useHistory()
 
     const bt_ref = useRef()
 
     const [goodName, setgoodName] = useState('');
-    const [goodCategory, setGoodCategory] = useState('');
+    const [goodCategory, setGoodCategory] = useState([]);
     const [goodCode, setGoodCode] = useState('');
     const [stockUnit, setStockUnit] = useState('');
     const [sellUnit, setSellUnit] = useState('');
@@ -37,11 +37,13 @@ const Into = (props) => {
         probeType: 1
     }
 
+console.log('渲染===========')
+
     useEffect(() => {
         getProductCategoryAllChildren({
             action: 'getProductCategoryAllChildren', data: {
                 uniacid: store.getState().uniacid,
-                uid:store.getState().uid,
+                uid: store.getState().uid,
 
             }
         }).then((res) => {
@@ -64,6 +66,8 @@ const Into = (props) => {
             setUnit(result)
         })
 
+
+
         try {
             bt_ref.current.BScroll.refresh()
         } catch (error) {
@@ -76,10 +80,37 @@ const Into = (props) => {
     }, [])
 
 
+    useEffect(() => {
+        
+        getProductCode({
+            action: 'getProductCode', data: {
+                uniacid: store.getState().uniacid,
+                categoryid: goodCategory.toString(),
+
+            }
+        }).then((res) => {
+            console.log(res.data.data)
+            setGoodCode(res.data.data)
+
+        })
+
+    }, [goodCategory])
+
+
+
+    // useMemo(() => {
+
+    //     console.log(999999999999999999999999999999999)
+       
+
+    // }, [goodCategory])
+
+
+
     return (
         <>
-            
-                <BetterScroll config={scrollConfig} style={{ height: 'calc(100vh - 1.6rem)' }} ref={bt_ref}>
+
+            <BetterScroll config={scrollConfig} style={{ height: 'calc(100vh - 1.6rem)' }} ref={bt_ref}>
                 <TAddGoodsStyle>
 
                     <DocumentTitle title={'新增商品'} />
@@ -116,7 +147,7 @@ const Into = (props) => {
                                     extra="选择商品分类"
                                     value={goodCategory}
                                     onChange={e => { setGoodCategory(e) }}
-                                    onOk={v => setGoodCategory(v)}
+                                    onOk={e => { code() }}
                                 >
                                     <List.Item className='time' arrow="horizontal"></List.Item>
                                 </Picker>
@@ -132,10 +163,11 @@ const Into = (props) => {
                             </div>
                             <div className="right">
                                 <input
-                                    value={goodCode}
+                                    readonly="readonly"
+                                    value={goodCode.uniacid===store.getState().uniacid? "" : goodCode }
                                     type="text"
                                     placeholder='条码唯一,提交后不支持修改'
-                                    onChange={e => { setGoodCode(e.target.value) }}
+                                    
                                 />
                             </div>
                         </div>
@@ -196,8 +228,8 @@ const Into = (props) => {
                             </div>
                         </div>
                     </div>
-                    </TAddGoodsStyle>
-                    <AddGoodsStyle>
+                </TAddGoodsStyle>
+                <AddGoodsStyle>
                     <div className="type flex-column">
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
@@ -257,17 +289,17 @@ const Into = (props) => {
                             </List.Item>
                             <div className='xian'></div>
                             <div style={{ display: memberInterests ? "none" : "block" }}>
-                            <List.Item 
-                                extra={<Switch 
-                                    checked={memberPrice}
-                                    onChange={() => { setMemberPrice(!memberPrice) }}
-                                />}
-                            >启用会员价
+                                <List.Item
+                                    extra={<Switch
+                                        checked={memberPrice}
+                                        onChange={() => { setMemberPrice(!memberPrice) }}
+                                    />}
+                                >启用会员价
                     <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>是否启用会员价</span>
-                            </List.Item>
-                            <div className='xian'></div></div>
+                                </List.Item>
+                                <div className='xian'></div></div>
 
-                            <div className="type flex-column" style={(memberInterests)? { display:  "none" }:{ display:memberPrice? "block": "none" }}>
+                            <div className="type flex-column" style={(memberInterests) ? { display: "none" } : { display: memberPrice ? "block" : "none" }}>
                                 <div className="item flex-row" style={{
                                     justifyContent: 'space-between'
                                 }}>
@@ -295,7 +327,7 @@ const Into = (props) => {
                             <div className='xian'></div>
 
 
-                            <div className="type flex-column" style={{display: matchGood === false? "none": "block"}}>
+                            <div className="type flex-column" style={{ display: matchGood === false ? "none" : "block" }}>
                                 <div className="item flex-row" style={{
                                     justifyContent: 'space-between'
                                 }}>
@@ -316,18 +348,23 @@ const Into = (props) => {
                         </div>
                     </List>
                 </AddGoodsStyle>
-                </BetterScroll>
+            </BetterScroll>
 
-                <FAddGoodsStyle>
+            <FAddGoodsStyle>
                 <div className='foot'>
                     <div className='lbb'></div>
                     <div className='raa' onClick={e => { check() }}>提交</div>
                 </div>
-                </FAddGoodsStyle>
-            
+            </FAddGoodsStyle>
+
         </>
 
     )
+
+    function code() {
+        console.log(goodCategory.toString())
+
+    }
 
 
 
@@ -352,10 +389,10 @@ const Into = (props) => {
             }
         }).then((res) => {
             console.log(res)
-            if(res.data.status===4001){
-                history.push('/bjsygoods') 
+            if (res.data.status === 4001) {
+                history.push('/bjsygoods')
                 Toast.success(res.data.msg, 2)
-            }else{
+            } else {
                 Toast.info(res.data.msg, 2)
             }
         })

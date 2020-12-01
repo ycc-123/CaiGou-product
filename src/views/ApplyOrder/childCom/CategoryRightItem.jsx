@@ -38,14 +38,15 @@ class CategoryRightgoods extends Component {
           <img className='category-img' src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png" alt="" />
 
           <div className='category-goods-info'>
-          <div className='shuliang' style={{color:'#1a1a1a'}}>
-                   <article>{goods.code}</article>
+          <div style={{fontSize:".35rem",color:'#1a1a1a',width:"4rem"}}>{goods.name}</div>
+
+              <div className='shuliang' style={{color:'#1a1a1a',paddingTop:".1rem"}}>
+                   <article>商品编码：{goods.code}</article>
                    <div>{goods.posprice}元/{goods.unitname}</div>
-                 </div>
+              </div>
             <div style={{display:"flex",justifyContent:"space-between"}}>
-            <div style={{fontSize:".35rem",paddingTop:".2rem",color:'#1a1a1a',width:"4rem"}}>{goods.name}</div>
             {
-              this.state.login ? <div  style={{ marginTop:'.79rem',textAlign: "center", color: "#CD2323", fontSize: ".35rem" }}>{this.state.login}</div> :
+              this.state.login ? <div  style={{width:"100%",textAlign: "right",paddingTop:".2rem", color: "#CD2323", fontSize: ".35rem" }}>{this.state.login}</div> :
                 <img className='category-goods-img'
                   src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
                   alt="" />
@@ -89,6 +90,12 @@ class CategoryRightgoods extends Component {
 }
 
 const CategoryRightgoodsStyle = styled.div`
+.category-goods-img {
+  margin-top:.2rem;
+  margin-left:4.65rem;
+  width: 0.43rem;
+  height: 0.43rem;
+}
 .shuliang span{
   margin-left:1.5rem;
 }
@@ -223,11 +230,7 @@ const CategoryRightgoodsStyle = styled.div`
 .category-goods-info p:nth-child(4) span {
   margin-right: .2rem;
 }
-.category-goods-img {
-  margin-top:.65rem;
-  width: 0.43rem;
-  height: 0.43rem;
-}
+
 .category-goods .goods-img img {
   margin-left: 1.2rem;
 }

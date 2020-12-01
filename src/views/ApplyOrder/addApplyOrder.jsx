@@ -73,7 +73,7 @@ export default class AddInventoryList extends Component {
                                 data={this.state.data}
                                 cols={1}
                                 className="forss"
-                                extra="请选择盘点仓库"
+                                extra="请选择申请仓库"
                                 value={this.state.sValue}
                                 onChange={v => this.setState({ sValue: v })}
                                 onOk={v => this.setState({ IDck: v })}

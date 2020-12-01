@@ -89,7 +89,7 @@ export default class AddInventoryList extends Component {
                                 data={this.state.data}
                                 cols={1}
                                 className="forss"
-                                extra="请选择盘点仓库"
+                                extra="请选择报损仓库"
                                 value={this.state.sValue}
                                 onChange={v => this.setState({ sValue: v })}
                                 onOk={v => this.setState({ IDck: v })}
@@ -107,7 +107,6 @@ export default class AddInventoryList extends Component {
 
                     <div className='foot'>
                         <div className='left'></div>
-                        <div></div>
                         <div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
 
                     </div>
@@ -199,22 +198,25 @@ const AddPurchaseOrderStyle = styled.div`
     
     
     .left{
-        width: 25rem;
+        width: 1rem;
         height: 1.6rem;
         background-color: #fff;
     }
     .right{
+        margin-top:.2rem;
+        margin-right:.2rem;
+        border-radius:.2rem;
         font-size:.4rem;
         color:#fff;
         text-align:center;
-        width: 100%;
-        margin:auto;
-        height: 1.6rem;
-        line-height:1.6rem;
+        width: 2.04rem;
+        height: 1.17rem;
+        line-height: 1.17rem;
         background-color: #ED7913;
     }
     .foot{
         display:flex;
+        justify-content:space-between;
         width: 100%;
         height: 1.6rem;
         background-color: #fff;

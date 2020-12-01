@@ -174,14 +174,18 @@ export default class ApplyOrder extends Component {
                                             <div >
                                                 <p>单据日期：{v.createtime}</p>
                                                 <p>报损仓库：{v.warehouseName}</p>
+                                                <div style={{display:"flex",justifyContent:"space-between"}}>
+                                                    <p>报损数量：0</p>
+                                                    <p style={{marginRight:".27rem"}}>报损金额：0</p>
+                                                </div>
                                             </div>
                                             
-                                            </div>
+                                        </div>
                                         </div>
                                         </div>
                                         
                                         <div className='btn_sh' onClick={() => { this.submit() }}
-                                            style={{display:v.statusName==="已审核"?"none":''}}
+                                            style={{display:"none"}}
                                             >审核</div>
                                     </div>
                                 )

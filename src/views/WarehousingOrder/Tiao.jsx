@@ -25,6 +25,10 @@ export default class Tiao extends Component {
                         <div className='dan-footer'>
                             <p>单据日期：{data.docdate}</p>
                             <p>入库仓库：{data.warehousename}</p>
+                            <div style={{display:"flex",justifyContent:"space-between"}}>   
+                                <p>采购总数量：{data.docdate}</p>
+                                <p style={{marginRight:".27rem"}}>入库总数量：{data.warehousename}</p>
+                            </div>
                         </div>
                     </div>
             </div>

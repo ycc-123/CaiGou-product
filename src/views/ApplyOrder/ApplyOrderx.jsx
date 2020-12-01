@@ -154,12 +154,14 @@ export default class ApplyOrderx extends Component {
                 <img className='t-img-l' src={v.image ? v.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
                 <ul className='wen-zi'>
-                <li className='wen-zi-c'>
-                        <div >{v.barcode}</div>
-                        <p>{v.price}元/{v.unit_name}</p></li>
                     <li className='wen-zi-t'>
                         <div className='name'>{v.goodsname}</div>
                     </li>
+                    <li className='wen-zi-c'>
+                        <div >商品编码：{v.barcode}</div>
+                        <p>{v.price}元/{v.unit_name}</p>
+                    </li>
+                    
                     <li className='wen-zi-f'>
                         <div></div>
                         <p>申请数量：<span>{v.goodsnum}</span></p>
@@ -292,7 +294,6 @@ const ApplyOrderxStyle = styled.div`
         font-size:.35rem;
         width: 3.2rem;
         color:#1a1a1a;
-        margin: .1rem 0;
     }
     .wen-zi-f{
         display:flex;

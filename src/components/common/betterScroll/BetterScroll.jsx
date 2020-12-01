@@ -35,7 +35,7 @@ class BetterScroll extends Component {
       // 3 只要是滚动都侦测
       probeType,
       // better-sroll 默认不监听按钮点击
-      click: localStorage.getItem('user')===true?false:true,
+      click: true,
       // tap: false,
       // 监听上来加载更多
       pullUpLoad: true,
