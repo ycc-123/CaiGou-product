@@ -1,10 +1,11 @@
 import React, { Component,createRef } from 'react'
 import styled from 'styled-components'
 import { store } from "store/index";
-import { Toast } from 'antd-mobile';
+// import { Toast } from 'antd-mobile';
 import DocumentTitle from 'react-document-title'
 import BetterScroll from 'common/betterScroll/BetterScroll'
-
+import { Toast, Button, Modal } from 'antd-mobile';
+const alert = Modal.alert;
 // import BetterScroll from 'common/betterScroll/BetterScroll'
 
 
@@ -93,7 +94,9 @@ export default class Home extends Component {
         <div className='sujubaobiao' style={{position:"relative",marginBottom:".2rem"}}>
           <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>版本信息</div>
           <ul>
-            <li style={{ marginLeft: ".3rem" }} onClick={()=>{this.aa()}}>
+            <li style={{ marginLeft: ".3rem" }} 
+            // onClick={()=>{this.aa()}}
+            >
               <div style={{position:"absolute",top:"1rem",left:"0rem"}}>
               <img  src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/bb.jpg" alt=""/>
               </div>
@@ -101,6 +104,17 @@ export default class Home extends Component {
               <div className="banben">
                   v1.1.1.7.3
               </div>
+
+              <div
+              style={{ width: "3rem", height: "2rem", position: "absolute", top: "1rem", left: "0rem", color: "transparent", background: "transparent" }}
+              className="btn_modal"
+              onClick={() =>
+                alert('', '有新版本可供更新', [
+                  { text: '确定', onPress: () => this.aa() },
+                  { text: '取消', onPress: () => console.log('cancel') },
+                ])
+              }
+            ></div>
             </li>
           </ul>
         </div>
@@ -113,6 +127,9 @@ export default class Home extends Component {
   }
 }
 const HomeStyle = styled.div`
+.am-modal-body{
+  color:#000;
+}
 .banben{
   opacity: .2;
   color: #000;

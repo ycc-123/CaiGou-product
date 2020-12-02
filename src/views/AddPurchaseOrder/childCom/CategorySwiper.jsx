@@ -3,32 +3,64 @@ import styled from 'styled-components'
 // import { getPurchaseList } from 'network/Api'
 import { Toast } from 'antd-mobile';
 // import BetterScroll from 'common/betterScroll/BetterScroll'
-import { store} from 'store/index'
+import { store } from 'store/index'
+import BetterScroll from 'common/betterScroll/BetterScroll'
 
+function Tiao(value) {
+    console.log(value)
+    let tiao = value.item
+    return (
+
+
+        <div className='tiao'>
+            <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+
+            <ul className='wen-zi'>
+                <li className='wen-zi-t'>
+                    <div className='name'>{tiao.goods_name}</div>
+                </li>
+                <li className='wen-zi-c'>
+                    <div >商品编码：{tiao.barcode}</div>
+                    <p>{tiao.price}元/{tiao.unitname}</p>
+                </li>
+
+                <li className='wen-zi-f'>
+                    <div></div>
+                    <p>采购数量：<span>{tiao.gnum}</span></p>
+
+                </li>
+            </ul>
+        </div>
+    )
+}
 export default class Liebiao extends Component {
-    constructor(){
+    constructor() {
         super()
-        this.state={
-            goodsList:[]
+        this.state = {
+            goodsList: []
         }
     }
-    componentDidMount(){
+    componentDidMount() {
         console.log(store.getState().goodsList)
-        if(store.getState().goodsList===[]){
-            Toast.info("无采购商品",1.5)
+        if (store.getState().goodsList === []) {
+            Toast.info("无采购商品", 1.5)
             this.setState({
-                goodsList:[]
+                goodsList: []
             })
-        }else{
+        } else {
             this.setState({
-                goodsList:store.getState().goodsList
+                goodsList: store.getState().goodsList
             })
         }
     }
     render() {
+        const scollConfig = {
+            probeType: 1
+        }
+
         return (
             <LiebiaoStyle>
-            <div>
+                {/* <div>
                 <div className='search' >
                     <input type="search" className='input' placeholder="请输入采购单号/仓库名称"/>
                     <div className='img'>
@@ -49,7 +81,6 @@ export default class Liebiao extends Component {
                             </li>
                             <li className='wen-zi-f'>
                                 <div>￥：{v.price}元/{v.danwei}</div>
-
                                 <p>{v.amount}
                                 </p>
                             </li>
@@ -57,27 +88,50 @@ export default class Liebiao extends Component {
                     </div>
                     )
                 })
-            }
-            {/* <div className='tiao'>amount: 4
-barcode: "100000025"
-barcodeid: "2099"
-gnum: "2"
-name: "积分测试"
-num: "2"
-price: "2"
-                        <img className='t-img-l'  alt="" />
-                        <ul className='wen-zi'>
-                            <li className='wen-zi-t'>
-                                <div className='name'>name</div>
-                                <p>100盒</p>
-                            </li>
-                            <li className='wen-zi-f'>
-                                <div>￥：3333元/盒</div>
-                                <p><span>库存金额：</span>99
-                                </p>
-                            </li>
-                        </ul>
-                    </div> */}
+            } */}
+
+                <div>
+                    <div className='search'>
+                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="goodsSearch"
+                            onChange={this.goodsChange.bind(this)}
+                            value={this.state.goodsSearch} />
+                        <div className='img' onClick={() => { this.search() }}>
+                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+                        </div>
+                    </div>
+
+                    <div className='conten'>
+                        <div className='conten-top'>
+                            <p>
+                                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+                            </p>
+                            <div>{this.state.purchaseDetail.docno}</div>
+                        </div>
+
+                        <div className='conten-c' style={{ paddingTop: ".25rem" }}>
+                            <p>单据日期：0</p>
+                            <p>创建时间：0</p>
+
+                            <p>单据仓库：0</p>
+                            <p>单据状态：0</p>
+                        </div>
+                    </div>
+
+                    <div className='footer'>
+                        采购备注：0
+                        </div>
+                </div>
+                {/* <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)"}}> */}
+                {
+                    this.state.purchaseItem.map((value, key) => {
+                        console.log(value)
+                        return (
+                            <Tiao item={value} key={key}></Tiao>
+                        )
+                    })
+                }
+                {/* </BetterScroll> */}
+
             </LiebiaoStyle>
         )
     }
@@ -87,110 +141,242 @@ price: "2"
 
 
 const LiebiaoStyle = styled.div`
-.wen-zi-t p{
-    color:#646464;
-    font-size:.35rem;
+.am-button::before {
+    border: none !important;
 }
-.wen-zi-f div{
-    font-size:.35rem;
-    color:#646464;
-}
-.wen-zi-f p span{
-    color:#646464;
-}
-.wen-zi-f p{
-    font-size:.38rem;
+.yuan{
+    // padding-top:.1rem;
+    text-align:center;
+    // margin:auto;
+    position:absolute;
+    top: .2rem;
+    left:1.3rem;
+    color:#fff;
+    width:.51rem;
+    height:.51rem;
+    line-height:.51rem;
+    border-radius:.5rem;
+    background-color: #E01616;
+    font-size:.24rem;
+  }
+  .foot_conton span{
     color:#cf2424;
-}
-.name{
-    font-size:.35rem;
-    width: 3.2rem;
-    height: 100%;
-    color:#1a1a1a;
-    // background-color: pink;
-}
-.wen-zi-f{
-    display:flex;
-    justify-content: space-between;
-}
-.wen-zi-t{
-    display:flex;
-    justify-content: space-between;
-    width: 7.5rem;
-    height: 1.1rem;
-    // background-color: yellow;
-}
-.wen-zi{
-    
-    padding-top:.2rem;
-    margin-left: .2rem;
-    width: 7.5rem;
-    height: 1.7rem;
-    // background-color: red;
-}
-.t-img-l{
-    margin-left: .2rem;
-    margin-top:.2rem;
-    width: 1.5rem;
-    height: 1.5rem;
-    // background-color: orange;
-}
-.t-img{
-    // padding-top: .2rem;
-    margin-left: .2rem;
-    width: 1.5rem;
-    height: 1.8rem;
-    background-color: red;
-}
-.tiao{
-    display:flex;
-    width: 100%;
-    height: 2rem;
-    background-color: #fff;
-    border-bottom:2px solid #dadada;
-    
-
-}
-
-
-
-
-
-input::-webkit-input-placeholder {
-    color: #c9c9c9;
-    font-size:.35rem;
-}
-.img{
-    width: .8rem;  
-    height: .6rem; 
-}
-.img-search{
-    margin-top:.1rem;
+  }
+  .foot_conton{
+    width: 12rem;
+    // height: 100%rem;
+    line-height:1.6rem;
+    text-align:center;
+    font-size:.4rem;
+  }
+  .left img{
     width: auto;  
     height: auto;  
     max-width: 100%;  
     max-height: 100%;
-}
+  }
+  .left{
+    padding-left:.48rem;
+    padding-top:.45rem;
+    width:3rem;
     
-.input{
-    font-size:.35rem;
-    border:none;
-    width:8.3rem;
-    margin-top:.1rem;
-    margin-left:.3rem;
-    height: .6rem;
-    // background-color: red;
+  }
+  .right{
+    margin-top:.2rem;
 
-}
-.search{
+    margin-right:.2rem;
+  border-radius:.2rem;
+  font-size:.4rem;
+  color:#fff;
+  text-align:center;
+  width: 2.04rem;
+  height: 1.17rem;
+  line-height: 1.17rem;
+  background-color: #ED7913;
+  }
+  .foot{
     display:flex;
-    margin: .3rem .2rem;
-    width:9.5rem;
-    height: .8rem;
-    border-radius:.5rem;
+    width: 100%;
+    height: 1.6rem;
     background-color: #fff;
+    position:absolute;
+    bottom:0;
+  }
+    
+    
+    
+    
+    
+    .wen-zi-f p span{
+        color:#cf2424;
+    }
+    .wen-zi-t p{
+        color:#646464;
+        font-size:.29rem;
+    }
+    .wen-zi-f div{
+        font-size:.29rem;
+        color:#646464;
+    }
+    .wen-zi-f p{
+        font-size:.29rem;
+        color:#646464;
+    }
+    .name{
+        font-size:.35rem;
+        width: 3.2rem;
+        color:#1a1a1a;
+        // margin: .1rem 0;
+    }
+    .wen-zi-f{
+        margin-bottom:0rem;
 
-}
+        display:flex;
+        justify-content: space-between;
+    }
+    .wen-zi-t{
+        display:flex;
+        justify-content: space-between;
+        width: 7.5rem;
+        // height: 1.1rem;
+        // background-color: yellow;
+    }
+    .wen-zi-c{
+        display:flex;
+        justify-content: space-between;
+        font-size:.29rem;
+        // margin-bottom:.27rem;
+    }
+    .wen-zi{
+        margin-bottom: .24rem;
+        padding-top:.25rem;
+        margin-left: .32rem;
+        width: 7.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: space-between;
+    }
+    .t-img-l{
+
+        margin-left: .37rem;
+        margin-top:.24rem;
+        margin-bottom:.24rem;
+        width: 1.33rem;
+        height: 1.33rem;
+        // background-color: orange;
+    }
+    .t-img{
+        // padding-top: .2rem;
+        margin-left: .2rem;
+        width: 1.5rem;
+        height: 1.8rem;
+        background-color: red;
+    }
+    .tiao{
+        display:flex;
+        width: 100%;
+        // height: 2rem;
+        background-color: #fff;
+        border-bottom:2px solid #dadada;
+        
+    
+    }
+    .footer{
+        font-size:.35rem;
+        margin-top: .33rem;
+        margin-left: .45rem;
+        color:#646464;
+        margin-bottom: .32rem;
+
+    
+    }
+    .conten-c p{ 
+        color:#646464;
+        font-size:.32rem;
+        padding-bottom:.25rem;
+        margin-left: .35rem;
+    }
+    .conten-c{
+        width: 9.3rem;  
+        // height: 3.4rem;  
+        margin:0 .37rem;
+        background-color: #f8f8f8;
+    
+    }
+    .conten-top p img{ 
+        width: auto;  
+        height: auto;  
+        max-width: 100%;  
+        max-height: 100%;
+    }
+    .conten-top div{
+        height:.89rem;
+        line-height:.89rem;
+        font-size:.35rem;
+        color:#646464;
+        // margin-top: .25rem;
+        margin-left:.2rem;
+    }
+    .conten-top p{
+        margin-top: .28rem;
+        margin-left:.45rem;
+        width:.33rem;
+        height:.37rem;
+    }
+    .conten-top{
+        display:flex;
+        height:.89rem;
+    
+    }
+    .conten{
+        border-bottom:2px solid #dadada;
+        margin-top:.2rem;
+        width:100%;
+        background-color: #fff;
+    
+    }
+
+      
+      input::-webkit-input-placeholder {
+        color: #c9c9c9;
+        font-size:.35rem;
+      }
+      .img{
+        width: .55rem;  
+        height: .55rem; 
+        // line-height: .5rem; 
+        margin-left:2.45rem;
+      }
+      .img-search{
+        margin-top:.12rem;
+        width: auto;  
+        height: auto;  
+        max-width: 100%;  
+        max-height: 100%;
+      }
+        
+      .input{
+        font-size:.37rem;
+        border:none;
+        width:6rem;
+        // margin-top:.21rem;
+        margin-left:.17rem;
+        height: .75rem;
+        line-height: .75rem;
+        // background-color: red;
+      
+      }
+      .search{
+        display:flex;
+        margin-top:.21rem;
+        margin-left:.32rem;
+        width:9.36rem;
+        height: .75rem;
+        border-radius:.15rem;
+        background-color: #fff;
+      
+      }
 
 
 `

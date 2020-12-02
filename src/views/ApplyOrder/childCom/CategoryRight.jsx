@@ -69,7 +69,8 @@ class CategoryRight extends Component {
     this.props.onRef(this)
   }
 
-  myName = () =>{
+  myName = (e) =>{
+    console.log(e)
     console.log(this.state.login[0],this.state.goods)
     let num =this.state.login
     // let price =this.state.password
@@ -98,6 +99,7 @@ class CategoryRight extends Component {
     createPurchaseApply({ action: 'createPurchaseApply', data: {
       uniacid: store.getState().uniacid,
       uid:store.getState().uid,
+      status:e,
       totalnum:this.state.num,
       remark:this.props.bz==="1"?"":this.props.bz,
       warehouseid:this.props.id,

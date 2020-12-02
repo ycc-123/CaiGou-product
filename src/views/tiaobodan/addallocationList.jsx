@@ -138,9 +138,9 @@ export default class AddInventoryList extends Component {
                                 value={this.state.inputbeiz} type="text" /></li>
                     </ul>
 
-                    <div className='foot'>
+                    <div className='foot' style={{justifyContent: 'space-between'}}>
                         <div className='left'></div>
-                        <div></div>
+                        {/* <div></div> */}
                         <div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
 
                     </div>
@@ -219,19 +219,21 @@ const AddPurchaseOrderStyle = styled.div`
     
     
     .left{
-        width: 25rem;
+        width: 2rem;
         height: 1.6rem;
         background-color: #fff;
     }
     .right{
-        font-size:.35rem;
-        color:#fff;
-        text-align:center;
-        width: 100%;
-        margin:auto;
-        height: 1.6rem;
-        line-height:1.6rem;
-        background-color: #ED7913;
+        margin-top:.2rem;
+    margin-right:.2rem;
+    border-radius:.2rem;
+    font-size:.4rem;
+    color:#fff;
+    text-align:center;
+    width: 2.04rem;
+    height: 1.17rem;
+    line-height: 1.17rem;
+    background-color: #ED7913;
     }
     .foot{
         display:flex;

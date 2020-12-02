@@ -194,7 +194,7 @@ export default class ApplyOrderx extends Component {
          
 
 
-            <div className='foot'>
+            {/* <div className='foot'>
             <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
             <div className='left'
             >
@@ -205,7 +205,34 @@ export default class ApplyOrderx extends Component {
                         onClick={(e)=>{this.tijiao(this.state.quan.statusname)}}
                         >提交</div>
             </div>
-            </div> 
+            </div>  */}
+
+            <div className='foot'>
+              <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
+                  <div className='left'>
+                      <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                      <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
+                  </div>
+                  <div style={{display:"flex",marginTop:".2rem"}}>
+                      <div className='baocun' style={{display:this.state.quan.statusname=== "提交成功" ? "none" : 'block'}}>保存</div>
+                      <div className='tijiao' style={{ background: this.state.quan.statusname === "提交成功" ? "#B4B4B4" : '' }}
+                        onClick={(e)=>{this.tijiao(this.state.quan.statusname)}}>提交</div>
+                  </div>
+              </div>
+           
+            {/* <div
+              style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "7.78rem", color: "transparent", background: "transparent" }}
+              className="btn_modal"
+              onClick={() =>
+                alert('提交', '是否确认提交采购单', [
+                  { text: '取消', onPress: () => console.log('cancel') },
+                  { text: '确定', onPress: () => this.click() },
+                ])
+              }
+            >
+              confirm
+                        </div> */}
+                        </div>
            
                 </div> 
             </ApplyOrderxStyle>
@@ -213,6 +240,28 @@ export default class ApplyOrderx extends Component {
     }
 }
 const ApplyOrderxStyle = styled.div`
+.baocun{
+    margin-right:.2rem;
+    border-radius:.2rem;
+    font-size:.4rem;
+    color:#fff;
+    text-align:center;
+    width: 2.04rem;
+    height: 1.17rem;
+    line-height: 1.17rem;
+    background-color: #ED7913;
+  }
+  .tijiao{
+    margin-right:.2rem;
+    border-radius:.2rem;
+    font-size:.4rem;
+    color:#fff;
+    text-align:center;
+    width: 2.04rem;
+    height: 1.17rem;
+    line-height: 1.17rem;
+    background-color: #ED7913;
+  }
 .am-button::before {
     border: none !important;
 }

@@ -448,3 +448,14 @@ export function getProductCode(config) {
     data: config.data
   })
 }
+
+// 提交采购申请单
+
+export function erpPurchaseList(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

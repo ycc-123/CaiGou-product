@@ -11,21 +11,27 @@ function Tiao(value) {
     console.log(value)
     let tiao = value.item
     return (
-        <div className='tiao'>
-            {/* <img className='t-img-l' src={tiao.image} alt="" /> */}
-            <img className='t-img-l' src={tiao.image?tiao.image:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
-            <ul className='wen-zi'>
-                <li className='wen-zi-t'>
-                    <div className='name'>{tiao.goods_name}</div>
-                    <p>{tiao.gnum}{tiao.unitname}</p>
-                </li>
-                <li className='wen-zi-f'>
-                    <div>￥：{tiao.price}元/{tiao.unitname}</div>
-                    <p>{tiao.subtotal}</p>
-                </li>
-            </ul>
-        </div>
+
+<div className='tiao'>
+<img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+
+<ul className='wen-zi'>
+    <li className='wen-zi-t'>
+        <div className='name'>{tiao.goods_name}</div>
+    </li>
+    <li className='wen-zi-c'>
+        <div >商品编码：{tiao.barcode}</div>
+        <p>{tiao.price}元/{tiao.unitname}</p>
+    </li>
+    
+    <li className='wen-zi-f'>
+        <div></div>
+        <p>采购数量：<span>{tiao.gnum}</span></p>
+
+    </li>
+</ul>
+</div>
     )
 }
 export default class PurchaseOrderDetailed extends Component {
@@ -202,6 +208,8 @@ export default class PurchaseOrderDetailed extends Component {
 
                         <div className='conten-c' style={{ paddingTop: ".25rem" }}>
                             <p>单据日期：{this.state.purchaseDetail.docdate}</p>
+                            <p>创建时间：{this.state.purchaseDetail.createtime}</p>
+
                             <p>单据仓库：{this.state.purchaseDetail.warehousename}</p>
                             <p>单据状态：<span style={{ color: Color }}>{this.state.purchaseDetail.statusname}</span></p>
                         </div>
@@ -223,11 +231,11 @@ export default class PurchaseOrderDetailed extends Component {
                     <div className='foot'>
                     <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
                         <div className='left'>
-                        <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                        <div style={{ width: "1.28rem", height: ".68rem" }}>
+                            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                                 <div className='yuan'>{this.state.purchaseItem.length}</div>
                         </div>
-                        {/* <div className='yuan'>{this.state.purchaseItem.length}</div> */}
-                        {/* <div className='foot_conton'>总额：<span>0</span></div> */}
+
                         <div style={{ background: this.state.purchaseDetail.statusname === "审核成功" ? "#B4B4B4" : '' }}
                             className='right'
                             onClick={() => { this.shengHe() }}
@@ -245,20 +253,6 @@ export default class PurchaseOrderDetailed extends Component {
                         >
                             confirm
                         </Button>
-
-                        {/* <Button
-                            style={{ position: "absolute", top: ".3rem", left: "4.6rem", color: "transparent", background: "transparent" }}
-                            className="btn_modal"
-                            onClick={() => prompt(
-                                '添加',
-                                '请填写采购数量与单价',
-                                (login, password) => this.zjian(login, password, goods),
-                                'login-password',
-                                null,
-                                ['请填写采购数量', '请填写采购单价'],
-                            )}
-                            visible={false}
-                        >111111</Button> */}
                     </div>
                     </div>
                 </div>
@@ -309,12 +303,15 @@ const PurchaseOrderDetailedStyle = styled.div`
     
   }
   .right{
+    margin-top:.2rem;
+    margin-right:.2rem;
+    border-radius:.2rem;
     font-size:.4rem;
     color:#fff;
     text-align:center;
-    width: 2.76rem;
-    height: 1.6rem;
-    line-height:1.6rem;
+    width: 2.04rem;
+    height: 1.17rem;
+    line-height: 1.17rem;
     background-color: #ED7913;
   }
   .foot{

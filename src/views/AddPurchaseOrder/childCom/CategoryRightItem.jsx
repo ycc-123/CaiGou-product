@@ -44,7 +44,21 @@ class CategoryRightgoods extends Component {
           <img className='category-img' src={goods.albumpath?goods.albumpath:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
           <div className='category-goods-info'>
-            <p>{goods.name}</p>
+            {/* <p>{goods.name}</p> */}
+            <div style={{fontSize:".35rem",color:'#1a1a1a',width:"4rem"}}>{goods.name}</div>
+
+              <div className='shuliang' style={{color:'#1a1a1a',paddingTop:".1rem"}}>
+                   <article>商品编码：{goods.code}</article>
+                   <div>{goods.posprice}元/{goods.unitname}</div>
+              </div>
+            <div style={{display:"flex",justifyContent:"space-between"}}>
+            {
+              this.state.login ? <div  style={{width:"100%",textAlign: "right",paddingTop:".2rem", color: "#CD2323", fontSize: ".35rem" }}>{this.state.login}</div> :
+                <img className='category-goods-img'
+                  src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
+                  alt="" />
+            }
+            </div>
 
             <Button
               style={{ position: "absolute", top: ".3rem", left: "4.6rem", color: "transparent", background: "transparent" }}
@@ -59,12 +73,12 @@ class CategoryRightgoods extends Component {
               )}
               visible={false}
             >111111</Button>
-            {
+            {/* {
               this.state.login ? <div className='category-goods-img' style={{ textAlign: "center", width: "2rem", height: ".5rem", marginTop: ".8rem", marginLeft: "4rem", color: "#d54343", fontSize: ".4rem" }}>{this.state.login}</div> :
                 <img className='category-goods-img'
                   src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
                   alt="" />
-            }
+            } */}
 
 
           </div>
@@ -79,6 +93,21 @@ class CategoryRightgoods extends Component {
 }
 
 const CategoryRightgoodsStyle = styled.div`
+.category-goods-img {
+  margin-top:.2rem;
+  margin-left:4.65rem;
+  width: 0.43rem;
+  height: 0.43rem;
+}
+.shuliang span{
+  margin-left:1.5rem;
+}
+.shuliang{
+  // margin-top:.8rem;
+  font-size:.29rem;
+  display:flex;
+  justify-content: space-between;
+}
 .am-button::before{
   border:none !important;
 }
@@ -119,7 +148,7 @@ const CategoryRightgoodsStyle = styled.div`
   // width: 7.17rem;
   height: 1.85rem;
   line-height: 1;
-  padding: .17rem;
+  padding: .24rem .37rem;
   border-bottom:1px solid #ccc;
   // margin-bottom: .17rem;
   // border-radius: .2rem;
@@ -128,20 +157,20 @@ const CategoryRightgoodsStyle = styled.div`
 .category-img {
   display: block;
   float: left;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-right: .15rem;
+  width: 1.33rem;
+  height: 1.33rem;
+  margin-right: .32rem;
 }
 .category-goods-info {
   position: relative;
-  width: calc(100% - 2.3704rem);
+  width: calc(100% - 1.65rem);
   height: 100%;
   float: left;
 }
 .category-goods-info p:first-child {
   font-size: .32rem;
-  margin-bottom: .24rem;
-  margin-top: .05rem;
+  // margin-bottom: .24rem;
+  // margin-top: .05rem;
   text-align: justify;
   // overflow: hidden;
   text-overflow: ellipsis;
@@ -204,12 +233,7 @@ const CategoryRightgoodsStyle = styled.div`
 .category-goods-info p:nth-child(4) span {
   margin-right: .2rem;
 }
-.category-goods-img {
-  margin-top:.4rem;
-  margin-left:4.7rem;
-  width: .5rem;
-  height: .5rem;
-}
+
 .category-goods .goods-img img {
   margin-left: 1.2rem;
 }
@@ -248,6 +272,7 @@ const CategoryRightgoodsStyle = styled.div`
   text-align: center;
   color: #f5702a;
 }
+
 `
 
 export default withRouter(CategoryRightgoods)

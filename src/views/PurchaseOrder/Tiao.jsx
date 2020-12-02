@@ -28,6 +28,7 @@ class Tiao extends Component {
                         </div>
                         <div className='dan-footer'>
                             <p>单据日期：{item.docdate}</p>
+                            <p>创建时间：0</p>
                             <p>采购仓库：{item.warehousename}</p>
                         </div>
                     </div>

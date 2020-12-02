@@ -28,31 +28,31 @@ export default class ApplyOrderx extends Component {
         }).then((res) => {
             console.log(res)
             if (res.data.status === 4001) {
-                // let aa = {}
-                // let arr = []
+                let aa = {}
+                let arr = []
 
-                // res.data.data.item.map((v, k) => {
-                //     console.log(v, k)
-                //     aa = v.goodsnum
-                //    return arr.push(aa);
+                res.data.data.data.map((v, k) => {
+                    console.log(v, k)
+                    aa = v.num
+                   return arr.push(aa);
 
-                // })
-                // console.log(arr)
+                })
+                console.log(arr)
 
-                // let sum = 0;
-                // // let dd = arr
-                // arr.forEach(item => {
-                //     console.log(item)
-                //     sum = sum +Number(item)
-                // })
-                // console.log(sum)
+                let sum = 0;
+                // let dd = arr
+                arr.forEach(item => {
+                    console.log(item)
+                    sum = sum +Number(item)
+                })
+                console.log(sum)
 
 
                 this.setState({
                     quan: res.data.data.damage,
-                    sum: res.data.data.data.length,
+                    // sum: res.data.data.data.length,
                     tiao: res.data.data.data ? res.data.data.data : [],
-                    // sum
+                    sum
                 })
             } else {
                 Toast.info(res.data.msg, 2)
@@ -62,7 +62,9 @@ export default class ApplyOrderx extends Component {
 
     tijiao(e) {
 
-        if (e === "已审核") { } else {
+        if (e === "已审核") {
+
+        } else {
             let aa = {}
             let arr = []
 
@@ -153,7 +155,7 @@ export default class ApplyOrderx extends Component {
 
                         <div className='conten-c' style={{ paddingTop: ".25rem" }}>
                             <p>单据日期：{this.state.quan.createtime}</p>
-                            <p>报损仓库：cc</p>
+                            <p>报损仓库：{this.state.quan.warehouseName}</p>
                             <p>报损数量：{this.state.sum}</p>
                             <p>单据状态：<span style={{ color: "#ed5f21" }}>{this.state.quan.statusName}</span></p>
                         </div>
@@ -218,7 +220,7 @@ export default class ApplyOrderx extends Component {
                                 <div className='yuan'>{this.state.tiao.length}</div>
                             </div>
 
-                            <div className="foot_c">总额：<span style={{color:"#cf2424"}}>0</span></div>
+                            <div className="foot_c">总额：<span style={{color:"#cf2424"}}>{this.state.quan.totalPrice}</span></div>
 
                             <div className='right' 
                             style={{ background: this.state.quan.statusName === "已审核" ? "#B4B4B4" : '' }}

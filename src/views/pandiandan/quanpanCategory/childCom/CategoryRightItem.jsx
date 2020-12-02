@@ -42,11 +42,12 @@ class CategoryRightgoods extends Component {
           <img className='category-img' src={goods.image?goods.image:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
           <div className='category-goods-info'>
-          <div className='shuliang' style={{color:'#1a1a1a'}}>
-                   <article>{goods.barcode}</article>
+          <div style={{fontSize:".35rem",color:'#1a1a1a'}}>{goods.name}</div>
+
+          <div className='shuliang' style={{color:'#1a1a1a',padding:".2rem 0"}}>
+                   <article>商品编码：{goods.barcode}</article>
                    <div>{goods.costprice}元/{goods.unit_name}</div>
                  </div>
-            <div style={{fontSize:".35rem",padding:".2rem 0",color:'#1a1a1a'}}>{goods.name}</div>
             <div className='shuliang' style={{color:'#4c4c4c'}}>
                    <article>账面数量：{goods.gnum}</article>
                    <div>实际数量：{this.state.login?this.state.login:goods.gnum}</div>

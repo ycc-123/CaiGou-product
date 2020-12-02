@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseApplyList } from 'network/Api'
+import { getPurchaseApplyList,erpPurchaseList } from 'network/Api'
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
+import {  Toast } from 'antd-mobile';
+
 export default class ApplyOrder extends Component {
     constructor() {
         super()
@@ -120,8 +122,22 @@ export default class ApplyOrder extends Component {
             bottomTip.innerHTML = '商品已经全部加载完成' */
         }
     }
-    submit(){
-        console.log(1111)
+    submit(v){
+        console.log(v)
+        erpPurchaseList({
+            action: 'erpPurchaseList', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                id:v.id
+            }
+        }).then((res) => {
+            if(res.data.status===4001){
+                window.location.reload();
+                Toast.success(res.data.msg,1)
+            }else{
+                Toast.info(res.data.msg,1)
+            }
+        })
     }
     render() {
         const scrollConfig = {
@@ -181,7 +197,7 @@ export default class ApplyOrder extends Component {
                                         </div>
                                         </div>
                                         
-                                        <div className='btn_sh' onClick={() => { this.submit() }}
+                                        <div className='btn_sh' onClick={() => { this.submit(v) }}
                                             style={{display:v.statusname==="提交成功"?"none":''}}
                                             >提交</div>
                                     </div>
@@ -213,7 +229,7 @@ const ApplyOrderStyle = styled.div`
 }
 .btn_sh{
     position:absolute;
-    top:1.6rem;
+    top:2.9rem;
     left:7.8rem;
     width: 1.33rem;
     height: 0.67rem;

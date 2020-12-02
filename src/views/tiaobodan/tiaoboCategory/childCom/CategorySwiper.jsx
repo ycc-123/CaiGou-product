@@ -49,14 +49,14 @@ export default class InventoryListDetails extends Component {
                         </div>
 
                         <div className='conten-c' style={{ paddingTop: ".25rem" }}>
-                            <p>单据日期：{s2}</p>
+                            <p>单据日期：{this.state.beiz}</p>
                             <p>转出仓库：{this.state.zcck}</p>
                             <p>转入仓库：{this.state.zrvk}</p>
                             <p>单据状态：<span style={{ color: "#d92929" }}>待提交</span></p>
                         </div>
 
                         <div className='footer'>
-                            备注：{this.state.beiz}
+                            备注：{s2}
                         </div>
                     </div>
                     {/* <BetterScroll config={scrollConfig} ref='scroll' style={{ }}> */}

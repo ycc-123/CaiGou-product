@@ -145,6 +145,20 @@ export default class AddPurchaseOrder extends Component {
                             </Picker>
                         
                         </li>
+                        <li>引用采购申请：
+                        <Picker
+                             data={this.state.supplier} 
+                             cols={1}  
+                             className="forss"
+                             extra="调用采购申请"
+                             value={this.state.Value}
+                             onChange={v => this.setState({Value: v})}
+                             onOk={v => this.setState({ IDgy: v })}
+                             >
+                                <List.Item className='yycgsq' arrow="horizontal"></List.Item>
+                            </Picker>
+                        
+                        </li>
                         <li>
                             <div>预付款：</div>
                             <input name="inputAmount" 
@@ -163,9 +177,9 @@ export default class AddPurchaseOrder extends Component {
                     </ul>
 
                     <div className='foot'>
-                        <div className='left'></div>
                         <div></div>
-                        <div className='right' onClick={() => { this.state.jj===false?console.log(): this.createPurchase() }}>下一步</div>
+                        <div className='btn' onClick={() => { this.state.jj===false?console.log(): this.createPurchase() }}>下一步</div>
+                        {/* <div className='right' >下一步</div> */}
 
                     </div>
 
@@ -210,8 +224,17 @@ const AddPurchaseOrderStyle = styled.div`
 
 .pdlx{
     position:absolute;
-    left:2.2rem;
+    left:2.5rem;
     top:1.4rem;
+    // padding-top:.3rem;
+    color: #a9a9a9;
+    width:12rem;
+    background-color: transparent;
+}
+.yycgsq{
+    position:absolute;
+    left:2.5rem;
+    top:2.65rem;
     // padding-top:.3rem;
     color: #a9a9a9;
     width:12rem;
@@ -219,7 +242,7 @@ const AddPurchaseOrderStyle = styled.div`
 }
 .times{
     position:absolute;
-    left:2.2rem;
+    left:2.5rem;
     top:.1rem;
     // padding-top:.3rem;
     color: #a9a9a9;
@@ -233,26 +256,27 @@ const AddPurchaseOrderStyle = styled.div`
 }
 
 
-
-.left{
-    width: 25rem;
-    height: 1.6rem;
-    background-color: #fff;
-}
-.right{
-    font-size:.35rem;
-    color:#fff;
+.btn{
+    width: 2.04rem;
+    height: 1.17rem;
+    line-height:1.17rem;
     text-align:center;
-    width: 100%;
-    margin:auto;
-    height: 1.6rem;
-    line-height:1.6rem;
-    background-color: #ED7913;
+
+    color:#fff;
+    background: #ED7913;
+    border-radius: .2rem;
+    font-size:0.37rem;    
+    margin-right:.2rem;
+    margin-top:.2rem;
 }
+
 .foot{
     display:flex;
+    justify-content: space-between;
+
     width: 100%;
     height: 1.6rem;
+    line-height:1.6rem;
     background-color: #fff;
     position:absolute;
     bottom:0;

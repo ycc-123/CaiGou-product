@@ -115,7 +115,7 @@ class Category extends Component {
           </div>
 
           
-          <div className='foot'>
+          {/* <div className='foot'>
             <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
             <div className='left'
             onClick={() => { this.mingxi() }}
@@ -128,6 +128,31 @@ class Category extends Component {
            
             <div
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
+              className="btn_modal"
+              onClick={() =>
+                alert('提交', '是否确认提交调拨单', [
+                  { text: '取消', onPress: () => console.log('cancel') },
+                  { text: '确定', onPress: () => this.click() },
+                ])
+              }
+            >
+              confirm
+                        </div></div> */}
+
+            <div className='foot'>
+              <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
+                  <div className='left' onClick={() => { this.mingxi() }}>
+                      <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                      <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
+                  </div>
+                  <div style={{display:"flex",marginTop:".2rem"}}>
+                      <div className='baocun' >保存</div>
+                      <div className='tijiao' >提交</div>
+                  </div>
+              </div>
+           
+              <div
+              style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "7.78rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
               onClick={() =>
                 alert('提交', '是否确认提交调拨单', [
@@ -327,6 +352,30 @@ class Category extends Component {
 
 }
 const CategoryStyle = styled.div`
+.baocun{
+  margin-right:.2rem;
+  border-radius:.2rem;
+  font-size:.4rem;
+  color:#fff;
+  text-align:center;
+  width: 2.04rem;
+  height: 1.17rem;
+  line-height: 1.17rem;
+  background-color: #ED7913;
+}
+.tijiao{
+  margin-right:.2rem;
+  border-radius:.2rem;
+  font-size:.4rem;
+  color:#fff;
+  text-align:center;
+  width: 2.04rem;
+  height: 1.17rem;
+  line-height: 1.17rem;
+  background-color: #ED7913;
+}
+
+
 input::-webkit-input-placeholder {
   color: #c9c9c9;
   font-size:.35rem;
@@ -410,25 +459,17 @@ input::-webkit-input-placeholder {
 .left{
   padding-left:.48rem;
   padding-top:.45rem;
-  width:7rem;
+  width:3rem;
   
 }
-.right{
-  font-size:.4rem;
-  color:#fff;
-  text-align:center;
-  width: 2.76rem;
-  height: 1.6rem;
-  line-height:1.6rem;
-  background-color: #ED7913;
-}
+
 .foot{
   display:flex;
   width: 100%;
   height: 1.6rem;
   background-color: #fff;
   position:absolute;
-  bottom:0;
+  // bottom:0;
 }
 
 
