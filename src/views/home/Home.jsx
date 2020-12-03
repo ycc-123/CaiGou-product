@@ -51,8 +51,8 @@ export default class Home extends Component {
         <ul>
           {/* <li onClick={()=>{this.props.history.push('/AddGoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/add.png" alt=""/></li> */}
           <li onClick={()=>{this.props.history.push('/bjsygoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/bianji.png" alt=""/></li>
-          {/* <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaojia.png" alt=""/></li> */}
-          {/* <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dabao.png" alt=""/></li> */}
+          <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaojia.png" alt=""/></li>
+          <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dabao.png" alt=""/></li>
         </ul>
       </div>
         <DocumentTitle title={'进销存'} />
@@ -61,7 +61,7 @@ export default class Home extends Component {
           <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigou.png" alt="" /></div>
           <ul>
             <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/ApplyOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shengqing.png" alt="" /></li>
-            <li style={{ marginLeft: ".4rem" }} onClick={() => { this.props.history.push('/AddPurchaseOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/addcaigou.png" alt="" /></li>
+            {/* <li style={{ marginLeft: ".4rem" }} onClick={() => { this.props.history.push('/AddPurchaseOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/addcaigou.png" alt="" /></li> */}
             <li style={{ marginLeft: ".3rem" }} onClick={() => { this.props.history.push('/PurchaseOrder')} }><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigoudan.png" alt="" /></li>
           </ul>
         </div>
@@ -105,16 +105,16 @@ export default class Home extends Component {
                   v1.1.1.7.3
               </div>
 
-              <div
+              <p
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "1rem", left: "0rem", color: "transparent", background: "transparent" }}
-              className="btn_modal"
+              // className="btn_modal"
               onClick={() =>
                 alert('', '有新版本可供更新', [
                   { text: '确定', onPress: () => this.aa() },
                   { text: '取消', onPress: () => console.log('cancel') },
                 ])
               }
-            ></div>
+            ></p>
             </li>
           </ul>
         </div>

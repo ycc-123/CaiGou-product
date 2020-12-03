@@ -86,7 +86,7 @@ export default class AddPurchaseOrder extends Component {
           } }).then(res=>{
             console.log(res)
             if(res.data.status===4001){
-                this.props.history.push(`/category/${res.data.data}`)
+                this.props.history.push(`/category/${res.data.data.id}`)
                 console.log(res.data.data)
                 Toast.success('新建采购单成功', 2)
             }else{

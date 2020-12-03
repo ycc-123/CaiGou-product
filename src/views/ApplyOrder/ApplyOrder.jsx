@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseApplyList,erpPurchaseList } from 'network/Api'
+import { getPurchaseApplyList,submitPurchaseApply } from 'network/Api'
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
@@ -124,8 +124,8 @@ export default class ApplyOrder extends Component {
     }
     submit(v){
         console.log(v)
-        erpPurchaseList({
-            action: 'erpPurchaseList', data: {
+        submitPurchaseApply({
+            action: 'submitPurchaseApply', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 id:v.id
@@ -229,8 +229,8 @@ const ApplyOrderStyle = styled.div`
 }
 .btn_sh{
     position:absolute;
-    top:2.9rem;
-    left:7.8rem;
+    bottom:.2rem;
+    right:.2rem;
     width: 1.33rem;
     height: 0.67rem;
     line-height: 0.67rem;

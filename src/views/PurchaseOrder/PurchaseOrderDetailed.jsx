@@ -83,15 +83,21 @@ export default class PurchaseOrderDetailed extends Component {
         })
     }
     shengHe() {
-        // let itemData = [{
-        //     amount:3,
-        //     barcodeid:1988,
-        //     barcode:"火龙果，芒果，瓜类0002",
-        //     gnum:3,
-        //     num:3,
-        //     price:1
-        // }]
-        let purchaseData = { subtotal: 8, snum: 8 }
+        let price=[]
+        let num=[]
+        this.state.purchaseItem.map((value, key) => {
+            price.push(value.subtotal)
+            num.push(value.gnum)
+        })
+        let prices=0
+        let nums=0
+        price.forEach(item =>{
+           prices = prices + Number(item)
+        })
+        num.forEach(item =>{
+           nums = nums + Number(item)
+        })
+        let purchaseData = { subtotal: prices, snum: nums }
         if (this.state.purchaseDetail.statusname === "待提交") {
             submitPurchase({
                 action: 'submitPurchase', data: {
@@ -209,8 +215,7 @@ export default class PurchaseOrderDetailed extends Component {
                         <div className='conten-c' style={{ paddingTop: ".25rem" }}>
                             <p>单据日期：{this.state.purchaseDetail.docdate}</p>
                             <p>创建时间：{this.state.purchaseDetail.createtime}</p>
-
-                            <p>单据仓库：{this.state.purchaseDetail.warehousename}</p>
+                            <p>采购仓库：{this.state.purchaseDetail.warehousename}</p>
                             <p>单据状态：<span style={{ color: Color }}>{this.state.purchaseDetail.statusname}</span></p>
                         </div>
 

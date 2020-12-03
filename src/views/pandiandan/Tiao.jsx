@@ -46,7 +46,7 @@ export default class Tiao extends Component {
                             style={{ position: "absolute", left: "6.6rem", color: "transparent", background: "transparent", width: "9rem" }}
                             className="btn_modal"
                             onClick={() => prompt(
-                                '填写', '请输入入库数量',
+                                '填写', '请输入实际数量',
                                 [
                                     {
                                         text: '取消',

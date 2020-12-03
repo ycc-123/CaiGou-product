@@ -210,6 +210,8 @@ class Category extends Component {
             uniacid: store.getState().uniacid,
             uid: store.getState().uid,
             categoryid: Id[0].id,
+            limit: "1000",
+            page: "1"
           }
         }).then(res => {
           console.log(res.data.msg)
@@ -245,6 +247,8 @@ class Category extends Component {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         categoryid: this.state.id[index].id,
+        limit: "1000",
+        page: "1"
       }
     }).then(res => {
       console.log(res.data.msg)

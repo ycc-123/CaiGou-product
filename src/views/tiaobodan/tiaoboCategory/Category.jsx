@@ -146,7 +146,7 @@ class Category extends Component {
                       <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
                   </div>
                   <div style={{display:"flex",marginTop:".2rem"}}>
-                      <div className='baocun' >保存</div>
+                      <div className='baocun' onClick={()=>{this.click(1)}}>保存</div>
                       <div className='tijiao' >提交</div>
                   </div>
               </div>
@@ -157,7 +157,7 @@ class Category extends Component {
               onClick={() =>
                 alert('提交', '是否确认提交调拨单', [
                   { text: '取消', onPress: () => console.log('cancel') },
-                  { text: '确定', onPress: () => this.click() },
+                  { text: '确定', onPress: () => this.click(2) },
                 ])
               }
             >
@@ -173,7 +173,7 @@ class Category extends Component {
   }
 
   click = (e) => {
-    this.child.myName()
+    this.child.myName(e)
   }
   changeImage = () => {
     if (this.state.type === 'swiper') {

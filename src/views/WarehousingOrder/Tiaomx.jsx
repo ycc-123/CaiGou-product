@@ -36,7 +36,7 @@ export default class Tiao extends Component {
                 </li>
                 <li className='wen-zi-f'>
                     <div>商品编码：{tiao.gnum}</div>
-                    <p>2元/单位</p>
+                    <p>{tiao.price}元/{tiao.unitname}</p>
                 </li>
                 <li className='wen-zi-f'>
                     <div>采购数量：{tiao.gnum}</div>

@@ -82,14 +82,32 @@ export default class PurchaseOrder extends Component {
             <PurchaseOrderStyle>
     <DocumentTitle title={'采购单'} />
                 
-                <div className='search' >
+                {/* <div className='search' >
                     <input type="search" className='input' placeholder="请输入采购单号/仓库名称" name="inputSearch" 
                                     onChange={this.inputChange.bind(this)}
                                     value={this.state.inputSearch}/>
                     <div className='img' onClick={()=>{this.Search()}}>
                     <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search"/>
                     </div>
+                </div> */}
+
+            <div style={{display:"flex"}}>
+                <div className='search'>
+                        <input type="search" className='input' placeholder="请输入采购单号/仓库名称" name="inputSearch" 
+                                    onChange={this.inputChange.bind(this)}
+                                    value={this.state.inputSearch}/>
+                        <div className='img' onClick={()=>{this.Search()}}>
+                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+                            </div>
                 </div>
+                <div
+          onClick={()=>{this.props.history.push(`/AddPurchaseOrder`)}}
+           className='add'>新增<span style={{fontSize:".4rem"}}>+</span></div>
+          </div>
+
+
+
+
                 <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0rem" }} loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
                     {
@@ -178,8 +196,22 @@ const PurchaseOrderStyle = styled.div`
 }
 .btn_sh{
     position:absolute;
-    top:1.6rem;
-    left:7.8rem;
+    bottom:.2rem;
+    right:.2rem;
+    width: 1.33rem;
+    height: 0.67rem;
+    line-height: 0.67rem;
+    // margin-top:.4rem;
+    // margin-right:.11rem;
+    color:#fff;
+    text-align:center;
+    background: #ED7913;
+    border-radius: .1rem;
+}
+.btn_tj{
+    position:absolute;
+    bottom:.2rem;
+    right:.2rem;
     width: 1.33rem;
     height: 0.67rem;
     line-height: 0.67rem;
@@ -273,7 +305,7 @@ const PurchaseOrderStyle = styled.div`
         width: .55rem;  
         height: .55rem; 
         // line-height: .5rem; 
-        margin-left:2.45rem;
+        // margin-left:2.45rem;
       }
       .img-search{
         margin-top:.12rem;
@@ -286,7 +318,7 @@ const PurchaseOrderStyle = styled.div`
       .input{
         font-size:.37rem;
         border:none;
-        width:6rem;
+        width:6.5rem;
         // margin-top:.21rem;
         margin-left:.17rem;
         height: .75rem;
@@ -298,7 +330,7 @@ const PurchaseOrderStyle = styled.div`
         display:flex;
         margin-top:.21rem;
         margin-left:.32rem;
-        width:9.36rem;
+        width:7.44rem;
         height: .75rem;
         border-radius:.15rem;
         background-color: #fff;

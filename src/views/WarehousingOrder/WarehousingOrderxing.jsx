@@ -251,19 +251,13 @@ export default class WarehousingOrderxing extends Component {
                     </BetterScroll>
                     <div className='foot'>
                     <div className="foot_t">
-                            <p>采购总量：111</p>
-                            <p>入库总量：222</p>
+                            <p>采购总量：{this.state.purchaseDetail.snum}</p>
+                            <p>入库总量：{this.state.purchaseDetail.in_out_num}</p>
                         </div>
                         <div className="foot_c">差异数量：<span style={{color:"#cf2424"}}>0</span></div>
                         <div className="btn" style={{ background: this.state.purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }} 
                         onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
-                    {/* <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-                        <div className='left' >
-                           <div style={{ width: "1.28rem", height: ".68rem" }}> <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                        </div>
-                        <div className='yuan'>{this.state.purchaseItem.length}</div>
-                        <div  className='right' onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
-                        </div> */}
+      
                     </div>
                 </div>
             </WarehousingOrderxingStyle>

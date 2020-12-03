@@ -109,7 +109,7 @@ class CategoryRight extends Component {
     this.props.onRef(this)
   }
 
-  myName = () =>{
+  myName = (e) =>{
     if(this.state.login[0]===undefined){
      Toast.info('请采购商品后提交',1.5)
     }else{
@@ -150,7 +150,7 @@ class CategoryRight extends Component {
       uid:store.getState().uid,
       type:"1",
       purchaseId:this.props.id,
-      status:"2",
+      status:e,
       itemData:itemData,
       purchaseData:purchaseData
     } }).then(res=>{

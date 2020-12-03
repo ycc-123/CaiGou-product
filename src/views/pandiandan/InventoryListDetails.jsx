@@ -78,7 +78,7 @@ export default class InventoryListDetails extends Component {
         if (e === "提交成功") {
 
         } else {
-            if(this.state.input!==[]){
+            if(this.state.input.length!==0){
                 let aa = {}
                 let arr = []
                 this.state.input.map((v, k) => {

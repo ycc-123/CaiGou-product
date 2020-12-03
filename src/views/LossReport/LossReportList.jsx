@@ -166,7 +166,7 @@ export default class ApplyOrder extends Component {
                                             </p>
                                             <div className='t-right'>
                                             <div className='caigoudanhao'>报损单号：{v.ydocno}</div>
-                                            <div className='zuantai'>{v.statusName}</div>
+                                            <div className='zuantai' style={{color:v.statusName==="已审核"?"rgb(34, 163, 27)":""}}>{v.statusName}</div>
                                             </div>
                                         </div>
                                         <div className='dan-footer'>
@@ -175,8 +175,8 @@ export default class ApplyOrder extends Component {
                                                 <p>单据日期：{v.createtime}</p>
                                                 <p>报损仓库：{v.warehouseName}</p>
                                                 <div style={{display:"flex",justifyContent:"space-between"}}>
-                                                    <p>报损数量：0</p>
-                                                    <p style={{marginRight:".27rem"}}>报损金额：0</p>
+                                                    <p>报损数量：{v.num}</p>
+                                                    <p style={{marginRight:".27rem"}}>报损金额：{v.price}</p>
                                                 </div>
                                             </div>
                                             

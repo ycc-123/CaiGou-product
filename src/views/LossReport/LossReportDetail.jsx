@@ -157,7 +157,7 @@ export default class ApplyOrderx extends Component {
                             <p>单据日期：{this.state.quan.createtime}</p>
                             <p>报损仓库：{this.state.quan.warehouseName}</p>
                             <p>报损数量：{this.state.sum}</p>
-                            <p>单据状态：<span style={{ color: "#ed5f21" }}>{this.state.quan.statusName}</span></p>
+                            <p>单据状态：<span style={{ color:this.state.quan.statusName==="已审核"? "rgb(34, 163, 27)":"" }}>{this.state.quan.statusName}</span></p>
                         </div>
 
                         <div className='footer'>

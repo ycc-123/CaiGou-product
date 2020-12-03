@@ -45,18 +45,18 @@ export default class InventoryListDetails extends Component {
                             <p>
                                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
                             </p>
-                            <div>{this.state.danhao}</div>
+                            <div>{this.state.beiz}</div>
                         </div>
 
                         <div className='conten-c' style={{ paddingTop: ".25rem" }}>
-                            <p>单据日期：{this.state.beiz}</p>
+                            <p>单据日期：{this.state.s2}</p>
                             <p>转出仓库：{this.state.zcck}</p>
                             <p>转入仓库：{this.state.zrvk}</p>
                             <p>单据状态：<span style={{ color: "#d92929" }}>待提交</span></p>
                         </div>
 
                         <div className='footer'>
-                            备注：{s2}
+                            备注：{this.state.danhao}
                         </div>
                     </div>
                     {/* <BetterScroll config={scrollConfig} ref='scroll' style={{ }}> */}
