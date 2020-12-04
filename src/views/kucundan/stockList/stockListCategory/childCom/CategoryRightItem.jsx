@@ -30,7 +30,7 @@ class CategoryRightgoods extends Component {
 
   render() {
     const { goods } = this.props
-    // console.log(goods)
+    console.log(goods.costprice_cb)
 
     return (
       <CategoryRightgoodsStyle>
@@ -49,34 +49,11 @@ class CategoryRightgoods extends Component {
                    <div>{goods.costprice}元/{goods.unit_name}</div>
                  </div>
             <div className='shuliang' style={{color:'#4c4c4c'}}>
-                   <article>账面数量：{goods.gnum}</article>
-                   <div>实际数量：{this.state.login?this.state.login:0}</div>
+                   <article>{goods.gnum}{goods.unit_name}</article>
+                   <div>库存金额：{goods.costprice_cb}</div>
                  </div>
    
-            <Button
-              style={{ position: "absolute",width:"3rem", top: ".3rem", left: "3.2rem", color: "transparent", background: "transparent",border:"none" }}
-              className="btn_modal"
-              onClick={() => prompt('填写', '请输入商品实际账面数量',
-              [
-                {
-                  text: '取消',
-                  onPress: value => console.log(`value:${value}`)
-                },
-                {
-                  text: '确定',
-                  onPress: value =>this.zjian(value,goods)
-                },
-              ]
-              )}
-            >111111</Button>
-            {
-              
-                // <div className='shuliang'>
-                //   <article>账面数量：{goods.gnum}</article>
-                //   <div>实际数量：{this.state.login?this.state.login:goods.gnum}</div>
-                // </div>
-    
-            }
+
 
 
           </div>

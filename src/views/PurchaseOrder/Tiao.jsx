@@ -24,22 +24,18 @@ class Tiao extends Component {
 
                 }
             }).then((res) => {
-                console.log(res.data)
                 if (res.data.status === 4001) {
-                    // window.location.reload();
+                    window.location.reload();
                     Toast.success(res.data.msg, 2)
                 } else {
                     Toast.info(res.data.msg, 2)
                 }
 
             })
-        
-    }
+        }
     shenghe(e){
         let arr=[]
         arr.push(e.id)
-        console.log(arr) 
-        console.log(e.id)
         changePurchaseStatus({ action: 'changePurchaseStatus', data: {
             uniacid: store.getState().uniacid,
             uid:store.getState().uid,

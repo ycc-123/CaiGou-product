@@ -59,6 +59,7 @@
     "postcss-safe-parser": "4.0.1",
     "rc-form": "^2.4.11",
     "react": "^16.13.1",
+    "react-activation": "^0.7.0",
     "react-amap": "^1.2.8",
     "react-app-polyfill": "^1.0.6",
     "react-dev-utils": "^10.2.1",

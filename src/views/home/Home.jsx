@@ -69,7 +69,7 @@ export default class Home extends Component {
         <div className='footer'>
           <div><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/ckgl.png" alt="" /></div>
           <ul>
-            <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/stockList') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kucundan.png" alt="" /></li>
+            <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/stockCategory') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kucundan.png" alt="" /></li>
             <li style={{ height: "1.6rem", width: "1.95rem", marginLeft: ".4rem" }} onClick={() => { this.props.history.push('/WarehousingOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/rkdan.png" alt="" /></li>
            
             <li onClick={()=>{this.props.history.push('/Pandian')}} style={{marginLeft:".2rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/pandiandan.png" alt=""/></li>
@@ -136,7 +136,7 @@ const HomeStyle = styled.div`
   font-size: .3rem;
   position: absolute;
   top: 2.7rem;
-  left:.1rem;
+  left:0rem;
   text-align: center;
 }
 

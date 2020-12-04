@@ -9,6 +9,8 @@ import PurchaseOrderDetailed from 'views/PurchaseOrder/PurchaseOrderDetailed'
 import WarehousingOrder from 'views/WarehousingOrder/WarehousingOrder'
 import WarehousingOrderxing from 'views/WarehousingOrder/WarehousingOrderxing'
 import stockList from 'views/kucundan/stockList/stockList'
+import stockCategory from 'views/kucundan/stockList/stockListCategory/Category'
+
 import LossReport from 'views/LossReport/LossReport'
 import LossReportDetail from 'views/LossReport/LossReportDetail'
 import LossReportList from 'views/LossReport/LossReportList'
@@ -97,6 +99,7 @@ const AppRouter = () => {
         <Route path='/AddGoods' exact component={AddGoods} ></Route>
         <Route path='/bjsygoods' exact component={bjgoods} ></Route>
         <Route path='/BjGoods/:id' exact component={BjGoods} ></Route>
+        <Route path='/stockCategory' exact component={stockCategory} ></Route>
 
 
         {/* 测试 */}

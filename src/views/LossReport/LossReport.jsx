@@ -690,7 +690,7 @@ input::-webkit-input-placeholder {
     width: .55rem;  
     height: .55rem; 
     // line-height: .5rem; 
-    // margin-left:3.8rem;
+    margin-right:.2rem;
   }
   .img-search{
     margin-top:.12rem;
@@ -715,7 +715,7 @@ input::-webkit-input-placeholder {
     display:flex;
     margin-top:.21rem;
     margin-bottom:.21rem;
-
+    justify-content: space-between;
     margin-left:.32rem;
     width:8.6rem;
     height: .75rem;

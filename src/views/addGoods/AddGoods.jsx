@@ -405,12 +405,15 @@ const FAddGoodsStyle = styled.div`
     background-color: #fff;
 }
 .raa{
+    margin-top:.2rem;
+    margin-right:.2rem;
+    border-radius:.2rem;
     font-size:.4rem;
     color:#fff;
     text-align:center;
-    width: 2.76rem;
-    height: 1.6rem;
-    line-height:1.6rem;
+    width: 2.04rem;
+    height: 1.17rem;
+    line-height: 1.17rem;
     background-color: #ED7913;
 }
 .foot{
@@ -505,12 +508,15 @@ const TAddGoodsStyle = styled.div`
     background-color: #fff;
 }
 .raa{
+    margin-top:.2rem;
+    margin-right:.2rem;
+    border-radius:.2rem;
     font-size:.4rem;
     color:#fff;
     text-align:center;
-    width: 2.76rem;
-    height: 1.6rem;
-    line-height:1.6rem;
+    width: 2.04rem;
+    height: 1.17rem;
+    line-height: 1.17rem;
     background-color: #ED7913;
 }
 .foot{
@@ -678,14 +684,15 @@ const AddGoodsStyle = styled.div`
     background-color: #fff;
 }
 .raa{
-    // float:right;
+    margin-top:.2rem;
+    margin-right:.2rem;
+    border-radius:.2rem;
     font-size:.4rem;
     color:#fff;
     text-align:center;
-    width: 2.76rem;
-    // margin-right:0rem;
-    height: 1.6rem;
-    line-height:1.6rem;
+    width: 2.04rem;
+    height: 1.17rem;
+    line-height: 1.17rem;
     background-color: #ED7913;
 }
 .foot{

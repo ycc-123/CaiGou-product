@@ -300,6 +300,9 @@ export default class stockList extends Component {
                             <img className='sximg-search' onClick={()=>{this.state.kongbj===false? console.log(): this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
                         </div>
                     </div>
+
+
+
                     <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1.15rem",bottom:"1.5rem"}} loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
                     <div style={{display: this.state.xian===false?"block":"none"}}>
@@ -365,6 +368,11 @@ export default class stockList extends Component {
                         
                         <div className='btn' onClick={()=>{this.queding()}}>确定</div>
                     </div>
+                    
+                    
+                    
+                    
+                    
                     </BetterScroll>
                 <div className='foot' >
                     <div>总库存：<span>{this.state.totalgnum?this.state.totalgnum:0}</span></div>

@@ -293,7 +293,7 @@ const WarehousingOrderStyle = styled.div`
         width: .55rem;  
         height: .55rem; 
         // line-height: .5rem; 
-        margin-left:2.45rem;
+        margin-right:.2rem;
       }
       .img-search{
         margin-top:.12rem;
@@ -306,7 +306,7 @@ const WarehousingOrderStyle = styled.div`
       .input{
         font-size:.37rem;
         border:none;
-        // width:8.3rem;
+        width:7.3rem;
         // margin-top:.21rem;
         margin-left:.17rem;
         height: .75rem;
@@ -316,6 +316,7 @@ const WarehousingOrderStyle = styled.div`
       }
       .search{
         display:flex;
+    justify-content: space-between;
         margin-top:.21rem;
         margin-left:.32rem;
         width:7.44rem;

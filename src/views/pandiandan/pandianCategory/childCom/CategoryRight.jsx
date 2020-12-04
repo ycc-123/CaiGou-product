@@ -9,8 +9,6 @@ import { submitInventory,searchProduct } from 'network/Api'
 import {  Toast } from 'antd-mobile';
 
 import { store} from 'store/index'
-
-
 import { saveGoods} from 'store/actionCreators'
 
 class CategoryRight extends Component {
@@ -51,6 +49,7 @@ class CategoryRight extends Component {
               )
             })}
           </BetterScroll>
+
         </ul>
       </div>
     );
@@ -106,12 +105,12 @@ class CategoryRight extends Component {
     this.props.onRef(this)
   }
 
-  myName = () =>{
+  myName = (e) =>{
     if(this.state.login[0]===undefined){
       submitInventory({ action: 'submitInventory', data: {
         uniacid: store.getState().uniacid,
         uid:store.getState().uid,
-        status:"2",
+        status:e,
         warehouseid:this.props.ckid,
         inventoryId:this.props.pdid,
         itemData:this.props.itemData,
@@ -158,7 +157,7 @@ class CategoryRight extends Component {
     submitInventory({ action: 'submitInventory', data: {
       uniacid: store.getState().uniacid,
       uid:store.getState().uid,
-      status:"2",
+      status:e,
       warehouseid:this.props.ckid,
       inventoryId:this.props.pdid,
       itemData:itemData,

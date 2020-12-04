@@ -5,7 +5,7 @@ import CategoryLeftItem from './childCom/CategoryLeftItem'
 import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
-import { getProductCategoryAll, getStockList } from 'network/Api'
+import { getProductCategoryAll, getStockList,getWarehouseList } from 'network/Api'
 import { _categoryRight } from 'network/category'
 import KeepAlive from 'react-activation'
 import { Toast, Button, Modal } from 'antd-mobile';
@@ -24,6 +24,12 @@ class Category extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      ckkey:"",
+      cankuID:"",
+      flid:'',
+      totalgnum:"",
+      totalcostprice:"",
+      result:[],
       indexId: '',
       value: [],
       title: [],
@@ -35,7 +41,9 @@ class Category extends Component {
       price: '',
       inputSearch: '',
       mrqunangoods: [],
-      Id: ""
+      Id: "",
+      kongbj:false,
+      xian:false
     }
 
   }
@@ -76,6 +84,17 @@ class Category extends Component {
 
     })
   }
+  xianyin(){
+    if(this.state.xian===false){
+        this.setState({
+            xian:true
+        })
+    }else{
+        this.setState({
+            xian:false
+        })
+    }
+}
   render() {
     const { title, type } = this.state
     console.log(this.props.match.params.id)
@@ -86,14 +105,32 @@ class Category extends Component {
     <DocumentTitle title={'新建盘点单'} />
 
         <Fragment>
-          <div className='search'>
+          {/* <div className='search'>
             <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"
               onChange={this.inputChange.bind(this)}
               value={this.state.inputSearch} />
             <div className='img' onClick={() => { this.Search() }}>
               <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
-          </div>
+          </div> */}
+
+
+                    <div style={{ display: "flex" }}>
+                        <div className='search'  >
+                            <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch" 
+                                    onChange={this.inputChange.bind(this)}
+                                    value={this.state.inputSearch}/>
+                            <div className='img' onClick={()=>{this.Search()}}>
+                                <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+                            </div>
+                        </div>
+                        <div className='sximg' >
+                            <img className='sximg-search' onClick={()=>{this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
+                        </div>
+                    </div>
+
+                    
+
           <div className='category-main'>
             {type === 'goods' ? <Fragment><div className='categoryLeft'>
               <ul>
@@ -120,56 +157,70 @@ class Category extends Component {
             </Fragment> : <Fragment>
               </Fragment>}
           </div>
-          {/* <div className='foot'>
-            <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
-            <div className='left'
-            // onClick={() => { this.mingxi() }}
-            >
-             <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-            <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
-            </div>
-            <div className='right' >提交</div>
-            </div>
-           
-            <div
-              style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent",border:"none" }}
-              
-              onClick={() =>
-                alert('提交', '是否确认提交盘点单', [
-                  { text: '取消', onPress: () => console.log('cancel') },
-                  { text: '确定', onPress: () => this.click() },
-                ])
-              }
-            >
-              confirm
-                        </div> </div> */}
-            <div className='foot'>
-              <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
-                  <div className='left' >
-                      <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                      <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
-                  </div>
-                  <div style={{display:"flex",marginTop:".2rem"}}>
-                      <div className='baocun' onClick={()=>{this.click(1)}}>保存</div>
-                      <div className='tijiao' >提交</div>
-                  </div>
-              </div>
-           
-              <div
-              style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "7.78rem", color: "transparent", background: "transparent" }}
-              className="btn_modal"
-              onClick={() =>
-                alert('提交', '是否确认提交调拨单', [
-                  { text: '取消', onPress: () => console.log('cancel') },
-                  { text: '确定', onPress: () => this.click(2) },
-                ])
-              }
-            >
-              confirm
-                        </div></div>
+
+          <div className='fenglei' style={{display: this.state.xian===false?"none":"block"}}>
+                        <div>仓库名称
+                            <ul>
+                                {
+                                    this.state.result.map((v,k)=>{
+                                        return(
+                                            <li onClick={(e)=>{this.canku(v,k)}}
+                                            style={{background:this.state.cankuID===v.id?"#fff5ed":'',color:this.state.cankuID===v.id?"#ed7913":'',border:this.state.cankuID===v.id?"1px solid #ed7913":''}}
+                                            >{v.name}</li>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        </div>
+                        <div className='btn' onClick={()=>{this.queding()}}>确定</div>
+                    </div>
+
+                <div className='foot' >
+                    <div>总库存：<span>{this.state.totalgnum?this.state.totalgnum:0}</span></div>
+                    <div style={{ marginRight: ".6rem" }}>总库存金额：<span>{this.state.totalcostprice?this.state.totalcostprice:0}</span></div>
+                </div>
         </Fragment>
       </CategoryStyle>
     )
+  }
+  canku(v,k){
+    console.log(v.id)
+    this.setState({
+        cankuID:v.id,
+    })
+}
+  queding(){
+    this.setState({
+      xian:false,
+    })
+    console.log(this.state.flid)
+    getStockList({
+      action: 'getStockList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        warehouseid: this.state.cankuID,
+        categoryid: this.state.flid,
+        limit: "300",
+        page: "1"
+      }
+    }).then(res => {
+     
+      if (res.data.status === 4001) {
+       this.setState({
+        totalgnum: res.data.data.totalgnum,
+        totalcostprice: res.data.data.totalcostprice,
+        goods: res.data.data.data === null ? [] : res.data.data.data
+       })
+       
+      } else {
+        this.setState({
+          goods: [],
+          totalgnum: 0,
+          totalcostprice: 0,
+        })
+        Toast.info(res.data.msg,2)
+      }
+    })
   }
   onRef = (ref) => {
     this.child = ref
@@ -240,7 +291,8 @@ class Category extends Component {
             uid: store.getState().uid,
             warehouseid: this.props.match.params.ck,
             categoryid: Id[0].id,
-
+            limit: "300",
+            page: "1"
           }
         }).then(res => {
           console.log(res)
@@ -253,15 +305,19 @@ class Category extends Component {
               mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
               console.log(mrqunangoods)
             }
-            // console.log(res.data.data.data)
-            // var mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-            // console.log(mrqunangoods)
-
             this.setState({
+              flid:Id[0].id,
+              totalgnum: res.data.data.totalgnum,
+              totalcostprice: res.data.data.totalcostprice,
               mrqunangoods,
               goods: res.data.msg === "成功" ? res.data.data.data : [{}]
             })
           } else {
+            this.setState({
+              goods: [],
+              totalgnum: 0,
+              totalcostprice: 0,
+            })
             Toast.info(res.data.msg, 2)
           }
         })
@@ -275,6 +331,28 @@ class Category extends Component {
       }
     })
     console.log(this.state.id)
+    getWarehouseList({
+      action: 'getWarehouseList', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          type:"1",
+          limit:"43",
+          page:"1"
+      }
+  }).then((res) => {
+      console.log(res)
+      if(res.data.status===4001){
+          var bb = res.data.data.data.map(o=>{return{id:o.id,name:o.name}});
+              console.log(bb)
+              let aa=[{id:"",name:"全部仓库"}]
+              let result=[...aa,...bb]
+          this.setState({
+              result
+          })
+      }else{
+          Toast.info(res.data.msg,2)
+      }
+  })
   }
 
   onChangeActive = index => {
@@ -283,8 +361,10 @@ class Category extends Component {
       action: 'getStockList', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        warehouseid: this.props.match.params.ck,
+        warehouseid: this.state.cankuID,
         categoryid: this.state.id[index].id,
+        limit: "300",
+        page: "1"
       }
     }).then(res => {
       let mrqunangoods = []
@@ -296,12 +376,17 @@ class Category extends Component {
           mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
         }
         this.setState({
+          flid:this.state.id[index].id,
+          totalgnum: res.data.data.totalgnum,
+          totalcostprice: res.data.data.totalcostprice,
           mrqunangoods,
           goods: res.data.data.data === null ? [] : res.data.data.data
         })
       } else {
         this.setState({
-          goods: []
+          goods: [],
+          totalgnum: 0,
+          totalcostprice: 0,
         })
         Toast.info(res.data.msg, 2)
       }
@@ -341,6 +426,49 @@ class Category extends Component {
 
 }
 const CategoryStyle = styled.div`
+.fenglei div ul li{
+  font-size:.27rem;
+  overflow: hidden;
+  width: 2rem;
+  height: 0.69rem;
+  line-height:0.69rem;
+  text-align:center;
+  background-color: #f6f6f6;
+  margin:.2rem .2rem;
+  border-radius:.1rem;
+  border:1px solid #dcdcdc;
+}
+.fenglei div ul{
+  display:flex;
+  flex-wrap:wrap;
+}
+.fenglei div{
+  font-size:.37rem;
+}
+.fenglei{
+  padding:.2rem .2rem;
+  position:absolute;
+  top:1rem;
+  left:0;
+  width:10rem;
+  background-color: #f0f0f0;
+  // height:4rem;
+}
+.btn{
+  // position:absolute;
+  // bottom:.2rem;
+  color:#fff;
+  width:100%;
+  background-color: #ed7912;
+  height:1rem;
+  line-height:1rem;
+  text-align:center;
+  border-radius:.1rem;
+}
+
+
+
+
 .baocun{
   margin-right:.2rem;
   border-radius:.2rem;
@@ -365,6 +493,18 @@ const CategoryStyle = styled.div`
 }
 
 
+.sximg{
+  margin-left:.2rem;
+  margin-top:.3rem;
+  width: .8rem;  
+  height: .6rem; 
+}
+.sximg-search{
+  width: auto;  
+  height: auto;  
+  max-width: 100%;  
+  max-height: 100%;
+}
 input::-webkit-input-placeholder {
   color: #c9c9c9;
   font-size:.35rem;
@@ -373,7 +513,7 @@ input::-webkit-input-placeholder {
   width: .55rem;  
   height: .55rem; 
   // line-height: .5rem; 
-  margin-left:2.45rem;
+  margin-right:.1rem;
 }
 .img-search{
   margin-top:.12rem;
@@ -386,7 +526,7 @@ input::-webkit-input-placeholder {
 .input{
   font-size:.37rem;
   border:none;
-  width:6rem;
+  width:7.3rem;
   // margin-top:.21rem;
   margin-left:.17rem;
   height: .75rem;
@@ -397,10 +537,10 @@ input::-webkit-input-placeholder {
 .search{
   display:flex;
   margin-top:.21rem;
-  margin-left:.32rem;
   margin-bottom:.21rem;
-
-  width:9.36rem;
+  justify-content: space-between;
+  margin-left:.32rem;
+  width:8.6rem;
   height: .75rem;
   border-radius:.15rem;
   background-color: #fff;
@@ -429,36 +569,22 @@ input::-webkit-input-placeholder {
   background-color: #E01616;
   font-size:.24rem;
 }
-.foot_conton span{
+.foot div span{
   color:#cf2424;
+  font-weight:900;
 }
-.foot_conton{
-  width: 12rem;
-  // height: 100%rem;
-  line-height:1.6rem;
-  text-align:center;
-  font-size:.4rem;
-}
-.left img{
-  width: auto;  
-  height: auto;  
-  max-width: 100%;  
-  max-height: 100%;
-}
-.left{
-  padding-left:.48rem;
-  padding-top:.45rem;
-  width:3rem;
-  
-}
-
 .foot{
+  box-shadow: -1px -1px 2px #ccc;
+  padding-left:.6rem;
+  font-size:.38rem;
   display:flex;
-  width: 100%;
-  height: 1.6rem;
-  background-color: #fff;
+  justify-content: space-between;
+  width:100%;
+  height:1.5rem;
+  line-height:1.5rem;
   position:absolute;
-  // bottom:0;
+  bottom:0rem;
+  background-color: #fff;
 }
 
 

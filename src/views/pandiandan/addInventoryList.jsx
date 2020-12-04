@@ -171,7 +171,6 @@ export default class AddInventoryList extends Component {
 
                     <div className='foot'>
                         <div className='left'></div>
-                        <div></div>
                         <div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
 
                     </div>
@@ -263,21 +262,24 @@ const AddPurchaseOrderStyle = styled.div`
     
     
     .left{
-        width: 25rem;
+        width: 2rem;
         height: 1.6rem;
         background-color: #fff;
     }
     .right{
+        margin-top:.2rem;
+        margin-right:.2rem;
+        border-radius:.2rem;
         font-size:.4rem;
         color:#fff;
         text-align:center;
-        width: 100%;
-        margin:auto;
-        height: 1.6rem;
-        line-height:1.6rem;
+        width: 2.04rem;
+        height: 1.17rem;
+        line-height: 1.17rem;
         background-color: #ED7913;
     }
     .foot{
+        justify-content: space-between;
         display:flex;
         width: 100%;
         height: 1.6rem;

@@ -214,7 +214,7 @@ export default class ApplyOrderx extends Component {
                       <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
                   </div>
                   <div style={{display:"flex",marginTop:".2rem"}}>
-                      <div className='baocun' style={{display:this.state.quan.statusname=== "提交成功" ? "none" : 'block'}}>保存</div>
+                      {/* <div className='baocun' style={{display:this.state.quan.statusname=== "提交成功" ? "none" : 'block'}}>保存</div> */}
                       <div className='tijiao' style={{ background: this.state.quan.statusname === "提交成功" ? "#B4B4B4" : '' }}
                         onClick={(e)=>{this.tijiao(this.state.quan.statusname)}}>提交</div>
                   </div>
