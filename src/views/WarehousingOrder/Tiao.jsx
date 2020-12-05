@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 export default class Tiao extends Component {
     render() {
-        // console.log(this.props.item)
         let data=this.props.item
         let Color=''
         if(data.statusname==="审核通过"){

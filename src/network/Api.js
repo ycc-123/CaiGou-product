@@ -449,13 +449,13 @@ export function getProductCode(config) {
   })
 }
 
-// 提交采购申请单
+// 检查盘点单未盘点商品
 
-// export function submitPurchaseApply(config) {
-//   return requestPost({
-//     params: {
-//       action: config.action
-//     },
-//     data: config.data
-//   })
-// }
+export function checkSubmitInventory(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

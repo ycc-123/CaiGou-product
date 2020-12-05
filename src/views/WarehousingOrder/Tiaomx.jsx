@@ -26,7 +26,6 @@ export default class Tiao extends Component {
         }
         return (
             <div className='tiao' style={{position:"relative"}}>
-            {/* <img className='t-img-l' src="" alt="" /> */}
             <img className='t-img-l' src={tiao.image?tiao.image:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
             <ul className='wen-zi'>
                 <div className='aaa'>
@@ -56,14 +55,12 @@ export default class Tiao extends Component {
                                     onPress: value => {
                                         this.shuliang(value,tiao)
                                     }
-                                    
                                 },
                             ], 'default', null, [''])}
                     >111111</Button>
                 </li>
                 </div>
             </ul>
-
         </div>
         )
     }

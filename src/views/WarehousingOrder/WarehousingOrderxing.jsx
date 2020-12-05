@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseDeliveryDetail, submitPurchaseDelivery } from 'network/Api'
-import { Toast, Modal, Button } from 'antd-mobile';
+import { Toast, Modal} from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiaomx'
 import DocumentTitle from 'react-document-title'
@@ -257,7 +257,6 @@ export default class WarehousingOrderxing extends Component {
                         <div className="foot_c">差异数量：<span style={{color:"#cf2424"}}>0</span></div>
                         <div className="btn" style={{ background: this.state.purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }} 
                         onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
-      
                     </div>
                 </div>
             </WarehousingOrderxingStyle>

@@ -64,7 +64,7 @@ export default class AddInventoryList extends Component {
     render() {
         return (
             <AddPurchaseOrderStyle>
-    <DocumentTitle title={'新建盘点单'} />
+    <DocumentTitle title={'新建采购申请单'} />
 
                 <div>
                     <ul className='biao'>

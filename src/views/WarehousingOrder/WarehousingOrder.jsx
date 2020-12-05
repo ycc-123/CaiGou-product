@@ -74,14 +74,6 @@ export default class WarehousingOrder extends Component {
             }
         })
     }
-    componentDidUpdate = () => {
-        // // 默认每次加载x=0，y=0 不然会有bug
-        // // console.log(this)
-        // /* console.log('进来了') */
-        // this.refs.scroll.BScroll.scrollTo(0, 0)
-        // this.refs.scroll.BScroll.refresh()
-    
-      }
     render() {
         const scrollConfig = {
             probeType: 1
@@ -155,18 +147,13 @@ export default class WarehousingOrder extends Component {
                     this.setState({
                         page: page += 1
                     })
-
                     loading = false
                     this.refs.scroll.BScroll.finishPullUp()
                     this.refs.scroll.BScroll.refresh()
                 })
             })
-        } else {
-        }
+        } else {}
     }
-
-
-
 }
 const WarehousingOrderStyle = styled.div`
 .kongbj img{

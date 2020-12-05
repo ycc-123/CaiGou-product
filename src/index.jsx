@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { store} from 'store/index'
 import { Provider } from 'react-redux'
-import { AliveScope } from 'react-activation'
 import AppRouter from './router/AppRouter'
 import { getParamsString } from 'commons/index'
 import { 

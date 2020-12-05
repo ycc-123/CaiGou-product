@@ -216,7 +216,7 @@ export default class ApplyOrderx extends Component {
                     <div className='foot'>
                         <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
                             <div className='left'>
-                                <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                                <div style={{ width: ".8rem", height: ".8rem" }}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/baoshun.png" alt="" /></div>
                                 <div className='yuan'>{this.state.tiao.length}</div>
                             </div>
 
@@ -245,7 +245,7 @@ const ApplyOrderxStyle = styled.div`
     // margin:auto;
     position:absolute;
     top: .2rem;
-    left:1.3rem;
+    left:1.1rem;
     color:#fff;
     width:.51rem;
     height:.51rem;

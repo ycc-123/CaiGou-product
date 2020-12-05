@@ -32,7 +32,6 @@ import Pandian from 'views/pandiandan/addInventoryList'
 import pandianCategory from 'views/pandiandan/pandianCategory/Category'
 import quanpanCategory from 'views/pandiandan/quanpanCategory/Category'
 
-import TransferOrder from 'views/TransferOrder/TransferOrder'
 import InventoryList from 'views/pandiandan/InventoryList'
 import InventoryListDetails from 'views/pandiandan/InventoryListDetails'
 import allocationOrder from 'views/tiaobodan/allocationOrder'
@@ -44,6 +43,14 @@ import tiaoboCategory from 'views/tiaobodan/tiaoboCategory/Category'
 import AddGoods from 'views/addGoods/AddGoods'
 import BjGoods from 'views/addGoods/BjGoods'
 import bjgoods from 'views/addGoods/category/Category'
+import editPackagedGoods from 'views/packagedGoods/PackagedGoods'
+import PackagedGoods from 'views/packagedGoods/category/Category'
+import choiceGoods from 'views/packagedGoods/choice/Category'
+import choiceGoodsmx from 'views/packagedGoods/choice/childCom/CategorySwiper'
+
+
+
+
 
 // 测试
 import Text from 'views/ApplyOrder/Text'
@@ -84,7 +91,6 @@ const AppRouter = () => {
         <Route path='/GoodDiscount' exact component={GoodDiscount} ></Route>
         <Route path='/Shouyinmxb/:id/:page' exact component={Shouyinmxb} ></Route>
         <Route path='/addPandian' exact component={Pandian} ></Route>
-        <Route path='/TransferOrder' exact component={TransferOrder} ></Route>
         <Route path='/Pandian' exact component={InventoryList} ></Route>
         <Route path='/allocationListDetails/:id' exact component={allocationListDetails} ></Route>
         <Route path='/allocationOrder' exact component={allocationOrder} ></Route>
@@ -100,6 +106,14 @@ const AppRouter = () => {
         <Route path='/bjsygoods' exact component={bjgoods} ></Route>
         <Route path='/BjGoods/:id' exact component={BjGoods} ></Route>
         <Route path='/stockCategory' exact component={stockCategory} ></Route>
+
+        <Route path='/editPackagedGoods' exact component={editPackagedGoods} ></Route>
+        <Route path='/PackagedGoods' exact component={PackagedGoods} ></Route>
+        <Route path='/choiceGoods' exact component={choiceGoods} ></Route>
+        <Route path='/choiceGoodsmx' exact component={choiceGoodsmx} ></Route>
+
+
+
 
 
         {/* 测试 */}

@@ -83,7 +83,7 @@ class Category extends Component {
     let ida = this.props.match.params.id
     return (
       <CategoryStyle>
-    <DocumentTitle title={'新建采购单'} />
+    <DocumentTitle title={'商品档案'} />
 
         <Fragment>
           <div style={{display:"flex"}}>
