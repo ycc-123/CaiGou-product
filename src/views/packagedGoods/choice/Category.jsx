@@ -9,6 +9,7 @@ import { getProductCategoryAll, getStockList,searchProduct } from 'network/Api'
 import { _categoryRight } from 'network/category'
 import { Toast, Button, Modal } from 'antd-mobile';
 const alert = Modal.alert;
+
 const scollConfig = {
   probeType: 1
 }
@@ -75,9 +76,9 @@ class Category extends Component {
   render() {
     const { title, type } = this.state
     console.log(this.props.match.params.id)
-    let pdid = this.props.match.params.id
+    let pdid = this.props.match.params.ds
     let ckid = this.props.match.params.bz
-    let bsid = this.props.match.params.bsid
+    let bsid = this.props.match.params.id
     return (
       <CategoryStyle>
     <DocumentTitle title={'新建盘点单'} />
@@ -121,7 +122,7 @@ class Category extends Component {
                       <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
                   </div>
                   <div style={{display:"flex",marginTop:".2rem"}}>
-                      <div className='tijiao' >下一步</div>
+                      <div className='tijiao' onClick={()=>{this.props.history.push('/choiceGoodsmx')}}>下一步</div>
                   </div>
               </div>
            
@@ -208,6 +209,8 @@ class Category extends Component {
           action: 'searchProduct', data: {
             uniacid: store.getState().uniacid,
             uid: store.getState().uid,
+            // categoryid: this.state.indexId,
+            // is_packge:"1",
             limit:"1000",
             page:1,
             categoryid: Id[0].id,
@@ -251,6 +254,7 @@ class Category extends Component {
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
+        // is_packge:"1",
         limit:"1000",
         page:1,
         categoryid: this.state.id[index].id,

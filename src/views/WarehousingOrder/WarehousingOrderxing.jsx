@@ -254,7 +254,7 @@ export default class WarehousingOrderxing extends Component {
                             <p>采购总量：{this.state.purchaseDetail.snum}</p>
                             <p>入库总量：{this.state.purchaseDetail.in_out_num}</p>
                         </div>
-                        <div className="foot_c">差异数量：<span style={{color:"#cf2424"}}>0</span></div>
+                        <div className="foot_c">差异数量：<span style={{color:"#cf2424"}}>{Number(this.state.purchaseDetail.snum)-Number(this.state.purchaseDetail.in_out_num)}</span></div>
                         <div className="btn" style={{ background: this.state.purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }} 
                         onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
                     </div>

@@ -44,6 +44,10 @@ import AddGoods from 'views/addGoods/AddGoods'
 import BjGoods from 'views/addGoods/BjGoods'
 import bjgoods from 'views/addGoods/category/Category'
 import editPackagedGoods from 'views/packagedGoods/PackagedGoods'
+import PackagedBjGoods from 'views/packagedGoods/BjGoods'
+import PackagedBjGoodsmx from 'views/packagedGoods/category/childCom/CategorySwiper'
+
+
 import PackagedGoods from 'views/packagedGoods/category/Category'
 import choiceGoods from 'views/packagedGoods/choice/Category'
 import choiceGoodsmx from 'views/packagedGoods/choice/childCom/CategorySwiper'
@@ -108,9 +112,13 @@ const AppRouter = () => {
         <Route path='/stockCategory' exact component={stockCategory} ></Route>
 
         <Route path='/editPackagedGoods' exact component={editPackagedGoods} ></Route>
+        <Route path='/PackagedBjGoods/:id' exact component={PackagedBjGoods} ></Route>
+
         <Route path='/PackagedGoods' exact component={PackagedGoods} ></Route>
         <Route path='/choiceGoods' exact component={choiceGoods} ></Route>
         <Route path='/choiceGoodsmx' exact component={choiceGoodsmx} ></Route>
+        <Route path='/PackagedBjGoodsmx/:id' exact component={PackagedBjGoodsmx} ></Route>
+
 
 
 

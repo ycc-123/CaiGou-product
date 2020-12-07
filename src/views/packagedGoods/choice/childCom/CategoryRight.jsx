@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import CategoryRightItem from './CategoryRightItem'
 
 import BetterScroll from 'common/betterScroll/BetterScroll'
-import { submitDamage } from 'network/Api'
+import { submitDamage ,editPackgeProduct} from 'network/Api'
 // import { store } from 'store/index'
 import {  Toast } from 'antd-mobile';
 import { store } from "store/index";
@@ -85,7 +85,7 @@ class CategoryRight extends Component {
     num.map((v,k)=>{
       console.log(v,k,this.state.goods[k].name)
        aa={
-        stockid:this.state.goods[k].id,
+        stockid:this.state.goods[k].barcodeid,
           // barcode:this.state.goods[k].code,
           num:num[k],
         }
@@ -93,21 +93,22 @@ class CategoryRight extends Component {
     })
 
     console.log(arr)
-    let itemData=arr
-    console.log(itemData)
-    submitDamage({ action: 'submitDamage', data: {
+    let packge_ids=arr
+    // console.log(itemData)
+    editPackgeProduct({ action: 'editPackgeProduct', data: {
       uniacid: store.getState().uniacid,
       uid:store.getState().uid,
-      damageId:this.props.bsid,
-      remark:this.props.ckid==="1"?"":this.props.ckid,
-      warehouseid:this.props.pdid,
-      itemData:itemData,
+      goodsid:this.props.bsid,
+      packge_ids:packge_ids
+      // remark:this.props.ckid==="1"?"":this.props.ckid,
+      // warehouseid:this.props.pdid,
+      // itemData:itemData,
       // purchaseData:purchaseData
     } }).then(res=>{
       console.log(res)
       if(res.data.status===4001){
         Toast.success(res.data.msg, 2)
-        this.home()
+        // this.home()
       }else{
         Toast.info(res.data.msg, 2)
       }

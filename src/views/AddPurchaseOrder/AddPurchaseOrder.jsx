@@ -145,7 +145,7 @@ export default class AddPurchaseOrder extends Component {
                             </Picker>
                         
                         </li>
-                        <li>引用采购申请：
+                        {/* <li>引用采购申请：
                         <Picker
                              data={this.state.supplier} 
                              cols={1}  
@@ -158,7 +158,7 @@ export default class AddPurchaseOrder extends Component {
                                 <List.Item className='yycgsq' arrow="horizontal"></List.Item>
                             </Picker>
                         
-                        </li>
+                        </li> */}
                         <li>
                             <div>预付款：</div>
                             <input name="inputAmount" 

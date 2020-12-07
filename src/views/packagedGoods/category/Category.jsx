@@ -60,10 +60,11 @@ class Category extends Component {
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        // categoryid: this.state.indexId,
+        categoryid: this.state.indexId,
+        is_packge:"1",
         limit:"1000",
         page:1,
-        search:this.state.inputSearch
+        // search:this.state.inputSearch
       }
     }).then(res => {
       if(res.data.status===4001){
@@ -94,7 +95,7 @@ class Category extends Component {
             </div>
           </div>
           <div
-          onClick={()=>{this.state.jj===false?console.log(): this.props.history.push('/editPackagedGoods')}}
+          onClick={()=>{this.state.jj===false?console.log(): this.props.history.push('/choiceGoods')}}
            className='add'>新增<span style={{fontSize:".4rem"}}>+</span></div>
           </div>
           <div className='category-main'>
@@ -151,6 +152,7 @@ class Category extends Component {
           action: 'searchProduct', data: {
             uniacid: store.getState().uniacid,
             uid: store.getState().uid,
+            is_packge:"1",
             limit:"1000",
             page:1,
             categoryid: Id[0].id,
@@ -194,6 +196,7 @@ class Category extends Component {
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
+        is_packge:"1",
         limit:"1000",
         page:1,
         categoryid: this.state.id[index].id,

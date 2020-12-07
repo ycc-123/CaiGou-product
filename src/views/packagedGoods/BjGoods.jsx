@@ -1,48 +1,80 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { Picker, Toast, List, Switch } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { createProduct, getUnitList, getProductCategoryAll, getProductCategoryAllChildren, getProductCode } from 'network/Api'
+import { createProduct, getUnitList, getProductCategoryAllChildren,getProductDetail ,editProduct,getPackgeProductDetail} from 'network/Api'
 import { store } from "store/index";
+import { useHistory, useParams  } from 'react-router-dom';
 // import { Picker, List, Toast } from 'antd-mobile';
-import { useHistory } from 'react-router-dom';
 
 
 const Into = (props) => {
-    const history = useHistory()
+    const history =useHistory()
+    const params=useParams().id
+    // console.log(params.id)
     const bt_ref = useRef()
+
     const [goodName, setgoodName] = useState('');
-    const [goodCategory, setGoodCategory] = useState([]);
+    const [goodCategory, setGoodCategory] = useState('');
     const [goodCode, setGoodCode] = useState('');
     const [stockUnit, setStockUnit] = useState('');
     const [sellUnit, setSellUnit] = useState('');
     const [retailPrice, setRetailPrice] = useState('');
     const [setPrice, setSetPrice] = useState('');
-    const [memberInterests, setMemberInterests] = useState(false)
-    const [isProduct, setisProduct] = useState(false)
-    const [memberPrice, setMemberPrice] = useState(false)
+    const [memberInterests, setMemberInterests] = useState()
+    const [isProduct, setisProduct] = useState()
+    const [memberPrice, setMemberPrice] = useState()
     // const [retailPrice, setRetailPrice] = useState(false)
-    const [matchGood, setMatchGood] = useState(false);
+    const [matchGood, setMatchGood] = useState();
     const [matchCode, setMatchCode] = useState('')
     const [goodSort, setGoodSort] = useState('');
     const [unit, setUnit] = useState([]);
     const [classification, setClassification] = useState([]);
+    const [morengoods,setMorengoods]=useState({});
+    const [erji,seterji]=useState([]);
+
     const scrollConfig = {
         probeType: 1
     }
+
     useEffect(() => {
+        getPackgeProductDetail({
+            action: 'getPackgeProductDetail', data: {
+                uniacid: store.getState().uniacid,
+                uid:store.getState().uid,
+                id: params,
+            }
+        }).then((res) => {
+            // console.log(res.data.data)
+            if(res.data.status===4001){
+                
+                setMorengoods(res.data.data);
+                setMemberInterests(res.data.data.is_membership==="2"?true:false);
+                setMemberPrice(res.data.data.is_memberprice==="1"?false:true);
+                setMatchGood(res.data.data.is_plu_goods==="1"?false:true);
+
+
+
+
+
+            }else{
+                Toast.fail(res.data.msg,2)
+            }
+        })
         getProductCategoryAllChildren({
             action: 'getProductCategoryAllChildren', data: {
                 uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
+                uid:store.getState().uid,
             }
         }).then((res) => {
-            console.log(res)
-            var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
-            console.log(result)
+            // console.log(res)
+   
+            var result = res.data.data.map(o => {
+                return { value: o.id, label: o.name } });
+            // console.log(result)
             setClassification(result)
         })
         getUnitList({
@@ -52,7 +84,7 @@ const Into = (props) => {
             }
         }).then((res) => {
             var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
-            console.log(result)
+            // console.log(result)
             setUnit(result)
         })
         try {
@@ -62,37 +94,27 @@ const Into = (props) => {
         return () => {
         }
     }, [])
-    useEffect(() => {
-        getProductCode({
-            action: 'getProductCode', data: {
-                uniacid: store.getState().uniacid,
-                categoryid: goodCategory.toString(),
-            }
-        }).then((res) => {
-            console.log(res.data.data)
-            setGoodCode(res.data.data)
-        })
-    }, [goodCategory])
     return (
         <>
-            <BetterScroll config={scrollConfig} style={{ height: 'calc(100vh - 1.6rem)' }} ref={bt_ref}>
+                <BetterScroll config={scrollConfig} style={{ height: 'calc(100vh - 1.6rem)' }} ref={bt_ref}>
                 <TAddGoodsStyle>
 
-                    <DocumentTitle title={'新建打包商品'} />
+                    <DocumentTitle title={'编辑商品'} />
 
-                    <div className="type flex-column">
+                    <div className="type flex-column" style={{background:"#F8F8F8"}}>
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
                         }}>
                             <div className="left">
-                                <span>商品名称:</span>
+                                <span>商品编码: </span>
                             </div>
                             <div className="right">
-                                <input
-                                    value={goodName}
+                                <input style={{background:"#F8F8F8"}}
+                                    readonly="readonly"
+                                    value={goodCode}
                                     type="text"
-                                    placeholder='请输入商品名称'
-                                    onChange={e => { setgoodName(e.target.value) }}
+                                    placeholder={morengoods.code}
+                                    onChange={e => { setGoodCode(e.target.value) }}
                                 />
                             </div>
                         </div>
@@ -109,34 +131,65 @@ const Into = (props) => {
                                     data={classification}
                                     cols={1}
                                     className="forss"
-                                    extra="选择商品分类"
+                                    extra={morengoods.category_name}
                                     value={goodCategory}
                                     onChange={e => { setGoodCategory(e) }}
-                                    onOk={e => { code() }}
+                                    onOk={v => setGoodCategory(v)}
                                 >
                                     <List.Item className='time' arrow="horizontal"></List.Item>
                                 </Picker>
                             </div>
                         </div>
                     </div>
-                    <div className="type flex-column">
+                    
+
+                    <div className="type flex-column" >
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
                         }}>
                             <div className="left">
-                                <span>商品编码: </span>
+                                <span>商品名称:</span>
                             </div>
                             <div className="right">
-                                <input
-                                    readonly="readonly"
-                                    value={goodCode.uniacid===store.getState().uniacid? "" : goodCode }
+                                <input 
+                                    value={goodName}
                                     type="text"
-                                    placeholder='条码唯一,提交后不支持修改'
-                                    
+                                    placeholder={morengoods.name}
+                                    onChange={e => { setgoodName(e.target.value) }}
                                 />
                             </div>
                         </div>
                     </div>
+
+
+                    {/* <div className="type flex-column">
+                        <div className="item flex-row" style={{
+                            justifyContent: 'space-between'
+                        }}>
+                            <div className="left">
+                                <span>库存单位: </span>
+                            </div>
+                            <div className="right">
+                            <Picker
+                             data={unit} 
+                             cols={1}  
+                             className="forss"
+                             extra="选择库存单位"
+                             value={stockUnit}
+                             onChange={e => { setStockUnit(e)}}
+                             onOk={v => setStockUnit(v)}
+                             >
+                                <List.Item className='kcdwtimes'  arrow="horizontal"></List.Item>
+                            </Picker> */}
+                    {/* <input
+                                    value={stockUnit}
+                                    type="text"
+                                    placeholder='选择库存单位'
+                                    onChange={e => { setStockUnit(e.target.value) }}
+                                /> */}
+                    {/* </div>
+                        </div>
+                    </div> */}
                     <div className="type flex-column">
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
@@ -149,18 +202,24 @@ const Into = (props) => {
                                     data={unit}
                                     cols={1}
                                     className="forss"
-                                    extra="选择售出单位"
+                                    extra={morengoods.unit_name}
                                     value={sellUnit}
                                     onChange={e => { setSellUnit(e) }}
                                     onOk={v => setSellUnit(v)}
                                 >
                                     <List.Item className='scdwtimes' arrow="horizontal"></List.Item>
                                 </Picker>
+                                {/* <input
+                                    value={sellUnit}
+                                    type="text"
+                                    placeholder='选择售出单位'
+                                    onChange={e => { setSellUnit(e.target.value) }}
+                                /> */}
                             </div>
                         </div>
                     </div>
-                </TAddGoodsStyle>
-                <AddGoodsStyle>
+                    </TAddGoodsStyle>
+                    <AddGoodsStyle>
                     <div className="type flex-column">
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
@@ -173,7 +232,7 @@ const Into = (props) => {
                                 <input
                                     value={goodSort}
                                     type="text"
-                                    placeholder='数字越大越靠前'
+                                    placeholder={morengoods.sequence}
                                     onChange={e => { setGoodSort(e.target.value) }}
                                 />
                             </div>
@@ -190,12 +249,14 @@ const Into = (props) => {
                                 <input
                                     value={retailPrice}
                                     type="text"
-                                    placeholder='收银端零售价'
+                                    placeholder={morengoods.posprice}
                                     onChange={e => { setRetailPrice(e.target.value) }}
                                 />
                             </div>
                         </div>
                     </div>
+
+
                     <List
                         renderHeader={() => ''}
                     >
@@ -207,28 +268,27 @@ const Into = (props) => {
                         >更多信息</List.Item>
                         <div className='xian'></div>
 
-                        <div style={{ display: isProduct ? "block" : "none" }}>
+                        <div style={{ display: isProduct? "block" : "none" }}>
                             <List.Item
                                 extra={<Switch
-                                    checked={memberInterests}
+                                    checked={ memberInterests}
                                     onChange={() => { setMemberInterests(!memberInterests) }}
                                 />}
                             >启用会员权益
                     <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1rem" }}>是否启用会员权益</span>
                             </List.Item>
                             <div className='xian'></div>
-                            <div style={{ display: memberInterests ? "none" : "block" }}>
-                                <List.Item
-                                    extra={<Switch
-                                        checked={memberPrice}
-                                        onChange={() => { setMemberPrice(!memberPrice) }}
-                                    />}
-                                >启用会员价
+                            <List.Item 
+                                extra={<Switch
+                                    checked={memberPrice}
+                                    onChange={() => { setMemberPrice(!memberPrice) }}
+                                />}
+                            >启用会员价
                     <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>是否启用会员价</span>
-                                </List.Item>
-                                <div className='xian'></div></div>
+                            </List.Item>
+                            <div className='xian'></div>
 
-                            <div className="type flex-column" style={(memberInterests) ? { display: "none" } : { display: memberPrice ? "block" : "none" }}>
+                            <div className="type flex-column" style={{display:memberPrice===true?"block":"none"}}>
                                 <div className="item flex-row" style={{
                                     justifyContent: 'space-between'
                                 }}>
@@ -239,7 +299,7 @@ const Into = (props) => {
                                         <input
                                             value={setPrice}
                                             type="text"
-                                            placeholder='设置会员价'
+                                            placeholder={morengoods.memberprice}
                                             onChange={e => { setSetPrice(e.target.value) }}
                                         />
                                     </div>
@@ -256,7 +316,7 @@ const Into = (props) => {
                             <div className='xian'></div>
 
 
-                            <div className="type flex-column" style={{ display: matchGood === false ? "none" : "block" }}>
+                            <div className="type flex-column" style={{display:matchGood?"block":"none"}}>
                                 <div className="item flex-row" style={{
                                     justifyContent: 'space-between'
                                 }}>
@@ -267,7 +327,7 @@ const Into = (props) => {
                                         <input
                                             value={matchCode}
                                             type="text"
-                                            placeholder='设置分体称PLU编号'
+                                            placeholder={morengoods.plu_goods_keyboard_id}
 
                                             onChange={e => { setMatchCode(e.target.value) }}
                                         />
@@ -277,48 +337,106 @@ const Into = (props) => {
                         </div>
                     </List>
                 </AddGoodsStyle>
-            </BetterScroll>
+                </BetterScroll>
 
-            <FAddGoodsStyle>
+                <FAddGoodsStyle>
                 <div className='foot'>
-                    <div className='lbb'></div>
+                <div className='left' onClick={()=>{history.push(`/PackagedBjGoodsmx/${params}`)}}>
+                      <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                      <div className='yuan'>{morengoods.packgeListCount}</div>
+                  </div>
                     <div className='raa' onClick={e => { check() }}>提交</div>
                 </div>
-            </FAddGoodsStyle>
+                </FAddGoodsStyle>
+            
         </>
     )
-    function code() {
-        console.log(goodCategory.toString())
-    }
     function check() {
-        createProduct({
-            action: 'createProduct', data: {
+        if(memberInterests && memberPrice){
+            Toast.info("会员价和会员权益不能同时开启",2)
+
+        }else{
+        console.log(matchGood)
+        let aa={}
+        unit.map((v,k)=>{
+            // console.log(v)
+            if(v.label===morengoods.unit_name){
+                aa=v 
+            }
+        })
+        let cc=aa.value
+
+        editProduct({
+            action: 'editProduct', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                categoryid: goodCategory.toString(),
-                code: goodCode,
-                posprice: retailPrice,
-                memberprice: setPrice,
-                name: goodName,
-                unit: sellUnit.toString(),
-                is_membership: memberInterests === true ? "2" : "1",
-                is_memberprice: memberPrice === true ? "2" : "1",
-                is_plu_goods: matchGood === true ? "2" : "1",
-                plu_goods_keyboard_id: matchCode,
-                sequence: goodSort,
-                is_packge:"1"
+                id:params,
+                categoryid: goodCategory.toString()?goodCategory.toString():morengoods.categoryid,
+                code:goodCode?goodCode:morengoods.code,
+                posprice:retailPrice?retailPrice:morengoods.posprice,
+                memberprice:setPrice?setPrice:morengoods.memberprice,
+                name:goodName?goodName:morengoods.name,
+                unit:sellUnit.toString()?sellUnit.toString():cc,
+                is_membership:memberInterests === true ? "2" : "1"?memberInterests === true ? "2" : "1":morengoods.is_membership,
+                is_memberprice:memberPrice === true ? "2" : "1"?memberPrice === true ? "2" : "1":morengoods.is_memberprice,
+                is_plu_goods:matchGood === true ? "2" : "1"?matchGood === true ? "2" : "1":morengoods.is_plu_goods,
+                plu_goods_keyboard_id:matchCode?matchCode:morengoods.plu_goods_keyboard_id,
+                sequence:goodSort?goodSort:morengoods.sequence,
             }
         }).then((res) => {
-            if (res.data.status === 4001) {
-                history.push(`/PackagedGoods`)
+            // console.log(res)
+            if(res.data.status===4001){
+                history.push('/bjsygoods')
                 Toast.success(res.data.msg, 2)
-            } else {
+            }else{
                 Toast.info(res.data.msg, 2)
             }
         })
     }
+    }
 }
 const FAddGoodsStyle = styled.div`
+.yuan{
+    // padding-top:.1rem;
+    text-align:center;
+    // margin:auto;
+    position:absolute;
+    top: .2rem;
+    left:1.3rem;
+    color:#fff;
+    width:.51rem;
+    height:.51rem;
+    line-height:.51rem;
+    border-radius:.5rem;
+    background-color: #E01616;
+    font-size:.24rem;
+  }
+  .foot_conton span{
+    color:#cf2424;
+  }
+  .foot_conton{
+    width: 12rem;
+    // height: 100%rem;
+    line-height:1.6rem;
+    text-align:center;
+    font-size:.4rem;
+  }
+  .left img{
+    width: auto;  
+    height: auto;  
+    max-width: 100%;  
+    max-height: 100%;
+  }
+  .left{
+    padding-left:.48rem;
+    padding-top:.45rem;
+    width:7rem;
+    
+  }
+
+
+
+
 .lbb{
     width: 2rem;
     height: 1.6rem;
@@ -347,10 +465,6 @@ const FAddGoodsStyle = styled.div`
 }
 
 `
-
-
-
-
 
 const TAddGoodsStyle = styled.div`
   height: 100%;
@@ -422,32 +536,7 @@ const TAddGoodsStyle = styled.div`
   
 }
 
-  .lbb{
-    width: 2rem;
-    height: 1.6rem;
-    background-color: #fff;
-}
-.raa{
-    margin-top:.2rem;
-    margin-right:.2rem;
-    border-radius:.2rem;
-    font-size:.4rem;
-    color:#fff;
-    text-align:center;
-    width: 2.04rem;
-    height: 1.17rem;
-    line-height: 1.17rem;
-    background-color: #ED7913;
-}
-.foot{
-    display:flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 1.6rem;
-    background-color: #fff;
-    position:absolute;
-    bottom:0;
-}
+
   .xian{
       width:100%;
       height:1px;
@@ -543,11 +632,10 @@ const AddGoodsStyle = styled.div`
     flex-basis:auto;
     // padding-top:.5rem;
     color:#b4b4b4;
-    // text-align: left;
+    text-align: left;
     font-size:.35rem;
     padding-left:.1rem;
     text-align: right;
-    // padding-right: 3rem;
     width:3rem;
 }
 .am-list-item .am-list-line .am-list-arrow{
@@ -590,47 +678,6 @@ const AddGoodsStyle = styled.div`
     opacity:0;
     // 
 }
-
-
-
-
-
-
-
-  .lbb{
-    // float:left;
-    width: 2rem;
-    height: 1.6rem;
-    background-color: #fff;
-}
-.raa{
-    margin-top:.2rem;
-    margin-right:.2rem;
-    border-radius:.2rem;
-    font-size:.4rem;
-    color:#fff;
-    text-align:center;
-    width: 2.04rem;
-    height: 1.17rem;
-    line-height: 1.17rem;
-    background-color: #ED7913;
-}
-.foot{
-    display:flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 1.6rem;
-    background-color: #fff;
-    position:absolute;
-    bottom:0;
-}
-
-
-
-
-
-
-
 
   .xian{
       width:100%;

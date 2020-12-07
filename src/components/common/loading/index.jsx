@@ -18,7 +18,7 @@ export const LoadingMore = (props) => {
   return (
     <>
       <LoadingMoreStyle>
-        <p>{props.isLoading ? '正在玩命加载int...' : '已加载全部'} </p>
+        <p>{props.isLoading ? '加载中...' : '已加载全部'} </p>
       </LoadingMoreStyle>
     </>
   )

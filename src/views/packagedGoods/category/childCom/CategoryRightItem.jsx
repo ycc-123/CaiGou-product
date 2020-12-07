@@ -34,6 +34,7 @@ class CategoryRightgoods extends Component {
       <CategoryRightgoodsStyle>
         <div className="rrr"></div>
         <li className='category-goods clearfix'
+        onClick={()=>{this.props.history.push(`/PackagedBjGoods/${goods.id}`)}}
         >
 
           <img className='category-img' src={"https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/dabaogoods.png"} alt="" />
@@ -41,12 +42,12 @@ class CategoryRightgoods extends Component {
 
             <div style={{ fontSize: ".35rem", color: '#1a1a1a' }}>{goods.name}</div>
             <div className='shuliang' style={{ color: '#1a1a1a', padding: ".2rem 0" }}>
-              <article>商品编码：{goods.barcode}</article>
-              <div style={{color:"#C61E1E"}}>{goods.costprice}元/{goods.unit_name}</div>
+              <article>商品编码：{goods.code}</article>
+              <div style={{color:"#C61E1E",display:goods.memberprice!=="0.00"?"block":"none"}}>{goods.memberprice}元/{goods.unitname}</div>
             </div>
             <div className='shuliang' style={{ color: '#4c4c4c' }}>
               <article></article>
-              <div style={{fontSize:".35rem"}}>{goods.costprice}元/{goods.unit_name}</div>
+              <div style={{fontSize:".35rem"}}>{goods.posprice}元/{goods.unitname}</div>
             </div>
 
             {/* <Button

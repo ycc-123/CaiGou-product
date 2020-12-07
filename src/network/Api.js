@@ -459,3 +459,40 @@ export function checkSubmitInventory(config) {
     data: config.data
   })
 }
+
+
+// 打包商品明细
+
+export function getPackgeProductDetail(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+
+// 打包商品明细
+
+export function createPackgeProduct(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+
+
+// 打包商品明细
+
+export function editPackgeProduct(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
