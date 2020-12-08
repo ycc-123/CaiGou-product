@@ -64,7 +64,7 @@ class Category extends Component {
         is_packge:"1",
         limit:"1000",
         page:1,
-        // search:this.state.inputSearch
+        search:this.state.inputSearch
       }
     }).then(res => {
       if(res.data.status===4001){
@@ -95,7 +95,7 @@ class Category extends Component {
             </div>
           </div>
           <div
-          onClick={()=>{this.state.jj===false?console.log(): this.props.history.push('/choiceGoods')}}
+          onClick={()=>{this.state.jj===false?console.log(): this.props.history.push('/editPackagedGoods')}}
            className='add'>新增<span style={{fontSize:".4rem"}}>+</span></div>
           </div>
           <div className='category-main'>

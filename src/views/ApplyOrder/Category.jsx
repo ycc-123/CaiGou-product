@@ -80,7 +80,7 @@ class Category extends Component {
     let bz = this.props.match.params.bz
     return (
       <CategoryStyle>
-    <DocumentTitle title={'新建采购单'} />
+    <DocumentTitle title={'新建采购申请单'} />
 
         <Fragment>
           <div className='search'>

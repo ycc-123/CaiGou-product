@@ -102,7 +102,7 @@ class Category extends Component {
     let ckid = this.props.match.params.ck
     return (
       <CategoryStyle>
-    <DocumentTitle title={'新建盘点单'} />
+    <DocumentTitle title={'库存单'} />
 
         <Fragment>
           {/* <div className='search'>

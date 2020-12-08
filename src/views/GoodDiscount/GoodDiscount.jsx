@@ -43,7 +43,6 @@ export default class LossReport extends Component {
         return GMT
     }
     componentDidMount() {
-
         getRetailGoodsList({
             action: 'getRetailGoodsList', data: {
                 uniacid: store.getState().uniacid,
@@ -131,7 +130,6 @@ export default class LossReport extends Component {
                     GoodsList: [],
                     Goodszong: {}
                 })
-                
             }
         })
     }
@@ -277,8 +275,6 @@ export default class LossReport extends Component {
             // this.refs.scroll.BScroll.refresh()
         })
     }
-
-
     search() {
         console.log(this.state.inputSearch)
         getRetailGoodsList({
@@ -301,7 +297,6 @@ export default class LossReport extends Component {
                 Toast.info(res.data.msg, 1)
             }
         })
-
     }
     inputChange(e) {
         console.log(e.target.value)
@@ -315,8 +310,7 @@ export default class LossReport extends Component {
         }
         return (
             <LossReportStyle>
-    <DocumentTitle title={'商品优惠汇总'} />
-
+            <DocumentTitle title={'商品优惠汇总'} />
                 <div style={{ display: "flex" }}>
                     <div className='search'  >
                         <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
@@ -341,14 +335,11 @@ export default class LossReport extends Component {
                         })
                     }
                     {
-
                     this.state.GoodsList.length > 0 &&
                     <LoadingMore isLoading={this.isLoadMore} />
                     }
                     </div>
                     </BetterScroll>
-
-                
                     <BetterScroll config={scrollConfig} ref='bbb'>
                 <div className='fenglei' style={{ display: this.state.xian === false ? "none" : "block" }}>
                     <div><span style={{ color: "#333333" }}>仓库名称</span>
@@ -379,7 +370,6 @@ export default class LossReport extends Component {
                                     >
                                         <List.Item arrow="horizontal" className='data'></List.Item>
                                     </DatePicker>
-
                                 </div>
                                 <span style={{ fontSize: ".5rem", paddingTop: ".25rem", paddingLeft: '.3rem' }}>&nbsp;~</span>
                                 <div className='end'>
@@ -446,7 +436,6 @@ export default class LossReport extends Component {
             }
         }, 1000)
         if (this.isLoadMore) {
-          
             getRetailGoodsList({
                 action: 'getRetailGoodsList', data: {
                     uniacid: store.getState().uniacid,
@@ -459,7 +448,6 @@ export default class LossReport extends Component {
                     page: "1"
                 }
             }).then((res) => {
-               
                 let good=res.data.data.data.length
                 // 如果长度不等于得时候加载 那么是到底了
                 if (good < this.state.limit ) {
@@ -535,9 +523,6 @@ const LossReportStyle = styled.div`
     background-image: none;
     opacity:0;
     }
-
-
-
 
 .store_name{
     color: #8b8b8b;

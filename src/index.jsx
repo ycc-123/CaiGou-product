@@ -13,7 +13,7 @@ import 'assets/css/basic.css'
 
 // import  VConsole  from  'vconsole';
 // let vConsole = new VConsole();
-localStorage.clear()
+// localStorage.clear()
 
 // let uniacid = getParamsString('uniacid')
 // let uid = getParamsString('uid')

@@ -68,6 +68,8 @@ const AppRouter = () => {
       {/* 缓存路由 */}
       <CacheSwitch>
       <CacheRoute path='/category/:id' when='always' component={category}></CacheRoute>
+      <CacheRoute path='/choiceGoods/:id' when='always' component={choiceGoods}></CacheRoute>
+
       </CacheSwitch>
 
       <Switch>
@@ -113,9 +115,9 @@ const AppRouter = () => {
 
         <Route path='/editPackagedGoods' exact component={editPackagedGoods} ></Route>
         <Route path='/PackagedBjGoods/:id' exact component={PackagedBjGoods} ></Route>
-
         <Route path='/PackagedGoods' exact component={PackagedGoods} ></Route>
-        <Route path='/choiceGoods' exact component={choiceGoods} ></Route>
+
+        {/* <Route path='/choiceGoods/:id' exact component={choiceGoods} ></Route> */}
         <Route path='/choiceGoodsmx' exact component={choiceGoodsmx} ></Route>
         <Route path='/PackagedBjGoodsmx/:id' exact component={PackagedBjGoodsmx} ></Route>
 

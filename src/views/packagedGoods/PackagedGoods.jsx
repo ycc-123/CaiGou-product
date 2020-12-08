@@ -5,7 +5,7 @@ import { createForm } from 'rc-form';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { createProduct, getUnitList, getProductCategoryAll, getProductCategoryAllChildren, getProductCode } from 'network/Api'
+import { createProduct, getUnitList, getProductCategoryAll, getProductCategoryAllChildren, getProductCode,getProductDetail } from 'network/Api'
 import { store } from "store/index";
 // import { Picker, List, Toast } from 'antd-mobile';
 import { useHistory } from 'react-router-dom';
@@ -282,7 +282,7 @@ const Into = (props) => {
             <FAddGoodsStyle>
                 <div className='foot'>
                     <div className='lbb'></div>
-                    <div className='raa' onClick={e => { check() }}>提交</div>
+                    <div className='raa' onClick={e => { check() }}>下一步</div>
                 </div>
             </FAddGoodsStyle>
         </>
@@ -310,7 +310,8 @@ const Into = (props) => {
             }
         }).then((res) => {
             if (res.data.status === 4001) {
-                history.push(`/PackagedGoods`)
+                console.log(res)
+                history.push(`/choiceGoods/${res.data.data}`)
                 Toast.success(res.data.msg, 2)
             } else {
                 Toast.info(res.data.msg, 2)

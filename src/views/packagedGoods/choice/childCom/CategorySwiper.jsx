@@ -14,11 +14,18 @@ export default class ApplyOrderx extends Component {
             tiao: [],
             sum: '',
             remark: '',
-            inputSearch: ""
+            inputSearch: "",
+            goods:[]
         }
     }
     componentDidMount() {
         console.log(store.getState().packagedGoods)
+        // console.log(localStorage.getItem('packagedGoods'))
+        // localStorage.setItem('mobile',store.getState().packagedGoods)
+       console.log(JSON.parse(localStorage.getItem("packagedGoods"))) 
+        this.setState({
+            goods: store.getState().packagedGoods
+        })
 
     }
     seach() {
@@ -31,10 +38,10 @@ export default class ApplyOrderx extends Component {
         })
     }
     render() {
-        console.log(this.state.quan.item)
+        console.log(this.state.goods)
         return (
             <ApplyOrderxStyle>
-                <DocumentTitle title={'打包商品选择明细'} />
+                <DocumentTitle title={'打包商品明细'} />
                 <div>
                     <div className='search'>
                         <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
@@ -44,30 +51,26 @@ export default class ApplyOrderx extends Component {
                             <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
                         </div>
                     </div>
-
                     {
-                        this.state.tiao.map((v, k) => {
+                        JSON.parse(localStorage.getItem("packagedGoods")).map((v, k) => {
                             return (
-
                                 <div className='tiao'>
-                                    <img className='t-img-l' src={v.image ? v.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-
+                                    <img className='t-img-l' src={v.img ? v.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
                                     <ul className='wen-zi'>
                                         <li className='wen-zi-t'>
-                                            <div className='name'>{v.goodsname}</div>
+                                            <div className='name'>{v.name}</div>
                                         </li>
                                         <li className='wen-zi-c'>
-                                            <div >商品编码：{v.barcode}</div>
-                                            <p>{v.price}元/{v.unit_name}</p>
+                                            <div >商品编码：{v.code}</div>
+                                            <p>{v.posprice}元/{v.unitname}</p>
                                         </li>
 
                                         <li className='wen-zi-f'>
                                             <div></div>
-                                            <p>申请数量：<span>{v.goodsnum}</span></p>
+                                            <p>打包数量：<span>{v.num}</span></p>
                                         </li>
                                     </ul>
                                 </div>
-
                             )
                         })
                     }
@@ -156,11 +159,9 @@ const ApplyOrderxStyle = styled.div`
     position:absolute;
     bottom:0;
   }
-    
-    
-    
-    
-    
+
+
+  
     .wen-zi-f p span{
         color:#cf2424;
     }
@@ -321,6 +322,8 @@ const ApplyOrderxStyle = styled.div`
       .search{
         display:flex;
         margin-top:.21rem;
+        margin-bottom:.21rem;
+
         margin-left:.32rem;
         width:9.36rem;
         height: .75rem;

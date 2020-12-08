@@ -135,7 +135,7 @@ export default class ApplyOrder extends Component {
         }
         return (
             <ApplyOrderStyle>
-        <DocumentTitle title={'采购申请单'} />
+        <DocumentTitle title={'报损单'} />
         <div>
         <div style={{display:"flex"}}>
                 <div className='search'>

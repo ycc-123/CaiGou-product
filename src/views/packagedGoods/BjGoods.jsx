@@ -31,6 +31,7 @@ const Into = (props) => {
     const [matchGood, setMatchGood] = useState();
     const [matchCode, setMatchCode] = useState('')
     const [goodSort, setGoodSort] = useState('');
+    const [goodlength, setGoodlength] = useState('');
     const [unit, setUnit] = useState([]);
     const [classification, setClassification] = useState([]);
     const [morengoods,setMorengoods]=useState({});
@@ -41,6 +42,23 @@ const Into = (props) => {
     }
 
     useEffect(() => {
+        getProductDetail({
+            action: 'getProductDetail', data: {
+                uniacid: store.getState().uniacid,
+                uid:store.getState().uid,
+                id: params,
+            }
+        }).then((res) => {
+            if(res.data.status===4001){
+                
+                setMorengoods(res.data.data);
+                setMemberInterests(res.data.data.is_membership==="2"?true:false);
+                setMemberPrice(res.data.data.is_memberprice==="1"?false:true);
+                setMatchGood(res.data.data.is_plu_goods==="1"?false:true);
+            }else{
+                Toast.fail(res.data.msg,2)
+            }
+        })
         getPackgeProductDetail({
             action: 'getPackgeProductDetail', data: {
                 uniacid: store.getState().uniacid,
@@ -51,17 +69,12 @@ const Into = (props) => {
             // console.log(res.data.data)
             if(res.data.status===4001){
                 
-                setMorengoods(res.data.data);
-                setMemberInterests(res.data.data.is_membership==="2"?true:false);
-                setMemberPrice(res.data.data.is_memberprice==="1"?false:true);
-                setMatchGood(res.data.data.is_plu_goods==="1"?false:true);
-
-
-
-
-
+                setGoodlength(res.data.data);
+                // setMemberInterests(res.data.data.is_membership==="2"?true:false);
+                // setMemberPrice(res.data.data.is_memberprice==="1"?false:true);
+                // setMatchGood(res.data.data.is_plu_goods==="1"?false:true);
             }else{
-                Toast.fail(res.data.msg,2)
+                // Toast.fail(res.data.msg,2)
             }
         })
         getProductCategoryAllChildren({
@@ -343,9 +356,9 @@ const Into = (props) => {
                 <div className='foot'>
                 <div className='left' onClick={()=>{history.push(`/PackagedBjGoodsmx/${params}`)}}>
                       <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                      <div className='yuan'>{morengoods.packgeListCount}</div>
+                      <div className='yuan'>{goodlength.packgeListCount?goodlength.packgeListCount:0}</div>
                   </div>
-                    <div className='raa' onClick={e => { check() }}>提交</div>
+                    <div className='raa' onClick={e => { this.check() }}>提交</div>
                 </div>
                 </FAddGoodsStyle>
             
@@ -382,11 +395,12 @@ const Into = (props) => {
                 is_plu_goods:matchGood === true ? "2" : "1"?matchGood === true ? "2" : "1":morengoods.is_plu_goods,
                 plu_goods_keyboard_id:matchCode?matchCode:morengoods.plu_goods_keyboard_id,
                 sequence:goodSort?goodSort:morengoods.sequence,
+                packge_ids:"1"
             }
         }).then((res) => {
             // console.log(res)
             if(res.data.status===4001){
-                history.push('/bjsygoods')
+                history.push('/PackagedGoods')
                 Toast.success(res.data.msg, 2)
             }else{
                 Toast.info(res.data.msg, 2)

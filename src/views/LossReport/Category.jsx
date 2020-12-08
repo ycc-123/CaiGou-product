@@ -82,7 +82,7 @@ class Category extends Component {
     let bsid = this.props.match.params.bsid
     return (
       <CategoryStyle>
-    <DocumentTitle title={'新建盘点单'} />
+    <DocumentTitle title={'新建报损单'} />
 
         <Fragment>
           <div className='search'>

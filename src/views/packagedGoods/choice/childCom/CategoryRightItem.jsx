@@ -47,7 +47,7 @@ class CategoryRightgoods extends Component {
             <Button
               style={{position:"absolute",top:".3rem",left:"4.6rem",color:"transparent",background:"transparent"}} 
               className="btn_modal"
-              onClick={() => prompt('填写', '请输入报损申请数量',
+              onClick={() => prompt('填写', '请输入商品打包数量',
               [
                 {
                   text: '取消',

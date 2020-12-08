@@ -8,6 +8,10 @@ import { submitDamage ,editPackgeProduct} from 'network/Api'
 // import { store } from 'store/index'
 import {  Toast } from 'antd-mobile';
 import { store } from "store/index";
+import { 
+  savepackagedGoods, 
+  saveUserUniacid} from 'store/actionCreators'
+
 class CategoryRight extends Component {
   constructor(){
     super()
@@ -47,7 +51,6 @@ class CategoryRight extends Component {
   }
   getChildrenMsg = (result,login,ww) => {
     let num=Number(this.state.num)+Number(login)
-    // let price=Number(this.state.price)+Number(login)*Number(password)
    this.props.aa(num)
     let arr  = []
     arr.push(ww);
@@ -55,15 +58,32 @@ class CategoryRight extends Component {
     let nums  = []
     nums.push(login);
 
-    // let prices  = []
-    // prices.push(password);
     this.setState({
       num,
-      // price,
       login:[...this.state.login, ...nums],
-      // password:[...this.state.password, ...prices],
       goods:[...this.state.goods, ...arr]
+    },()=>{
+      let aa = {}
+      let arr =[]
+      this.state.goods.map((v,k)=>{
+        console.log(v,k,this.state.goods[k].name)
+         aa={
+            code: this.state.goods[k].code,
+            img: this.state.goods[k].albumpath,
+            name: this.state.goods[k].name,
+            posprice: this.state.goods[k].posprice,
+            memberprice: this.state.goods[k].memberprice,
+            unitname: this.state.goods[k].unitname,
+            num: this.state.login[k],
+          }
+         return arr.push(aa);
+      })
+      localStorage.setItem('packagedGoods',JSON.stringify(arr))
+      const actionuid = savepackagedGoods(arr)
+      store.dispatch(actionuid)
+      console.log(this.state.login,"111111111111111111111",this.state.goods)
     })
+
 }
   componentDidMount(){
     this.props.onRef(this)
@@ -72,12 +92,6 @@ class CategoryRight extends Component {
   myName = () =>{
     console.log(this.state.login[0],this.state.goods)
     let num =this.state.login
-    // let price =this.state.password
-    console.log(this.props.id)
-    // this.child.myName()
-    // let itemData=[]
-    // let aa=''
-    console.log(num.length)
 
     let aa = {}
     let arr =[]
@@ -85,37 +99,30 @@ class CategoryRight extends Component {
     num.map((v,k)=>{
       console.log(v,k,this.state.goods[k].name)
        aa={
-        stockid:this.state.goods[k].barcodeid,
-          // barcode:this.state.goods[k].code,
+        id:this.state.goods[k].barcodeid,
           num:num[k],
         }
        return arr.push(aa);
     })
 
-    console.log(arr)
     let packge_ids=arr
-    // console.log(itemData)
     editPackgeProduct({ action: 'editPackgeProduct', data: {
       uniacid: store.getState().uniacid,
       uid:store.getState().uid,
       goodsid:this.props.bsid,
       packge_ids:packge_ids
-      // remark:this.props.ckid==="1"?"":this.props.ckid,
-      // warehouseid:this.props.pdid,
-      // itemData:itemData,
-      // purchaseData:purchaseData
     } }).then(res=>{
       console.log(res)
       if(res.data.status===4001){
         Toast.success(res.data.msg, 2)
-        // this.home()
+        this.home()
       }else{
         Toast.info(res.data.msg, 2)
       }
     })
   } 
   home(){
-    this.props.history.push('/home')
+    this.props.history.push('/PackagedGoods')
   }
 
   shouldComponentUpdate = (nextProps, nextState) => {

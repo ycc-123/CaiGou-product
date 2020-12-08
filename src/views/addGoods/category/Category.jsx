@@ -166,9 +166,7 @@ class Category extends Component {
     }
   }
 
-  componentDidCache = () => {
-    console.log('缓存了')
-  }
+
 
   componentDidRecover = () => {
     const { defaultIndex, title } = this.state

@@ -210,7 +210,7 @@ export default class InventoryListDetails extends Component {
         }
         return (
             <WarehousingOrderxingStyle>
-                <DocumentTitle title={'新建调拨单'} />
+                <DocumentTitle title={'调拨单明细'} />
 
                 <div>
                     <div className='search'>

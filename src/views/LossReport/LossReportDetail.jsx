@@ -133,7 +133,7 @@ export default class ApplyOrderx extends Component {
         console.log(this.state.quan.item)
         return (
             <ApplyOrderxStyle>
-                <DocumentTitle title={'采购申请单明细'} />
+                <DocumentTitle title={'报损单明细'} />
 
                 <div>
                     <div className='search'>

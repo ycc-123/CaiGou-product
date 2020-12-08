@@ -81,7 +81,7 @@ class Category extends Component {
     let bsid = this.props.match.params.id
     return (
       <CategoryStyle>
-    <DocumentTitle title={'新建盘点单'} />
+    <DocumentTitle title={'新建打包商品'} />
 
         <Fragment>
           <div className='search'>
@@ -122,7 +122,7 @@ class Category extends Component {
                       <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
                   </div>
                   <div style={{display:"flex",marginTop:".2rem"}}>
-                      <div className='tijiao' onClick={()=>{this.props.history.push('/choiceGoodsmx')}}>下一步</div>
+                      <div className='tijiao' onClick={()=>{this.props.history.push('/choiceGoodsmx')}}>提交</div>
                   </div>
               </div>
            
@@ -189,7 +189,7 @@ class Category extends Component {
   }
 
   componentDidMount = () => {
-
+    localStorage.clear()
     // this.refs.scroll.BScroll.refresh()
     // const { appConfig } = store.getState()
     getProductCategoryAll({
