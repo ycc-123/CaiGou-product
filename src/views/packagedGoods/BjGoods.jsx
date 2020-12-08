@@ -358,7 +358,7 @@ const Into = (props) => {
                       <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                       <div className='yuan'>{goodlength.packgeListCount?goodlength.packgeListCount:0}</div>
                   </div>
-                    <div className='raa' onClick={e => { this.check() }}>提交</div>
+                    <div className='raa' onClick={e => { check() }}>提交</div>
                 </div>
                 </FAddGoodsStyle>
             

@@ -23,14 +23,11 @@ export default class InventoryList extends Component {
             action: 'getWarehouseChangeList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                // type: "1",
                 limit: this.state.limit,
                 page: this.state.page
             }
         }).then((res) => {
-            console.log(res.data.data.data)
             if (res.data.status === 4001) {
-
                 this.setState({
                     data: res.data.data.data
                 }, () => {
@@ -45,21 +42,16 @@ export default class InventoryList extends Component {
         })
     }
     inputChange(e) {
-        console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
-
     }
     Search() {
-        console.log(111)
         getWarehouseChangeList({
             action: 'getWarehouseChangeList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                // type: "1",
                 search: this.state.inputSearch,
-                // warehouseName:this.state.inputSearch,
                 limit: "1000",
                 page: "1"
             }
@@ -75,7 +67,6 @@ export default class InventoryList extends Component {
             }
         })
     }
-
     render() {
         const scrollConfig = {
             probeType: 1
@@ -83,8 +74,6 @@ export default class InventoryList extends Component {
         return (
             <WarehousingOrderStyle>
     <DocumentTitle title={'调拨单'} />
-
-                {/* <div style={{width:"100%"}}> */}
                 <div style={{display:"flex"}}>
                 <div className='search'>
                     <input type="search" className='input' placeholder="请输入调拨单单号" name="inputSearch"
@@ -102,7 +91,6 @@ export default class InventoryList extends Component {
                     isLoadMore={this.isLoadMore}>
                     {
                         this.state.data.map((value, key) => {
-                            // console.log(value)
                             let data = value
                             let Color = ''
                             if (data.status === "提交成功") {
@@ -136,7 +124,6 @@ export default class InventoryList extends Component {
                             )
                         })
                     }
-                    {/* </div> */}
                 </BetterScroll>
                 <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
                     <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
@@ -155,7 +142,6 @@ export default class InventoryList extends Component {
             }
         }, 1000)
         if (this.isLoadMore) {
-            // console.log(111)
             getWarehouseChangeList({
                 action: 'getWarehouseChangeList', data: {
                     uniacid: store.getState().uniacid,
@@ -165,7 +151,6 @@ export default class InventoryList extends Component {
                     page: this.state.page
                 }
             }).then(res => {
-                console.log(res.data.data.data)
                 if (res.data.data.data.length < this.state.limit) {
                     this.isLoadMore = false
                 }
@@ -177,18 +162,13 @@ export default class InventoryList extends Component {
                     this.setState({
                         page: page += 1
                     })
-
                     loading = false
                     this.refs.scroll.BScroll.finishPullUp()
                     this.refs.scroll.BScroll.refresh()
                 })
             })
-        } else {
-        }
+        } else {}
     }
-
-
-
 }
 const WarehousingOrderStyle = styled.div`
 .kongbj img{

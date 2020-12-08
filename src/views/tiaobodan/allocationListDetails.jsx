@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { getWarehouseChangeDetail, submitWarehouseChange } from 'network/Api'
 import { Toast, Modal, Button } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
-// import Tiao from './Tiao'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 const alert = Modal.alert;
@@ -35,12 +34,8 @@ export default class InventoryListDetails extends Component {
                 page: "1"
             }
         }).then((res) => {
-            console.log(res.data.data)
             if (res.data.status === 4001) {
-                // var supplier = res.data.data.purchaseDeliveryItem.map(o => { return { gnum: o.gnum } });
-                // console.log(supplier)
                 this.setState({
-                    // supplier,
                     count: res.data.data.count,
                     inventoryData: res.data.data.delivery,
                     itemData: res.data.data.items
@@ -53,38 +48,15 @@ export default class InventoryListDetails extends Component {
         })
     }
     shengHe(e) {
-        console.log(e)
-        // if (e === "提交成功") {
-
-        // } else {
-        //         if (this.state.input.length === 0) {
-        //             // 默认
         let aa = {}
         let arr = []
         this.state.itemData.map((v, k) => {
-            console.log(v)
             aa = {
                 stockid: v.stockid,
                 realnum: v.gnum,
             }
             return arr.push(aa);
         })
-
-        //             let in_out_num = []
-        //             this.state.purchaseItem.map((v, k) => {
-        //                 let innum = this.state.purchaseItem[k].gnum
-        //                 return in_out_num.push(innum);
-        //             })
-        //             let sum = 0;
-        //             in_out_num.forEach(item => {
-        //                 sum = Number(sum) + parseInt(item)
-        //             })
-        //             let deliveryData = {
-        //                 id: this.props.match.params.id,
-        //                 snum: this.state.count,
-        //                 in_out_num: sum
-        //             }
-        //             console.log("默认", deliveryData, itemData)
         submitWarehouseChange({
             action: 'submitWarehouseChange', data: {
                 uniacid: store.getState().uniacid,
@@ -94,7 +66,6 @@ export default class InventoryListDetails extends Component {
                 itemData: arr,
             }
         }).then((res) => {
-            //                 console.log(res.data)
             if (res.data.status === 4001) {
                 window.location.reload();
                 Toast.success(res.data.msg, 2)
@@ -102,67 +73,8 @@ export default class InventoryListDetails extends Component {
                 Toast.info(res.data.msg, 2)
             }
         })
-        //         } else {
-        //             let aa = {}
-        //             let arr = []
-        //             this.state.goods.map((v, k) => {
-        //                 console.log(v, k)
-        //                 aa = {
-        //                     id: this.state.goods[k].id,
-        //                     barcodeid: this.state.goods[k].barcodeid,
-        //                     diffnum: this.state.goods[k].price - this.state.input[k],
-        //                     innum: this.state.input[k],
-        //                     goodsid: this.state.goods[k].goodsid
-        //                 }
-        //                 return arr.push(aa);
-        //             })
-        //             let itemData = arr
-        //             console.log(itemData)
-        //             let deliveryData = {
-        //                 id: this.props.match.params.id,
-        //                 snum: this.state.count,
-        //                 in_out_num: this.state.num
-        //             }
-        //             console.log("22222", deliveryData, itemData)
-        //             submitPurchaseDelivery({
-        //                 action: 'submitPurchaseDelivery', data: {
-        //                     uniacid: store.getState().uniacid,
-        //                     uid: store.getState().uid,
-        //                     itemData: itemData,
-        //                     deliveryData: deliveryData,
-        //                     type: "1",
-        //                     status: "4"
-        //                 }
-        //             }).then((res) => {
-        //                 console.log(res.data)
-        //                 if (res.data.status === 4001) {
-        //                     window.location.reload();
-        //                     Toast.success(res.data.msg, 2)
-        //                 } else {
-        //                     Toast.info(res.data.msg, 2)
-        //                 }
-        //             })
-        //         }
     }
-
-    // }
-    // getChildrenMsg = (result, msg) => {
-    //     let input = []
-    //     input.push(result)
-    //     let ww = []
-    //     ww.push(msg)
-    //     let arr = Number(result) + Number(this.state.arr)
-    //     this.setState({
-    //         result,
-    //         arr,
-    //         goods: [...this.state.goods, ...ww],
-    //         num: arr,
-    //         input: [...this.state.input, ...input]
-    //     })
-    //     console.log(result, msg)
-    // }
     seach() {
-        console.log(111)
         getWarehouseChangeDetail({
             action: 'getWarehouseChangeDetail', data: {
                 uniacid: store.getState().uniacid,
@@ -173,12 +85,8 @@ export default class InventoryListDetails extends Component {
                 page: "1"
             }
         }).then((res) => {
-            console.log(res.data.data)
             if (res.data.status === 4001) {
-                // var supplier = res.data.data.purchaseDeliveryItem.map(o => { return { gnum: o.gnum } });
-                // console.log(supplier)
                 this.setState({
-                    // supplier,
                     count: res.data.data.count,
                     inventoryData: res.data.data.delivery,
                     itemData: res.data.data.items
@@ -191,7 +99,6 @@ export default class InventoryListDetails extends Component {
         })
     }
     inputChange(e) {
-        console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -241,29 +148,23 @@ export default class InventoryListDetails extends Component {
                             备注：{this.state.inventoryData.remark}
                         </div>
                     </div>
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)"}}>
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)" }}>
                         {
                             this.state.itemData.map((value, key) => {
-                                console.log(value)
                                 let tiao = value
                                 return (
                                     <div className='tiao'>
-                                        {/* <img className='t-img-l' src={tiao.image} alt="" /> */}
                                         <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-
                                         <ul className='wen-zi'>
                                             <li className='wen-zi-c'>
                                                 <div >{tiao.barcode}</div>
                                                 <p>{tiao.transfer_price}元/{tiao.unitname}</p></li>
                                             <li className='wen-zi-t'>
                                                 <div className='name'>{tiao.goods_name}</div>
-                                                {/* <p>{tiao.gnum}公斤</p> */}
                                             </li>
                                             <li className='wen-zi-f'>
                                                 <div>数量：{tiao.gnum}</div>
                                                 <p>总价：{tiao.transfer_price * tiao.gnum}</p>
-
-
                                             </li>
                                         </ul>
                                     </div>
@@ -273,15 +174,11 @@ export default class InventoryListDetails extends Component {
                     </BetterScroll>
                     <div className='foot'>
                         <div className='left'>
-                            {/* <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt=""transfer_totalmoney: "123.00"
-transfer_totalnumber: "1.000" /> */}
                             移库总数：<span>{this.state.inventoryData.transfer_totalnumber}</span>
                             <span style={{ marginLeft: ".75rem" }}></span>
                             移库总额：<span>{this.state.inventoryData.transfer_totalmoney}</span>
                         </div>
-                        {/* <div className='yuan'>{this.state.itemData.length}</div> */}
                         <div style={{ background: this.state.inventoryData.statusname === "提交成功" ? "#B4B4B4" : '' }} className='right' onClick={(e) => { this.shengHe(this.state.inventoryData.statusname) }}>{this.state.inventoryData.statusname === "待提交" ? "提交" : "已提交"}</div>
-
                     </div>
                 </div>
             </WarehousingOrderxingStyle>

@@ -16,12 +16,9 @@ export default class AddInventoryList extends Component {
             IDck: [],
             inputbeiz: '',
             lxValue: '',
-
-
         }
     }
     componentDidMount() {
-
         getWarehouseList({
             action: 'getWarehouseList', data: {
                 uniacid: store.getState().uniacid,
@@ -31,11 +28,8 @@ export default class AddInventoryList extends Component {
                 page: "1"
             }
         }).then((res) => {
-            console.log(res.data.data.data)
             if (res.data.status === 4001) {
-                console.log(0)
                 var result = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
-                console.log(result)
                 this.setState({
                     data: result
                 })
@@ -43,17 +37,10 @@ export default class AddInventoryList extends Component {
                 Toast.info('网络错误', 2)
             }
         })
-
     }
     createPurchase() {
-
-        //    in
         let idgy = this.state.IDck === '' ? '' : this.state.IDck.toString()
-        // out
         let idkc = this.state.lxID === '' ? '' : this.state.lxID.toString()
-        console.log(idkc)
-
-     
         createWarehouseChange({
             action: 'createWarehouseChange', data: {
                 uniacid: store.getState().uniacid,
@@ -63,36 +50,29 @@ export default class AddInventoryList extends Component {
                 remark: this.state.inputbeiz,
             }
         }).then(res => {
-            console.log(res.data.data.docno)
             if (res.data.status === 4001) {
                 this.props.history.push(`/tiaoboCategory/${res.data.data.id}/${idgy}`)
                 Toast.success(res.data.msg, 2)
-         
-                    let arr = []
-                    let aa = {}
-                    this.state.data.map((v, k) => {
-                        if (v.value === idgy) {
-                            aa = v
-                            return arr.push(aa, this.state.inputbeiz);
-                        }
-                        if (v.value === idkc) {
-                            aa = v
-                            return arr.push(aa, res.data.data.docno);
-                        }
-                        // return arr.push(this.state.inputbeiz);
-                    })
-                    const tiaoboxqck = saveCanku(arr)
-                    store.dispatch(tiaoboxqck)
-                    console.log(arr)
-               
+                let arr = []
+                let aa = {}
+                this.state.data.map((v, k) => {
+                    if (v.value === idgy) {
+                        aa = v
+                        return arr.push(aa, this.state.inputbeiz);
+                    }
+                    if (v.value === idkc) {
+                        aa = v
+                        return arr.push(aa, res.data.data.docno);
+                    }
+                })
+                const tiaoboxqck = saveCanku(arr)
+                store.dispatch(tiaoboxqck)
             } else {
                 Toast.info(res.data.msg, 2)
             }
         })
     }
-
     inputChangebz(e) {
-        // console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -100,8 +80,7 @@ export default class AddInventoryList extends Component {
     render() {
         return (
             <AddPurchaseOrderStyle>
-    <DocumentTitle title={'新建调拨单'} />
-
+                <DocumentTitle title={'新建调拨单'} />
                 <div>
                     <ul className='biao'>
                         <li><span>*</span>转出仓库：
@@ -130,22 +109,16 @@ export default class AddInventoryList extends Component {
                                 <List.Item className='pdlx' arrow="horizontal"></List.Item>
                             </Picker>
                         </li>
-
                         <li style={{ border: "none" }}>
                             <div>备注：</div>
                             <input name="inputbeiz"
                                 onChange={this.inputChangebz.bind(this)}
                                 value={this.state.inputbeiz} type="text" /></li>
                     </ul>
-
-                    <div className='foot' style={{justifyContent: 'space-between'}}>
+                    <div className='foot' style={{ justifyContent: 'space-between' }}>
                         <div className='left'></div>
-                        {/* <div></div> */}
                         <div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
-
                     </div>
-
-
                 </div>
             </AddPurchaseOrderStyle>
         )

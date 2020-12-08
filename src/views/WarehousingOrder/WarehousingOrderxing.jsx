@@ -25,7 +25,6 @@ export default class WarehousingOrderxing extends Component {
         }
     }
     componentDidMount() {
-
         getPurchaseDeliveryDetail({
             action: 'getPurchaseDeliveryDetail', data: {
                 uniacid: store.getState().uniacid,
@@ -36,7 +35,6 @@ export default class WarehousingOrderxing extends Component {
                 page: "1"
             }
         }).then((res) => {
-            // console.log(res.data.data.purchaseDeliveryItem)
             if (res.data.status === 4001) {
                 var supplier = res.data.data.purchaseDeliveryItem.map(o => { return { gnum: o.gnum } });
                 console.log(supplier)
@@ -54,9 +52,7 @@ export default class WarehousingOrderxing extends Component {
         })
     }
     shengHe(e) {
-        console.log(e)
         if(e==="审核通过"){
-
         }else{
         if (this.state.input.length === 0) {
             // 默认
@@ -148,8 +144,7 @@ export default class WarehousingOrderxing extends Component {
                 })
         }
     }
-        
-    }
+}
     getChildrenMsg = (result, msg) => {
         let input = []
         input.push(result)
@@ -194,7 +189,6 @@ export default class WarehousingOrderxing extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
-
     }
     render() {
         const scrollConfig = {
@@ -210,8 +204,7 @@ export default class WarehousingOrderxing extends Component {
         }
         return (
             <WarehousingOrderxingStyle>
-    <DocumentTitle title={'采购入库单明细'} />
-
+                <DocumentTitle title={'采购入库单明细'} />
                 <div>
                     <div className='search'>
                         <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
@@ -221,7 +214,6 @@ export default class WarehousingOrderxing extends Component {
                             <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
                         </div>
                     </div>
-
                     <div className='conten'>
                         <div className='conten-top'>
                             <p>
@@ -229,7 +221,6 @@ export default class WarehousingOrderxing extends Component {
                             </p>
                             <div>{this.state.purchaseDetail.docno}</div>
                         </div>
-
                         <div className='conten-c' style={{ paddingTop: ".25rem" }}>
                             <p>单据日期：{this.state.purchaseDetail.docdate}</p>
                             <p>单据仓库：{this.state.purchaseDetail.warehousename}</p>

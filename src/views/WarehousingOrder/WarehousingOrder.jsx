@@ -21,7 +21,6 @@ export default class WarehousingOrder extends Component {
         this.isLoadMore = true
     }
     componentDidMount() {
-
         getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
             uniacid: store.getState().uniacid,
             uid:store.getState().uid,
@@ -29,9 +28,7 @@ export default class WarehousingOrder extends Component {
             limit:this.state.limit,
             page:this.state.page
           } }).then((res) => {
-            console.log(res.data.data.data)
             if(res.data.status===4001){
-
                 this.setState({
                     data: res.data.data.data
                 },()=>{
@@ -46,20 +43,16 @@ export default class WarehousingOrder extends Component {
         })
     }
     inputChange(e){
-        console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
-        
     }
     Search(){
-        console.log(111)
         getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
             uniacid: store.getState().uniacid,
             uid:store.getState().uid,
             type:"1",
             search:this.state.inputSearch,
-            // warehouseName:this.state.inputSearch,
             limit:"1000",
             page:"1"
           } }).then((res) => {
@@ -81,8 +74,6 @@ export default class WarehousingOrder extends Component {
         return (
             <WarehousingOrderStyle>
     <DocumentTitle title={'采购入库单'} />
-                
-            {/* <div style={{width:"100%"}}> */}
                 <div className='search'>
                     <input type="search" className='input' placeholder="请输入入库单号/仓库名称" name="inputSearch" 
                                     onChange={this.inputChange.bind(this)}
@@ -95,7 +86,6 @@ export default class WarehousingOrder extends Component {
                     isLoadMore={this.isLoadMore}>
                     {
                         this.state.data.map((value,key)=>{
-                            // console.log(value)
                             return(
                                 <div className='caigoudan' >
                                 <Tiao item={value} key={key} history={this.props.history}/>
@@ -104,11 +94,9 @@ export default class WarehousingOrder extends Component {
                         })
                     }
                     {
-
                         this.state.data.length > 0 &&
                         <LoadingMore isLoading={this.isLoadMore} />
                     }
-            {/* </div> */}
             </BetterScroll>
             <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
                     <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
@@ -127,7 +115,6 @@ export default class WarehousingOrder extends Component {
             }
         }, 1000)
         if (this.isLoadMore) {
-            // console.log(111)
             getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
                 uniacid: store.getState().uniacid,
                 uid:store.getState().uid,
@@ -135,7 +122,6 @@ export default class WarehousingOrder extends Component {
                 limit:this.state.limit,
                 page:this.state.page
               } }).then(res => {
-                console.log(res.data.data.data)
                 if (res.data.data.data.length < this.state.limit) {
                     this.isLoadMore = false
                 }

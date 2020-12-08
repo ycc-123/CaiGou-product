@@ -14,9 +14,6 @@ export default class AddInventoryList extends Component {
             inputbeiz:'',
             sValue:'',
             IDck:""
-
-
-
         }
     }
     componentDidMount() {
@@ -38,23 +35,14 @@ export default class AddInventoryList extends Component {
                     data: result
                 })
             } else {
-                Toast.info('网络错误', 2)
+                Toast.info(res.data.msg, 2)
             }
         })
     }
     createPurchase(){
-       
-       
-        // console.log(this.state.IDgy)
         let idgy = this.state.sValue.toString()
         let flname={}
-        
-        console.log(idgy)
-        console.log(this.state.lxID)
         let bz='1'
-        
-        // let idkc = this.state.IDck.toString()
-        
         createDamage({
             action: 'createDamage', data: {
                 uniacid: store.getState().uniacid,
@@ -63,7 +51,6 @@ export default class AddInventoryList extends Component {
                 remark:this.state.inputbeiz
             }
         }).then((res) => {
-            console.log(res)
             if(res.data.status===4001){
                 this.props.history.push(`/bsCategory/${idgy}/${this.state.inputbeiz?this.state.inputbeiz:bz}/${res.data.data}`)
             }else{
@@ -72,7 +59,6 @@ export default class AddInventoryList extends Component {
         })
     }
     inputChangebz(e) {
-        // console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -80,8 +66,7 @@ export default class AddInventoryList extends Component {
     render() {
         return (
             <AddPurchaseOrderStyle>
-    <DocumentTitle title={'新建报损单'} />
-
+                <DocumentTitle title={'新建报损单'} />
                 <div>
                     <ul className='biao'>
                         <li><span>*</span>报损仓库：
@@ -97,21 +82,16 @@ export default class AddInventoryList extends Component {
                                 <List.Item className='times' arrow="horizontal"></List.Item>
                             </Picker>
                         </li>
-                    
                         <li style={{ border: "none" }}>
                             <div>备注：</div>
                             <input name="inputbeiz"
                                 onChange={this.inputChangebz.bind(this)}
                                 value={this.state.inputbeiz} type="text" /></li>
                     </ul>
-
                     <div className='foot'>
                         <div className='left'></div>
                         <div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
-
                     </div>
-
-
                 </div>
             </AddPurchaseOrderStyle>
         )

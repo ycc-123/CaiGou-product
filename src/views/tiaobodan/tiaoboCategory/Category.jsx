@@ -35,27 +35,22 @@ class Category extends Component {
       mrqunangoods: [],
       Id: ""
     }
-
   }
   mingxi() {
-    console.log(111)
     this.props.history.push('/tiaoboxq')
   }
   getChildValue(aa, val) {
-    console.log(aa);
     this.setState({
       num: aa,
       price: val
     })
   }
   inputChange(e) {
-    console.log(e.target.value)
     this.setState({
       [e.target.name]: e.target.value
     })
   }
   Search() {
-    console.log(this.state.inputSearch)
     getStockList({
       action: 'getStockList', data: {
         uniacid: store.getState().uniacid,
@@ -71,18 +66,15 @@ class Category extends Component {
       } else {
         Toast.info(res.data.msg, 2)
       }
-
     })
   }
   render() {
     const { title, type } = this.state
-    console.log(this.props.match.params.id)
     let pdid = this.props.match.params.id
     let ckid = this.props.match.params.ck
     return (
       <CategoryStyle>
-    <DocumentTitle title={'新建调拨单'} />
-
+        <DocumentTitle title={'新建调拨单'} />
         <Fragment>
           <div className='search'>
             <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"
@@ -113,45 +105,19 @@ class Category extends Component {
             </Fragment> : <Fragment>
               </Fragment>}
           </div>
-
-          
-          {/* <div className='foot'>
-            <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
-            <div className='left'
-            onClick={() => { this.mingxi() }}
-            >
-             <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-            <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
-            </div>
-            <div className='right' >提交</div>
-            </div>
-           
-            <div
-              style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
-              className="btn_modal"
-              onClick={() =>
-                alert('提交', '是否确认提交调拨单', [
-                  { text: '取消', onPress: () => console.log('cancel') },
-                  { text: '确定', onPress: () => this.click() },
-                ])
-              }
-            >
-              confirm
-                        </div></div> */}
-
-            <div className='foot'>
-              <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
-                  <div className='left' onClick={() => { this.mingxi() }}>
-                      <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                      <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
-                  </div>
-                  <div style={{display:"flex",marginTop:".2rem"}}>
-                      <div className='baocun' onClick={()=>{this.click(1)}}>保存</div>
-                      <div className='tijiao' >提交</div>
-                  </div>
+          <div className='foot'>
+            <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+              <div className='left' onClick={() => { this.mingxi() }}>
+                <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
               </div>
-           
-              <div
+              <div style={{ display: "flex", marginTop: ".2rem" }}>
+                <div className='baocun' onClick={() => { this.click(1) }}>保存</div>
+                <div className='tijiao' >提交</div>
+              </div>
+            </div>
+
+            <div
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "7.78rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
               onClick={() =>
@@ -175,46 +141,6 @@ class Category extends Component {
   click = (e) => {
     this.child.myName(e)
   }
-  changeImage = () => {
-    if (this.state.type === 'swiper') {
-      this.setState({
-        type: 'goods'
-      })
-    } else {
-      this.setState({
-        type: 'swiper'
-      })
-    }
-  }
-
-  componentDidCache = () => {
-    console.log('缓存了')
-  }
-
-  componentDidRecover = () => {
-    const { defaultIndex, title } = this.state
-    const { appConfig } = store.getState()
-    const right_config = {
-      action: 'getGoodsByCategory',
-      data: {
-        uniacid: appConfig.uniacid,
-        openid: appConfig.wxUserInfo.openid,
-        cid: title[defaultIndex].id,
-        pagesize: 100
-      }
-    }
-
-    _categoryRight(right_config).then(res => {
-      title[defaultIndex].goods = (res.data && res.data.data && res.data.data.list) || []
-      this.setState({
-        ys: res.data.data.issell,
-        kc: res.data.data.showPubStock,
-        title
-      })
-    })
-
-  }
-
   componentDidMount = () => {
 
     // this.refs.scroll.BScroll.refresh()
@@ -239,8 +165,8 @@ class Category extends Component {
             uid: store.getState().uid,
             warehouseid: this.props.match.params.ck,
             categoryid: Id[0].id,
-            limit:"1000",
-            page:1
+            limit: "1000",
+            page: 1
 
           }
         }).then(res => {
@@ -289,8 +215,8 @@ class Category extends Component {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         warehouseid: this.props.match.params.ck,
-        limit:"1000",
-        page:1,
+        limit: "1000",
+        page: 1,
         categoryid: this.state.id[index].id,
       }
     }).then(res => {

@@ -9,7 +9,6 @@ export default class Tiao extends Component {
         }
     }
     shuliang= (value,tiao) => {
-        console.log(value,tiao)
         this.props.parent.getChildrenMsg( value,tiao)
         this.setState({
             value
@@ -18,7 +17,6 @@ export default class Tiao extends Component {
     render() {
         let tiao = this.props.item
         let rk=''
-
         if(Number(tiao.innum)===0){
             rk=tiao.gnum
         }else{

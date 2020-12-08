@@ -6,10 +6,10 @@ export default class InventoryListDetails extends Component {
     constructor() {
         super()
         this.state = {
-            zcck:store.getState().tiaoboxqck[0].label?store.getState().tiaoboxqck[0].label:"",
-            zrvk:store.getState().tiaoboxqck[2].label?store.getState().tiaoboxqck[2].label:"",
-            danhao:store.getState().tiaoboxqck[3]?store.getState().tiaoboxqck[3]:"",
-            beiz:store.getState().tiaoboxqck[1]?store.getState().tiaoboxqck[1]:""
+            zcck: store.getState().tiaoboxqck[0].label ? store.getState().tiaoboxqck[0].label : "",
+            zrvk: store.getState().tiaoboxqck[2].label ? store.getState().tiaoboxqck[2].label : "",
+            danhao: store.getState().tiaoboxqck[3] ? store.getState().tiaoboxqck[3] : "",
+            beiz: store.getState().tiaoboxqck[1] ? store.getState().tiaoboxqck[1] : ""
             // zcck:1111,
             // zrvk:222,
             // danhao:333,
@@ -20,7 +20,7 @@ export default class InventoryListDetails extends Component {
         console.log(store.getState().tiaoboxqck)
         console.log(store.getState().tiaobogoods)
     }
-   
+
     render() {
         const scrollConfig = {
             probeType: 1
@@ -31,15 +31,12 @@ export default class InventoryListDetails extends Component {
         return (
             <WarehousingOrderxingStyle>
                 <div>
-                <div className='search'>
-                        <input type="search" className='input' placeholder="请输入商品名称或商品编码"  />
+                    <div className='search'>
+                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
                         <div className='img' onClick={() => { }}>
                             <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
                         </div>
                     </div>
-
-
-
                     <div className='conten'>
                         <div className='conten-top'>
                             <p>
@@ -59,14 +56,12 @@ export default class InventoryListDetails extends Component {
                             备注：{this.state.danhao}
                         </div>
                     </div>
-                    {/* <BetterScroll config={scrollConfig} ref='scroll' style={{ }}> */}
-                        {
-                            store.getState().tiaobogoods.map((value, key) => {
-                                console.log(value)
-                                let tiao = value
-                                return (
-                                    <div className='tiao'>
-                                    {/* <img className='t-img-l' src={tiao.image} alt="" /> */}
+                    {
+                        store.getState().tiaobogoods.map((value, key) => {
+                            console.log(value)
+                            let tiao = value
+                            return (
+                                <div className='tiao'>
                                     <img className='t-img-l' src={tiao.img ? tiao.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
                                     <ul className='wen-zi'>
@@ -75,22 +70,17 @@ export default class InventoryListDetails extends Component {
                                             <p>{tiao.price}元/{tiao.unit_name}</p></li>
                                         <li className='wen-zi-t'>
                                             <div className='name'>{tiao.name}</div>
-                                            {/* <p>{tiao.gnum}公斤</p> */}
                                         </li>
                                         <li className='wen-zi-f'>
                                             <div>数量：{tiao.gnum}</div>
-                                            <p>总价：{tiao.price*tiao.gnum}</p>
-
-
+                                            <p>总价：{tiao.price * tiao.gnum}</p>
                                         </li>
                                     </ul>
                                 </div>
-                     
-                                )
-                            })
-                        }
-                    {/* </BetterScroll> */}
-                    </div>
+                            )
+                        })
+                    }
+                </div>
             </WarehousingOrderxingStyle>
         )
     }
