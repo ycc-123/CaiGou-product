@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import {  getWarehouseList, getDamageList ,getDamageDetailList} from 'network/Api'
+import { getWarehouseList, getDamageList, getDamageDetailList } from 'network/Api'
 import { Toast, List, DatePicker } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import LossReportTiao from './LossReportTiao'
@@ -13,20 +13,19 @@ export default class LossReport extends Component {
         super()
         this.state = {
             cankuID: '',
-            status:'',
-            page:1,
-            limit:"20",
-            inputSearch:'',
-            zongnp:{},
-            damageList:[],
+            status: '',
+            page: 1,
+            limit: "20",
+            inputSearch: '',
+            zongnp: {},
+            damageList: [],
             fenleiName: ["今天", "昨天", "7天", "本月"],
             childrens: ["全部", "已审核", "待审核"],
-            yikey:0,
+            yikey: 0,
             ckkey: '',
             result: [],
             ekey: 0,
             xian: false,
-
             data: [],
             key: '',
             date: '',
@@ -36,17 +35,14 @@ export default class LossReport extends Component {
             end_data: '',
             time: '',
             today_time: '',
-            kongbj:true
-
+            kongbj: true
         }
         this.isLoadMore = true
     }
     componentDidMount() {
-
         var day2 = new Date();
         day2.setTime(day2.getTime());
         var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
-        console.log(s2)
         this.setState({
             today_time: s2
         })
@@ -55,53 +51,49 @@ export default class LossReport extends Component {
             action: 'getWarehouseList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                type:"1",
-                limit:"1000",
-                page:"1"
+                type: "1",
+                limit: "1000",
+                page: "1"
             }
         }).then((res) => {
-            console.log(res)
-            if(res.data.status===4001){
-                var bb = res.data.data.data.map(o=>{return{id:o.id,name:o.name}});
-                    let aa= [{id:"",name:"全部门店"}]
-                    let result=[...aa,...bb]
-                    // console.log()
+            if (res.data.status === 4001) {
+                var bb = res.data.data.data.map(o => { return { id: o.id, name: o.name } });
+                let aa = [{ id: "", name: "全部门店" }]
+                let result = [...aa, ...bb]
                 this.setState({
                     result
                 })
-            }else{
-                Toast.info(res.data.msg,2)
+            } else {
+                Toast.info(res.data.msg, 2)
             }
         })
-       
+
         // 报损列表
         getDamageDetailList({
             action: 'getDamageDetailList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 // type: "1",
-                limit:this.state.limit,
-                page:this.state.page
+                limit: this.state.limit,
+                page: this.state.page
             }
         }).then((res) => {
-            console.log(res.data.data.data)
             if (res.data.status === 4001) {
                 this.setState({
-                    damageList:res.data.data.data,
-                    zongnp:res.data.data.total
-                },()=>{
+                    damageList: res.data.data.data,
+                    zongnp: res.data.data.total
+                }, () => {
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
                 this.setState({
-                    kongbj:false
+                    kongbj: false
                 })
                 Toast.info(res.data.msg, 2)
             }
         })
     }
     queding() {
-        console.log(this.state.end_data,this.state.start_data)
         this.setState({
             xian: false
         })
@@ -110,49 +102,46 @@ export default class LossReport extends Component {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 warehouseid: this.state.cankuID,
-                starttime:this.state.start_data?this.state.start_data:this.state.today_time,
-                endtime:this.state.end_data?this.state.end_data:this.state.today_time,
-                status:this.state.status,
-                limit:"100",
-                page:"1"
+                starttime: this.state.start_data ? this.state.start_data : this.state.today_time,
+                endtime: this.state.end_data ? this.state.end_data : this.state.today_time,
+                status: this.state.status,
+                limit: "100",
+                page: "1"
             }
         }).then((res) => {
-            console.log(res.data.data.data)
             if (res.data.status === 4001) {
                 this.setState({
-                    damageList:res.data.data.data,
-                    zongnp:res.data.data.total,
-                    kongbj:true
-                },()=>{
+                    damageList: res.data.data.data,
+                    zongnp: res.data.data.total,
+                    kongbj: true
+                }, () => {
                     this.refs.scroll.BScroll.finishPullUp()
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
                 Toast.info(res.data.msg, 2)
                 this.setState({
-                    kongbj:false,
-                    damageList:[],
-                    zongnp:{}
+                    kongbj: false,
+                    damageList: [],
+                    zongnp: {}
                 })
             }
         })
     }
-    erjifenlei(v,k ) {
-        console.log(v,k)
-        if(v==="已审核"){
+    erjifenlei(v, k) {
+        if (v === "已审核") {
             this.setState({
                 ekey: k,
-                status:"2"
+                status: "2"
             })
-        }else if(v==="待审核"){
+        } else if (v === "待审核") {
             this.setState({
                 ekey: k,
-                status:"1"
+                status: "1"
             })
-        }else{
+        } else {
             this.setState({
                 ekey: k,
-                
             })
         }
     }
@@ -161,137 +150,126 @@ export default class LossReport extends Component {
         return GMT
     }
     yijifenlei(v, k) {
-        console.log(v, k)
         this.setState({
             yikey: k
         })
-        if(v==="今天"){
+        if (v === "今天") {
             axios({
                 timeout: 10000,
                 baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
                 method: 'post',
                 headers: {
-                  'Content-Type': 'text/plain'
+                    'Content-Type': 'text/plain'
                 },
-                data: {date:"今天"}
-              }).then(res=> {
-                console.log(res.data.data.end);
+                data: { date: "今天" }
+            }).then(res => {
                 let start = this.StrToGMT(res.data.data.start)
                 let end = this.StrToGMT(res.data.data.end)
                 this.setState({
-                    end:end,
-                    start:start,
-                    end_data:res.data.data.end,
-                    start_data:res.data.data.start,
+                    end: end,
+                    start: start,
+                    end_data: res.data.data.end,
+                    start_data: res.data.data.start,
                 })
-              })
-        }else if(v==="昨天"){
+            })
+        } else if (v === "昨天") {
             axios({
                 timeout: 10000,
                 baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
                 method: 'post',
                 headers: {
-                  'Content-Type': 'text/plain'
+                    'Content-Type': 'text/plain'
                 },
-                data: {date:"昨天"}
-              }).then(res=> {
-                console.log(res.data.data.end);
+                data: { date: "昨天" }
+            }).then(res => {
                 let start = this.StrToGMT(res.data.data.start)
                 let end = this.StrToGMT(res.data.data.end)
                 this.setState({
-                    end:end,
-                    start:start,
-                    end_data:res.data.data.end,
-                    start_data:res.data.data.start,
+                    end: end,
+                    start: start,
+                    end_data: res.data.data.end,
+                    start_data: res.data.data.start,
                 })
-              })
-        }else if(v==="7天"){
+            })
+        } else if (v === "7天") {
             axios({
                 timeout: 10000,
                 baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
                 method: 'post',
                 headers: {
-                  'Content-Type': 'text/plain'
+                    'Content-Type': 'text/plain'
                 },
-                data:{date: "近七天"}
-              }).then(res=> {
-                console.log(res.data.data.end);
+                data: { date: "近七天" }
+            }).then(res => {
                 let start = this.StrToGMT(res.data.data.start)
                 let end = this.StrToGMT(res.data.data.end)
                 this.setState({
-                    end:end,
-                    start:start,
-                    end_data:res.data.data.end,
-                    start_data:res.data.data.start,
+                    end: end,
+                    start: start,
+                    end_data: res.data.data.end,
+                    start_data: res.data.data.start,
                 })
-              })
-        }else if(v==="本月"){
+            })
+        } else if (v === "本月") {
             axios({
                 timeout: 10000,
                 baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
                 method: 'post',
                 headers: {
-                  'Content-Type': 'text/plain'
+                    'Content-Type': 'text/plain'
                 },
-                data:{date: "本月"}
-              }).then(res=> {
-                console.log(res.data.data.end);
+                data: { date: "本月" }
+            }).then(res => {
                 let start = this.StrToGMT(res.data.data.start)
                 let end = this.StrToGMT(res.data.data.end)
                 this.setState({
-                    end:end,
-                    start:start,
-                    end_data:res.data.data.end,
-                    start_data:res.data.data.start,
+                    end: end,
+                    start: start,
+                    end_data: res.data.data.end,
+                    start_data: res.data.data.start,
                 })
-              })
+            })
         }
     }
     xianyin() {
-        if(this.state.kongbj===false){}else{
-        if (this.state.xian === false) {
-            this.setState({
-                xian: true
-            },()=>{
-                this.refs.scroll.BScroll.refresh()
-            })
-        } else {
-            this.setState({
-                xian: false
-            },()=>{
-                this.refs.scroll.BScroll.refresh()
-            })
+        if (this.state.kongbj === false) { } else {
+            if (this.state.xian === false) {
+                this.setState({
+                    xian: true
+                }, () => {
+                    this.refs.scroll.BScroll.refresh()
+                })
+            } else {
+                this.setState({
+                    xian: false
+                }, () => {
+                    this.refs.scroll.BScroll.refresh()
+                })
+            }
         }
     }
-    }
     canku(v, k) {
-        console.log(v.id)
         this.setState({
             cankuID: v.id,
             ckkey: v.id
         })
     }
-
-
     search() {
-        console.log(this.state.inputSearch)
         getDamageDetailList({
             action: 'getDamageDetailList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                // type: "1",
                 limit: "100",
                 page: "1",
-                search:this.state.inputSearch
+                search: this.state.inputSearch
             }
         }).then((res) => {
-            console.log(res.data.data.data)
             if (res.data.status === 4001) {
                 this.setState({
-                    damageList:res.data.data.data,
-                    zongnp:res.data.data.total,
-                    kongbj:false,
-                },()=>{
+                    damageList: res.data.data.data,
+                    zongnp: res.data.data.total,
+                    kongbj: false,
+                }, () => {
                     this.refs.scroll.BScroll.refresh()
                 })
             } else {
@@ -300,7 +278,6 @@ export default class LossReport extends Component {
         })
     }
     inputChange(e) {
-        console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -309,13 +286,9 @@ export default class LossReport extends Component {
         const scrollConfig = {
             probeType: 1
         }
-        // let kong=
-        
         return (
             <LossReportStyle>
-    <DocumentTitle title={'报损汇总'} />
-
-
+                <DocumentTitle title={'报损汇总'} />
                 <div style={{ display: "flex" }}>
                     <div className='search'  >
                         <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
@@ -329,160 +302,142 @@ export default class LossReport extends Component {
                         <img className='sximg-search' onClick={() => { this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
                     </div>
                 </div>
-                <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"1.2rem",bottom:"1.5rem"}} loadMore={this.loadMore}
+                <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.2rem", bottom: "1.5rem" }} loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
-                        <div style={{ display: this.state.xian === false ? "block" : "none" }}>
-                    {
-                        this.state.damageList.map((v,k)=>{
-                            return(
-                                <LossReportTiao item={v}/>
-                            )
-                        })
-                    }
-                     {
-
-                        this.state.damageList.length > 0 &&
-                        <LoadingMore isLoading={this.isLoadMore} />
-                    }
+                    <div style={{ display: this.state.xian === false ? "block" : "none" }}>
+                        {
+                            this.state.damageList.map((v, k) => {
+                                return (
+                                    <LossReportTiao item={v} />
+                                )
+                            })
+                        }
+                        {
+                            this.state.damageList.length > 0 &&
+                            <LoadingMore isLoading={this.isLoadMore} />
+                        }
                     </div>
-                    
-                
+                    <div className='fenglei' style={{ display: this.state.xian === false ? "none" : "block" }}>
+                        <div><span style={{ color: "#333333" }}>仓库名称</span>
+                            <ul>
+                                {
+                                    this.state.result.map((v, k) => {
+                                        return (
+                                            <li onClick={(e) => { this.canku(v, k) }}
+                                                style={{ background: this.state.ckkey === v.id ? "#fff5ed" : '', color: this.state.ckkey === v.id ? "#ed7913" : '', border: this.state.ckkey === v.id ? "1px solid #ed7913" : '' }}
+                                            >{v.name}</li>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        </div>
 
-                <div className='fenglei' style={{ display: this.state.xian === false ? "none" : "block" }}>
-                    <div><span style={{ color: "#333333" }}>仓库名称</span>
-                        <ul>
-                            {
-                                this.state.result.map((v, k) => {
-                                    return (
-                                        <li onClick={(e) => { this.canku(v, k) }}
-                                            style={{ background: this.state.ckkey === v.id ? "#fff5ed" : '', color: this.state.ckkey === v.id ? "#ed7913" : '', border: this.state.ckkey === v.id ? "1px solid #ed7913" : '' }}
-                                        >{v.name}</li>
-                                    )
-                                })
-                            }
-                        </ul>
-                    </div>
+                        <div><span style={{ color: "#333333" }}>日期</span>
+                            <ul>
+                                <div style={{ display: "flex", width: "100%" }}>
+                                    <div className='start'>
+                                        <DatePicker
+                                            mode="date"
+                                            title=""
+                                            extra={this.state.today_time}
+                                            onOk={''}
+                                            value={this.state.start}
+                                            onChange={start => this.setState({ start, start_data: start.getFullYear() + '-' + (start.getMonth() + 1) + '-' + start.getDate() })}
+                                        >
+                                            <List.Item arrow="horizontal" className='data'></List.Item>
+                                        </DatePicker>
 
-                    <div><span style={{ color: "#333333" }}>日期</span>
-                        <ul>
-                            <div style={{ display: "flex", width: "100%" }}>
-                                <div className='start'>
-                                    <DatePicker
-                                        mode="date"
-                                        title=""
-                                        extra={this.state.today_time}
-                                        onOk={''}
-                                        value={this.state.start}
-                                        onChange={start => this.setState({ start, start_data: start.getFullYear() + '-' + (start.getMonth() + 1) + '-' + start.getDate() })}
-                                    >
-                                        <List.Item arrow="horizontal" className='data'></List.Item>
-                                    </DatePicker>
-
+                                    </div>
+                                    <span style={{ fontSize: ".5rem", paddingTop: ".25rem", paddingLeft: '.3rem' }}>&nbsp;~</span>
+                                    <div className='end'>
+                                        <DatePicker
+                                            mode="date"
+                                            title=""
+                                            extra={this.state.today_time}
+                                            onOk={(e) => { console.log(e) }}
+                                            value={this.state.end}
+                                            onChange={end => this.setState({ end, end_data: end.getFullYear() + '-' + (end.getMonth() + 1) + '-' + end.getDate() })}
+                                        >
+                                            <List.Item arrow="horizontal" className='data'></List.Item>
+                                        </DatePicker>
+                                    </div>
                                 </div>
-                                <span style={{ fontSize: ".5rem", paddingTop: ".25rem", paddingLeft: '.3rem' }}>&nbsp;~</span>
-                                <div className='end'>
-                                    <DatePicker
-                                        mode="date"
-                                        title=""
-                                        extra={this.state.today_time}
-                                        onOk={(e) => { console.log(e) }}
-                                        value={this.state.end}
-                                        onChange={end => this.setState({ end, end_data: end.getFullYear() + '-' + (end.getMonth() + 1) + '-' + end.getDate() })}
-                                    >
-                                        <List.Item arrow="horizontal" className='data'></List.Item>
-                                    </DatePicker>
-                                </div>
-                            </div>
-                            {
-                                this.state.fenleiName.map((v, k) => {
-                                    return (
-                                        <li
-                                            onClick={(e) => { this.yijifenlei(v, k) }}
-                                            style={{ background: this.state.yikey === k ? "#fff5ed" : '', color: this.state.yikey === k ? "#ed7913" : '', border: this.state.yikey === k ? "1px solid #ed7913" : '' }}
-                                        >{v}</li>
-                                    )
-                                })
-                            }
-                        </ul>
-                    </div>
+                                {
+                                    this.state.fenleiName.map((v, k) => {
+                                        return (
+                                            <li
+                                                onClick={(e) => { this.yijifenlei(v, k) }}
+                                                style={{ background: this.state.yikey === k ? "#fff5ed" : '', color: this.state.yikey === k ? "#ed7913" : '', border: this.state.yikey === k ? "1px solid #ed7913" : '' }}
+                                            >{v}</li>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        </div>
 
-                    <div><span style={{ color: "#333333" }}>单据状态</span>
-                        <ul>
-                            {
-                                this.state.childrens.map((v, k) => {
-                                    return (
-                                        <li onClick={(e) => { this.erjifenlei(v, k) }}
-                                            style={{ background: this.state.ekey === k ? "#fff5ed" : '', color: this.state.ekey === k ? "#ed7913" : '', border: this.state.ekey === k ? "1px solid #ed7913" : '' }}
-                                        >{v}</li>
-                                    )
-                                })
-                            }
-                        </ul>
+                        <div><span style={{ color: "#333333" }}>单据状态</span>
+                            <ul>
+                                {
+                                    this.state.childrens.map((v, k) => {
+                                        return (
+                                            <li onClick={(e) => { this.erjifenlei(v, k) }}
+                                                style={{ background: this.state.ekey === k ? "#fff5ed" : '', color: this.state.ekey === k ? "#ed7913" : '', border: this.state.ekey === k ? "1px solid #ed7913" : '' }}
+                                            >{v}</li>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        </div>
+                        <div className='btn' onClick={() => { this.queding() }}>确定</div>
                     </div>
-                    <div className='btn' onClick={() => { this.queding() }}>确定</div>
-                </div>
                 </BetterScroll>
                 <div className='foot' >
                     <div>总数量：<span>{this.state.zongnp.num ? this.state.zongnp.num : 0}</span></div>
                     <div style={{ marginRight: ".6rem" }}>总报损金额：<span>{this.state.zongnp.total ? this.state.zongnp.total : 0}</span></div>
                 </div>
-
-                <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
-                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
+                <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
+                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
                 </div>
             </LossReportStyle>
         )
     }
     loadMore = () => {
-        // 加载数据时转圈
         let loading = true
         setTimeout(() => {
             if (loading) {
                 this.setState({
-                    
                     loadingMore: true
                 })
             }
         }, 1000)
         if (this.isLoadMore) {
-          
             getDamageDetailList({
                 action: 'getDamageDetailList', data: {
                     uniacid: store.getState().uniacid,
                     uid: store.getState().uid,
-                    search:this.state.inputSearch,
-                    limit:this.state.limit,
-                    page:this.state.page
+                    search: this.state.inputSearch,
+                    limit: this.state.limit,
+                    page: this.state.page
                 }
             }).then((res) => {
-               
-
-                // 如果长度不等于得时候加载 那么是到底了
                 if (res.data.data.data.length < this.state.limit) {
                     this.isLoadMore = false
-                    /* let bottomTip = document.querySelector('.bottom-tip')
-                    bottomTip.style.visibility = 'visible'
-                    bottomTip.innerHTML = '商品已经全部加载完成' */
                 }
                 this.setState({
                     damageList: [...this.state.damageList, ...res.data.data.data],
-                    zongnp:res.data.data.total,
+                    zongnp: res.data.data.total,
                     loadingMore: false
                 }, () => {
-                    let page=Number(this.state.page)
+                    let page = Number(this.state.page)
                     this.setState({
                         page: page += 1
                     })
-
                     loading = false
                     this.refs.scroll.BScroll.finishPullUp()
                     this.refs.scroll.BScroll.refresh()
                 })
             })
         } else {
-            /* let bottomTip = document.querySelector('.bottom-tip')
-            bottomTip.style.visibility = 'visible'
-            bottomTip.innerHTML = '商品已经全部加载完成' */
         }
     }
 }

@@ -1,37 +1,34 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseDetail, changePurchaseStatus, submitPurchase } from 'network/Api'
-import { Toast, Modal, Button} from 'antd-mobile';
+import { Toast, Modal, Button } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 
 const alert = Modal.alert;
 function Tiao(value) {
-    console.log(value)
     let tiao = value.item
     return (
+        <div className='tiao'>
+            <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
+            <ul className='wen-zi'>
+                <li className='wen-zi-t'>
+                    <div className='name'>{tiao.goods_name}</div>
+                </li>
+                <li className='wen-zi-c'>
+                    <div >商品编码：{tiao.barcode}</div>
+                    <p>{tiao.price}元/{tiao.unitname}</p>
+                </li>
 
-<div className='tiao'>
-<img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+                <li className='wen-zi-f'>
+                    <div></div>
+                    <p>采购数量：<span>{tiao.gnum}</span></p>
 
-<ul className='wen-zi'>
-    <li className='wen-zi-t'>
-        <div className='name'>{tiao.goods_name}</div>
-    </li>
-    <li className='wen-zi-c'>
-        <div >商品编码：{tiao.barcode}</div>
-        <p>{tiao.price}元/{tiao.unitname}</p>
-    </li>
-    
-    <li className='wen-zi-f'>
-        <div></div>
-        <p>采购数量：<span>{tiao.gnum}</span></p>
-
-    </li>
-</ul>
-</div>
+                </li>
+            </ul>
+        </div>
     )
 }
 export default class PurchaseOrderDetailed extends Component {
@@ -45,11 +42,7 @@ export default class PurchaseOrderDetailed extends Component {
             goodsSearch: ''
         }
     }
-    componentDidUpdate = () => {
-
-    }
     componentDidMount() {
-
         getPurchaseDetail({
             action: 'getPurchaseDetail', data: {
                 uniacid: store.getState().uniacid,
@@ -60,16 +53,8 @@ export default class PurchaseOrderDetailed extends Component {
                 page: "1"
             }
         }).then((res) => {
-            console.log(res.data)
             if (res.data.status === 4001) {
-                console.log(res.data.data.purchaseItem)
                 let count = res.data.data.count
-                // 商品总价
-
-                // var subtotal = res.data.data.purchaseItem.map(o=>{return{subtotal:o.subtotal,gnum:o.gnum,num:o.gnum,price:o.price,goodsid:o.goodsid}});
-                // console.log(subtotal)
-
-
                 this.setState({
                     purchaseDetail: res.data.data.purchaseDetail,
                     purchaseItem: res.data.data.purchaseItem,
@@ -83,19 +68,19 @@ export default class PurchaseOrderDetailed extends Component {
         })
     }
     shengHe() {
-        let price=[]
-        let num=[]
+        let price = []
+        let num = []
         this.state.purchaseItem.map((value, key) => {
             price.push(value.subtotal)
             num.push(value.gnum)
         })
-        let prices=0
-        let nums=0
-        price.forEach(item =>{
-           prices = prices + Number(item)
+        let prices = 0
+        let nums = 0
+        price.forEach(item => {
+            prices = prices + Number(item)
         })
-        num.forEach(item =>{
-           nums = nums + Number(item)
+        num.forEach(item => {
+            nums = nums + Number(item)
         })
         let purchaseData = { subtotal: prices, snum: nums }
         if (this.state.purchaseDetail.statusname === "待提交") {
@@ -108,21 +93,16 @@ export default class PurchaseOrderDetailed extends Component {
                     status: "2",
                     itemData: [],
                     purchaseData: purchaseData
-
                 }
             }).then((res) => {
-                console.log(res.data)
                 if (res.data.status === 4001) {
                     window.location.reload();
                     Toast.success(res.data.msg, 2)
                 } else {
                     Toast.info(res.data.msg, 2)
                 }
-
             })
-
         } else {
-            console.log(this.props.match.params.id.split())
             let id = this.props.match.params.id.split()
             changePurchaseStatus({
                 action: 'changePurchaseStatus', data: {
@@ -133,7 +113,6 @@ export default class PurchaseOrderDetailed extends Component {
                     status: "4"
                 }
             }).then((res) => {
-                console.log(res.data)
                 if (res.data.status === 4001) {
                     window.location.reload();
                     Toast.success(res.data.msg, 2)
@@ -145,7 +124,6 @@ export default class PurchaseOrderDetailed extends Component {
     }
 
     search() {
-        console.log(this.state.goodsSearch)
         getPurchaseDetail({
             action: 'getPurchaseDetail', data: {
                 uniacid: store.getState().uniacid,
@@ -158,7 +136,6 @@ export default class PurchaseOrderDetailed extends Component {
             }
         }).then((res) => {
             if (res.data.status === 4001) {
-                console.log(res.data.data.purchaseItem)
                 let count = res.data.data.count
                 this.setState({
                     purchaseDetail: res.data.data.purchaseDetail,
@@ -173,7 +150,6 @@ export default class PurchaseOrderDetailed extends Component {
         })
     }
     goodsChange(e) {
-        console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -192,7 +168,7 @@ export default class PurchaseOrderDetailed extends Component {
         }
         return (
             <PurchaseOrderDetailedStyle>
-    <DocumentTitle title={'采购单明细'} />
+                <DocumentTitle title={'采购单明细'} />
 
                 <div>
                     <div className='search'>
@@ -223,10 +199,9 @@ export default class PurchaseOrderDetailed extends Component {
                             采购备注：{this.state.purchaseDetail.remark}
                         </div>
                     </div>
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)"}}>
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)" }}>
                         {
                             this.state.purchaseItem.map((value, key) => {
-                                console.log(value)
                                 return (
                                     <Tiao item={value} key={key}></Tiao>
                                 )
@@ -234,34 +209,32 @@ export default class PurchaseOrderDetailed extends Component {
                         }
                     </BetterScroll>
                     <div className='foot'>
-                    <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-                        <div className='left'>
-                        <div style={{ width: "1.28rem", height: ".68rem" }}>
-                            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                        <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+                            <div className='left'>
+                                <div style={{ width: "1.28rem", height: ".68rem" }}>
+                                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                                 <div className='yuan'>{this.state.purchaseItem.length}</div>
-                        </div>
-
-                        <div style={{ background: this.state.purchaseDetail.statusname === "审核成功" ? "#B4B4B4" : '' }}
-                            className='right'
-                            onClick={() => { this.shengHe() }}
-                        >{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
-
-                        <Button
-                        style={{display:this.state.purchaseDetail.statusname === "待提交" ? "none" : "block", width:"3rem",height:"2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
-                        className="btn_modal"
-                            onClick={() =>
-                                alert('审核', '是否确认审核采购单', [
-                                    { text: '取消', onPress: () => console.log('cancel') },
-                                    { text: '确定', onPress: () => this.shengHe() },
-                                ])
-                            }
-                        >
-                            confirm
+                            </div>
+                            <div style={{ background: this.state.purchaseDetail.statusname === "审核成功" ? "#B4B4B4" : '' }}
+                                className='right'
+                                onClick={() => { this.shengHe() }}
+                            >{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}
+                            </div>
+                            <Button
+                                style={{ display: this.state.purchaseDetail.statusname === "待提交" ? "none" : "block", width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
+                                className="btn_modal"
+                                onClick={() =>
+                                    alert('审核', '是否确认审核采购单', [
+                                        { text: '取消', onPress: () => console.log('cancel') },
+                                        { text: '确定', onPress: () => this.shengHe() },
+                                    ])
+                                }
+                            >
+                                confirm
                         </Button>
-                    </div>
+                        </div>
                     </div>
                 </div>
-           
             </PurchaseOrderDetailedStyle>
         )
     }

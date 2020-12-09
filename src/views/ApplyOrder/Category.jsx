@@ -35,30 +35,25 @@ class Category extends Component {
     }
   }
   mingxi() {
-    console.log(111)
     this.props.history.push('/Liebiao')
   }
   getChildValue(aa, val) {
-    console.log(aa);
     this.setState({
       num: aa,
       price: val
     })
   }
   inputChange(e){
-    console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
   }
   Search(){
-    console.log(this.state.inputSearch)
     searchProduct({
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         categoryid: this.state.indexId,
-        // code:this.state.inputSearch,
         search:this.state.inputSearch
       }
     }).then(res => {
@@ -69,13 +64,10 @@ class Category extends Component {
       }else{
         Toast.info(res.data.msg,2)
       }
-      
     })
   }
   render() {
     const { title, type } = this.state
-    // const { cartGoods } = store.getState()
-    console.log(this.props.match.params.id)
     let ida = this.props.match.params.id
     let bz = this.props.match.params.bz
     return (
@@ -148,63 +140,16 @@ class Category extends Component {
   click = (e) => {
     this.child.myName(e)
   }
-  changeImage = () => {
-    if (this.state.type === 'swiper') {
-      this.setState({
-        type: 'goods'
-      })
-    } else {
-      this.setState({
-        type: 'swiper'
-      })
-    }
-  }
-
-  componentDidCache = () => {
-    console.log('缓存了')
-  }
-
-  componentDidRecover = () => {
-    const { defaultIndex, title } = this.state
-    const { appConfig } = store.getState()
-    const right_config = {
-      action: 'getGoodsByCategory',
-      data: {
-        uniacid: appConfig.uniacid,
-        openid: appConfig.wxUserInfo.openid,
-        cid: title[defaultIndex].id,
-        pagesize: 100
-      }
-    }
-
-    _categoryRight(right_config).then(res => {
-      title[defaultIndex].goods = (res.data && res.data.data && res.data.data.list) || []
-      this.setState({
-        ys: res.data.data.issell,
-        kc: res.data.data.showPubStock,
-        title
-      })
-    })
-
-  }
-
   componentDidMount = () => {
-
-    // this.refs.scroll.BScroll.refresh()
-    // const { appConfig } = store.getState()
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
       }
     }).then(res => {
-      console.log(res.data.data)
       if (res.data.status === 4001) {
         var result = res.data.data.map(o => { return { name: o.name } });
-        console.log(result)
         var Id = res.data.data.map(o => { return { id: o.id } });
-        console.log(Id)
         var value = res.data.data.map(o => { return { code: o.code } });
-        console.log(value)
         searchProduct({
           action: 'searchProduct', data: {
             uniacid: store.getState().uniacid,
@@ -214,10 +159,7 @@ class Category extends Component {
             page: "1"
           }
         }).then(res => {
-          console.log(res.data.msg)
           if (res.data.status === 4001) {
-            console.log(res.data.data.data)
-
             this.setState({
               goods: res.data.msg === "成功" ? res.data.data.data : [{}]
             })
@@ -234,11 +176,8 @@ class Category extends Component {
         Toast.info('网络错误', 2)
       }
     })
-    console.log(this.state.id)
   }
-
   onChangeActive = index => {
-    console.log(this.state.value[index])
     this.setState({
       indexId:this.state.id[index].id
     })
@@ -251,9 +190,7 @@ class Category extends Component {
         page: "1"
       }
     }).then(res => {
-      console.log(res.data.msg)
       if (res.data.status === 4001) {
-        console.log(res.data.data.data)
         this.setState({
           goods: res.data.data.data
         })
@@ -264,36 +201,9 @@ class Category extends Component {
         Toast.info(res.data.msg, 2)
       }
     })
-
-
-
-
-    const { appConfig } = store.getState()
-    let { title } = this.state
-    if (!this.state.goods) {
-      const right_config = {
-        action: 'getGoodsByCategory',
-        data: {
-          uniacid: appConfig.uniacid,
-          openid: appConfig.wxUserInfo.openid,
-          cid: this.state.title[index].id,
-          pagesize: 100
-        }
-      }
-      _categoryRight(right_config).then(res => {
-        title[index].goods = (res.data && res.data.data && res.data.data.list) || []
-        this.setState({
-          ys: res.data.data.issell,
-          kc: res.data.data.showPubStock,
-          title,
-          defaultIndex: index
-        })
-      })
-    } else {
       this.setState({
         defaultIndex: index
       })
-    }
   }
 }
 const CategoryStyle = styled.div`

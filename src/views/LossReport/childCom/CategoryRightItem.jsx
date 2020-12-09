@@ -3,92 +3,67 @@ import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import { Modal, Button } from 'antd-mobile';
 
-
 const prompt = Modal.prompt;
 class CategoryRightgoods extends Component {
   constructor(props) {
     super(props)
     this.state = {
       num: this.props.goods.num,
-      login:'',
-      password:''
+      login: '',
+      password: ''
     }
     this.click = true
   }
-  zjian = (login,goods) => {
-    console.log(login,goods)
+  zjian = (login, goods) => {
     this.setState({
       login,
-    
     })
-    this.props.parent.getChildrenMsg(this, login,goods)
+    this.props.parent.getChildrenMsg(this, login, goods)
   }
 
   render() {
     const { goods } = this.props
-    console.log(goods)
-
     return (
       <CategoryRightgoodsStyle>
         <div className="rrr"></div>
         <li className='category-goods clearfix'
         >
-
-
-          <img className='category-img' src={goods.image?goods.image: "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-
+          <img className='category-img' src={goods.image ? goods.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
           <div className='category-goods-info'>
-
-          <div style={{fontSize:".35rem",color:'#1a1a1a',width:"4rem"}}>{goods.name}</div>
-
-              <div className='shuliang' style={{color:'#1a1a1a',paddingTop:".1rem"}}>
-                   <article >商品编码：{goods.code}</article>
-                   <div>{goods.costprice}元/{goods.unit_name}</div>
-              </div>
-            <div style={{display:"flex",justifyContent:"space-between"}}>
-            {
-              this.state.login ? <div  style={{width:"100%",textAlign: "right",paddingTop:".2rem", color: "#CD2323", fontSize: ".35rem" }}>{this.state.login}</div> :
-                <img className='category-goods-img'
-                  src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
-                  alt="" />
-            }
+            <div style={{ fontSize: ".35rem", color: '#1a1a1a', width: "4rem" }}>{goods.name}</div>
+            <div className='shuliang' style={{ color: '#1a1a1a', paddingTop: ".1rem" }}>
+              <article >商品编码：{goods.code}</article>
+              <div>{goods.costprice}元/{goods.unit_name}</div>
             </div>
-          
-            {/* <p>{goods.name}</p> */}
-            
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              {
+                this.state.login ? <div style={{ width: "100%", textAlign: "right", paddingTop: ".2rem", color: "#CD2323", fontSize: ".35rem" }}>{this.state.login}</div> :
+                  <img className='category-goods-img'
+                    src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
+                    alt="" />
+              }
+            </div>
             <Button
-              style={{position:"absolute",top:".3rem",left:"4.6rem",color:"transparent",background:"transparent"}} 
+              style={{ position: "absolute", top: ".3rem", left: "4.6rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
               onClick={() => prompt('填写', '请输入报损申请数量',
-              [
-                {
-                  text: '取消',
-                  onPress: value => console.log(`value:${value}`)
-                },
-                {
-                  text: '确定',
-                  onPress: value =>this.zjian(value,goods)
-                },
-              ]
+                [
+                  {
+                    text: '取消',
+                    onPress: value => console.log(`value:${value}`)
+                  },
+                  {
+                    text: '确定',
+                    onPress: value => this.zjian(value, goods)
+                  },
+                ]
               )}
             >111111</Button>
-            {/* {
-              this.state.login?<div className='category-goods-img' style={{textAlign:"center",width:"2rem",height:".5rem",marginTop: ".8rem",marginLeft: "4rem",color:"#d54343",fontSize:".4rem"}}>{this.state.login}</div>:
-            <img className='category-goods-img'
-              src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
-              alt=""/>
-            } */}
-            
-
           </div>
-
         </li>
       </CategoryRightgoodsStyle>
     );
   }
-
-
-
 }
 
 const CategoryRightgoodsStyle = styled.div`

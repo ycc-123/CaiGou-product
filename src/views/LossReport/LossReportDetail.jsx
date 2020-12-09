@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseApplyDetail, submitDamage, getDamageDetail } from 'network/Api'
 import { Toast } from 'antd-mobile';
-// import BetterScroll from 'common/betterScroll/BetterScroll'
 import { store } from "store/index";
 import DocumentTitle from 'react-document-title'
 export default class ApplyOrderx extends Component {
@@ -26,31 +25,21 @@ export default class ApplyOrderx extends Component {
                 page: "1"
             }
         }).then((res) => {
-            console.log(res)
             if (res.data.status === 4001) {
                 let aa = {}
                 let arr = []
 
                 res.data.data.data.map((v, k) => {
-                    console.log(v, k)
                     aa = v.num
                    return arr.push(aa);
 
                 })
-                console.log(arr)
-
                 let sum = 0;
-                // let dd = arr
                 arr.forEach(item => {
-                    console.log(item)
                     sum = sum +Number(item)
                 })
-                console.log(sum)
-
-
                 this.setState({
                     quan: res.data.data.damage,
-                    // sum: res.data.data.data.length,
                     tiao: res.data.data.data ? res.data.data.data : [],
                     sum
                 })
@@ -61,23 +50,17 @@ export default class ApplyOrderx extends Component {
     }
 
     tijiao(e) {
-
         if (e === "已审核") {
-
         } else {
             let aa = {}
             let arr = []
-
             this.state.tiao.map((v, k) => {
-                console.log(v, k)
                 aa = {
                     stockid: v.stockid,
                     num: v.num
                 }
                 return arr.push(aa);
-
             })
-            console.log(arr)
             let itemData = arr
 
             submitDamage({
@@ -90,7 +73,6 @@ export default class ApplyOrderx extends Component {
                     itemData: itemData,
                 }
             }).then((res) => {
-                console.log(res)
                 if (res.data.status === 4001) {
                     window.location.reload();
                     Toast.success(res.data.msg, 1)
@@ -99,7 +81,6 @@ export default class ApplyOrderx extends Component {
                 }
             })
         }
-
     }
     seach() {
         getDamageDetail({
@@ -112,7 +93,6 @@ export default class ApplyOrderx extends Component {
                 page: "1"
             }
         }).then((res) => {
-            console.log(res)
             if (res.data.status === 4001) {
                 this.setState({
                     tiao: res.data.data.data ? res.data.data.data : [],
@@ -123,18 +103,14 @@ export default class ApplyOrderx extends Component {
         })
     }
     inputChange(e) {
-        console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
-
     }
     render() {
-        console.log(this.state.quan.item)
         return (
             <ApplyOrderxStyle>
                 <DocumentTitle title={'报损单明细'} />
-
                 <div>
                     <div className='search'>
                         <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
@@ -152,26 +128,21 @@ export default class ApplyOrderx extends Component {
                             </p>
                             <div>{this.state.quan.ydocno}</div>
                         </div>
-
                         <div className='conten-c' style={{ paddingTop: ".25rem" }}>
                             <p>单据日期：{this.state.quan.createtime}</p>
                             <p>报损仓库：{this.state.quan.warehouseName}</p>
                             <p>报损数量：{this.state.sum}</p>
                             <p>单据状态：<span style={{ color:this.state.quan.statusName==="已审核"? "rgb(34, 163, 27)":"" }}>{this.state.quan.statusName}</span></p>
                         </div>
-
                         <div className='footer'>
                             备注：{this.state.quan.remark}
                         </div>
                     </div>
-
                     {
                         this.state.tiao.map((v, k) => {
                             return (
-
                                 <div className='tiao'>
                                     <img className='t-img-l' src={v.image ? v.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-
                                     <ul className='wen-zi'>
                                         <li className='wen-zi-t'>
                                             <div className='name'>{v.goods_name}</div>
@@ -180,48 +151,22 @@ export default class ApplyOrderx extends Component {
                                             <div >商品编码：{v.barcode}</div>
                                             <p>{v.costprice}元/{v.unitname}</p>
                                         </li>
-                                        
                                         <li className='wen-zi-f'>
                                             <div></div>
                                             <p style={{fontSize:".3rem"}}>报损数量：<span>{v.num}</span></p>
-                                            {/* <Button
-                            style={{ position: "absolute", left: "6.6rem", color: "transparent", background: "transparent", width: "9rem" }}
-                            className="btn_modal"
-                            onClick={() => prompt(
-                                '填写', '请输入入库数量',
-                                [
-                                    {
-                                        text: '取消',
-                                        onPress: value => console.log(111)
-                                    },
-                                    {
-                                        text: '确定',
-                                        onPress: value => {
-                                            this.shuliang(value, tiao)
-                                        }
-
-                                    },
-                                ], 'default', null, [''])}
-                        >111111</Button> */}
                                         </li>
                                     </ul>
                                 </div>
-
                             )
                         })
                     }
-
-
-
                     <div className='foot'>
                         <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
                             <div className='left'>
                                 <div style={{ width: ".8rem", height: ".8rem" }}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/baoshun.png" alt="" /></div>
                                 <div className='yuan'>{this.state.tiao.length}</div>
                             </div>
-
                             <div className="foot_c">总额：<span style={{color:"#cf2424"}}>{this.state.quan.totalPrice}</span></div>
-
                             <div className='right' 
                             style={{ background: this.state.quan.statusName === "已审核" ? "#B4B4B4" : '' }}
                             onClick={(e) => { this.tijiao(this.state.quan.statusName) }}>
@@ -229,7 +174,6 @@ export default class ApplyOrderx extends Component {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </ApplyOrderxStyle>
         )

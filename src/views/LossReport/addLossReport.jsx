@@ -26,11 +26,8 @@ export default class AddInventoryList extends Component {
                 page: "1"
             }
         }).then((res) => {
-            console.log(res.data.data.data)
             if (res.data.status === 4001) {
-                console.log(0)
                 var result = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
-                console.log(result)
                 this.setState({
                     data: result
                 })

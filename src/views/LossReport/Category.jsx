@@ -38,24 +38,20 @@ class Category extends Component {
 
   }
   mingxi() {
-    console.log(111)
     this.props.history.push('/tiaoboxq')
   }
   getChildValue(aa, val) {
-    console.log(aa);
     this.setState({
       num: aa,
       price: val
     })
   }
   inputChange(e) {
-    console.log(e.target.value)
     this.setState({
       [e.target.name]: e.target.value
     })
   }
   Search() {
-    console.log(this.state.inputSearch)
     getStockList({
       action: 'getStockList', data: {
         uniacid: store.getState().uniacid,
@@ -76,14 +72,12 @@ class Category extends Component {
   }
   render() {
     const { title, type } = this.state
-    console.log(this.props.match.params.id)
     let pdid = this.props.match.params.id
     let ckid = this.props.match.params.bz
     let bsid = this.props.match.params.bsid
     return (
       <CategoryStyle>
     <DocumentTitle title={'新建报损单'} />
-
         <Fragment>
           <div className='search'>
             <input type="search" className='input' placeholder="请输入商品名称或商品编号" name="inputSearch"
@@ -123,7 +117,6 @@ class Category extends Component {
                       <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
                   </div>
                   <div style={{display:"flex",marginTop:".2rem"}}>
-                      {/* <div className='baocun' >保存</div> */}
                       <div className='tijiao' >提交</div>
                   </div>
               </div>
@@ -152,22 +145,6 @@ class Category extends Component {
   click = (e) => {
     this.child.myName()
   }
-  changeImage = () => {
-    if (this.state.type === 'swiper') {
-      this.setState({
-        type: 'goods'
-      })
-    } else {
-      this.setState({
-        type: 'swiper'
-      })
-    }
-  }
-
-  componentDidCache = () => {
-    console.log('缓存了')
-  }
-
   componentDidRecover = () => {
     const { defaultIndex, title } = this.state
     const { appConfig } = store.getState()
@@ -193,23 +170,15 @@ class Category extends Component {
   }
 
   componentDidMount = () => {
-
-    // this.refs.scroll.BScroll.refresh()
-    // const { appConfig } = store.getState()
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
       }
     }).then(res => {
-      console.log(res.data.data)
       if (res.data.status === 4001) {
-
         var result = res.data.data.map(o => { return { name: o.name } });
-        console.log(result)
         var Id = res.data.data.map(o => { return { id: o.id } });
-        console.log(Id)
         var value = res.data.data.map(o => { return { code: o.code } });
-        console.log(value)
         getStockList({
           action: 'getStockList', data: {
             uniacid: store.getState().uniacid,
@@ -218,10 +187,8 @@ class Category extends Component {
             categoryid: Id[0].id,
             limit:"1000",
             page:1
-
           }
         }).then(res => {
-          console.log(res)
           if (res.data.status === 4001) {
             let mrqunangoods = []
             if (Boolean(res.data.data.data) === false) {
@@ -229,12 +196,7 @@ class Category extends Component {
               mrqunangoods = []
             } else {
               mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-              console.log(mrqunangoods)
             }
-            // console.log(res.data.data.data)
-            // var mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-            // console.log(mrqunangoods)
-
             this.setState({
               mrqunangoods,
               goods: res.data.msg === "成功" ? res.data.data.data : [{}]
@@ -252,11 +214,9 @@ class Category extends Component {
         Toast.info('网络错误', 2)
       }
     })
-    console.log(this.state.id)
   }
 
   onChangeActive = index => {
-    console.log(this.state.value[index])
     this.setState({
       indexId: this.state.id[index].id,
       index
@@ -265,14 +225,12 @@ class Category extends Component {
       action: 'getStockList', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        // warehouseid: this.props.match.params.ck,
         warehouseid: this.props.match.params.id,
         limit:"1000",
         page:1,
         categoryid: this.state.id[index].id,
       }
     }).then(res => {
-      console.log(res)
       let mrqunangoods = []
       if (res.data.status === 4001) {
         if (Boolean(res.data.data.data) === false) {
@@ -280,10 +238,7 @@ class Category extends Component {
           mrqunangoods = []
         } else {
           mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-          console.log(mrqunangoods)
         }
-        console.log(res.data.data.data)
-
         this.setState({
           mrqunangoods,
           goods: res.data.data.data === null ? [] : res.data.data.data
@@ -295,10 +250,6 @@ class Category extends Component {
         Toast.info(res.data.msg, 2)
       }
     })
-
-
-
-
     const { appConfig } = store.getState()
     let { title } = this.state
     if (!this.state.goods) {
@@ -326,8 +277,6 @@ class Category extends Component {
       })
     }
   }
-
-
 }
 const CategoryStyle = styled.div`
 .baocun{

@@ -17,15 +17,12 @@ export default class AddInventoryList extends Component {
             IDck: [],
             IDgy: [],
             inputbeiz: '',
-            leixing:[{label:"全盘",value:"1"},{label:"抽盘",value:"2"},{label:"随机盘点",value:"3"}],
-            lxValue:'',
-            lxID:''
-
-
+            leixing: [{ label: "全盘", value: "1" }, { label: "抽盘", value: "2" }, { label: "随机盘点", value: "3" }],
+            lxValue: '',
+            lxID: ''
         }
     }
     componentDidMount() {
-
         getWarehouseList({
             action: 'getWarehouseList', data: {
                 uniacid: store.getState().uniacid,
@@ -35,11 +32,8 @@ export default class AddInventoryList extends Component {
                 page: "1"
             }
         }).then((res) => {
-            console.log(res.data.data.data)
             if (res.data.status === 4001) {
-                console.log(0)
                 var result = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
-                console.log(result)
                 this.setState({
                     data: result
                 })
@@ -50,16 +44,10 @@ export default class AddInventoryList extends Component {
         getProductCategoryAll({
             action: 'getProductCategoryAll', data: {
                 uniacid: store.getState().uniacid,
-                // uid: store.getState().uid,
-                // limit: "1000",
-                // page: "1"
             }
         }).then(res => {
-            console.log(res)
             if (res.data.status === 4001) {
-                console.log(res.data.data)
                 var supplier = res.data.data.map(o => { return { value: o.id, label: o.name } });
-                console.log(supplier)
                 this.setState({
                     supplier
                 })
@@ -69,38 +57,31 @@ export default class AddInventoryList extends Component {
         })
     }
     createPurchase() {
-        // console.log(this.state.IDgy)
         let idgy = this.state.IDgy.toString()
-        let flname={}
-        this.state.supplier.map((v,k)=>{
-            // console.log(v)
-            if(v.value===idgy){
-                flname=v
+        let flname = {}
+        this.state.supplier.map((v, k) => {
+            if (v.value === idgy) {
+                flname = v
             }
         })
-        console.log(flname.label)
-        console.log(this.state.lxID)
         let idkc = this.state.IDck.toString()
-
-        var parame=encodeURI(flname.label);
+        var parame = encodeURI(flname.label);
         createInventory({
             action: 'createInventory', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                type: this.state.lxID===''?"1":this.state.lxID,
+                type: this.state.lxID === '' ? "1" : this.state.lxID,
                 warehouseid: idkc,
                 categoryid: idgy,
                 remark: this.state.inputbeiz,
             }
         }).then(res => {
-            console.log(res)
             if (res.data.status === 4001) {
-                if(Number(this.state.lxID)===2){
+                if (Number(this.state.lxID) === 2) {
                     this.props.history.push(`/pandianCategory/${res.data.data}/${idkc}/${idgy}/${parame}`)
-                }else{
+                } else {
                     this.props.history.push(`/quanpanCategory/${res.data.data}/${idkc}`)
                 }
-                console.log(res.data.data)
                 Toast.success('新建盘点单成功', 2)
             } else {
                 Toast.info(res.data.msg, 2)
@@ -109,7 +90,6 @@ export default class AddInventoryList extends Component {
     }
 
     inputChangebz(e) {
-        // console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -117,7 +97,7 @@ export default class AddInventoryList extends Component {
     render() {
         return (
             <AddPurchaseOrderStyle>
-    <DocumentTitle title={'新建盘点单'} />
+                <DocumentTitle title={'新建盘点单'} />
 
                 <div>
                     <ul className='biao'>
@@ -147,7 +127,7 @@ export default class AddInventoryList extends Component {
                                 <List.Item className='pdlx' arrow="horizontal"></List.Item>
                             </Picker>
                         </li>
-                        <li style={{display:this.state.lxID==="2"?"block":"none"}}><span>*</span>商品分类：
+                        <li style={{ display: this.state.lxID === "2" ? "block" : "none" }}><span>*</span>商品分类：
                             <Picker
                                 data={this.state.supplier}
                                 cols={1}
@@ -159,23 +139,17 @@ export default class AddInventoryList extends Component {
                             >
                                 <List.Item className='time' arrow="horizontal"></List.Item>
                             </Picker>
-
                         </li>
-
                         <li style={{ border: "none" }}>
                             <div>备注：</div>
                             <input name="inputbeiz"
                                 onChange={this.inputChangebz.bind(this)}
                                 value={this.state.inputbeiz} type="text" /></li>
                     </ul>
-
                     <div className='foot'>
                         <div className='left'></div>
                         <div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
-
                     </div>
-
-
                 </div>
             </AddPurchaseOrderStyle>
         )

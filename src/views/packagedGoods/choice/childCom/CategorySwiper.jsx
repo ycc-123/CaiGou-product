@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseApplyDetail, submitPurchaseApply } from 'network/Api'
 import { Toast } from 'antd-mobile';
-// import BetterScroll from 'common/betterScroll/BetterScroll'
 import { store } from "store/index";
 import DocumentTitle from 'react-document-title'
 
@@ -19,26 +18,16 @@ export default class ApplyOrderx extends Component {
         }
     }
     componentDidMount() {
-        console.log(store.getState().packagedGoods)
-        // console.log(localStorage.getItem('packagedGoods'))
-        // localStorage.setItem('mobile',store.getState().packagedGoods)
-       console.log(JSON.parse(localStorage.getItem("packagedGoods"))) 
         this.setState({
             goods: store.getState().packagedGoods
         })
-
-    }
-    seach() {
-
     }
     inputChange(e) {
-        console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
     }
     render() {
-        console.log(this.state.goods)
         return (
             <ApplyOrderxStyle>
                 <DocumentTitle title={'打包商品明细'} />

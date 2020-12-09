@@ -1,44 +1,33 @@
 import React, { Component } from 'react'
-
 import { Toast, Modal, Button } from 'antd-mobile';
-// import BetterScroll from 'common/betterScroll/BetterScroll'
-// import Tiao from './Tiao'
-// import { setTitle } from 'commons/utils'
-// import { store } from "store/index";
 const alert = Modal.alert;
 const prompt = Modal.prompt;
 
-
-
 export default class Tiao extends Component {
-    constructor(){
+    constructor() {
         super()
-        this.state={
-            value:''
+        this.state = {
+            value: ''
         }
     }
-    shuliang= (value,tiao) => {
-        console.log(value,tiao)
-        this.props.parent.getChildrenMsg( value,tiao)
+    shuliang = (value, tiao) => {
+        this.props.parent.getChildrenMsg(value, tiao)
         this.setState({
             value
         })
     }
     render() {
-        // console.log(this.props.item)
-        let tiao=this.props.item
+        let tiao = this.props.item
         return (
             <div className='tiao'>
                 <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-
                 <ul className='wen-zi'>
-                <li className='wen-zi-t'>
+                    <li className='wen-zi-t'>
                         <div className='name'>{tiao.goods_name}</div>
                     </li>
-                <li className='wen-zi-c'>
+                    <li className='wen-zi-c'>
                         <div >商品编码：{tiao.barcode}</div>
                         <p>{tiao.goods_cost}元/{tiao.unitname}</p></li>
-                    
                     <li className='wen-zi-f'>
                         <div>账面数量：{tiao.gnum}</div>
                         <p>实际数量：{this.state.value !== '' ? this.state.value : tiao.realnum}</p>

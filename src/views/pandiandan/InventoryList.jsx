@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getInventoryList } from 'network/Api'
 import { Toast } from 'antd-mobile';
-// import Tiao from './Tiao'
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
+
 export default class InventoryList extends Component {
     constructor() {
         super()
@@ -14,24 +14,20 @@ export default class InventoryList extends Component {
             limit: 10,
             page: 1,
             inputSearch: '',
-            kongbj:true
+            kongbj: true
         }
         this.isLoadMore = true
     }
     componentDidMount() {
-
         getInventoryList({
             action: 'getInventoryList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                // type: "1",
                 limit: this.state.limit,
                 page: this.state.page
             }
         }).then((res) => {
-            console.log(res.data.data.data)
             if (res.data.status === 4001) {
-
                 this.setState({
                     data: res.data.data.data
                 }, () => {
@@ -39,28 +35,23 @@ export default class InventoryList extends Component {
                 })
             } else {
                 this.setState({
-                    kongbj:false
+                    kongbj: false
                 })
                 Toast.info(res.data.msg, 2)
             }
         })
     }
     inputChange(e) {
-        console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
-
     }
     Search() {
-        console.log(111)
         getInventoryList({
             action: 'getInventoryList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-                // type: "1",
                 search: this.state.inputSearch,
-                // warehouseName:this.state.inputSearch,
                 limit: "1000",
                 page: "1"
             }
@@ -76,42 +67,31 @@ export default class InventoryList extends Component {
             }
         })
     }
-    componentDidUpdate = () => {
-        // // 默认每次加载x=0，y=0 不然会有bug
-        // // console.log(this)
-        // /* console.log('进来了') */
-        // this.refs.scroll.BScroll.scrollTo(0, 0)
-        // this.refs.scroll.BScroll.refresh()
-
-    }
     render() {
         const scrollConfig = {
             probeType: 1
         }
         return (
             <WarehousingOrderStyle>
-    <DocumentTitle title={'盘点单'} />
-
-                {/* <div style={{width:"100%"}}> */}
-                <div style={{display:"flex"}}>
-                <div className='search'>
-                    <input type="search" className='input' placeholder="请输入盘点单单号" name="inputSearch"
-                        onChange={this.inputChange.bind(this)}
-                        value={this.state.inputSearch} />
-                    <div className='img' onClick={() => { this.Search() }}>
-                        <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+                <DocumentTitle title={'盘点单'} />
+                <div style={{ display: "flex" }}>
+                    <div className='search'>
+                        <input type="search" className='input' placeholder="请输入盘点单单号" name="inputSearch"
+                            onChange={this.inputChange.bind(this)}
+                            value={this.state.inputSearch} />
+                        <div className='img' onClick={() => { this.Search() }}>
+                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+                        </div>
                     </div>
+                    <div
+                        onClick={() => { this.state.kongbj === false ? console.log() : this.props.history.push('/addpandian') }}
+                        className='add'>新增<span style={{ fontSize: ".4rem" }}>+</span></div>
                 </div>
-                <div
-          onClick={()=>{this.state.kongbj===false?console.log(): this.props.history.push('/addpandian')}}
-           className='add'>新增<span style={{fontSize:".4rem"}}>+</span></div>
-          </div>
 
                 <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0" }} loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
                     {
                         this.state.data.map((value, key) => {
-                            console.log(value)
                             let data = value
                             let Color = ''
                             if (data.statusname === "提交成功") {
@@ -134,7 +114,7 @@ export default class InventoryList extends Component {
                                         <div className='dan-footer'>
                                             <p>单据日期：{data.docdate}</p>
                                             <p>盘点仓库：{data.warehousename}</p>
-                                            <div style={{ display: "flex" ,justifyContent: "space-between"}}>
+                                            <div style={{ display: "flex", justifyContent: "space-between" }}>
                                                 <p>账面数量：{data.gnum}</p>
                                                 <p style={{ marginRight: ".4rem" }}>实际总数：{data.realnum}</p>
                                             </div>
@@ -144,10 +124,9 @@ export default class InventoryList extends Component {
                             )
                         })
                     }
-                    {/* </div> */}
                 </BetterScroll>
-                <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
-                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
+                <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
+                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
                 </div>
             </WarehousingOrderStyle>
         )
@@ -163,7 +142,6 @@ export default class InventoryList extends Component {
             }
         }, 1000)
         if (this.isLoadMore) {
-            // console.log(111)
             getInventoryList({
                 action: 'getInventoryList', data: {
                     uniacid: store.getState().uniacid,
@@ -173,7 +151,6 @@ export default class InventoryList extends Component {
                     page: this.state.page
                 }
             }).then(res => {
-                console.log(res.data.data.data)
                 if (res.data.data.data.length < this.state.limit) {
                     this.isLoadMore = false
                 }
@@ -185,7 +162,6 @@ export default class InventoryList extends Component {
                     this.setState({
                         page: page += 1
                     })
-
                     loading = false
                     this.refs.scroll.BScroll.finishPullUp()
                     this.refs.scroll.BScroll.refresh()
@@ -194,9 +170,6 @@ export default class InventoryList extends Component {
         } else {
         }
     }
-
-
-
 }
 const WarehousingOrderStyle = styled.div`
 .kongbj img{

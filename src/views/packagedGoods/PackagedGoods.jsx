@@ -5,11 +5,9 @@ import { createForm } from 'rc-form';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { createProduct, getUnitList, getProductCategoryAll, getProductCategoryAllChildren, getProductCode,getProductDetail } from 'network/Api'
+import { createProduct, getUnitList, getProductCategoryAll, getProductCategoryAllChildren, getProductCode, getProductDetail } from 'network/Api'
 import { store } from "store/index";
-// import { Picker, List, Toast } from 'antd-mobile';
 import { useHistory } from 'react-router-dom';
-
 
 const Into = (props) => {
     const history = useHistory()
@@ -24,7 +22,6 @@ const Into = (props) => {
     const [memberInterests, setMemberInterests] = useState(false)
     const [isProduct, setisProduct] = useState(false)
     const [memberPrice, setMemberPrice] = useState(false)
-    // const [retailPrice, setRetailPrice] = useState(false)
     const [matchGood, setMatchGood] = useState(false);
     const [matchCode, setMatchCode] = useState('')
     const [goodSort, setGoodSort] = useState('');
@@ -40,9 +37,7 @@ const Into = (props) => {
                 uid: store.getState().uid,
             }
         }).then((res) => {
-            console.log(res)
             var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
-            console.log(result)
             setClassification(result)
         })
         getUnitList({
@@ -52,7 +47,6 @@ const Into = (props) => {
             }
         }).then((res) => {
             var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
-            console.log(result)
             setUnit(result)
         })
         try {
@@ -69,7 +63,6 @@ const Into = (props) => {
                 categoryid: goodCategory.toString(),
             }
         }).then((res) => {
-            console.log(res.data.data)
             setGoodCode(res.data.data)
         })
     }, [goodCategory])
@@ -77,9 +70,7 @@ const Into = (props) => {
         <>
             <BetterScroll config={scrollConfig} style={{ height: 'calc(100vh - 1.6rem)' }} ref={bt_ref}>
                 <TAddGoodsStyle>
-
                     <DocumentTitle title={'新建打包商品'} />
-
                     <div className="type flex-column">
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
@@ -112,7 +103,6 @@ const Into = (props) => {
                                     extra="选择商品分类"
                                     value={goodCategory}
                                     onChange={e => { setGoodCategory(e) }}
-                                    onOk={e => { code() }}
                                 >
                                     <List.Item className='time' arrow="horizontal"></List.Item>
                                 </Picker>
@@ -129,10 +119,9 @@ const Into = (props) => {
                             <div className="right">
                                 <input
                                     readonly="readonly"
-                                    value={goodCode.uniacid===store.getState().uniacid? "" : goodCode }
+                                    value={goodCode.uniacid === store.getState().uniacid ? "" : goodCode}
                                     type="text"
                                     placeholder='条码唯一,提交后不支持修改'
-                                    
                                 />
                             </div>
                         </div>
@@ -167,7 +156,6 @@ const Into = (props) => {
                         }}>
                             <div className="left">
                                 <p style={{ fontSize: ".35rem" }}>商品排序: </p>
-
                             </div>
                             <div className="right">
                                 <input
@@ -227,7 +215,6 @@ const Into = (props) => {
                     <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>是否启用会员价</span>
                                 </List.Item>
                                 <div className='xian'></div></div>
-
                             <div className="type flex-column" style={(memberInterests) ? { display: "none" } : { display: memberPrice ? "block" : "none" }}>
                                 <div className="item flex-row" style={{
                                     justifyContent: 'space-between'
@@ -254,8 +241,6 @@ const Into = (props) => {
                             <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>设置为分体称商品</span>
                             </List.Item>
                             <div className='xian'></div>
-
-
                             <div className="type flex-column" style={{ display: matchGood === false ? "none" : "block" }}>
                                 <div className="item flex-row" style={{
                                     justifyContent: 'space-between'
@@ -268,7 +253,6 @@ const Into = (props) => {
                                             value={matchCode}
                                             type="text"
                                             placeholder='设置分体称PLU编号'
-
                                             onChange={e => { setMatchCode(e.target.value) }}
                                         />
                                     </div>
@@ -287,9 +271,6 @@ const Into = (props) => {
             </FAddGoodsStyle>
         </>
     )
-    function code() {
-        console.log(goodCategory.toString())
-    }
     function check() {
         createProduct({
             action: 'createProduct', data: {
@@ -306,11 +287,10 @@ const Into = (props) => {
                 is_plu_goods: matchGood === true ? "2" : "1",
                 plu_goods_keyboard_id: matchCode,
                 sequence: goodSort,
-                is_packge:"1"
+                is_packge: "1"
             }
         }).then((res) => {
             if (res.data.status === 4001) {
-                console.log(res)
                 history.push(`/choiceGoods/${res.data.data}`)
                 Toast.success(res.data.msg, 2)
             } else {

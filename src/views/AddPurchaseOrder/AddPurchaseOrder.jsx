@@ -1,113 +1,100 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getWarehouseList,getSupplierList,createPurchase} from 'network/Api'
+import { getWarehouseList, getSupplierList, createPurchase } from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
-
-
 
 export default class AddPurchaseOrder extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            Value:'',
+            Value: '',
             sValue: '',
-            data:[],
-            supplier:[],
-            IDck:[],
-            IDgy:[],
-            inputAmount:'',
-            inputHetong:'',
-            inputbeiz:'',
-            jj:true
-
-
+            data: [],
+            supplier: [],
+            IDck: [],
+            IDgy: [],
+            inputAmount: '',
+            inputHetong: '',
+            inputbeiz: '',
+            jj: true
         }
     }
     componentDidMount() {
-        
-        getWarehouseList({ action: 'getWarehouseList', data: {
-            uniacid: store.getState().uniacid,
-            uid:store.getState().uid,
-            type:"1",
-            limit:"1000",
-            page:"1"
-          } }).then((res) => {
-            console.log(res.data.data.data)
-            if(res.data.status===4001){
-                console.log(0)
-                var result = res.data.data.data.map(o=>{return{value:o.id,label:o.name}});
-                    console.log(result)
+        getWarehouseList({
+            action: 'getWarehouseList', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                type: "1",
+                limit: "1000",
+                page: "1"
+            }
+        }).then((res) => {
+            if (res.data.status === 4001) {
+                var result = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
                 this.setState({
                     data: result
                 })
-            }else{
+            } else {
                 Toast.info(res.data.msg, 2)
             }
         })
-        getSupplierList({ action: 'getSupplierList', data: {
-            uniacid: store.getState().uniacid,
-            uid:store.getState().uid,
-            limit:"1000",
-            page:"1"
-          } }).then(res=>{
-            console.log(res)
-            if(res.data.status===4001){
-                console.log(res.data.data.data)
-                var supplier = res.data.data.data.map(o=>{return{value:o.id,label:o.name}});
-                    console.log(supplier)
-                    this.setState({
-                        supplier
-                    })
-            }else{
+        getSupplierList({
+            action: 'getSupplierList', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                limit: "1000",
+                page: "1"
+            }
+        }).then(res => {
+            if (res.data.status === 4001) {
+                var supplier = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
                 this.setState({
-                    jj:false
+                    supplier
+                })
+            } else {
+                this.setState({
+                    jj: false
                 })
                 Toast.info(res.data.msg, 2)
             }
-        }) 
+        })
     }
-    createPurchase(){
-        // console.log(this.state.inputbeiz)
-        let idgy=this.state.IDgy.toString()
-        let idkc=this.state.IDck.toString()
-        // console.log(idkc)
-        // this.props.history.push('/category')
-        createPurchase({ action: 'createPurchase', data: {
-            uniacid: store.getState().uniacid,
-            uid:store.getState().uid,
-            type:"1",
-            supplierid:idgy,
-            warehouseid:idkc,
-            beforepay:this.state.inputAmount,
-            contract:this.state.inputHetong,
-            remark:this.state.inputbeiz,
-          } }).then(res=>{
-            console.log(res)
-            if(res.data.status===4001){
+    createPurchase() {
+        let idgy = this.state.IDgy.toString()
+        let idkc = this.state.IDck.toString()
+        createPurchase({
+            action: 'createPurchase', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                type: "1",
+                supplierid: idgy,
+                warehouseid: idkc,
+                beforepay: this.state.inputAmount,
+                contract: this.state.inputHetong,
+                remark: this.state.inputbeiz,
+            }
+        }).then(res => {
+            if (res.data.status === 4001) {
                 this.props.history.push(`/category/${res.data.data.id}`)
-                console.log(res.data.data)
                 Toast.success('新建采购单成功', 2)
-            }else{
+            } else {
                 Toast.info(res.data.msg, 2)
             }
         })
     }
     inputChange(e) {
-        // console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
     }
-    inputChangeht(e){
-        // console.log(e.target.value)
+    inputChangeht(e) {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
-    inputChangebz(e){
-        // console.log(e.target.value)
+    inputChangebz(e) {
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -120,70 +107,50 @@ export default class AddPurchaseOrder extends Component {
                     <ul className='biao'>
                         <li><span>*</span>采购仓库：
                             <Picker
-                             data={this.state.data} 
-                             cols={1}  
-                             className="forss"
-                             extra="请选择采购仓库"
-                             value={this.state.sValue}
-                             onChange={v => this.setState({ sValue: v })}
-                             onOk={v => this.setState({ IDck: v })}
-                             >
+                                data={this.state.data}
+                                cols={1}
+                                className="forss"
+                                extra="请选择采购仓库"
+                                value={this.state.sValue}
+                                onChange={v => this.setState({ sValue: v })}
+                                onOk={v => this.setState({ IDck: v })}
+                            >
                                 <List.Item className='times' arrow="horizontal"></List.Item>
                             </Picker>
                         </li>
                         <li><span>*</span>供应商：
                         <Picker
-                             data={this.state.supplier} 
-                             cols={1}  
-                             className="forss"
-                             extra="请选择供应商"
-                             value={this.state.Value}
-                             onChange={v => this.setState({Value: v})}
-                             onOk={v => this.setState({ IDgy: v })}
-                             >
+                                data={this.state.supplier}
+                                cols={1}
+                                className="forss"
+                                extra="请选择供应商"
+                                value={this.state.Value}
+                                onChange={v => this.setState({ Value: v })}
+                                onOk={v => this.setState({ IDgy: v })}
+                            >
                                 <List.Item className='pdlx' arrow="horizontal"></List.Item>
                             </Picker>
-                        
                         </li>
-                        {/* <li>引用采购申请：
-                        <Picker
-                             data={this.state.supplier} 
-                             cols={1}  
-                             className="forss"
-                             extra="调用采购申请"
-                             value={this.state.Value}
-                             onChange={v => this.setState({Value: v})}
-                             onOk={v => this.setState({ IDgy: v })}
-                             >
-                                <List.Item className='yycgsq' arrow="horizontal"></List.Item>
-                            </Picker>
-                        
-                        </li> */}
                         <li>
                             <div>预付款：</div>
-                            <input name="inputAmount" 
-                                    onChange={this.inputChange.bind(this)}
-                                    value={this.state.inputAmount} type="text"/></li>
+                            <input name="inputAmount"
+                                onChange={this.inputChange.bind(this)}
+                                value={this.state.inputAmount} type="text" /></li>
                         <li>
                             <div>合同编号：</div>
-                            <input name="inputHetong" 
-                                    onChange={this.inputChangeht.bind(this)}
-                                    value={this.state.inputHetong} type="text" /></li>
+                            <input name="inputHetong"
+                                onChange={this.inputChangeht.bind(this)}
+                                value={this.state.inputHetong} type="text" /></li>
                         <li style={{ border: "none" }}>
                             <div>备注：</div>
-                            <input name="inputbeiz" 
-                                    onChange={this.inputChangebz.bind(this)}
-                                    value={this.state.inputbeiz} type="text" /></li>
+                            <input name="inputbeiz"
+                                onChange={this.inputChangebz.bind(this)}
+                                value={this.state.inputbeiz} type="text" /></li>
                     </ul>
-
                     <div className='foot'>
                         <div></div>
-                        <div className='btn' onClick={() => { this.state.jj===false?console.log(): this.createPurchase() }}>下一步</div>
-                        {/* <div className='right' >下一步</div> */}
-
+                        <div className='btn' onClick={() => { this.state.jj === false ? console.log() : this.createPurchase() }}>下一步</div>
                     </div>
-
-
                 </div>
             </AddPurchaseOrderStyle>
         )

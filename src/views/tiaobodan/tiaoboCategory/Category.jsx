@@ -74,7 +74,7 @@ class Category extends Component {
     let ckid = this.props.match.params.ck
     return (
       <CategoryStyle>
-        <DocumentTitle title={'新建调拨单'} />
+        <DocumentTitle title={'选择调拨商品'} />
         <Fragment>
           <div className='search'>
             <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"

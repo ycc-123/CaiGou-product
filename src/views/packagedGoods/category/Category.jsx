@@ -6,7 +6,6 @@ import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
 import { getProductCategoryAll, searchProduct } from 'network/Api'
-// import {  _categoryRight } from 'network/category'
 import { Toast } from 'antd-mobile';
 
 const scollConfig = {
@@ -38,24 +37,20 @@ class Category extends Component {
     }
   }
   mingxi() {
-    console.log(111)
     this.props.history.push('/Liebiao')
   }
   getChildValue(aa, val) {
-    console.log(aa);
     this.setState({
       num: aa,
       price: val
     })
   }
   inputChange(e){
-    console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
   }
   Search(){
-    console.log(this.state.inputSearch)
     searchProduct({
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
@@ -74,12 +69,10 @@ class Category extends Component {
       }else{
         Toast.info(res.data.msg,2)
       }
-      
     })
   }
   render() {
     const { title, type } = this.state
-    console.log(this.props.match.params.id)
     let ida = this.props.match.params.id
     return (
       <CategoryStyle>
@@ -132,22 +125,15 @@ class Category extends Component {
     this.child.myName()
   }
   componentDidMount = () => {
-
-    // this.refs.scroll.BScroll.refresh()
-    // const { appConfig } = store.getState()
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
       }
     }).then(res => {
-      console.log(res.data.data)
       if (res.data.status === 4001) {
         var result = res.data.data.map(o => { return { name: o.name } });
-        console.log(result)
         var Id = res.data.data.map(o => { return { id: o.id } });
-        console.log(Id)
         var value = res.data.data.map(o => { return { code: o.code } });
-        console.log(value)
         searchProduct({
           action: 'searchProduct', data: {
             uniacid: store.getState().uniacid,
@@ -156,13 +142,9 @@ class Category extends Component {
             limit:"1000",
             page:1,
             categoryid: Id[0].id,
-            
           }
         }).then(res => {
-          console.log(res.data.msg)
           if (res.data.status === 4001) {
-            console.log(res.data.data.data)
-
             this.setState({
               goods: res.data.msg === "成功" ? res.data.data.data : [{}]
             })
@@ -180,14 +162,11 @@ class Category extends Component {
         jj:false
       })
         Toast.info(res.data.msg, 2)
-        // Toast.info("无商品",2)
       }
     })
-    console.log(this.state.id)
   }
 
   onChangeActive = index => {
-    console.log(this.state.value[index])
     this.setState({
       indexId:this.state.id[index].id,
       index
@@ -202,9 +181,7 @@ class Category extends Component {
         categoryid: this.state.id[index].id,
       }
     }).then(res => {
-      console.log(res.data.msg)
       if (res.data.status === 4001) {
-        console.log(res.data.data.data)
         this.setState({
           goods: res.data.data.data,
           Bj: true
@@ -215,18 +192,11 @@ class Category extends Component {
           Bj: false  
         })
         Toast.info(res.data.msg, 2)
-        
       }
     })
-
-
-
-
-   
       this.setState({
         defaultIndex: index
       })
-
   }
 }
 const CategoryStyle = styled.div`

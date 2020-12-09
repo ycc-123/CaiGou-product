@@ -5,18 +5,14 @@ import { createForm } from 'rc-form';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { createProduct, getUnitList, getProductCategoryAllChildren,getProductDetail ,editProduct} from 'network/Api'
+import { createProduct, getUnitList, getProductCategoryAllChildren, getProductDetail, editProduct } from 'network/Api'
 import { store } from "store/index";
-import { useHistory, useParams  } from 'react-router-dom';
-// import { Picker, List, Toast } from 'antd-mobile';
-
+import { useHistory, useParams } from 'react-router-dom';
 
 const Into = (props) => {
-    const history =useHistory()
-    const params=useParams().id
-    // console.log(params.id)
+    const history = useHistory()
+    const params = useParams().id
     const bt_ref = useRef()
-
     const [goodName, setgoodName] = useState('');
     const [goodCategory, setGoodCategory] = useState('');
     const [goodCode, setGoodCode] = useState('');
@@ -27,14 +23,13 @@ const Into = (props) => {
     const [memberInterests, setMemberInterests] = useState()
     const [isProduct, setisProduct] = useState()
     const [memberPrice, setMemberPrice] = useState()
-    // const [retailPrice, setRetailPrice] = useState(false)
     const [matchGood, setMatchGood] = useState();
     const [matchCode, setMatchCode] = useState('')
     const [goodSort, setGoodSort] = useState('');
     const [unit, setUnit] = useState([]);
     const [classification, setClassification] = useState([]);
-    const [morengoods,setMorengoods]=useState({});
-    const [erji,seterji]=useState([]);
+    const [morengoods, setMorengoods] = useState({});
+    const [erji, seterji] = useState([]);
 
     const scrollConfig = {
         probeType: 1
@@ -44,37 +39,28 @@ const Into = (props) => {
         getProductDetail({
             action: 'getProductDetail', data: {
                 uniacid: store.getState().uniacid,
-                uid:store.getState().uid,
+                uid: store.getState().uid,
                 id: params
             }
         }).then((res) => {
-            // console.log(res.data.data)
-            if(res.data.status===4001){
-                
+            if (res.data.status === 4001) {
                 setMorengoods(res.data.data);
-                setMemberInterests(res.data.data.is_membership==="2"?true:false);
-                setMemberPrice(res.data.data.is_memberprice==="1"?false:true);
-                setMatchGood(res.data.data.is_plu_goods==="1"?false:true);
-
-
-
-
-
-            }else{
-                Toast.fail(res.data.msg,2)
+                setMemberInterests(res.data.data.is_membership === "2" ? true : false);
+                setMemberPrice(res.data.data.is_memberprice === "1" ? false : true);
+                setMatchGood(res.data.data.is_plu_goods === "1" ? false : true);
+            } else {
+                Toast.fail(res.data.msg, 2)
             }
         })
         getProductCategoryAllChildren({
             action: 'getProductCategoryAllChildren', data: {
                 uniacid: store.getState().uniacid,
-                uid:store.getState().uid,
+                uid: store.getState().uid,
             }
         }).then((res) => {
-            // console.log(res)
-   
             var result = res.data.data.map(o => {
-                return { value: o.id, label: o.name } });
-            // console.log(result)
+                return { value: o.id, label: o.name }
+            });
             setClassification(result)
         })
         getUnitList({
@@ -84,7 +70,6 @@ const Into = (props) => {
             }
         }).then((res) => {
             var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
-            // console.log(result)
             setUnit(result)
         })
         try {
@@ -96,12 +81,11 @@ const Into = (props) => {
     }, [])
     return (
         <>
-                <BetterScroll config={scrollConfig} style={{ height: 'calc(100vh - 1.6rem)' }} ref={bt_ref}>
+            <BetterScroll config={scrollConfig} style={{ height: 'calc(100vh - 1.6rem)' }} ref={bt_ref}>
                 <TAddGoodsStyle>
-
                     <DocumentTitle title={'编辑商品'} />
 
-                    <div className="type flex-column" style={{background:"#F8F8F8"}}>
+                    <div className="type flex-column" style={{ background: "#F8F8F8" }}>
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
                         }}>
@@ -109,7 +93,7 @@ const Into = (props) => {
                                 <span>商品编码: </span>
                             </div>
                             <div className="right">
-                                <input style={{background:"#F8F8F8"}}
+                                <input style={{ background: "#F8F8F8" }}
                                     readonly="readonly"
                                     value={goodCode}
                                     type="text"
@@ -141,7 +125,6 @@ const Into = (props) => {
                             </div>
                         </div>
                     </div>
-                    
 
                     <div className="type flex-column" >
                         <div className="item flex-row" style={{
@@ -151,7 +134,7 @@ const Into = (props) => {
                                 <span>商品名称:</span>
                             </div>
                             <div className="right">
-                                <input 
+                                <input
                                     value={goodName}
                                     type="text"
                                     placeholder={morengoods.name}
@@ -160,36 +143,6 @@ const Into = (props) => {
                             </div>
                         </div>
                     </div>
-
-
-                    {/* <div className="type flex-column">
-                        <div className="item flex-row" style={{
-                            justifyContent: 'space-between'
-                        }}>
-                            <div className="left">
-                                <span>库存单位: </span>
-                            </div>
-                            <div className="right">
-                            <Picker
-                             data={unit} 
-                             cols={1}  
-                             className="forss"
-                             extra="选择库存单位"
-                             value={stockUnit}
-                             onChange={e => { setStockUnit(e)}}
-                             onOk={v => setStockUnit(v)}
-                             >
-                                <List.Item className='kcdwtimes'  arrow="horizontal"></List.Item>
-                            </Picker> */}
-                    {/* <input
-                                    value={stockUnit}
-                                    type="text"
-                                    placeholder='选择库存单位'
-                                    onChange={e => { setStockUnit(e.target.value) }}
-                                /> */}
-                    {/* </div>
-                        </div>
-                    </div> */}
                     <div className="type flex-column">
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
@@ -209,17 +162,11 @@ const Into = (props) => {
                                 >
                                     <List.Item className='scdwtimes' arrow="horizontal"></List.Item>
                                 </Picker>
-                                {/* <input
-                                    value={sellUnit}
-                                    type="text"
-                                    placeholder='选择售出单位'
-                                    onChange={e => { setSellUnit(e.target.value) }}
-                                /> */}
                             </div>
                         </div>
                     </div>
-                    </TAddGoodsStyle>
-                    <AddGoodsStyle>
+                </TAddGoodsStyle>
+                <AddGoodsStyle>
                     <div className="type flex-column">
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
@@ -256,7 +203,6 @@ const Into = (props) => {
                         </div>
                     </div>
 
-
                     <List
                         renderHeader={() => ''}
                     >
@@ -268,17 +214,17 @@ const Into = (props) => {
                         >更多信息</List.Item>
                         <div className='xian'></div>
 
-                        <div style={{ display: isProduct? "block" : "none" }}>
+                        <div style={{ display: isProduct ? "block" : "none" }}>
                             <List.Item
                                 extra={<Switch
-                                    checked={ memberInterests}
+                                    checked={memberInterests}
                                     onChange={() => { setMemberInterests(!memberInterests) }}
                                 />}
                             >启用会员权益
                     <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1rem" }}>是否启用会员权益</span>
                             </List.Item>
                             <div className='xian'></div>
-                            <List.Item 
+                            <List.Item
                                 extra={<Switch
                                     checked={memberPrice}
                                     onChange={() => { setMemberPrice(!memberPrice) }}
@@ -288,7 +234,7 @@ const Into = (props) => {
                             </List.Item>
                             <div className='xian'></div>
 
-                            <div className="type flex-column" style={{display:memberPrice===true?"block":"none"}}>
+                            <div className="type flex-column" style={{ display: memberPrice === true ? "block" : "none" }}>
                                 <div className="item flex-row" style={{
                                     justifyContent: 'space-between'
                                 }}>
@@ -315,8 +261,7 @@ const Into = (props) => {
                             </List.Item>
                             <div className='xian'></div>
 
-
-                            <div className="type flex-column" style={{display:matchGood?"block":"none"}}>
+                            <div className="type flex-column" style={{ display: matchGood ? "block" : "none" }}>
                                 <div className="item flex-row" style={{
                                     justifyContent: 'space-between'
                                 }}>
@@ -337,59 +282,55 @@ const Into = (props) => {
                         </div>
                     </List>
                 </AddGoodsStyle>
-                </BetterScroll>
+            </BetterScroll>
 
-                <FAddGoodsStyle>
+            <FAddGoodsStyle>
                 <div className='foot'>
                     <div className='lbb'></div>
                     <div className='raa' onClick={e => { check() }}>提交</div>
                 </div>
-                </FAddGoodsStyle>
-            
+            </FAddGoodsStyle>
+
         </>
     )
     function check() {
-        if(memberInterests && memberPrice){
-            Toast.info("会员价和会员权益不能同时开启",2)
+        if (memberInterests && memberPrice) {
+            Toast.info("会员价和会员权益不能同时开启", 2)
 
-        }else{
-        console.log(matchGood)
-        let aa={}
-        unit.map((v,k)=>{
-            // console.log(v)
-            if(v.label===morengoods.unit_name){
-                aa=v 
-            }
-        })
-        let cc=aa.value
-
-        editProduct({
-            action: 'editProduct', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                id:params,
-                categoryid: goodCategory.toString()?goodCategory.toString():morengoods.categoryid,
-                code:goodCode?goodCode:morengoods.code,
-                posprice:retailPrice?retailPrice:morengoods.posprice,
-                memberprice:setPrice?setPrice:morengoods.memberprice,
-                name:goodName?goodName:morengoods.name,
-                unit:sellUnit.toString()?sellUnit.toString():cc,
-                is_membership:memberInterests === true ? "2" : "1"?memberInterests === true ? "2" : "1":morengoods.is_membership,
-                is_memberprice:memberPrice === true ? "2" : "1"?memberPrice === true ? "2" : "1":morengoods.is_memberprice,
-                is_plu_goods:matchGood === true ? "2" : "1"?matchGood === true ? "2" : "1":morengoods.is_plu_goods,
-                plu_goods_keyboard_id:matchCode?matchCode:morengoods.plu_goods_keyboard_id,
-                sequence:goodSort?goodSort:morengoods.sequence,
-            }
-        }).then((res) => {
-            // console.log(res)
-            if(res.data.status===4001){
-                history.push('/bjsygoods')
-                Toast.success(res.data.msg, 2)
-            }else{
-                Toast.info(res.data.msg, 2)
-            }
-        })
-    }
+        } else {
+            let aa = {}
+            unit.map((v, k) => {
+                if (v.label === morengoods.unit_name) {
+                    aa = v
+                }
+            })
+            let cc = aa.value
+            editProduct({
+                action: 'editProduct', data: {
+                    uniacid: store.getState().uniacid,
+                    uid: store.getState().uid,
+                    id: params,
+                    categoryid: goodCategory.toString() ? goodCategory.toString() : morengoods.categoryid,
+                    code: goodCode ? goodCode : morengoods.code,
+                    posprice: retailPrice ? retailPrice : morengoods.posprice,
+                    memberprice: setPrice ? setPrice : morengoods.memberprice,
+                    name: goodName ? goodName : morengoods.name,
+                    unit: sellUnit.toString() ? sellUnit.toString() : cc,
+                    is_membership: memberInterests === true ? "2" : "1" ? memberInterests === true ? "2" : "1" : morengoods.is_membership,
+                    is_memberprice: memberPrice === true ? "2" : "1" ? memberPrice === true ? "2" : "1" : morengoods.is_memberprice,
+                    is_plu_goods: matchGood === true ? "2" : "1" ? matchGood === true ? "2" : "1" : morengoods.is_plu_goods,
+                    plu_goods_keyboard_id: matchCode ? matchCode : morengoods.plu_goods_keyboard_id,
+                    sequence: goodSort ? goodSort : morengoods.sequence,
+                }
+            }).then((res) => {
+                if (res.data.status === 4001) {
+                    history.push('/bjsygoods')
+                    Toast.success(res.data.msg, 2)
+                } else {
+                    Toast.info(res.data.msg, 2)
+                }
+            })
+        }
     }
 }
 const FAddGoodsStyle = styled.div`

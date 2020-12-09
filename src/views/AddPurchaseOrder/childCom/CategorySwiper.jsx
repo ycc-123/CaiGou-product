@@ -1,20 +1,14 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-// import { getPurchaseList } from 'network/Api'
 import { Toast } from 'antd-mobile';
-// import BetterScroll from 'common/betterScroll/BetterScroll'
 import { store } from 'store/index'
 import BetterScroll from 'common/betterScroll/BetterScroll'
 
 function Tiao(value) {
-    console.log(value)
     let tiao = value.item
     return (
-
-
         <div className='tiao'>
             <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-
             <ul className='wen-zi'>
                 <li className='wen-zi-t'>
                     <div className='name'>{tiao.goods_name}</div>
@@ -23,11 +17,9 @@ function Tiao(value) {
                     <div >商品编码：{tiao.barcode}</div>
                     <p>{tiao.price}元/{tiao.unitname}</p>
                 </li>
-
                 <li className='wen-zi-f'>
                     <div></div>
                     <p>采购数量：<span>{tiao.gnum}</span></p>
-
                 </li>
             </ul>
         </div>
@@ -41,7 +33,6 @@ export default class Liebiao extends Component {
         }
     }
     componentDidMount() {
-        console.log(store.getState().goodsList)
         if (store.getState().goodsList === []) {
             Toast.info("无采购商品", 1.5)
             this.setState({
@@ -60,36 +51,6 @@ export default class Liebiao extends Component {
 
         return (
             <LiebiaoStyle>
-                {/* <div>
-                <div className='search' >
-                    <input type="search" className='input' placeholder="请输入采购单号/仓库名称"/>
-                    <div className='img'>
-                    <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search"/>
-                    </div>
-                </div>
-            </div>
-            {
-                this.state.goodsList.map((v,k)=>{
-                    console.log(v)
-                    return(
-                        <div className='tiao'>
-                        <img className='t-img-l' src={v.img?v.img :"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"}  alt="网络卡" />
-                        <ul className='wen-zi'>
-                            <li className='wen-zi-t'>
-                                <div className='name'>{v.name}</div>
-                                <p>{v.num}{v.danwei}</p>
-                            </li>
-                            <li className='wen-zi-f'>
-                                <div>￥：{v.price}元/{v.danwei}</div>
-                                <p>{v.amount}
-                                </p>
-                            </li>
-                        </ul>
-                    </div>
-                    )
-                })
-            } */}
-
                 <div>
                     <div className='search'>
                         <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="goodsSearch"
@@ -116,12 +77,10 @@ export default class Liebiao extends Component {
                             <p>单据状态：0</p>
                         </div>
                     </div>
-
                     <div className='footer'>
                         采购备注：0
                         </div>
                 </div>
-                {/* <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)"}}> */}
                 {
                     this.state.purchaseItem.map((value, key) => {
                         console.log(value)
@@ -130,15 +89,10 @@ export default class Liebiao extends Component {
                         )
                     })
                 }
-                {/* </BetterScroll> */}
-
             </LiebiaoStyle>
         )
     }
 }
-
-
-
 
 const LiebiaoStyle = styled.div`
 .am-button::before {

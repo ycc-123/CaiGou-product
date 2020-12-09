@@ -14,9 +14,6 @@ export default class AddInventoryList extends Component {
             inputbeiz:'',
             sValue:'',
             IDck:""
-
-
-
         }
     }
     componentDidMount() {
@@ -29,11 +26,8 @@ export default class AddInventoryList extends Component {
                 page: "1"
             }
         }).then((res) => {
-            console.log(res.data.data.data)
             if (res.data.status === 4001) {
-                console.log(0)
                 var result = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
-                console.log(result)
                 this.setState({
                     data: result
                 })
@@ -43,20 +37,12 @@ export default class AddInventoryList extends Component {
         })
     }
     createPurchase(){
-       
-        // console.log(this.state.IDgy)
         let idgy = this.state.sValue.toString()
         let flname={}
-        
-        console.log(idgy)
-        console.log(this.state.lxID)
         let bz='1'
-        
-        // let idkc = this.state.IDck.toString()
         this.props.history.push(`/Sqcgcategory/${idgy}/${this.state.inputbeiz?this.state.inputbeiz:bz}`)
     }
     inputChangebz(e) {
-        // console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -91,7 +77,6 @@ export default class AddInventoryList extends Component {
 
                     <div className='foot'>
                         <div className='left'></div>
-                        {/* <div></div> */}
                         <div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
                     </div>
                 </div>

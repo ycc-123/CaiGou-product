@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseList } from 'network/Api'
-import {  Toast } from 'antd-mobile';
+import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiao'
 import DocumentTitle from 'react-document-title'
@@ -9,68 +9,66 @@ import { store } from "store/index";
 import { LoadingMore } from 'common/loading'
 
 export default class PurchaseOrder extends Component {
-    constructor(){
+    constructor() {
         super()
-        this.state={
-            data:[],
+        this.state = {
+            data: [],
             limit: 10,
             page: 1,
-            inputSearch:'',
-            kongbj:true
+            inputSearch: '',
+            kongbj: true
         }
         this.isLoadMore = true
     }
-
-    componentDidMount(){
-
-        getPurchaseList({ action: 'getPurchaseList', data: {
-            uniacid: store.getState().uniacid,
-            uid:store.getState().uid,
-            type:"1",
-            limit:this.state.limit,
-            page:this.state.page
-          } }).then((res) => {
-            if(res.data.status===4001){
+    componentDidMount() {
+        getPurchaseList({
+            action: 'getPurchaseList', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                type: "1",
+                limit: this.state.limit,
+                page: this.state.page
+            }
+        }).then((res) => {
+            if (res.data.status === 4001) {
                 this.setState({
                     data: res.data.data.data
                 }, () => {
                     this.refs.scroll.BScroll.refresh()
                 })
-            }else{
+            } else {
                 this.setState({
-                    kongbj:false
+                    kongbj: false
                 })
                 Toast.info(res.data.msg, 2)
             }
         })
     }
-    inputChange(e){
-        console.log(e.target.value)
+    inputChange(e) {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
-    Search(){
-        
-
-        getPurchaseList({ action: 'getPurchaseList', data: {
-            uniacid: store.getState().uniacid,
-            uid:store.getState().uid,
-            type:"1",
-            search:this.state.inputSearch,
-            // warehouseName:this.state.inputSearch,
-            limit:"1000",
-            page:"1"
-          } }).then((res) => {
-            if(res.data.status===4001){
+    Search() {
+        getPurchaseList({
+            action: 'getPurchaseList', data: {
+                uniacid: store.getState().uniacid,
+                uid: store.getState().uid,
+                type: "1",
+                search: this.state.inputSearch,
+                limit: "1000",
+                page: "1"
+            }
+        }).then((res) => {
+            if (res.data.status === 4001) {
                 this.isLoadMore = false
                 this.setState({
                     data: res.data.data.data
                 }, () => {
                     this.refs.scroll.BScroll.refresh()
                 })
-            }else{
-                Toast.info(res.data.msg,2)
+            } else {
+                Toast.info(res.data.msg, 2)
             }
         })
     }
@@ -80,53 +78,38 @@ export default class PurchaseOrder extends Component {
         }
         return (
             <PurchaseOrderStyle>
-    <DocumentTitle title={'采购单'} />
-                
-                {/* <div className='search' >
-                    <input type="search" className='input' placeholder="请输入采购单号/仓库名称" name="inputSearch" 
-                                    onChange={this.inputChange.bind(this)}
-                                    value={this.state.inputSearch}/>
-                    <div className='img' onClick={()=>{this.Search()}}>
-                    <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search"/>
-                    </div>
-                </div> */}
-
-            <div style={{display:"flex"}}>
-                <div className='search'>
-                        <input type="search" className='input' placeholder="请输入采购单号/仓库名称" name="inputSearch" 
-                                    onChange={this.inputChange.bind(this)}
-                                    value={this.state.inputSearch}/>
-                        <div className='img' onClick={()=>{this.Search()}}>
+                <DocumentTitle title={'采购单'} />
+                <div style={{ display: "flex" }}>
+                    <div className='search'>
+                        <input type="search" className='input' placeholder="请输入采购单号/仓库名称" name="inputSearch"
+                            onChange={this.inputChange.bind(this)}
+                            value={this.state.inputSearch} />
+                        <div className='img' onClick={() => { this.Search() }}>
                             <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-                            </div>
+                        </div>
+                    </div>
+                    <div
+                        onClick={() => { this.props.history.push(`/AddPurchaseOrder`) }}
+                        className='add'>新增<span style={{ fontSize: ".4rem" }}>+</span></div>
                 </div>
-                <div
-          onClick={()=>{this.props.history.push(`/AddPurchaseOrder`)}}
-           className='add'>新增<span style={{fontSize:".4rem"}}>+</span></div>
-          </div>
-
-
-
-
                 <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0rem" }} loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
                     {
-                        this.state.data.map((value,key)=>{
-                            return(
+                        this.state.data.map((value, key) => {
+                            return (
                                 <div >
-                                <Tiao item={value} key={key} />
+                                    <Tiao item={value} key={key} />
                                 </div>
                             )
                         })
                     }
                     {
-
                         this.state.data.length > 0 &&
                         <LoadingMore isLoading={this.isLoadMore} />
                     }
-            </BetterScroll>
-            <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
-                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
+                </BetterScroll>
+                <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
+                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
                 </div>
             </PurchaseOrderStyle>
         )
@@ -137,48 +120,38 @@ export default class PurchaseOrder extends Component {
         setTimeout(() => {
             if (loading) {
                 this.setState({
-                    
+
                     loadingMore: true
                 })
             }
         }, 1000)
         if (this.isLoadMore) {
-            // console.log(111)
-            getPurchaseList({ action: 'getPurchaseList', data: {
-                uniacid: store.getState().uniacid,
-                uid:store.getState().uid,
-                type:"1",
-                limit:this.state.limit,
-                page:this.state.page
-              } }).then(res => {
-                // console.log(res.data.data.data)
-
-                // 如果长度不等于得时候加载 那么是到底了
+            getPurchaseList({
+                action: 'getPurchaseList', data: {
+                    uniacid: store.getState().uniacid,
+                    uid: store.getState().uid,
+                    type: "1",
+                    limit: this.state.limit,
+                    page: this.state.page
+                }
+            }).then(res => {
                 if (res.data.data.data.length < this.state.limit) {
                     this.isLoadMore = false
-                    /* let bottomTip = document.querySelector('.bottom-tip')
-                    bottomTip.style.visibility = 'visible'
-                    bottomTip.innerHTML = '商品已经全部加载完成' */
                 }
                 this.setState({
                     data: [...this.state.data, ...res.data.data.data],
                     loadingMore: false
                 }, () => {
-                    let page=this.state.page
+                    let page = this.state.page
                     this.setState({
                         page: page += 1
                     })
-
                     loading = false
                     this.refs.scroll.BScroll.finishPullUp()
                     this.refs.scroll.BScroll.refresh()
                 })
             })
-        } else {
-            /* let bottomTip = document.querySelector('.bottom-tip')
-            bottomTip.style.visibility = 'visible'
-            bottomTip.innerHTML = '商品已经全部加载完成' */
-        }
+        } else { }
     }
 }
 const PurchaseOrderStyle = styled.div`

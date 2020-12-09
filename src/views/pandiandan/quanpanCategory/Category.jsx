@@ -37,27 +37,22 @@ class Category extends Component {
       mrqunangoods: [],
       Id: ""
     }
-
   }
   mingxi() {
-    console.log(111)
     this.props.history.push('/Liebiao')
   }
   getChildValue(aa, val) {
-    console.log(aa);
     this.setState({
       num: aa,
       price: val
     })
   }
   inputChange(e) {
-    console.log(e.target.value)
     this.setState({
       [e.target.name]: e.target.value
     })
   }
   Search() {
-    console.log(this.state.inputSearch)
     getStockList({
       action: 'getStockList', data: {
         uniacid: store.getState().uniacid,
@@ -73,17 +68,15 @@ class Category extends Component {
       } else {
         Toast.info(res.data.msg, 2)
       }
-
     })
   }
   render() {
     const { title, type } = this.state
-    console.log(this.props.match.params.id)
     let pdid = this.props.match.params.id
     let ckid = this.props.match.params.ck
     return (
       <CategoryStyle>
-    <DocumentTitle title={'新建盘点单'} />
+        <DocumentTitle title={'新建盘点单'} />
 
         <Fragment>
           <div className='search'>
@@ -101,7 +94,6 @@ class Category extends Component {
                   <li className='category-left-head'></li>
                   {title.map((item, index) => {
                     return (
-                      
                       <CategoryLeftItem key={item.id + index}
                         item={item}
                         index={index}
@@ -112,50 +104,27 @@ class Category extends Component {
                 </BetterScroll>}
               </ul>
             </div>
-              <CategoryRight 
-            itemData={this.state.mrqunangoods} 
-            ckid={ckid} pdid={pdid} index={this.state.Id} 
-            goodsList={this.state.goods} onRef={this.onRef} 
-            aa={this.getChildValue.bind(this)} history={this.props.history} />
+              <CategoryRight
+                itemData={this.state.mrqunangoods}
+                ckid={ckid} pdid={pdid} index={this.state.Id}
+                goodsList={this.state.goods} onRef={this.onRef}
+                aa={this.getChildValue.bind(this)} history={this.props.history} />
             </Fragment> : <Fragment>
               </Fragment>}
           </div>
-          {/* <div className='foot'>
-            <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
-            <div className='left'
-            // onClick={() => { this.mingxi() }}
-            >
-             <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-            <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
-            </div>
-            <div className='right' >提交</div>
-            </div>
-           
-            <div
-              style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent",border:"none" }}
-              
-              onClick={() =>
-                alert('提交', '是否确认提交盘点单', [
-                  { text: '取消', onPress: () => console.log('cancel') },
-                  { text: '确定', onPress: () => this.click() },
-                ])
-              }
-            >
-              confirm
-                        </div> </div> */}
-            <div className='foot'>
-              <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
-                  <div className='left' >
-                      <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                      <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
-                  </div>
-                  <div style={{display:"flex",marginTop:".2rem"}}>
-                      <div className='baocun' onClick={()=>{this.click(1)}}>保存</div>
-                      <div className='tijiao' >提交</div>
-                  </div>
+          <div className='foot'>
+            <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+              <div className='left' >
+                <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
               </div>
-           
-              <div
+              <div style={{ display: "flex", marginTop: ".2rem" }}>
+                <div className='baocun' onClick={() => { this.click(1) }}>保存</div>
+                <div className='tijiao' >提交</div>
+              </div>
+            </div>
+
+            <div
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "7.78rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
               onClick={() =>
@@ -178,72 +147,25 @@ class Category extends Component {
   click = (e) => {
     this.child.myName(e)
   }
-  changeImage = () => {
-    if (this.state.type === 'swiper') {
-      this.setState({
-        type: 'goods'
-      })
-    } else {
-      this.setState({
-        type: 'swiper'
-      })
-    }
-  }
-
-  componentDidCache = () => {
-    console.log('缓存了')
-  }
-
-  componentDidRecover = () => {
-    const { defaultIndex, title } = this.state
-    const { appConfig } = store.getState()
-    const right_config = {
-      action: 'getGoodsByCategory',
-      data: {
-        uniacid: appConfig.uniacid,
-        openid: appConfig.wxUserInfo.openid,
-        cid: title[defaultIndex].id,
-        pagesize: 100
-      }
-    }
-
-    _categoryRight(right_config).then(res => {
-      title[defaultIndex].goods = (res.data && res.data.data && res.data.data.list) || []
-      this.setState({
-        ys: res.data.data.issell,
-        kc: res.data.data.showPubStock,
-        title
-      })
-    })
-
-  }
 
   componentDidMount = () => {
-
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
       }
     }).then(res => {
-      console.log(res.data.data)
       if (res.data.status === 4001) {
-
         var result = res.data.data.map(o => { return { name: o.name } });
-        console.log(result)
         var Id = res.data.data.map(o => { return { id: o.id } });
-        console.log(Id)
         var value = res.data.data.map(o => { return { code: o.code } });
-        console.log(value)
         getStockList({
           action: 'getStockList', data: {
             uniacid: store.getState().uniacid,
             uid: store.getState().uid,
             warehouseid: this.props.match.params.ck,
             categoryid: Id[0].id,
-
           }
         }).then(res => {
-          console.log(res)
           if (res.data.status === 4001) {
             let mrqunangoods = []
             if (Boolean(res.data.data.data) === false) {
@@ -251,12 +173,7 @@ class Category extends Component {
               mrqunangoods = []
             } else {
               mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-              console.log(mrqunangoods)
             }
-            // console.log(res.data.data.data)
-            // var mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-            // console.log(mrqunangoods)
-
             this.setState({
               mrqunangoods,
               goods: res.data.msg === "成功" ? res.data.data.data : [{}]
@@ -274,11 +191,9 @@ class Category extends Component {
         Toast.info('网络错误', 2)
       }
     })
-    console.log(this.state.id)
   }
 
   onChangeActive = index => {
-    console.log(index)
     getStockList({
       action: 'getStockList', data: {
         uniacid: store.getState().uniacid,
@@ -306,10 +221,6 @@ class Category extends Component {
         Toast.info(res.data.msg, 2)
       }
     })
-
-
-
-
     const { appConfig } = store.getState()
     let { title } = this.state
     if (!this.state.goods) {
@@ -337,8 +248,6 @@ class Category extends Component {
       })
     }
   }
-
-
 }
 const CategoryStyle = styled.div`
 .baocun{

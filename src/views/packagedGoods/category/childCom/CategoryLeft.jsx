@@ -4,7 +4,6 @@ import CategoryLeftItem from './CategoryLeftItem'
 import CategoryRight from './CategoryRight'
 import BetterScroll from 'common/betterScroll/BetterScroll'
 
-
 class CategoryLeft extends Component {
   constructor(props) {
     super(props)
@@ -28,7 +27,6 @@ class CategoryLeft extends Component {
     const { title, defaultIndex, goods, ys, kc } = this.state
     const { type } = this.props
     const { cartGoods } = store.getState()
-
     if (title.length !== 0 && title[defaultIndex].goods.length !== 0) {
       title[defaultIndex].goods.forEach(item => {
         let newGoods = cartGoods.find(cartItem => {
@@ -61,7 +59,6 @@ class CategoryLeft extends Component {
         </div>
           {title.length !== 0 && title[defaultIndex].goods.length !== 0 && <CategoryRight goodsList={title[defaultIndex].goods} ys={ys} kc={kc} />}
         </> : <>
-            {/* <CategoryTabBar title={title} index={defaultIndex} changeActive={this.onChangeActive} goodsList={title[defaultIndex].goods} ys={ys} kc={kc} /> */}
             </>}
         {
           goods.length === 0 && <div className='wutu' style={{ color: 'white' }}>
@@ -70,7 +67,6 @@ class CategoryLeft extends Component {
           </div>
         }
       </Fragment>
-
     );
   }
   onChangeActive = index => {
@@ -124,6 +120,5 @@ class CategoryLeft extends Component {
     })
   }
 }
-
 
 export default withRouter(CategoryLeft);

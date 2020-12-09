@@ -6,9 +6,8 @@ import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
 import { getProductCategoryAll, searchProduct } from 'network/Api'
-import {  _categoryRight } from 'network/category'
-// import { Toast } from 'antd-mobile';
-import { Toast ,Modal } from 'antd-mobile';
+import { _categoryRight } from 'network/category'
+import { Toast, Modal } from 'antd-mobile';
 const alert = Modal.alert;
 
 const scollConfig = {
@@ -24,7 +23,7 @@ class Category extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      indexId:'',
+      indexId: '',
       value: [],
       title: [],
       goods: [],
@@ -33,62 +32,54 @@ class Category extends Component {
       id: [],
       num: '',
       price: '',
-      inputSearch:'',
-
-      Id:""
+      inputSearch: '',
+      Id: ""
     }
-    
+
   }
   mingxi() {
-    console.log(111)
     this.props.history.push('/Liebiao')
   }
   getChildValue(aa, val) {
-    console.log(aa);
     this.setState({
       num: aa,
       price: val
     })
   }
-  inputChange(e){
-    console.log(e.target.value)
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+  inputChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
-  Search(){
-    console.log(this.state.inputSearch)
+  Search() {
     searchProduct({
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         categoryid: this.state.indexId,
-        search:this.state.inputSearch
+        search: this.state.inputSearch
       }
     }).then(res => {
-      if(res.data.status===4001){
+      if (res.data.status === 4001) {
         this.setState({
-            goods: res.data.data.data
+          goods: res.data.data.data
         })
-      }else{
-        Toast.info(res.data.msg,2)
+      } else {
+        Toast.info(res.data.msg, 2)
       }
-      
     })
   }
   render() {
     const { title, type } = this.state
-    console.log(this.props.match.params.id)
     let ida = this.props.match.params.id
     return (
       <CategoryStyle>
-    <DocumentTitle title={'新建采购单'} />
-
+        <DocumentTitle title={'新建采购单'} />
         <Fragment>
           <div className='search'>
-            <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch" 
-                                    onChange={this.inputChange.bind(this)}
-                                    value={this.state.inputSearch}/>
+            <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"
+              onChange={this.inputChange.bind(this)}
+              value={this.state.inputSearch} />
             <div className='img' onClick={() => { this.Search() }}>
               <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
@@ -114,27 +105,17 @@ class Category extends Component {
             </Fragment> : <Fragment>
               </Fragment>}
           </div>
-          {/* <div className='foot'>
-            <div className='left' onClick={() => { this.mingxi() }}>
-              <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" />
-            </div>
-            <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
-            <div className='foot_conton' onClick={() => { this.mingxi() }}>总额：
-                    <span>{this.state.price ? this.state.price : 0}</span></div>
-            <div className='right' onClick={this.click}>提交</div>
-          </div> */}
           <div className='foot'>
-              <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
-                  <div className='left'>
-                      <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                      <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
-                  </div>
-                  <div style={{display:"flex",marginTop:".2rem"}}>
-                      <div className='baocun' onClick={()=>{this.click(1)}}>保存</div>
-                      <div className='tijiao' >提交</div>
-                  </div>
+            <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+              <div className='left'>
+                <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
               </div>
-           
+              <div style={{ display: "flex", marginTop: ".2rem" }}>
+                <div className='baocun' onClick={() => { this.click(1) }}>保存</div>
+                <div className='tijiao' >提交</div>
+              </div>
+            </div>
             <div
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "7.78rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
@@ -159,77 +140,26 @@ class Category extends Component {
   click = (e) => {
     this.child.myName(e)
   }
-  changeImage = () => {
-    if (this.state.type === 'swiper') {
-      this.setState({
-        type: 'goods'
-      })
-    } else {
-      this.setState({
-        type: 'swiper'
-      })
-    }
-  }
-
-  componentDidCache = () => {
-    console.log('缓存了')
-  }
-
-  componentDidRecover = () => {
-    const { defaultIndex, title } = this.state
-    const { appConfig } = store.getState()
-    const right_config = {
-      action: 'getGoodsByCategory',
-      data: {
-        uniacid: appConfig.uniacid,
-        openid: appConfig.wxUserInfo.openid,
-        cid: title[defaultIndex].id,
-        pagesize: 100
-      }
-    }
-
-    _categoryRight(right_config).then(res => {
-      title[defaultIndex].goods = (res.data && res.data.data && res.data.data.list) || []
-      this.setState({
-        ys: res.data.data.issell,
-        kc: res.data.data.showPubStock,
-        title
-      })
-    })
-
-  }
-
   componentDidMount = () => {
-
-    // this.refs.scroll.BScroll.refresh()
-    // const { appConfig } = store.getState()
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
       }
     }).then(res => {
-      console.log(res.data.data)
       if (res.data.status === 4001) {
         var result = res.data.data.map(o => { return { name: o.name } });
-        console.log(result)
         var Id = res.data.data.map(o => { return { id: o.id } });
-        console.log(Id)
         var value = res.data.data.map(o => { return { code: o.code } });
-        console.log(value)
         searchProduct({
           action: 'searchProduct', data: {
             uniacid: store.getState().uniacid,
             uid: store.getState().uid,
-            limit:"1000",
-            page:1,
+            limit: "1000",
+            page: 1,
             categoryid: Id[0].id,
-            
           }
         }).then(res => {
-          console.log(res.data.msg)
           if (res.data.status === 4001) {
-            console.log(res.data.data.data)
-
             this.setState({
               goods: res.data.msg === "成功" ? res.data.data.data : [{}]
             })
@@ -246,27 +176,23 @@ class Category extends Component {
         Toast.info('网络错误', 2)
       }
     })
-    console.log(this.state.id)
   }
 
   onChangeActive = index => {
-    console.log(this.state.value[index])
     this.setState({
-      indexId:this.state.id[index].id,
+      indexId: this.state.id[index].id,
       index
     })
     searchProduct({
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        limit:"1000",
-        page:1,
+        limit: "1000",
+        page: 1,
         categoryid: this.state.id[index].id,
       }
     }).then(res => {
-      console.log(res.data.msg)
       if (res.data.status === 4001) {
-        console.log(res.data.data.data)
         this.setState({
           goods: res.data.data.data
         })
@@ -277,39 +203,10 @@ class Category extends Component {
         Toast.info(res.data.msg, 2)
       }
     })
-
-
-
-
-    const { appConfig } = store.getState()
-    let { title } = this.state
-    if (!this.state.goods) {
-      const right_config = {
-        action: 'getGoodsByCategory',
-        data: {
-          uniacid: appConfig.uniacid,
-          openid: appConfig.wxUserInfo.openid,
-          cid: this.state.title[index].id,
-          pagesize: 100
-        }
-      }
-      _categoryRight(right_config).then(res => {
-        title[index].goods = (res.data && res.data.data && res.data.data.list) || []
-        this.setState({
-          ys: res.data.data.issell,
-          kc: res.data.data.showPubStock,
-          title,
-          defaultIndex: index
-        })
-      })
-    } else {
-      this.setState({
-        defaultIndex: index
-      })
-    }
+    this.setState({
+      defaultIndex: index
+    })
   }
-
-
 }
 const CategoryStyle = styled.div`
 .baocun{

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPackgeProductDetail } from 'network/Api'
 import { Toast } from 'antd-mobile';
-// import BetterScroll from 'common/betterScroll/BetterScroll'
 import { store } from "store/index";
 import DocumentTitle from 'react-document-title'
 
@@ -24,7 +23,6 @@ export default class ApplyOrderx extends Component {
                 page:"1"
             }
         }).then((res) => {
-            console.log(res)
             if(res.data.status===4001){
                 this.setState({
                     goods: res.data.data.packgeList
@@ -45,7 +43,6 @@ export default class ApplyOrderx extends Component {
                 page:"1"
             }
         }).then((res) => {
-            console.log(res)
             if(res.data.status===4001){
                 this.setState({
                     goods: res.data.data.packgeList
@@ -56,13 +53,11 @@ export default class ApplyOrderx extends Component {
         })
     }
     inputChange(e) {
-        console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
     }
     render() {
-        console.log(this.state.goods)
         return (
             <ApplyOrderxStyle>
                 <DocumentTitle title={'打包商品选择明细'} />
@@ -88,7 +83,6 @@ export default class ApplyOrderx extends Component {
                                             <div >商品编码：{v.barcode}</div>
                                             <p>{v.posprice}元/{v.unitname}</p>
                                         </li>
-
                                         <li className='wen-zi-f'>
                                             <div></div>
                                             <p>打包数量：<span>{v.num}</span></p>

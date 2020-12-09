@@ -31,7 +31,7 @@ export default class Home extends Component {
         <ul>
           {/* <li onClick={()=>{this.props.history.push('/PackagedGoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/add.png" alt=""/></li> */}
           <li onClick={()=>{this.props.history.push('/bjsygoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/bianji.png" alt=""/></li>
-          {/* <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaojia.png" alt=""/></li> */}
+          <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaojia.png" alt=""/></li>
           <li onClick={()=>{this.props.history.push('/PackagedGoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dabao.png" alt=""/></li>
         </ul>
       </div>
@@ -42,6 +42,7 @@ export default class Home extends Component {
             <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/ApplyOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shengqing.png" alt="" /></li>
             <li style={{ marginLeft: ".3rem" }} onClick={() => { this.props.history.push('/PurchaseOrder')} }><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/caigoudan.png" alt="" /></li>
           </ul>
+
         </div>
         <div className='footer'>
           <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>仓储管理</div>

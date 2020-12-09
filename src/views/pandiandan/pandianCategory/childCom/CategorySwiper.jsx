@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-// import { getPurchaseList } from 'network/Api'
 import { Toast } from 'antd-mobile';
-// import BetterScroll from 'common/betterScroll/BetterScroll'
 import { store} from 'store/index'
 
 export default class Liebiao extends Component {
@@ -13,7 +11,6 @@ export default class Liebiao extends Component {
         }
     }
     componentDidMount(){
-        console.log(store.getState().goodsList)
         if(store.getState().goodsList===[]){
             Toast.info("无采购商品",1.5)
             this.setState({
@@ -38,7 +35,6 @@ export default class Liebiao extends Component {
             </div>
             {
                 this.state.goodsList.map((v,k)=>{
-                    // console.log(v)
                     return(
                         <div className='tiao'>
                         <img className='t-img-l' src={v.img?v.img :"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"}  alt="网络卡" />
@@ -58,33 +54,10 @@ export default class Liebiao extends Component {
                     )
                 })
             }
-            {/* <div className='tiao'>amount: 4
-barcode: "100000025"
-barcodeid: "2099"
-gnum: "2"
-name: "积分测试"
-num: "2"
-price: "2"
-                        <img className='t-img-l'  alt="" />
-                        <ul className='wen-zi'>
-                            <li className='wen-zi-t'>
-                                <div className='name'>name</div>
-                                <p>100盒</p>
-                            </li>
-                            <li className='wen-zi-f'>
-                                <div>￥：3333元/盒</div>
-                                <p><span>库存金额：</span>99
-                                </p>
-                            </li>
-                        </ul>
-                    </div> */}
             </LiebiaoStyle>
         )
     }
 }
-
-
-
 
 const LiebiaoStyle = styled.div`
 .wen-zi-t p{

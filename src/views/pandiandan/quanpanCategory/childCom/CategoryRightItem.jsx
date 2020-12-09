@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import { Modal, Button, Toast } from 'antd-mobile';
 
-
 const prompt = Modal.prompt;
 class CategoryRightgoods extends Component {
   constructor(props) {
@@ -16,13 +15,11 @@ class CategoryRightgoods extends Component {
     this.click = true
   }
   zjian = (login, goods) => {
-    if (login === '' ) {
+    if (login === '') {
       Toast.info('请填写实际账面数量')
-    } else{
-      console.log(login, goods)
+    } else {
       this.setState({
         login,
-      
       })
       this.props.parent.getChildrenMsg(this, login, goods)
     }
@@ -30,64 +27,42 @@ class CategoryRightgoods extends Component {
 
   render() {
     const { goods } = this.props
-    // console.log(goods)
-
     return (
       <CategoryRightgoodsStyle>
         <div className="rrr"></div>
-        <li className='category-goods clearfix'
-        >
-
-
-          <img className='category-img' src={goods.image?goods.image:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-
+        <li className='category-goods clearfix'>
+          <img className='category-img' src={goods.image ? goods.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
           <div className='category-goods-info'>
-          <div style={{fontSize:".35rem",color:'#1a1a1a'}}>{goods.name}</div>
-
-          <div className='shuliang' style={{color:'#1a1a1a',padding:".2rem 0"}}>
-                   <article>商品编码：{goods.barcode}</article>
-                   <div>{goods.costprice}元/{goods.unit_name}</div>
-                 </div>
-            <div className='shuliang' style={{color:'#4c4c4c'}}>
-                   <article>账面数量：{goods.gnum}</article>
-                   <div>实际数量：{this.state.login?this.state.login:goods.gnum}</div>
-                 </div>
-   
+            <div style={{ fontSize: ".35rem", color: '#1a1a1a' }}>{goods.name}</div>
+            <div className='shuliang' style={{ color: '#1a1a1a', padding: ".2rem 0" }}>
+              <article>商品编码：{goods.barcode}</article>
+              <div>{goods.costprice}元/{goods.unit_name}</div>
+            </div>
+            <div className='shuliang' style={{ color: '#4c4c4c' }}>
+              <article>账面数量：{goods.gnum}</article>
+              <div>实际数量：{this.state.login ? this.state.login : goods.gnum}</div>
+            </div>
             <Button
-              style={{ position: "absolute",width:"3rem", top: ".3rem", left: "3.2rem", color: "transparent", background: "transparent",border:"none" }}
+              style={{ position: "absolute", width: "3rem", top: ".3rem", left: "3.2rem", color: "transparent", background: "transparent", border: "none" }}
               className="btn_modal"
               onClick={() => prompt('填写', '请输入商品实际账面数量',
-              [
-                {
-                  text: '取消',
-                  onPress: value => console.log(`value:${value}`)
-                },
-                {
-                  text: '确定',
-                  onPress: value =>this.zjian(value,goods)
-                },
-              ]
+                [
+                  {
+                    text: '取消',
+                    onPress: value => console.log(`value:${value}`)
+                  },
+                  {
+                    text: '确定',
+                    onPress: value => this.zjian(value, goods)
+                  },
+                ]
               )}
             >111111</Button>
-            {
-              
-                // <div className='shuliang'>
-                //   <article>账面数量：{goods.gnum}</article>
-                //   <div>实际数量：{this.state.login?this.state.login:goods.gnum}</div>
-                // </div>
-    
-            }
-
-
           </div>
-
         </li>
       </CategoryRightgoodsStyle>
     );
   }
-
-
-
 }
 
 const CategoryRightgoodsStyle = styled.div`

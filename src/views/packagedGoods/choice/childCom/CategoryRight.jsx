@@ -1,11 +1,8 @@
 
 import React, { Component } from 'react'
-
 import CategoryRightItem from './CategoryRightItem'
-
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { submitDamage ,editPackgeProduct} from 'network/Api'
-// import { store } from 'store/index'
 import {  Toast } from 'antd-mobile';
 import { store } from "store/index";
 import { 
@@ -33,7 +30,6 @@ class CategoryRight extends Component {
       width: '7.5rem',
     }
     const { goodsList} = this.props
-    console.log(this.props)
     return (
       <div className='categoryRight'>
         <ul>
@@ -66,7 +62,6 @@ class CategoryRight extends Component {
       let aa = {}
       let arr =[]
       this.state.goods.map((v,k)=>{
-        console.log(v,k,this.state.goods[k].name)
          aa={
             code: this.state.goods[k].code,
             img: this.state.goods[k].albumpath,
@@ -81,23 +76,18 @@ class CategoryRight extends Component {
       localStorage.setItem('packagedGoods',JSON.stringify(arr))
       const actionuid = savepackagedGoods(arr)
       store.dispatch(actionuid)
-      console.log(this.state.login,"111111111111111111111",this.state.goods)
     })
-
 }
   componentDidMount(){
     this.props.onRef(this)
   }
 
   myName = () =>{
-    console.log(this.state.login[0],this.state.goods)
     let num =this.state.login
-
     let aa = {}
     let arr =[]
 
     num.map((v,k)=>{
-      console.log(v,k,this.state.goods[k].name)
        aa={
         id:this.state.goods[k].barcodeid,
           num:num[k],
@@ -112,7 +102,6 @@ class CategoryRight extends Component {
       goodsid:this.props.bsid,
       packge_ids:packge_ids
     } }).then(res=>{
-      console.log(res)
       if(res.data.status===4001){
         Toast.success(res.data.msg, 2)
         this.home()

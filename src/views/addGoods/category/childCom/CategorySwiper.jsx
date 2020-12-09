@@ -1,90 +1,62 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-// import { getPurchaseList } from 'network/Api'
 import { Toast } from 'antd-mobile';
-// import BetterScroll from 'common/betterScroll/BetterScroll'
-import { store} from 'store/index'
+import { store } from 'store/index'
 
 export default class Liebiao extends Component {
-    constructor(){
+    constructor() {
         super()
-        this.state={
-            goodsList:[]
+        this.state = {
+            goodsList: []
         }
     }
-    componentDidMount(){
-        console.log(store.getState().goodsList)
-        if(store.getState().goodsList===[]){
-            Toast.info("无采购商品",1.5)
+    componentDidMount() {
+        if (store.getState().goodsList === []) {
+            Toast.info("无采购商品", 1.5)
             this.setState({
-                goodsList:[]
+                goodsList: []
             })
-        }else{
+        } else {
             this.setState({
-                goodsList:store.getState().goodsList
+                goodsList: store.getState().goodsList
             })
         }
     }
     render() {
         return (
             <LiebiaoStyle>
-            <div>
-                <div className='search' >
-                    <input type="search" className='input' placeholder="请输入采购单号/仓库名称"/>
-                    <div className='img'>
-                    <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search"/>
+                <div>
+                    <div className='search' >
+                        <input type="search" className='input' placeholder="请输入采购单号/仓库名称" />
+                        <div className='img'>
+                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+                        </div>
                     </div>
                 </div>
-            </div>
-            {
-                this.state.goodsList.map((v,k)=>{
-                    console.log(v)
-                    return(
-                        <div className='tiao'>
-                        <img className='t-img-l' src={v.img?v.img :"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"}  alt="网络卡" />
-                        <ul className='wen-zi'>
-                            <li className='wen-zi-t'>
-                                <div className='name'>{v.name}</div>
-                                <p>{v.num}{v.danwei}</p>
-                            </li>
-                            <li className='wen-zi-f'>
-                                <div>￥：{v.price}元/{v.danwei}</div>
-
-                                <p>{v.amount}
-                                </p>
-                            </li>
-                        </ul>
-                    </div>
-                    )
-                })
-            }
-            {/* <div className='tiao'>amount: 4
-barcode: "100000025"
-barcodeid: "2099"
-gnum: "2"
-name: "积分测试"
-num: "2"
-price: "2"
-                        <img className='t-img-l'  alt="" />
-                        <ul className='wen-zi'>
-                            <li className='wen-zi-t'>
-                                <div className='name'>name</div>
-                                <p>100盒</p>
-                            </li>
-                            <li className='wen-zi-f'>
-                                <div>￥：3333元/盒</div>
-                                <p><span>库存金额：</span>99
-                                </p>
-                            </li>
-                        </ul>
-                    </div> */}
+                {
+                    this.state.goodsList.map((v, k) => {
+                        return (
+                            <div className='tiao'>
+                                <img className='t-img-l' src={v.img ? v.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="网络卡" />
+                                <ul className='wen-zi'>
+                                    <li className='wen-zi-t'>
+                                        <div className='name'>{v.name}</div>
+                                        <p>{v.num}{v.danwei}</p>
+                                    </li>
+                                    <li className='wen-zi-f'>
+                                        <div>￥：{v.price}元/{v.danwei}</div>
+                                        <p>{v.amount}
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                        )
+                    })
+                }
             </LiebiaoStyle>
         )
     }
 }
-
-
-
 
 const LiebiaoStyle = styled.div`
 .wen-zi-t p{
@@ -148,13 +120,7 @@ const LiebiaoStyle = styled.div`
     height: 2rem;
     background-color: #fff;
     border-bottom:2px solid #dadada;
-    
-
 }
-
-
-
-
 
 input::-webkit-input-placeholder {
     color: #c9c9c9;

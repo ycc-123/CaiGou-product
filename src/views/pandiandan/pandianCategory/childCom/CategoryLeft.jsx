@@ -4,7 +4,6 @@ import CategoryLeftItem from './CategoryLeftItem'
 import CategoryRight from './CategoryRight'
 import BetterScroll from 'common/betterScroll/BetterScroll'
 
-
 class CategoryLeft extends Component {
   constructor(props) {
     super(props)

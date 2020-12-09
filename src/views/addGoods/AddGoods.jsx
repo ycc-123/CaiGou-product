@@ -7,15 +7,11 @@ import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
 import { createProduct, getUnitList, getProductCategoryAll, getProductCategoryAllChildren, getProductCode } from 'network/Api'
 import { store } from "store/index";
-// import { Picker, List, Toast } from 'antd-mobile';
 import { useHistory } from 'react-router-dom';
-
 
 const Into = (props) => {
     const history = useHistory()
-
     const bt_ref = useRef()
-
     const [goodName, setgoodName] = useState('');
     const [goodCategory, setGoodCategory] = useState([]);
     const [goodCode, setGoodCode] = useState('');
@@ -26,7 +22,6 @@ const Into = (props) => {
     const [memberInterests, setMemberInterests] = useState(false)
     const [isProduct, setisProduct] = useState(false)
     const [memberPrice, setMemberPrice] = useState(false)
-    // const [retailPrice, setRetailPrice] = useState(false)
     const [matchGood, setMatchGood] = useState(false);
     const [matchCode, setMatchCode] = useState('')
     const [goodSort, setGoodSort] = useState('');
@@ -36,85 +31,49 @@ const Into = (props) => {
     const scrollConfig = {
         probeType: 1
     }
-
-console.log('渲染===========')
-
     useEffect(() => {
         getProductCategoryAllChildren({
             action: 'getProductCategoryAllChildren', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-
             }
         }).then((res) => {
-            console.log(res)
             var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
-            console.log(result)
             setClassification(result)
         })
-
-
         getUnitList({
             action: 'getUnitList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
-
             }
         }).then((res) => {
             var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
-            console.log(result)
             setUnit(result)
         })
-
-
-
         try {
             bt_ref.current.BScroll.refresh()
         } catch (error) {
-
         }
 
         return () => {
-            // cleanup
         }
     }, [])
-
-
     useEffect(() => {
-        
+
         getProductCode({
             action: 'getProductCode', data: {
                 uniacid: store.getState().uniacid,
                 categoryid: goodCategory.toString(),
-
             }
         }).then((res) => {
-            console.log(res.data.data)
             setGoodCode(res.data.data)
-
         })
-
     }, [goodCategory])
-
-
-
-    // useMemo(() => {
-
-    //     console.log(999999999999999999999999999999999)
-       
-
-    // }, [goodCategory])
-
-
-
     return (
         <>
-
             <BetterScroll config={scrollConfig} style={{ height: 'calc(100vh - 1.6rem)' }} ref={bt_ref}>
                 <TAddGoodsStyle>
-
                     <DocumentTitle title={'新增商品'} />
-
                     <div className="type flex-column">
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
@@ -164,42 +123,13 @@ console.log('渲染===========')
                             <div className="right">
                                 <input
                                     readonly="readonly"
-                                    value={goodCode.uniacid===store.getState().uniacid? "" : goodCode }
+                                    value={goodCode.uniacid === store.getState().uniacid ? "" : goodCode}
                                     type="text"
                                     placeholder='条码唯一,提交后不支持修改'
-                                    
                                 />
                             </div>
                         </div>
                     </div>
-                    {/* <div className="type flex-column">
-                        <div className="item flex-row" style={{
-                            justifyContent: 'space-between'
-                        }}>
-                            <div className="left">
-                                <span>库存单位: </span>
-                            </div>
-                            <div className="right">
-                            <Picker
-                             data={unit} 
-                             cols={1}  
-                             className="forss"
-                             extra="选择库存单位"
-                             value={stockUnit}
-                             onChange={e => { setStockUnit(e)}}
-                             onOk={v => setStockUnit(v)}
-                             >
-                                <List.Item className='kcdwtimes'  arrow="horizontal"></List.Item>
-                            </Picker> */}
-                    {/* <input
-                                    value={stockUnit}
-                                    type="text"
-                                    placeholder='选择库存单位'
-                                    onChange={e => { setStockUnit(e.target.value) }}
-                                /> */}
-                    {/* </div>
-                        </div>
-                    </div> */}
                     <div className="type flex-column">
                         <div className="item flex-row" style={{
                             justifyContent: 'space-between'
@@ -219,12 +149,6 @@ console.log('渲染===========')
                                 >
                                     <List.Item className='scdwtimes' arrow="horizontal"></List.Item>
                                 </Picker>
-                                {/* <input
-                                    value={sellUnit}
-                                    type="text"
-                                    placeholder='选择售出单位'
-                                    onChange={e => { setSellUnit(e.target.value) }}
-                                /> */}
                             </div>
                         </div>
                     </div>
@@ -236,7 +160,6 @@ console.log('渲染===========')
                         }}>
                             <div className="left">
                                 <p style={{ fontSize: ".35rem" }}>商品排序: </p>
-
                             </div>
                             <div className="right">
                                 <input
@@ -265,7 +188,6 @@ console.log('渲染===========')
                             </div>
                         </div>
                     </div>
-
 
                     <List
                         renderHeader={() => ''}
@@ -356,21 +278,14 @@ console.log('渲染===========')
                     <div className='raa' onClick={e => { check() }}>提交</div>
                 </div>
             </FAddGoodsStyle>
-
         </>
-
     )
 
     function code() {
         console.log(goodCategory.toString())
 
     }
-
-
-
     function check() {
-        console.log(memberPrice)
-
         createProduct({
             action: 'createProduct', data: {
                 uniacid: store.getState().uniacid,
@@ -388,7 +303,6 @@ console.log('渲染===========')
                 sequence: goodSort,
             }
         }).then((res) => {
-            console.log(res)
             if (res.data.status === 4001) {
                 history.push('/bjsygoods')
                 Toast.success(res.data.msg, 2)
