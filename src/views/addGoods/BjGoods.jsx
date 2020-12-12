@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { Picker, Toast, List, Switch } from 'antd-mobile';
-import { createForm } from 'rc-form';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { createProduct, getUnitList, getProductCategoryAllChildren, getProductDetail, editProduct } from 'network/Api'
+import { getUnitList, getProductCategoryAllChildren, getProductDetail, editProduct } from 'network/Api'
 import { store } from "store/index";
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -227,7 +226,7 @@ const Into = (props) => {
                             <List.Item
                                 extra={<Switch
                                     checked={memberPrice}
-                                    onChange={() => { setMemberPrice(!memberPrice) }}
+                                    onChange={() => { setMemberPrice(!memberPrice) }}                    
                                 />}
                             >启用会员价
                     <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>是否启用会员价</span>

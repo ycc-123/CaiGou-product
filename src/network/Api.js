@@ -496,3 +496,46 @@ export function editPackgeProduct(config) {
     data: config.data
   })
 }
+
+// 商品调价单明细
+
+export function getPriceModifyDetail(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+// 商品调价单列表
+
+export function getPriceModifyList(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+// 创建商品调价单
+
+export function createPriceModify(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+// 提交商品调价单
+
+export function submitPriceModify(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

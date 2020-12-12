@@ -43,7 +43,6 @@ export default class ApplyOrder extends Component {
         })
     }
     inputChange(e) {
-        console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -153,18 +152,17 @@ export default class ApplyOrder extends Component {
                                                         <div >
                                                             <p>单据日期：{v.createtime}</p>
                                                             <p>报损仓库：{v.warehouseName}</p>
-                                                            <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                                                <p>报损数量：{v.num}</p>
-                                                                <p style={{ marginRight: ".27rem" }}>报损金额：{v.price}</p>
-                                                            </div>
+
+                                                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                                                    <p>报损数量：{v.num}</p>
+                                                                    <p style={{ marginRight: ".27rem" }}>报损金额：{v.price}</p>
+                                                                </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div className='btn_sh' 
-                                                style={{ display: "none" }}
-                                            >审核</div>
+                                            <div className='btn_sh' style={{ display: "none" }}>审核</div>
                                         </div>
                                     )
                                 })
@@ -172,9 +170,10 @@ export default class ApplyOrder extends Component {
                         </BetterScroll>
                     </div>
                 </div>
-                <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
-                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
-                </div>
+                
+                    <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
+                        <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
+                    </div>
             </ApplyOrderStyle>
         )
     }

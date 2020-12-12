@@ -5,7 +5,7 @@ import CategoryLeftItem from './childCom/CategoryLeftItem'
 import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
-import { getProductCategoryAll, getStockList } from 'network/Api'
+import { getProductCategoryAll, getStockList, checkSubmitInventory } from 'network/Api'
 import { _categoryRight } from 'network/category'
 import KeepAlive from 'react-activation'
 import { Toast, Button, Modal } from 'antd-mobile';
@@ -24,6 +24,7 @@ class Category extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      arrCategoryid: [],
       indexId: '',
       value: [],
       title: [],
@@ -35,16 +36,50 @@ class Category extends Component {
       price: '',
       inputSearch: '',
       mrqunangoods: [],
-      Id: ""
+      Id: "",
+      sum: [],
+      dataName: [],
+      weilin: '存在下列实际数量为0的商品是否提交',
+      wulin: '是否确认提交盘点单',
+      gooda: []
     }
   }
   mingxi() {
     this.props.history.push('/Liebiao')
   }
-  getChildValue(aa, val) {
+  getChildValue(nums, goods, brr) {
+    // console.log(brr)
+    let aa = {}
+    let arr = []
+    aa = {
+      stockid: goods.id,
+      realnum: nums,
+    }
+    arr.push(aa);
     this.setState({
-      num: aa,
-      price: val
+      gooda: brr,
+      sum: [...this.state.sum, ...arr]
+    }, () => {
+      let itemData = this.state.sum
+      checkSubmitInventory({
+        action: 'checkSubmitInventory', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          inventoryId: this.props.match.params.id,
+          itemData: itemData,
+        }
+      }).then(res => {
+        console.log(res)
+        if (res.data.status === 4001) {
+          this.setState({
+            dataName: ["111"]
+          })
+        } else {
+          this.setState({
+            dataName: res.data.data
+          })
+        }
+      })
     })
   }
   inputChange(e) {
@@ -127,12 +162,7 @@ class Category extends Component {
             <div
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "7.78rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
-              onClick={() =>
-                alert('提交', '是否确认提交调拨单', [
-                  { text: '取消', onPress: () => console.log('cancel') },
-                  { text: '确定', onPress: () => this.click(2) },
-                ])
-              }
+              onClick={() => { this.click(1) }}
             >
               confirm
                         </div></div>
@@ -145,10 +175,41 @@ class Category extends Component {
   }
 
   click = (e) => {
-    this.child.myName(e)
+    console.log(Number(this.state.dataName.toString()))
+    console.log(Number(this.state.dataName.toString() === 111))
+    // this.child.myName(e)
+
+    this.setState({
+      Id: "1111"
+    }, () => {
+      alert(Number(this.state.dataName.toString()) === 111 ? this.state.wulin : this.state.weilin, Number(this.state.dataName.toString()) === 111 ? "" : this.state.dataName.join(","), [
+        { text: '取消', onPress: () => console.log('cancel') },
+        { text: '确定', onPress: () => this.child.myName(e) },
+      ])
+    })
   }
 
   componentDidMount = () => {
+    checkSubmitInventory({
+      action: 'checkSubmitInventory', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        inventoryId: this.props.match.params.id,
+        itemData: [],
+      }
+    }).then(res => {
+      console.log(res)
+      if (res.data.status === 4001) {
+        this.setState({
+          dataName: ["111"]
+        })
+      } else {
+        this.setState({
+          dataName: res.data.data
+        })
+      }
+    })
+
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
@@ -164,8 +225,11 @@ class Category extends Component {
             uid: store.getState().uid,
             warehouseid: this.props.match.params.ck,
             categoryid: Id[0].id,
+            limit: "100",
+            page: "1",
           }
         }).then(res => {
+          console.log(Id[0].id)
           if (res.data.status === 4001) {
             let mrqunangoods = []
             if (Boolean(res.data.data.data) === false) {
@@ -174,7 +238,10 @@ class Category extends Component {
             } else {
               mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
             }
+            let id = []
+            id.push(Id[0].id)
             this.setState({
+              arrCategoryid: id,
               mrqunangoods,
               goods: res.data.msg === "成功" ? res.data.data.data : [{}]
             })
@@ -194,59 +261,112 @@ class Category extends Component {
   }
 
   onChangeActive = index => {
-    getStockList({
-      action: 'getStockList', data: {
-        uniacid: store.getState().uniacid,
-        uid: store.getState().uid,
-        warehouseid: this.props.match.params.ck,
-        categoryid: this.state.id[index].id,
-      }
-    }).then(res => {
-      let mrqunangoods = []
-      if (res.data.status === 4001) {
-        if (Boolean(res.data.data.data) === false) {
-          Toast.info("无商品", 1)
-          mrqunangoods = []
-        } else {
-          mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-        }
-        this.setState({
-          mrqunangoods,
-          goods: res.data.data.data === null ? [] : res.data.data.data
-        })
-      } else {
-        this.setState({
-          goods: []
-        })
-        Toast.info(res.data.msg, 2)
-      }
+
+    console.log(this.state.gooda)
+
+
+    let brr = []
+    // console.log(this.state.id[index].id)
+    let panduan = ''
+    this.state.arrCategoryid.map((v, k) => {
+      if (Number(v) === Number(this.state.id[index].id)) {
+        panduan = true
+      } else { }
     })
-    const { appConfig } = store.getState()
-    let { title } = this.state
-    if (!this.state.goods) {
-      const right_config = {
-        action: 'getGoodsByCategory',
-        data: {
-          uniacid: appConfig.uniacid,
-          openid: appConfig.wxUserInfo.openid,
-          cid: this.state.title[index].id,
-          pagesize: 100
+    // console.log(panduan)
+
+    if (panduan === true) {
+      // console.log('不请求接口')
+      getStockList({
+        action: 'getStockList', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          warehouseid: this.props.match.params.ck,
+          categoryid: this.state.id[index].id,
+          limit: "100",
+          page: "1",
         }
-      }
-      _categoryRight(right_config).then(res => {
-        title[index].goods = (res.data && res.data.data && res.data.data.list) || []
-        this.setState({
-          ys: res.data.data.issell,
-          kc: res.data.data.showPubStock,
-          title,
-          defaultIndex: index
-        })
+      }).then(res => {
+
+
+
+
+        console.log(res.data.data.data)
+
+
+        let cartList = this.state.gooda
+        let now = res.data.data.data
+
+        console.log('之前', now)
+        
+        for (let i = 0; i < cartList.length; i++) {
+          for (let j = 0; j < now.length; j++) {
+            if (now[j].goods_name == cartList[i].id) {
+              now[j].realnum = cartList[i].realnum
+            }
+          }
+
+        }
+
+        console.log('之后', now)
+
+
+
+
+
+
+        let mrqunangoods = []
+        if (res.data.status === 4001) {
+          // 保存分类id
+          let Activeid = []
+          Activeid.push(this.state.id[index].id)
+          this.setState({
+            arrCategoryid: [...this.state.arrCategoryid, ...Activeid],
+            mrqunangoods,
+            goods: now
+          })
+        } else {
+          this.setState({
+            // arrCategoryid:[...this.state.arrCategoryid,...Activeid],
+            goods: []
+          })
+          Toast.info(res.data.msg, 2)
+        }
       })
     } else {
-      this.setState({
-        defaultIndex: index
+      getStockList({
+        action: 'getStockList', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          warehouseid: this.props.match.params.ck,
+          categoryid: this.state.id[index].id,
+          limit: "100",
+          page: "1",
+        }
+      }).then(res => {
+        let mrqunangoods = []
+        if (res.data.status === 4001) {
+          // 保存分类id
+          let Activeid = []
+          Activeid.push(this.state.id[index].id)
+          this.setState({
+            arrCategoryid: [...this.state.arrCategoryid, ...Activeid],
+            mrqunangoods,
+            // goods: now
+          })
+        } else {
+          this.setState({
+            // arrCategoryid:[...this.state.arrCategoryid,...Activeid],
+            goods: []
+          })
+          Toast.info(res.data.msg, 2)
+        }
       })
     }
+    this.setState({
+      defaultIndex: index
+    })
+    // console.log(brr)
   }
 }
 const CategoryStyle = styled.div`

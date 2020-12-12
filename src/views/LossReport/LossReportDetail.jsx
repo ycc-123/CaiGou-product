@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseApplyDetail, submitDamage, getDamageDetail } from 'network/Api'
+import { submitDamage, getDamageDetail } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import { store } from "store/index";
 import DocumentTitle from 'react-document-title'
@@ -134,9 +134,9 @@ export default class ApplyOrderx extends Component {
                             <p>报损数量：{this.state.sum}</p>
                             <p>单据状态：<span style={{ color:this.state.quan.statusName==="已审核"? "rgb(34, 163, 27)":"" }}>{this.state.quan.statusName}</span></p>
                         </div>
-                        <div className='footer'>
-                            备注：{this.state.quan.remark}
-                        </div>
+                            <div className='footer'>
+                                备注：{this.state.quan.remark}
+                            </div>
                     </div>
                     {
                         this.state.tiao.map((v, k) => {
@@ -168,8 +168,8 @@ export default class ApplyOrderx extends Component {
                             </div>
                             <div className="foot_c">总额：<span style={{color:"#cf2424"}}>{this.state.quan.totalPrice}</span></div>
                             <div className='right' 
-                            style={{ background: this.state.quan.statusName === "已审核" ? "#B4B4B4" : '' }}
-                            onClick={(e) => { this.tijiao(this.state.quan.statusName) }}>
+                                style={{ background: this.state.quan.statusName === "已审核" ? "#B4B4B4" : '' }}
+                                onClick={(e) => { this.tijiao(this.state.quan.statusName) }}>
                                 {this.state.quan.statusName === "已审核" ? "已审核" : '审核'}
                             </div>
                         </div>

@@ -40,7 +40,7 @@ class CategoryRightgoods extends Component {
             </div>
             <div className='shuliang' style={{ color: '#4c4c4c' }}>
               <article>账面数量：{goods.gnum}</article>
-              <div>实际数量：{this.state.login ? this.state.login : goods.gnum}</div>
+              <div>实际数量：{this.state.login ? this.state.login : 0}</div>
             </div>
             <Button
               style={{ position: "absolute", width: "3rem", top: ".3rem", left: "3.2rem", color: "transparent", background: "transparent", border: "none" }}

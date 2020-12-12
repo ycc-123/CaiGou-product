@@ -437,8 +437,7 @@ export default class LossReport extends Component {
                     this.refs.scroll.BScroll.refresh()
                 })
             })
-        } else {
-        }
+        } else {}
     }
 }
 const LossReportStyle = styled.div`

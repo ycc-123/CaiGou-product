@@ -31,7 +31,7 @@ export default class Home extends Component {
         <ul>
           {/* <li onClick={()=>{this.props.history.push('/PackagedGoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/add.png" alt=""/></li> */}
           <li onClick={()=>{this.props.history.push('/bjsygoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/bianji.png" alt=""/></li>
-          <li onClick={()=>{alert("该功能未实现")}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaojia.png" alt=""/></li>
+          <li onClick={()=>{this.props.history.push('/modifyPrice')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaojia.png" alt=""/></li>
           <li onClick={()=>{this.props.history.push('/PackagedGoods')}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dabao.png" alt=""/></li>
         </ul>
       </div>
@@ -75,7 +75,7 @@ export default class Home extends Component {
               </div>
               <div style={{position:"absolute",top:"2.2rem",left:".5rem"}}>版本信息</div>
               <div className="banben">
-                  v1.1.1.8.2
+                  v1.1.1.9
               </div>
               <p
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "1rem", left: "0rem", color: "transparent", background: "transparent" }}

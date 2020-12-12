@@ -2,26 +2,30 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import { Modal, Button, Toast } from 'antd-mobile';
-
 const prompt = Modal.prompt;
+
 class CategoryRightgoods extends Component {
   constructor(props) {
     super(props)
     this.state = {
       num: this.props.goods.num,
-      login: 0,
+      login: '',
       password: ''
     }
     this.click = true
   }
-  zjian = (login, goods) => {
+  zjian = (login, password, goods) => {
+    console.log(login, password, goods)
     if (login === '') {
-      Toast.info('请填写实际账面数量')
+      Toast.info('请填写采购数量')
+    } else if (password === '') {
+      Toast.info('请填写采购单价')
     } else {
       this.setState({
         login,
+        password
       })
-      this.props.parent.getChildrenMsg(this, login, goods)
+      this.props.parent.getChildrenMsg(this, login, password, goods)
     }
   }
 
@@ -30,34 +34,54 @@ class CategoryRightgoods extends Component {
     return (
       <CategoryRightgoodsStyle>
         <div className="rrr"></div>
-        <li className='category-goods clearfix'>
-          <img className='category-img' src={goods.image ? goods.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+        <li className='category-goods clearfix'
+        // onClick={()=>{this.props.history.push(`/PackagedBjGoods/${goods.id}`)}}
+        >
+          <img className='category-img' src={goods.albumpath?goods.albumpath:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
           <div className='category-goods-info'>
+
             <div style={{ fontSize: ".35rem", color: '#1a1a1a' }}>{goods.name}</div>
-            <div className='shuliang' style={{ color: '#1a1a1a', padding: ".2rem 0" }}>
-              <article>商品编码：{goods.barcode}</article>
-              <div>{goods.costprice}元/{goods.unit_name}</div>
+            <div className='member-price' style={{ color: '#1a1a1a', padding: ".2rem 0" }}>
+              <article >编码：{goods.code}</article>
+              <div style={{color:"#C61E1E",display:goods.memberprice!=="0.00"?"block":"none"}}>
+                <img style={{width:".32rem",height:".32rem",marginBottom:".05rem"}} src={"https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/memberPrice.png"} alt="" />
+                {this.state.password?this.state.password:goods.memberprice}元/{goods.unitname}
+                </div>
             </div>
             <div className='shuliang' style={{ color: '#4c4c4c' }}>
-              <article>账面数量：{goods.gnum}</article>
-              <div>实际数量：{goods.realnum ? goods.realnum : this.state.login}</div>
+              <article ></article>
+              <div style={{fontSize:".35rem"}}>{this.state.login?this.state.login:goods.posprice}元/{goods.unitname}</div>
             </div>
             <Button
-              style={{ position: "absolute", width: "3rem", top: ".3rem", left: "3.2rem", color: "transparent", background: "transparent", border: "none" }}
+              style={{ position: "absolute", top: ".3rem", left: "4.6rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
-              onClick={() => prompt('填写', '请输入商品实际账面数量',
-                [
-                  {
-                    text: '取消',
-                    onPress: value => console.log(`value:${value}`)
-                  },
-                  {
-                    text: '确定',
-                    onPress: value => this.zjian(value, goods)
-                  },
-                ]
+              onClick={() => prompt(
+                '填写',
+                '请输入最新零售价和会员价',
+                (login, text) => this.zjian(login, text, goods),
+                'login-password',
+                null,
+                ['最新零售价', '最新会员价'],
               )}
+              visible={false}
             >111111</Button>
+            <div style={{display:goods.memberprice!=="0.00"?"none":"block"}}>
+            <Button 
+              style={{position:"absolute",top:".3rem",left:"4.6rem",color:"transparent",background:"transparent"}} 
+              className="btn_modal"
+              onClick={() => prompt('填写', '请输入商品最新零售价',
+              [
+                {
+                  text: '取消',
+                  onPress: value => console.log(`value:${value}`)
+                },
+                {
+                  text: '确定',
+                  onPress: value =>this.zjian(value,0,goods)
+                },
+              ]
+              )}
+            >111111</Button></div>
           </div>
         </li>
       </CategoryRightgoodsStyle>
@@ -66,8 +90,19 @@ class CategoryRightgoods extends Component {
 }
 
 const CategoryRightgoodsStyle = styled.div`
+
+.am-modal-body .am-modal-propmt-content {
+  font-size: .37rem !important;
+
+}
 .shuliang span{
   margin-left:1.5rem;
+}
+.member-price{
+  // margin-top:.8rem;
+  font-size:.29rem;
+  display:flex;
+  justify-content: space-between;
 }
 .shuliang{
   // margin-top:.8rem;
@@ -115,7 +150,7 @@ const CategoryRightgoodsStyle = styled.div`
   // width: 7.17rem;
   height: 1.85rem;
   line-height: 1;
-  padding: .24rem .37rem;
+  padding: .24rem .3rem;
   border-bottom:1px solid #ccc;
   // margin-bottom: .17rem;
   // border-radius: .2rem;

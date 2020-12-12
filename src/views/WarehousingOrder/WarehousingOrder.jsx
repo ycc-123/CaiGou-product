@@ -75,9 +75,12 @@ export default class WarehousingOrder extends Component {
             <WarehousingOrderStyle>
     <DocumentTitle title={'采购入库单'} />
                 <div className='search'>
-                    <input type="search" className='input' placeholder="请输入入库单号/仓库名称" name="inputSearch" 
-                                    onChange={this.inputChange.bind(this)}
-                                    value={this.state.inputSearch}/>
+                <input type="search" 
+                      className='input' 
+                       placeholder="请输入入库单号/仓库名称" 
+                      name="inputSearch" 
+                      onChange={this.inputChange.bind(this)}
+                      value={this.state.inputSearch}/>
                     <div className='img' onClick={()=>{this.Search()}}>
                     <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search"/>
                     </div>

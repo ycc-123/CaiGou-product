@@ -154,7 +154,8 @@ export default class InventoryListDetails extends Component {
                                 let tiao = value
                                 return (
                                     <div className='tiao'>
-                                        <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+                                        <img className='t-img-l' 
+                                        src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
                                         <ul className='wen-zi'>
                                             <li className='wen-zi-c'>
                                                 <div >{tiao.barcode}</div>
@@ -178,7 +179,11 @@ export default class InventoryListDetails extends Component {
                             <span style={{ marginLeft: ".75rem" }}></span>
                             移库总额：<span>{this.state.inventoryData.transfer_totalmoney}</span>
                         </div>
-                        <div style={{ background: this.state.inventoryData.statusname === "提交成功" ? "#B4B4B4" : '' }} className='right' onClick={(e) => { this.shengHe(this.state.inventoryData.statusname) }}>{this.state.inventoryData.statusname === "待提交" ? "提交" : "已提交"}</div>
+                        <div 
+                            style={{ background: this.state.inventoryData.statusname === "提交成功" ? "#B4B4B4" : '' }} 
+                            className='right' onClick={(e) => { this.shengHe(this.state.inventoryData.statusname) }}>
+                            {this.state.inventoryData.statusname === "待提交" ? "提交" : "已提交"}
+                        </div>
                     </div>
                 </div>
             </WarehousingOrderxingStyle>

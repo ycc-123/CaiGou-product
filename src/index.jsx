@@ -26,7 +26,7 @@ import 'assets/css/basic.css'
 let uid ="2271"
 let uniacid = "53"
 
-
+// 无开通收银服务用户
 // let  uid= "5664"
 // let  uniacid= "4038"
 
@@ -37,11 +37,10 @@ store.dispatch(actionuid)
 const actionuniacid = saveUserUniacid(uniacid)
 store.dispatch(actionuniacid)
 
+// 判断是否微信开发者工具
 let environment = window.__wxjs_environment === 'miniprogram'
 console.log(environment)
 localStorage.setItem('user',environment);
-
-// window.location.reload()
 
 ReactDOM.render(
   <Provider store={store}> 

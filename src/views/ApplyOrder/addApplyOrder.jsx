@@ -10,10 +10,10 @@ export default class AddInventoryList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            data:[],
-            inputbeiz:'',
-            sValue:'',
-            IDck:""
+            data: [],
+            inputbeiz: '',
+            sValue: '',
+            IDck: ""
         }
     }
     componentDidMount() {
@@ -36,11 +36,10 @@ export default class AddInventoryList extends Component {
             }
         })
     }
-    createPurchase(){
+    createPurchase() {
         let idgy = this.state.sValue.toString()
-        let flname={}
-        let bz='1'
-        this.props.history.push(`/Sqcgcategory/${idgy}/${this.state.inputbeiz?this.state.inputbeiz:bz}`)
+        let bz = '1'
+        this.props.history.push(`/Sqcgcategory/${idgy}/${this.state.inputbeiz ? this.state.inputbeiz : bz}`)
     }
     inputChangebz(e) {
         this.setState({
@@ -50,7 +49,7 @@ export default class AddInventoryList extends Component {
     render() {
         return (
             <AddPurchaseOrderStyle>
-    <DocumentTitle title={'新建采购申请单'} />
+                <DocumentTitle title={'新建采购申请单'} />
 
                 <div>
                     <ul className='biao'>
@@ -67,12 +66,13 @@ export default class AddInventoryList extends Component {
                                 <List.Item className='times' arrow="horizontal"></List.Item>
                             </Picker>
                         </li>
-                    
+
                         <li style={{ border: "none" }}>
                             <div>备注：</div>
                             <input name="inputbeiz"
                                 onChange={this.inputChangebz.bind(this)}
-                                value={this.state.inputbeiz} type="text" /></li>
+                                value={this.state.inputbeiz} type="text" />
+                        </li>
                     </ul>
 
                     <div className='foot'>

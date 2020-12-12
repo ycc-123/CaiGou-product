@@ -21,6 +21,7 @@ export default class AddPurchaseOrder extends Component {
             jj: true
         }
     }
+    
     componentDidMount() {
         getWarehouseList({
             action: 'getWarehouseList', data: {

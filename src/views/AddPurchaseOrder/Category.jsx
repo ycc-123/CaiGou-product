@@ -35,7 +35,6 @@ class Category extends Component {
       inputSearch: '',
       Id: ""
     }
-
   }
   mingxi() {
     this.props.history.push('/Liebiao')
@@ -231,8 +230,6 @@ const CategoryStyle = styled.div`
   line-height: 1.17rem;
   background-color: #ED7913;
 }
-
-
 input::-webkit-input-placeholder {
   color: #c9c9c9;
   font-size:.35rem;

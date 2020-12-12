@@ -7,6 +7,7 @@ import Tiao from './Tiaomx'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 const alert = Modal.alert;
+
 export default class WarehousingOrderxing extends Component {
     constructor() {
         super()
@@ -25,6 +26,7 @@ export default class WarehousingOrderxing extends Component {
         }
     }
     componentDidMount() {
+        // 获取采购入库明细
         getPurchaseDeliveryDetail({
             action: 'getPurchaseDeliveryDetail', data: {
                 uniacid: store.getState().uniacid,
@@ -52,8 +54,7 @@ export default class WarehousingOrderxing extends Component {
         })
     }
     shengHe(e) {
-        if(e==="审核通过"){
-        }else{
+        if(e==="审核通过"){}else{
         if (this.state.input.length === 0) {
             // 默认
             let aa = {}
@@ -242,12 +243,24 @@ export default class WarehousingOrderxing extends Component {
                     </BetterScroll>
                     <div className='foot'>
                     <div className="foot_t">
-                            <p>采购总量：{this.state.purchaseDetail.snum}</p>
-                            <p>入库总量：{this.state.purchaseDetail.in_out_num}</p>
+                            <p>
+                                采购总量：{this.state.purchaseDetail.snum}
+                            </p>
+                            <p>
+                                入库总量：{this.state.purchaseDetail.in_out_num}
+                            </p>
                         </div>
-                        <div className="foot_c">差异数量：<span style={{color:"#cf2424"}}>{Number(this.state.purchaseDetail.snum)-Number(this.state.purchaseDetail.in_out_num)}</span></div>
-                        <div className="btn" style={{ background: this.state.purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }} 
-                        onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}</div>
+                        <div className="foot_c">
+                            差异数量：
+                            <span style={{color:"#cf2424"}}>
+                                {Number(this.state.purchaseDetail.snum)-Number(this.state.purchaseDetail.in_out_num)}
+                            </span>
+                        </div>
+                        <div className="btn"
+                            style={{ background: this.state.purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }} 
+                                onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>
+                            {this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}
+                        </div>
                     </div>
                 </div>
             </WarehousingOrderxingStyle>

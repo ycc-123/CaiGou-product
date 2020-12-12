@@ -5,9 +5,9 @@ import CategoryLeftItem from './childCom/CategoryLeftItem'
 import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
-import { getProductCategoryAll, searchProduct, getStockList,checkSubmitInventory } from 'network/Api'
-import { _categoryRight } from 'network/category'
-import { Toast, Button, Modal } from 'antd-mobile';
+import { getProductCategoryAll, searchProduct } from 'network/Api'
+// import { Toast } from 'antd-mobile';
+import { Toast ,Modal } from 'antd-mobile';
 const alert = Modal.alert;
 const scollConfig = {
   probeType: 1
@@ -22,113 +22,75 @@ class Category extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      indexId: '',
+      jj:true,
+      indexId:'',
       value: [],
-      title: [{ name: this.props.match.params.name }],
+      title: [],
       goods: [],
       defaultIndex: 0,
       type: 'goods',
       id: [],
       num: '',
       price: '',
-      inputSearch: '',
-      mrqunangoods: [],
-      Id: "",
-      sum:[],
-      dataName:[],
-      weilin:'存在下列实际数量为0的商品是否提交',
-      wulin:'是否确认提交盘点单'
+      inputSearch:'',
+      Bj:true,
+      Id:""
     }
   }
   mingxi() {
     this.props.history.push('/Liebiao')
   }
-  getChildValue(nums, goods) {
-    let aa = {}
-    let arr =[]
-       aa={
-        stockid:goods.id,
-        realnum:nums,
-        }
-       arr.push(aa);
-       this.setState({
-        sum:[...this.state.sum,...arr]
-       },()=>{
-        let itemData=this.state.sum
-    checkSubmitInventory({ action: 'checkSubmitInventory', data: {
-      uniacid: store.getState().uniacid,
-      uid:store.getState().uid,
-      inventoryId:this.props.match.params.id,
-      itemData:itemData,
-    } }).then(res=>{
-      console.log(res)
-      if(res.data.status===4001){
-        this.setState({
-          dataName:["0"]
-        })
-      }else{
-        this.setState({
-          dataName:res.data.data
-        })
-      }
-    })
-       })
-
-    
-
-
-
-
-
-
-
-    // console.log(aa, val)
-    // this.setState({
-    //   num: aa,
-    //   price: val
-    // })
-  }
-  inputChange(e) {
+  getChildValue(aa, val) {
     this.setState({
-      [e.target.name]: e.target.value
+      num: aa,
+      price: val
     })
   }
-  Search() {
+  inputChange(e){
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+  }
+  Search(){
     searchProduct({
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         categoryid: this.state.indexId,
-        search: this.state.inputSearch
+        // is_packge:"1",
+        limit:"1000",
+        page:1,
+        search:this.state.inputSearch
       }
     }).then(res => {
-      if (res.data.status === 4001) {
+      if(res.data.status===4001){
         this.setState({
-          goods: res.data.data.data
+            goods: res.data.data.data
         })
-      } else {
-        Toast.info(res.data.msg, 2)
+      }else{
+        Toast.info(res.data.msg,2)
       }
-
     })
   }
   render() {
     const { title, type } = this.state
-    let pdid = this.props.match.params.id
-    let ckid = this.props.match.params.ck
-    let flid = this.props.match.params.fl
+    let ida = this.props.match.params.id
     return (
       <CategoryStyle>
-        <DocumentTitle title={'新建盘点单'} />
-
+    <DocumentTitle title={'新建调价单'} />
         <Fragment>
+          <div style={{display:"flex"}}>
           <div className='search'>
-            <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"
-              onChange={this.inputChange.bind(this)}
-              value={this.state.inputSearch} />
+            <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch" 
+                                    onChange={this.inputChange.bind(this)}
+                                    value={this.state.inputSearch}/>
             <div className='img' onClick={() => { this.Search() }}>
               <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
+          </div>
+          {/* <div
+          onClick={()=>{this.state.jj===false?console.log(): this.props.history.push('/editPackagedGoods')}}
+           className='add'>新增<span style={{fontSize:".4rem"}}>+</span></div> */}
           </div>
           <div className='category-main'>
             {type === 'goods' ? <Fragment><div className='categoryLeft'>
@@ -147,15 +109,16 @@ class Category extends Component {
                 </BetterScroll>}
               </ul>
             </div>
-              <CategoryRight itemData={this.state.mrqunangoods} 
-              index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} ckid={ckid} pdid={pdid} 
-              aa={this.getChildValue.bind(this)} history={this.props.history} />
-            </Fragment> : <Fragment>
-              </Fragment>}
+             { <CategoryRight index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} 
+             id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />}
+             <div className='Bj' style={{display:this.state.Bj===false?"block":"none"}}>
+                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
+                </div></Fragment> : <Fragment></Fragment>}
           </div>
+
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-              <div className='left' >
+              <div className='left'>
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                 <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
               </div>
@@ -164,12 +127,14 @@ class Category extends Component {
                 <div className='tijiao' >提交</div>
               </div>
             </div>
-
-            <div 
+            <div
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "7.78rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
-              onClick={() =>{this.click(1)}
-                
+              onClick={() =>
+                alert('提交', '是否确认提交调价单', [
+                  { text: '取消', onPress: () => console.log('cancel') },
+                  { text: '确定', onPress: () => this.click(2) },
+                ])
               }
             >
               confirm
@@ -181,61 +146,82 @@ class Category extends Component {
   onRef = (ref) => {
     this.child = ref
   }
-
   click = (e) => {
-    console.log(this.state.dataName.toString())
-    // this.child.myName(e)
-   
-    this.setState({
-      Id:"1111"
-    },()=>{
-      alert(Number(this.state.dataName.toString())===0?this.state.wulin:this.state.weilin, Number(this.state.dataName.toString())===0?"":this.state.dataName.join(","), [
-        { text: '取消', onPress: () => console.log('cancel') },
-        { text: '确定', onPress: () =>this.child.myName(e) },
-      ])
-    })
+    this.child.myName(e)
   }
   componentDidMount = () => {
-    checkSubmitInventory({ action: 'checkSubmitInventory', data: {
-      uniacid: store.getState().uniacid,
-      uid:store.getState().uid,
-      inventoryId:this.props.match.params.id,
-      itemData:[],
-    } }).then(res=>{
-      console.log(res)
-      if(res.data.status===4001){
-        this.setState({
-          dataName:["0"]
-        })
-      }else{
-        this.setState({
-          dataName:res.data.data
-        })
-      }
-    })
-
-    getStockList({
-      action: 'getStockList', data: {
+    getProductCategoryAll({
+      action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
-        uid: store.getState().uid,
-        warehouseid: this.props.match.params.ck,
-        categoryid: this.props.match.params.fl,
-        limit: "100",
-        page: "1",
       }
     }).then(res => {
-      let mrqunangoods = []
-      if (Boolean(res.data.data.data) === false) {
-        Toast.info("无商品", 1)
-        mrqunangoods = []
+      if (res.data.status === 4001) {
+        var result = res.data.data.map(o => { return { name: o.name } });
+        var Id = res.data.data.map(o => { return { id: o.id } });
+        var value = res.data.data.map(o => { return { code: o.code } });
+        searchProduct({
+          action: 'searchProduct', data: {
+            uniacid: store.getState().uniacid,
+            uid: store.getState().uid,
+            // is_packge:"1",
+            limit:"1000",
+            page:1,
+            categoryid: Id[0].id,
+          }
+        }).then(res => {
+          if (res.data.status === 4001) {
+            this.setState({
+              goods: res.data.msg === "成功" ? res.data.data.data : [{}]
+            })
+          } else {
+            Toast.info(res.data.msg, 2)
+          }
+        })
+        this.setState({
+          title: result,
+          id: Id,
+          value
+        })
       } else {
-        mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-      }
       this.setState({
-        mrqunangoods,
-        goods: res.data.msg === "成功" ? res.data.data.data : [{}]
+        jj:false
       })
+        Toast.info(res.data.msg, 2)
+      }
     })
+  }
+
+  onChangeActive = index => {
+    this.setState({
+      indexId:this.state.id[index].id,
+      index
+    })
+    searchProduct({
+      action: 'searchProduct', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        // is_packge:"1",
+        limit:"1000",
+        page:1,
+        categoryid: this.state.id[index].id,
+      }
+    }).then(res => {
+      if (res.data.status === 4001) {
+        this.setState({
+          goods: res.data.data.data,
+          Bj: true
+        })
+      } else {
+        this.setState({
+          goods: [],
+          Bj: false  
+        })
+        Toast.info(res.data.msg, 2)
+      }
+    })
+      this.setState({
+        defaultIndex: index
+      })
   }
 }
 const CategoryStyle = styled.div`
@@ -263,6 +249,19 @@ const CategoryStyle = styled.div`
 }
 
 
+.add{
+  width: 1.6rem;
+  height: 0.75rem;
+  line-height: 0.75rem;
+  text-align:center;
+  color:#fff;
+  background: #ED7A14;
+  border-radius: .1rem;
+  margin-top:.21rem;
+  margin-left:.32rem;
+  font-size:.37rem;
+}
+
 input::-webkit-input-placeholder {
   color: #c9c9c9;
   font-size:.35rem;
@@ -271,7 +270,8 @@ input::-webkit-input-placeholder {
   width: .55rem;  
   height: .55rem; 
   // line-height: .5rem; 
-  margin-left:2.45rem;
+  margin-left:.45rem; 
+  margin-right:.2rem;
 }
 .img-search{
   margin-top:.12rem;
@@ -282,9 +282,10 @@ input::-webkit-input-placeholder {
 }
   
 .input{
+  width:6rem;
   font-size:.37rem;
   border:none;
-  width:6rem;
+  // width:8.3rem;
   // margin-top:.21rem;
   margin-left:.17rem;
   height: .75rem;
@@ -294,16 +295,16 @@ input::-webkit-input-placeholder {
 }
 .search{
   display:flex;
+  justify-content: space-between;
   margin-top:.21rem;
   margin-left:.32rem;
-  margin-bottom:.21rem;
-
   width:9.36rem;
   height: .75rem;
   border-radius:.15rem;
   background-color: #fff;
 
 }
+
 
 
 
@@ -326,12 +327,13 @@ input::-webkit-input-placeholder {
   border-radius:.5rem;
   background-color: #E01616;
   font-size:.24rem;
+
 }
 .foot_conton span{
   color:#cf2424;
 }
 .foot_conton{
-  width: 12rem;
+  width: 10rem;
   // height: 100%rem;
   line-height:1.6rem;
   text-align:center;
@@ -349,14 +351,23 @@ input::-webkit-input-placeholder {
   width:3rem;
   
 }
-
+.right{
+  font-size:.4rem;
+  color:#fff;
+  text-align:center;
+  width: 100%;
+  margin:auto;
+  height: 1.6rem;
+  line-height:1.6rem;
+  background-color: #ED7913;
+}
 .foot{
   display:flex;
   width: 100%;
   height: 1.6rem;
   background-color: #fff;
   position:absolute;
-  // bottom:0;
+  bottom:0;
 }
 
 
@@ -396,13 +407,14 @@ input::-webkit-input-placeholder {
 
 .category-main {
   width: 100%;
+  margin-top:.21rem;
 }
 
 .categoryLeft {
   position: relative;
   float: left;
   width: 2.46rem;
-  height: calc(100vh - 2.7rem);
+  height: calc(100vh - 2.8rem);
   overflow: hidden;
   background: #F7F7F7;;
 }
@@ -421,7 +433,7 @@ input::-webkit-input-placeholder {
   display: inline-block;
   // left: .16rem;
   width: 7.5rem;
-  height: calc(100vh - 2.7rem);
+  height: calc(100vh - 2.8rem);
   overflow: hidden;
 }
 
@@ -734,7 +746,6 @@ input::-webkit-input-placeholder {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
-
 `
 
 export default Category

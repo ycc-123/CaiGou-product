@@ -2,11 +2,10 @@
 import React, { Component } from 'react'
 import CategoryRightItem from './CategoryRightItem'
 import BetterScroll from 'common/betterScroll/BetterScroll'
-import { submitInventory,searchProduct } from 'network/Api'
+import { submitPurchase,submitPriceModify } from 'network/Api'
 import {  Toast } from 'antd-mobile';
 import { store} from 'store/index'
 import { saveGoods} from 'store/actionCreators'
-import localStorage from 'redux-persist/es/storage';
 
 class CategoryRight extends Component {
   constructor(){
@@ -39,7 +38,7 @@ class CategoryRight extends Component {
         <ul>
           <BetterScroll config={scollConfig} style={scrollStyle} ref='scroll' loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
-            {Boolean(goodsList)===false?"":goodsList.map((item, index) => {
+            {goodsList.map((item, index) => {
               return (
                 <CategoryRightItem key={item.id + index} goods={item} parent={ this }/>
               )
@@ -50,28 +49,45 @@ class CategoryRight extends Component {
     );
   }
   getChildrenMsg = (result,login, password,ww) => {
-    // this.props.aa(login, password)
+    let num=Number(this.state.num)+Number(login)
+    let price=Number(this.state.price)+Number(login)*Number(password)
+   this.props.aa(num,price)
+    let arr  = []
+    arr.push(ww);
+
     let nums  = []
     nums.push(login);
 
     let prices  = []
     prices.push(password);
     this.setState({
+      num,
+      price,
       login:[...this.state.login, ...nums],
-      password:[...this.state.password, ...prices]
+      password:[...this.state.password, ...prices],
+
+      goods:[...this.state.goods, ...arr]
     },()=>{
-      let aa={}
-      let arr=[]
-      this.state.login.map((v,k)=>{
-        aa={
-         id:this.state.password[k].name,
-         realnum:v,
-         }
-        return arr.push(aa);
-     })
-     console.log(arr)
-    //  localStorage.setItem("aa",JSON.stringify(arr))
-    this.props.aa(login, password,arr)
+    //   let num =this.state.login
+    // let price =this.state.password
+    // let aa = {}
+    // let arr =[]
+    // num.map((v,k)=>{
+    //    aa={
+          // amount:num[k]*price[k],
+          // barcodeid:this.state.goods[k].barcodeid,
+          // barcode:this.state.goods[k].code,
+          // img:this.state.goods[k].albumpath,
+          // danwei:this.state.goods[k].unitname,
+          // gnum:num[k],
+          // num:num[k],
+          // price:price[k],
+          // name:this.state.goods[k].name,
+      //   }
+      //  return arr.push(aa);
+    // })
+    // const goodsList = saveGoods(arr)
+    // store.dispatch(goodsList)
     })
 }
   componentDidMount(){
@@ -80,60 +96,48 @@ class CategoryRight extends Component {
 
   myName = (e) =>{
     if(this.state.login[0]===undefined){
-      submitInventory({ action: 'submitInventory', data: {
-        uniacid: store.getState().uniacid,
-        uid:store.getState().uid,
-        status:e,
-        warehouseid:this.props.ckid,
-        inventoryId:this.props.pdid,
-        itemData:this.props.itemData,
-      } }).then(res=>{
-        if(res.data.status===4001){
-          Toast.success(res.data.msg, 2)
-          this.props.history.push('/home')
-        }else{
-          Toast.info(res.data.msg, 2)
-        }
-      })
+     Toast.info('请调价商品后提交',1.5)
     }else{
     let num =this.state.login
     let price =this.state.password
     let aa = {}
     let arr =[]
-
     num.map((v,k)=>{
-       aa={
-        stockid:this.state.password[k].id,
-        realnum:v,
-  
+      aa={
+          barcodeid:this.state.goods[k].barcodeid,
+          newmemberprice:price[k],
+          newposprice:num[k],
         }
        return arr.push(aa);
     })
+    // const goodsList = saveGoods(arr)
+    // store.dispatch(goodsList)
     let itemData=arr
-    submitInventory({ action: 'submitInventory', data: {
+    submitPriceModify({ action: 'submitPriceModify', data: {
       uniacid: store.getState().uniacid,
       uid:store.getState().uid,
       status:e,
-      warehouseid:this.props.ckid,
-      inventoryId:this.props.pdid,
+      id:this.props.id,
       itemData:itemData,
     } }).then(res=>{
       if(res.data.status===4001){
         Toast.success(res.data.msg, 2)
-        this.props.history.push('/home')
+        this.home()
       }else{
         Toast.info(res.data.msg, 2)
       }
     })
     }
   } 
+  home(){
+    this.props.history.push('/home')
+  }
   shouldComponentUpdate = (nextProps, nextState) => {
     return JSON.stringify(this.props) !== JSON.stringify(nextProps)
   }
   componentDidUpdate = () => {
     this.refs.scroll.BScroll.scrollTo(0, 0)
     this.refs.scroll.BScroll.refresh()
-
   }
 }
 

@@ -45,7 +45,7 @@ class CategoryRightgoods extends Component {
           <div style={{fontSize:".35rem",color:'#1a1a1a'}}>{goods.name}</div>
 
           <div className='shuliang' style={{color:'#1a1a1a',padding:".2rem 0"}}>
-                   <article>商品编码：{goods.barcode}</article>
+                   <article>编码：{goods.barcode}</article>
                    <div>{goods.costprice}元/{goods.unit_name}</div>
                  </div>
             <div className='shuliang' style={{color:'#4c4c4c'}}>
@@ -117,7 +117,7 @@ const CategoryRightgoodsStyle = styled.div`
   // width: 7.17rem;
   height: 1.85rem;
   line-height: 1;
-  padding: .24rem .37rem;
+  padding: .24rem .3rem;
   border-bottom:1px solid #ccc;
   // margin-bottom: .17rem;
   // border-radius: .2rem;

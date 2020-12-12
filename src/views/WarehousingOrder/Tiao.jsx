@@ -16,7 +16,7 @@ export default class Tiao extends Component {
                             <p>
                             <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt=""/>
                             </p>
-                            <div className='t-right'>
+                            <div className='t-right'> 
                             <div className='caigoudanhao'>入库单号：{data.docno}</div>
                             <div className='zuantai' style={{color:Color}}>{data.statusname}</div>
                             </div>
