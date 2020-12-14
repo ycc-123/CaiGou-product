@@ -132,6 +132,10 @@ export default class AddPurchaseOrder extends Component {
                                 <List.Item className='pdlx' arrow="horizontal"></List.Item>
                             </Picker>
                         </li>
+                        <li onClick={()=>{this.props.history.push('/home')}}>
+                            <div>引用采购申请：</div>
+                            <div style={{color:"#a9a9a9",marginLeft:".3rem"}}>调用采购申请单</div>
+                        </li>
                         <li>
                             <div>预付款：</div>
                             <input name="inputAmount"

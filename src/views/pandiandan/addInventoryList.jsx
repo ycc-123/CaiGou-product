@@ -269,9 +269,10 @@ const AddPurchaseOrderStyle = styled.div`
         
     }
     .biao li input{
+        margin-top:.25rem;
         border:none;
         outline:none;
-        font-size:.45rem;
+        font-size:.37rem;
         width:7rem;
         height:.65rem;
         color:#646464; 

@@ -67,21 +67,22 @@ class CategoryRight extends Component {
 
   myName = (e) =>{
     if(this.state.login[0]===undefined){
-      submitInventory({ action: 'submitInventory', data: {
-        uniacid: store.getState().uniacid,
-        uid:store.getState().uid,
-        status:e,
-        warehouseid:this.props.ckid,
-        inventoryId:this.props.pdid,
-        itemData:this.props.itemData,
-      } }).then(res=>{
-        if(res.data.status===4001){
-          Toast.success(res.data.msg, 2)
-          this.home()
-        }else{
-          Toast.info(res.data.msg, 2)
-        }
-      })
+      Toast.info("请盘点商品后提交或保存")
+      // submitInventory({ action: 'submitInventory', data: {
+      //   uniacid: store.getState().uniacid,
+      //   uid:store.getState().uid,
+      //   status:e,
+      //   warehouseid:this.props.ckid,
+      //   inventoryId:this.props.pdid,
+      //   itemData:this.props.itemData,
+      // } }).then(res=>{
+      //   if(res.data.status===4001){
+      //     Toast.success(res.data.msg, 2)
+      //     this.home()
+      //   }else{
+      //     Toast.info(res.data.msg, 2)
+      //   }
+      // })
     }else{
     let num =this.state.login
     let price =this.state.password

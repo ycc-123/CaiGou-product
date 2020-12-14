@@ -71,22 +71,22 @@ export default class ApplyOrderx extends Component {
         // }
         // console.log("默认", deliveryData, itemData)
          submitPriceModify({
-        action: 'submitPriceModify', data: {
-          uniacid: store.getState().uniacid,
-          uid: store.getState().uid,
-          id: this.props.match.params.id,
-          status:2,
-          itemData:itemData
-        }
-      }).then((res) => {
-        if (res.data.status === 4001) {
-          window.location.reload();
-          Toast.success(res.data.msg, 1)
+            action: 'submitPriceModify', data: {
+              uniacid: store.getState().uniacid,
+              uid: store.getState().uid,
+              id: this.props.match.params.id,
+              status:2,
+              itemData:itemData
+            }
+          }).then((res) => {
+            if (res.data.status === 4001) {
+              window.location.reload();
+              Toast.success(res.data.msg, 1)
+            } else {
+              Toast.info(res.data.msg, 1)
+            }
+          })
         } else {
-          Toast.info(res.data.msg, 1)
-        }
-      })
-    } else {
         // let aa = {}
         // let arr = []
         // this.state.goods.map((v, k) => {
@@ -248,18 +248,18 @@ export default class ApplyOrderx extends Component {
                                 onClick={() => { this.tijiao(this.state.quan.statusName) }}
                             >{this.state.quan.statusName === "待提交" ? "提交" : "已提交"}
                             </div>
-                            <Button
+                            {/* <Button
                                 style={{ display: this.state.quan.statusName === "待提交" ? "none" : "block", width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
                                 className="btn_modal"
                                 onClick={() =>
-                                    alert('审核', '是否确认审核采购单', [
+                                    alert('提交', '是否确认提交调价单', [
                                         { text: '取消', onPress: () => console.log('cancel') },
                                         { text: '确定', onPress: () => this.tijiao(this.state.quan.statusName) },
                                     ])
                                 }
                             >
                                 confirm
-                        </Button>
+                        </Button> */}
                         </div>
                     </div>
         </div>
@@ -331,12 +331,15 @@ const ApplyOrderxStyle = styled.div`
     
   }
   .right{
+    margin-top:.2rem;
+    margin-right:.2rem;
+    border-radius:.2rem;
     font-size:.4rem;
     color:#fff;
     text-align:center;
-    width: 2.76rem;
-    height: 1.6rem;
-    line-height:1.6rem;
+    width: 2.04rem;
+    height: 1.17rem;
+    line-height: 1.17rem;
     background-color: #ED7913;
   }
   .foot{

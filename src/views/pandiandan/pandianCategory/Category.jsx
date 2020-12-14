@@ -196,6 +196,30 @@ class Category extends Component {
     })
   }
   componentDidMount = () => {
+    getStockList({
+      action: 'getStockList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        warehouseid: this.props.match.params.ck,
+        categoryid: this.props.match.params.fl,
+        limit: "100",
+        page: "1",
+      }
+    }).then(res => {
+      let mrqunangoods = []
+      if (Boolean(res.data.data.data) === false) {
+        Toast.info("无商品", 1)
+        mrqunangoods = []
+      } else {
+        mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
+        this.setState({
+          mrqunangoods,
+          goods: res.data.data.data
+      })
+      }
+    })
+
+
     checkSubmitInventory({ action: 'checkSubmitInventory', data: {
       uniacid: store.getState().uniacid,
       uid:store.getState().uid,
@@ -214,28 +238,7 @@ class Category extends Component {
       }
     })
 
-    getStockList({
-      action: 'getStockList', data: {
-        uniacid: store.getState().uniacid,
-        uid: store.getState().uid,
-        warehouseid: this.props.match.params.ck,
-        categoryid: this.props.match.params.fl,
-        limit: "100",
-        page: "1",
-      }
-    }).then(res => {
-      let mrqunangoods = []
-      if (Boolean(res.data.data.data) === false) {
-        Toast.info("无商品", 1)
-        mrqunangoods = []
-      } else {
-        mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-      }
-      this.setState({
-        mrqunangoods,
-        goods: res.data.msg === "成功" ? res.data.data.data : [{}]
-      })
-    })
+    
   }
 }
 const CategoryStyle = styled.div`

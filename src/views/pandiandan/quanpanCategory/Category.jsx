@@ -261,22 +261,6 @@ class Category extends Component {
   }
 
   onChangeActive = index => {
-
-    console.log(this.state.gooda)
-
-
-    let brr = []
-    // console.log(this.state.id[index].id)
-    let panduan = ''
-    this.state.arrCategoryid.map((v, k) => {
-      if (Number(v) === Number(this.state.id[index].id)) {
-        panduan = true
-      } else { }
-    })
-    // console.log(panduan)
-
-    if (panduan === true) {
-      // console.log('不请求接口')
       getStockList({
         action: 'getStockList', data: {
           uniacid: store.getState().uniacid,
@@ -287,82 +271,35 @@ class Category extends Component {
           page: "1",
         }
       }).then(res => {
-
-
-
-
         console.log(res.data.data.data)
-
-
         let cartList = this.state.gooda
-        let now = res.data.data.data
-
+        let now = res.data.data.data?res.data.data.data:[]
         console.log('之前', now)
-        
         for (let i = 0; i < cartList.length; i++) {
+          console.log(i)
           for (let j = 0; j < now.length; j++) {
+            console.log(j)
             if (now[j].goods_name == cartList[i].id) {
+              console.log(now[j].goods_name)
+              console.log(cartList[i].id)
               now[j].realnum = cartList[i].realnum
             }
           }
-
         }
-
         console.log('之后', now)
-
-
-
-
-
-
-        let mrqunangoods = []
         if (res.data.status === 4001) {
           // 保存分类id
-          let Activeid = []
-          Activeid.push(this.state.id[index].id)
           this.setState({
-            arrCategoryid: [...this.state.arrCategoryid, ...Activeid],
-            mrqunangoods,
             goods: now
           })
         } else {
           this.setState({
-            // arrCategoryid:[...this.state.arrCategoryid,...Activeid],
             goods: []
           })
           Toast.info(res.data.msg, 2)
         }
       })
-    } else {
-      getStockList({
-        action: 'getStockList', data: {
-          uniacid: store.getState().uniacid,
-          uid: store.getState().uid,
-          warehouseid: this.props.match.params.ck,
-          categoryid: this.state.id[index].id,
-          limit: "100",
-          page: "1",
-        }
-      }).then(res => {
-        let mrqunangoods = []
-        if (res.data.status === 4001) {
-          // 保存分类id
-          let Activeid = []
-          Activeid.push(this.state.id[index].id)
-          this.setState({
-            arrCategoryid: [...this.state.arrCategoryid, ...Activeid],
-            mrqunangoods,
-            // goods: now
-          })
-        } else {
-          this.setState({
-            // arrCategoryid:[...this.state.arrCategoryid,...Activeid],
-            goods: []
-          })
-          Toast.info(res.data.msg, 2)
-        }
-      })
-    }
+    
     this.setState({
       defaultIndex: index
     })

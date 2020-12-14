@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseApplyDetail, submitPurchaseApply } from 'network/Api'
+import BetterScroll from 'common/betterScroll/BetterScroll'
 import { Toast } from 'antd-mobile';
 import { store } from "store/index";
 import DocumentTitle from 'react-document-title'
@@ -39,6 +40,8 @@ export default class ApplyOrderx extends Component {
                     remark: res.data.data.remark,
                     tiao: res.data.data.item ? res.data.data.item : [],
                     sum
+                },()=>{
+                    this.refs.scroll.BScroll.refresh()
                 })
             } else {
                 Toast.info(res.data.msg, 2)
@@ -89,6 +92,9 @@ export default class ApplyOrderx extends Component {
         })
     }
     render() {
+        const scrollConfig = {
+            probeType: 1
+        }
         return (
             <ApplyOrderxStyle>
                 <DocumentTitle title={'采购申请单明细'} />
@@ -120,6 +126,8 @@ export default class ApplyOrderx extends Component {
                             采购备注：{this.state.quan.remark}
                         </div>
                     </div>
+                    <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)"}}>
+
                     {
                         this.state.tiao.map((v, k) => {
                             return (
@@ -142,6 +150,7 @@ export default class ApplyOrderx extends Component {
                             )
                         })
                     }
+                    </BetterScroll>
                     <div className='foot'>
                         <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
                             <div className='left'>
