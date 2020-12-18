@@ -24,6 +24,7 @@ class Category extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      Bj: true,
       ckkey:"",
       cankuID:"",
       flid:'',
@@ -150,10 +151,12 @@ class Category extends Component {
               </ul>
             </div>
               <CategoryRight 
-            itemData={this.state.mrqunangoods} 
-            ckid={ckid} pdid={pdid} index={this.state.Id} 
+             index={this.state.Id} 
             goodsList={this.state.goods} onRef={this.onRef} 
             aa={this.getChildValue.bind(this)} history={this.props.history} />
+            <div className='Bj' style={{ display: this.state.Bj === false ? "block" : "none" }}>
+                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
+              </div>
             </Fragment> : <Fragment>
               </Fragment>}
           </div>
@@ -193,7 +196,7 @@ class Category extends Component {
     this.setState({
       xian:false,
     })
-    // console.log(this.state.flid)
+    console.log(this.state.flid)
     getStockList({
       action: 'getStockList', data: {
         uniacid: store.getState().uniacid,
@@ -207,6 +210,7 @@ class Category extends Component {
      
       if (res.data.status === 4001) {
        this.setState({
+        Bj: true,
         totalgnum: res.data.data.totalgnum,
         totalcostprice: res.data.data.totalcostprice,
         goods: res.data.data.data === null ? [] : res.data.data.data
@@ -214,6 +218,7 @@ class Category extends Component {
        
       } else {
         this.setState({
+          Bj: false,
           goods: [],
           totalgnum: 0,
           totalcostprice: 0,
@@ -229,45 +234,7 @@ class Category extends Component {
   click = (e) => {
     this.child.myName(e)
   }
-  changeImage = () => {
-    if (this.state.type === 'swiper') {
-      this.setState({
-        type: 'goods'
-      })
-    } else {
-      this.setState({
-        type: 'swiper'
-      })
-    }
-  }
 
-  componentDidCache = () => {
-    // console.log('缓存了')
-  }
-
-  componentDidRecover = () => {
-    const { defaultIndex, title } = this.state
-    const { appConfig } = store.getState()
-    const right_config = {
-      action: 'getGoodsByCategory',
-      data: {
-        uniacid: appConfig.uniacid,
-        openid: appConfig.wxUserInfo.openid,
-        cid: title[defaultIndex].id,
-        pagesize: 100
-      }
-    }
-
-    _categoryRight(right_config).then(res => {
-      title[defaultIndex].goods = (res.data && res.data.data && res.data.data.list) || []
-      this.setState({
-        ys: res.data.data.issell,
-        kc: res.data.data.showPubStock,
-        title
-      })
-    })
-
-  }
 
   componentDidMount = () => {
 
@@ -297,23 +264,16 @@ class Category extends Component {
         }).then(res => {
           // console.log(res)
           if (res.data.status === 4001) {
-            let mrqunangoods = []
-            if (Boolean(res.data.data.data) === false) {
-              Toast.info("无商品", 1)
-              mrqunangoods = []
-            } else {
-              mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-              // console.log(mrqunangoods)
-            }
+           
             this.setState({
-              flid:Id[0].id,
+              Bj: true,
               totalgnum: res.data.data.totalgnum,
               totalcostprice: res.data.data.totalcostprice,
-              mrqunangoods,
-              goods: res.data.msg === "成功" ? res.data.data.data : [{}]
+              goods: res.data.data.data
             })
           } else {
             this.setState({
+              Bj: false,
               goods: [],
               totalgnum: 0,
               totalcostprice: 0,
@@ -330,7 +290,6 @@ class Category extends Component {
         Toast.info('网络错误', 2)
       }
     })
-    // console.log(this.state.id)
     getWarehouseList({
       action: 'getWarehouseList', data: {
           uniacid: store.getState().uniacid,
@@ -340,10 +299,8 @@ class Category extends Component {
           page:"1"
       }
   }).then((res) => {
-      // console.log(res)
       if(res.data.status===4001){
           var bb = res.data.data.data.map(o=>{return{id:o.id,name:o.name}});
-              // console.log(bb)
               let aa=[{id:"",name:"全部仓库"}]
               let result=[...aa,...bb]
           this.setState({
@@ -362,28 +319,23 @@ class Category extends Component {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         warehouseid: this.state.cankuID,
-        categoryid: this.state.id[index].id,
+        categoryid:this.state.id[index].id,
         limit: "300",
         page: "1"
       }
     }).then(res => {
-      let mrqunangoods = []
       if (res.data.status === 4001) {
-        if (Boolean(res.data.data.data) === false) {
-          Toast.info("无商品", 1)
-          mrqunangoods = []
-        } else {
-          mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-        }
         this.setState({
+          Bj: true,
           flid:this.state.id[index].id,
           totalgnum: res.data.data.totalgnum,
           totalcostprice: res.data.data.totalcostprice,
-          mrqunangoods,
           goods: res.data.data.data === null ? [] : res.data.data.data
         })
       } else {
         this.setState({
+          Bj: false,
+          flid:this.state.id[index].id,
           goods: [],
           totalgnum: 0,
           totalcostprice: 0,
@@ -391,41 +343,25 @@ class Category extends Component {
         Toast.info(res.data.msg, 2)
       }
     })
-
-
-
-
-    const { appConfig } = store.getState()
-    let { title } = this.state
-    if (!this.state.goods) {
-      const right_config = {
-        action: 'getGoodsByCategory',
-        data: {
-          uniacid: appConfig.uniacid,
-          openid: appConfig.wxUserInfo.openid,
-          cid: this.state.title[index].id,
-          pagesize: 100
-        }
-      }
-      _categoryRight(right_config).then(res => {
-        title[index].goods = (res.data && res.data.data && res.data.data.list) || []
-        this.setState({
-          ys: res.data.data.issell,
-          kc: res.data.data.showPubStock,
-          title,
-          defaultIndex: index
-        })
-      })
-    } else {
       this.setState({
         defaultIndex: index
       })
-    }
   }
-
-
 }
 const CategoryStyle = styled.div`
+.Bj img{
+  width: 5rem;
+  height: 5rem;
+}
+.Bj{
+  position:absolute;
+  top:4.5rem;
+  left:3.6rem;
+  vertical-align: middle;
+  text-align: center;
+}
+
+
 .fenglei div ul li{
   font-size:.27rem;
   overflow: hidden;

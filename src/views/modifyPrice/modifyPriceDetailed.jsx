@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import {  submitPriceModify, getPriceModifyDetail } from 'network/Api'
-import { Toast,Button } from 'antd-mobile';
+import { Toast } from 'antd-mobile';
 import { store } from "store/index";
 import DocumentTitle from 'react-document-title'
 import BetterScroll from 'common/betterScroll/BetterScroll'

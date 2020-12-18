@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import { Modal, Button, Toast } from 'antd-mobile';
+import { Modal, Toast } from 'antd-mobile';
 
 
-const prompt = Modal.prompt;
 class CategoryRightgoods extends Component {
   constructor(props) {
     super(props)

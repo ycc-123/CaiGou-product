@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getWarehouseList, getRetailGoodsList, get_store } from 'network/Api'
+import { getRetailGoodsList, get_store } from 'network/Api'
 import { Toast, List, DatePicker } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import GoodDiscounts from './GoodDiscounts'

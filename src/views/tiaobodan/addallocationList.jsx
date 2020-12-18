@@ -64,6 +64,7 @@ export default class AddInventoryList extends Component {
                         aa = v
                         return arr.push(aa, res.data.data.docno);
                     }
+                    return ""
                 })
                 const tiaoboxqck = saveCanku(arr)
                 store.dispatch(tiaoboxqck)

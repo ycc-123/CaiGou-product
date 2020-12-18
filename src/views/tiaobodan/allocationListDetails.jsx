@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getWarehouseChangeDetail, submitWarehouseChange } from 'network/Api'
-import { Toast, Modal, Button } from 'antd-mobile';
+import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
-const alert = Modal.alert;
 export default class InventoryListDetails extends Component {
     constructor() {
         super()

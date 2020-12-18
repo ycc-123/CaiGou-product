@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import CategoryRightItem from './CategoryRightItem'
 import BetterScroll from 'common/betterScroll/BetterScroll'
-import { submitDamage ,editPackgeProduct} from 'network/Api'
+import { editPackgeProduct} from 'network/Api'
 import {  Toast } from 'antd-mobile';
 import { store } from "store/index";
 import { 

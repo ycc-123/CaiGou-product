@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import CategoryRightItem from './CategoryRightItem'
 import BetterScroll from 'common/betterScroll/BetterScroll'
-import { submitPurchase, searchProduct, submitWarehouseChange } from 'network/Api'
+import { submitWarehouseChange } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import { store } from 'store/index'
 import { savetiaoboGoods } from 'store/actionCreators'
@@ -77,7 +77,7 @@ class CategoryRight extends Component {
           barcodeid: this.state.goods[k].barcodeid,
           barcode: this.state.goods[k].code,
           img: this.state.goods[k].image,
-          barcode: this.state.goods[k].barcode,
+          // barcode: this.state.goods[k].barcode,
           gnum: num[k],
           num: num[k],
           price: price[k],

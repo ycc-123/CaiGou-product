@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import { Modal, Button, Toast } from 'antd-mobile';
-const prompt = Modal.prompt;
+import { Toast } from 'antd-mobile';
 
 class CategoryRightgoods extends Component {
   constructor(props) {
@@ -14,6 +13,7 @@ class CategoryRightgoods extends Component {
     }
     this.click = true
   }
+  
   zjian = (login, password, goods) => {
     if (login === '') {
       Toast.info('请填写采购数量')

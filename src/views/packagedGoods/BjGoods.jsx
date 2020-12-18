@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { Picker, Toast, List, Switch } from 'antd-mobile';
-import { createForm } from 'rc-form';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { getProductCategoryAll, getUnitList, getProductCategoryAllChildren, getProductDetail, editProduct, getPackgeProductDetail } from 'network/Api'
+import { getProductCategoryAll, getUnitList, getProductDetail, editProduct, getPackgeProductDetail } from 'network/Api'
 import { store } from "store/index";
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -16,7 +15,6 @@ const Into = (props) => {
     const [goodName, setgoodName] = useState('');
     const [goodCategory, setGoodCategory] = useState('');
     const [goodCode, setGoodCode] = useState('');
-    const [stockUnit, setStockUnit] = useState('');
     const [sellUnit, setSellUnit] = useState('');
     const [retailPrice, setRetailPrice] = useState('');
     const [setPrice, setSetPrice] = useState('');
@@ -30,7 +28,6 @@ const Into = (props) => {
     const [unit, setUnit] = useState([]);
     const [classification, setClassification] = useState([]);
     const [morengoods, setMorengoods] = useState({});
-    const [erji, seterji] = useState([]);
 
     const scrollConfig = {
         probeType: 1
@@ -70,9 +67,6 @@ const Into = (props) => {
                 // uid: store.getState().uid,
             }
         }).then((res) => {
-            var result = res.data.data.map(o => {
-                return { value: o.id, label: o.name }
-            });
             setClassification(res.data.data)
         })
         getUnitList({
@@ -310,6 +304,7 @@ const Into = (props) => {
                 if (v.label === morengoods.unit_name) {
                     aa = v
                 }
+                return ""
             })
             let cc = aa.value
             editProduct({

@@ -47,7 +47,6 @@ export default class stockList extends Component {
         }).then((res) => {
             // console.log(res)
             if(res.data.status===4001){
-                var result = res.data.data.data.map(o=>{return{id:o.warehouseid,name:o.name}});
                     // console.log(result)
                 this.setState({
                     goods: res.data.data.data,

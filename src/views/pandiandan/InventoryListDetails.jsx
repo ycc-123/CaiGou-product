@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getInventoryInfo, submitInventory } from 'network/Api'
-import { Toast, Modal, Button } from 'antd-mobile';
+import { Toast} from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiao'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
-const alert = Modal.alert;
-const prompt = Modal.prompt;
 export default class InventoryListDetails extends Component {
     constructor() {
         super()

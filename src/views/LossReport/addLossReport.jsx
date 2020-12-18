@@ -38,7 +38,6 @@ export default class AddInventoryList extends Component {
     }
     createPurchase(){
         let idgy = this.state.sValue.toString()
-        let flname={}
         let bz='1'
         createDamage({
             action: 'createDamage', data: {

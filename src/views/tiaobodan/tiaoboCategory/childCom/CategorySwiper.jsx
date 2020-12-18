@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import BetterScroll from 'common/betterScroll/BetterScroll'
 import { store } from "store/index";
 export default class InventoryListDetails extends Component {
     constructor() {

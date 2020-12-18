@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getWarehouseList, getProductCategoryAll, createInventory } from 'network/Api'
+import { getWarehouseList } from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
@@ -201,9 +201,9 @@ const AddPurchaseOrderStyle = styled.div`
     .biao li input{
         border:none;
         outline:none;
-        font-size:.45rem;
+        font-size:.35rem;
         width:7rem;
-        height:.65rem;
+        height:1.2rem;
         color:#646464; 
     }
     .biao li span{

@@ -5,9 +5,10 @@ import { createForm } from 'rc-form';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { createProduct, getUnitList, getProductCategoryAll, getProductCategoryAllChildren, getProductCode } from 'network/Api'
+import { createProduct, getUnitList, getProductCategoryAll, getProductCode } from 'network/Api'
 import { store } from "store/index";
 import { useHistory } from 'react-router-dom';
+
 
 const Into = (props) => {
     const history = useHistory()
