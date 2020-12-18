@@ -153,7 +153,7 @@ export default class InventoryListDetails extends Component {
                             this.state.itemData.map((value, key) => {
                                 let tiao = value
                                 return (
-                                    <div className='tiao'>
+                                    <div className='tiao' key={key}>
                                         <img className='t-img-l' 
                                         src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
                                         <ul className='wen-zi'>
@@ -367,7 +367,7 @@ const WarehousingOrderxingStyle = styled.div`
         margin-left:.2rem;
     }
     .conten-top p{
-        margin-top: .28rem;
+        margin-top: .23rem;
         margin-left:.45rem;
         width:.33rem;
         height:.37rem;

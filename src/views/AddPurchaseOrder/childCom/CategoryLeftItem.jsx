@@ -10,7 +10,7 @@ class CategoryLeftItem extends Component {
   }
   render() {
     const { item, index } = this.state
-    console.log(this.props.active)
+    // console.log(this.props.active)
     return (
       <Fragment>
         <li className={`category-title ${this.props.active ? 'category-title-active' : ' '}`}
@@ -21,7 +21,7 @@ class CategoryLeftItem extends Component {
     );
   }
   componentWillUnmount() {
-    console.log('卸载完成')
+    // console.log('卸载完成')
   }
 
 

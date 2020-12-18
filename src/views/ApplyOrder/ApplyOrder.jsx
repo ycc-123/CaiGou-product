@@ -155,7 +155,7 @@ export default class ApplyOrder extends Component {
                                         Color = "#ED5F21"
                                     }
                                     return (
-                                        <div className='dan' >
+                                        <div className='dan' key={k}>
                                             <div onClick={() => { this.props.history.push(`/ApplyOrderx/${v.id}`) }}>
                                                 <div className='dan-top'>
                                                     <p>
@@ -224,7 +224,7 @@ const ApplyOrderStyle = styled.div`
     border-radius: .1rem;
 }
 .t-right{
-    width:100%;
+    width:8.8rem;
     display:flex;
     justify-content: space-between;
 }
@@ -261,7 +261,7 @@ const ApplyOrderStyle = styled.div`
         max-height: 100%;
     }
     .dan-top p{
-        margin-top:.25rem;
+        margin-top:.22rem;
         margin-left:.37rem;
         width: .29rem;  
         height: .35rem;

@@ -15,11 +15,11 @@ class CategoryRightgoods extends Component {
     this.click = true
   }
   zjian = (login, password, goods) => {
-    console.log(login, password, goods)
+    // console.log(login, password, goods)
     if (login === '') {
-      Toast.info('请填写采购数量')
+      Toast.info('请填写最新零售价')
     } else if (password === '') {
-      Toast.info('请填写采购单价')
+      Toast.info('请填写最新会员价')
     } else {
       this.setState({
         login,

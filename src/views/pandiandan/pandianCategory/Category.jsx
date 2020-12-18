@@ -61,7 +61,7 @@ class Category extends Component {
       inventoryId:this.props.match.params.id,
       itemData:itemData,
     } }).then(res=>{
-      console.log(res)
+      // console.log(res)
       if(res.data.status===4001){
         this.setState({
           dataName:["0"]
@@ -116,6 +116,7 @@ class Category extends Component {
     const { title, type } = this.state
     let pdid = this.props.match.params.id
     let ckid = this.props.match.params.ck
+    console.log(this.props.match.params.fl)
     let flid = this.props.match.params.fl
     return (
       <CategoryStyle>
@@ -183,7 +184,7 @@ class Category extends Component {
   }
 
   click = (e) => {
-    console.log(this.state.dataName.toString())
+    // console.log(this.state.dataName.toString())
     // this.child.myName(e)
    
     this.setState({
@@ -226,7 +227,7 @@ class Category extends Component {
       inventoryId:this.props.match.params.id,
       itemData:[],
     } }).then(res=>{
-      console.log(res)
+      // console.log(res)
       if(res.data.status===4001){
         this.setState({
           dataName:["0"]

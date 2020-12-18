@@ -51,7 +51,7 @@ class CategoryRight extends Component {
   getChildrenMsg = (result,login, password,ww) => {
     let num=Number(this.state.num)+Number(login)
     let price=Number(this.state.price)+Number(login)*Number(password)
-   this.props.aa(num,price)
+  //  this.props.aa(num,price,this.state.goods)
     let arr  = []
     arr.push(ww);
 
@@ -60,32 +60,17 @@ class CategoryRight extends Component {
 
     let prices  = []
     prices.push(password);
+    console.log(nums,prices)
     this.setState({
       num,
       price,
       login:[...this.state.login, ...nums],
       password:[...this.state.password, ...prices],
-
       goods:[...this.state.goods, ...arr]
     },()=>{
-    //   let num =this.state.login
-    // let price =this.state.password
-    // let aa = {}
-    // let arr =[]
-    // num.map((v,k)=>{
-    //    aa={
-          // amount:num[k]*price[k],
-          // barcodeid:this.state.goods[k].barcodeid,
-          // barcode:this.state.goods[k].code,
-          // img:this.state.goods[k].albumpath,
-          // danwei:this.state.goods[k].unitname,
-          // gnum:num[k],
-          // num:num[k],
-          // price:price[k],
-          // name:this.state.goods[k].name,
-      //   }
-      //  return arr.push(aa);
-    // })
+   this.props.aa(this.state.num,this.state.price,this.state.goods)
+      console.log(this.state.login,this.state.password,this.state.goods)
+   
     // const goodsList = saveGoods(arr)
     // store.dispatch(goodsList)
     })

@@ -73,7 +73,7 @@ export default class ApplyOrderx extends Component {
                     {
                         this.state.goods.map((v, k) => {
                             return (
-                                <div className='tiao'>
+                                <div className='tiao' key={k}>
                                     <img className='t-img-l' src={v.albumpath ? v.albumpath : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
                                     <ul className='wen-zi'>
                                         <li className='wen-zi-t'>
@@ -289,7 +289,7 @@ const ApplyOrderxStyle = styled.div`
         margin-left:.2rem;
     }
     .conten-top p{
-        margin-top: .28rem;
+        margin-top: .23rem;
         margin-left:.45rem;
         width:.33rem;
         height:.37rem;

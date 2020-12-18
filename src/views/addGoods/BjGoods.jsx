@@ -4,7 +4,7 @@ import { Picker, Toast, List, Switch } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { getUnitList, getProductCategoryAllChildren, getProductDetail, editProduct } from 'network/Api'
+import { getUnitList, getProductCategoryAllChildren, getProductCategoryAll,getProductDetail, editProduct } from 'network/Api'
 import { store } from "store/index";
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -51,16 +51,16 @@ const Into = (props) => {
                 Toast.fail(res.data.msg, 2)
             }
         })
-        getProductCategoryAllChildren({
-            action: 'getProductCategoryAllChildren', data: {
+        getProductCategoryAll({
+            action: 'getProductCategoryAll', data: {
                 uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
+                // uid: store.getState().uid,
             }
         }).then((res) => {
             var result = res.data.data.map(o => {
                 return { value: o.id, label: o.name }
             });
-            setClassification(result)
+            setClassification(res.data.data)
         })
         getUnitList({
             action: 'getUnitList', data: {
@@ -112,8 +112,8 @@ const Into = (props) => {
                             <div className="right">
                                 <Picker
                                     data={classification}
-                                    cols={1}
-                                    className="forss"
+                                    cols={4}
+                                    // className="forss"
                                     extra={morengoods.category_name}
                                     value={goodCategory}
                                     onChange={e => { setGoodCategory(e) }}
@@ -220,7 +220,7 @@ const Into = (props) => {
                                     onChange={() => { setMemberInterests(!memberInterests) }}
                                 />}
                             >启用会员权益
-                    <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1rem" }}>是否启用会员权益</span>
+                            <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1rem" }}>是否启用会员权益</span>
                             </List.Item>
                             <div className='xian'></div>
                             <List.Item
@@ -229,7 +229,7 @@ const Into = (props) => {
                                     onChange={() => { setMemberPrice(!memberPrice) }}                    
                                 />}
                             >启用会员价
-                    <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>是否启用会员价</span>
+                            <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>是否启用会员价</span>
                             </List.Item>
                             <div className='xian'></div>
 
@@ -309,7 +309,7 @@ const Into = (props) => {
                     uniacid: store.getState().uniacid,
                     uid: store.getState().uid,
                     id: params,
-                    categoryid: goodCategory.toString() ? goodCategory.toString() : morengoods.categoryid,
+                    categoryid: goodCategory[goodCategory.length-1] ? goodCategory[goodCategory.length-1] : morengoods.categoryid,
                     code: goodCode ? goodCode : morengoods.code,
                     posprice: retailPrice ? retailPrice : morengoods.posprice,
                     memberprice: setPrice ? setPrice : morengoods.memberprice,
@@ -394,7 +394,7 @@ const TAddGoodsStyle = styled.div`
     font-size:.35rem;
     padding-left:.1rem;
     text-align: left;
-    width:3rem;
+    width:8rem;
 }
 .am-list-item .am-list-line .am-list-arrow{
     margin-left:2.5rem !important;

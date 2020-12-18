@@ -4,9 +4,23 @@ import { createProduct, getUnitList, getProductCategoryAll,getProductCategoryAll
 
 import { Cascader ,Divider} from 'antd';
 import 'antd/dist/antd.css';
+import { Picker, List, WhiteSpace } from 'antd-mobile';
+import { createForm } from 'rc-form';
+import arrayTreeFilter from 'array-tree-filter';
 
+import { district, provinceLite } from 'antd-mobile-demo-data';
 
-
+const CustomChildren = props => (
+  <div
+    onClick={props.onClick}
+    style={{ backgroundColor: '#fff', paddingLeft: 15 }}
+  >
+    <div className="test" style={{ display: 'flex', height: '45px', lineHeight: '45px' }}>
+      <div style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{props.children}</div>
+      <div style={{ textAlign: 'right', color: '#888', marginRight: 15 }}>{props.extra}</div>
+    </div>
+  </div>
+);
 export default class text extends Component {
     constructor() {
         super()
@@ -37,24 +51,24 @@ export default class text extends Component {
      * 对话框取消按钮点击事件
      */
     onCancel() {
-        console.log("取消")
+        // console.log("取消")
         this.hideModal();
     }
     /**
      * 对话框确认按钮点击事件
      */
     onConfirm() {
-        console.log("确定" + this.state.inputsl, this.state.inputjg)
+        // console.log("确定" + this.state.inputsl, this.state.inputjg)
         this.hideModal();
     }
     inputChangesl(e) {
-        console.log(e.target.value)
+        // console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
     }
     inputChangejg(e) {
-        console.log(e.target.value)
+        // console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -117,6 +131,20 @@ export default class text extends Component {
                 placeholder="请选择分类"
                 expandTrigger="hover"
               /></div>
+
+
+        <Picker
+          title="选择地区"
+          extra="请选择(可选)"
+          cols={4}
+          data={this.state.aa}
+          value={this.state.pickerValue}
+          onChange={v => this.setState({ pickerValue: v })}
+          onOk={v => this.setState({ pickerValue: v })}
+          onDismiss={console.log(district)}
+        >
+          <CustomChildren>Customized children</CustomChildren>
+        </Picker>
               </TextStyle>
 
               // {/* <canvas id="drawing" width="200" height="200">A drawing of something.</canvas>  */}

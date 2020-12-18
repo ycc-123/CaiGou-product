@@ -47,7 +47,7 @@ export default class AddInventoryList extends Component {
             }
         }).then(res => {
             if (res.data.status === 4001) {
-                var supplier = res.data.data.map(o => { return { value: o.id, label: o.name } });
+                var supplier = res.data.data.map(o => { return { value: o.value, label: o.label } });
                 this.setState({
                     supplier
                 })
@@ -98,7 +98,6 @@ export default class AddInventoryList extends Component {
         return (
             <AddPurchaseOrderStyle>
                 <DocumentTitle title={'新建盘点单'} />
-
                 <div>
                     <ul className='biao'>
                         <li><span>*</span>盘点仓库：
@@ -232,9 +231,6 @@ const AddPurchaseOrderStyle = styled.div`
         opacity:0;
         // 
     }
-    
-    
-    
     .left{
         width: 2rem;
         height: 1.6rem;
@@ -262,11 +258,9 @@ const AddPurchaseOrderStyle = styled.div`
         bottom:0;
     }
     
-    
     .biao{
         width: 100%;
         height: 7rem;
-        
     }
     .biao li input{
         margin-top:.25rem;

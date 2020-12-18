@@ -39,7 +39,7 @@ export default class WarehousingOrderxing extends Component {
         }).then((res) => {
             if (res.data.status === 4001) {
                 var supplier = res.data.data.purchaseDeliveryItem.map(o => { return { gnum: o.gnum } });
-                console.log(supplier)
+                // console.log(supplier)
                 this.setState({
                     supplier,
                     count: res.data.data.count,
@@ -84,7 +84,7 @@ export default class WarehousingOrderxing extends Component {
                 snum: this.state.count,
                 in_out_num: sum
             }
-            console.log("默认", deliveryData, itemData)
+            // console.log("默认", deliveryData, itemData)
             submitPurchaseDelivery({
                     action: 'submitPurchaseDelivery', data: {
                         uniacid: store.getState().uniacid,
@@ -95,7 +95,7 @@ export default class WarehousingOrderxing extends Component {
                         status: "4"
                     }
                 }).then((res) => {
-                    console.log(res.data)
+                    // console.log(res.data)
                     if (res.data.status === 4001) {
                         window.location.reload();
                         Toast.success(res.data.msg, 2)
@@ -107,7 +107,7 @@ export default class WarehousingOrderxing extends Component {
             let aa = {}
             let arr = []
             this.state.goods.map((v, k) => {
-                console.log(v, k)
+                // console.log(v, k)
                 aa = {
                     id: this.state.goods[k].id,
                     barcodeid: this.state.goods[k].barcodeid,
@@ -118,13 +118,13 @@ export default class WarehousingOrderxing extends Component {
                 return arr.push(aa);
             })
             let itemData = arr
-            console.log(itemData)
+            // console.log(itemData)
             let deliveryData = {
                 id: this.props.match.params.id,
                 snum: this.state.count,
                 in_out_num: this.state.num
             }
-            console.log("22222", deliveryData, itemData)
+            // console.log("22222", deliveryData, itemData)
             submitPurchaseDelivery({
                     action: 'submitPurchaseDelivery', data: {
                         uniacid: store.getState().uniacid,
@@ -135,7 +135,7 @@ export default class WarehousingOrderxing extends Component {
                         status: "4"
                     }
                 }).then((res) => {
-                    console.log(res.data)
+                    // console.log(res.data)
                     if (res.data.status === 4001) {
                         window.location.reload();
                         Toast.success(res.data.msg, 2)
@@ -159,7 +159,7 @@ export default class WarehousingOrderxing extends Component {
             num: arr,
             input: [...this.state.input, ...input]
         })
-        console.log(result, msg)
+        // console.log(result, msg)
     }
     seach() {
         getPurchaseDeliveryDetail({
@@ -173,7 +173,7 @@ export default class WarehousingOrderxing extends Component {
                 page: "1"
             }
         }).then((res) => {
-            console.log(res.data.data.purchaseDeliveryItem)
+            // console.log(res.data.data.purchaseDeliveryItem)
             if (res.data.status === 4001) {
                 this.setState({
                     count: res.data.data.count,
@@ -186,7 +186,7 @@ export default class WarehousingOrderxing extends Component {
         })
     }
     inputChange(e) {
-        console.log(e.target.value)
+        // console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -330,11 +330,6 @@ const WarehousingOrderxingStyle = styled.div`
     position:absolute;
     bottom:0;
   }
-    
-    
-    
-    
-    
     .wen-zi-f p span{
         color:#cf2424;
     }
@@ -450,7 +445,7 @@ const WarehousingOrderxingStyle = styled.div`
         margin-left:.2rem;
     }
     .conten-top p{
-        margin-top: .28rem;
+        margin-top: .23rem;
         margin-left:.45rem;
         width:.33rem;
         height:.37rem;

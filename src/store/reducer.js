@@ -1,5 +1,5 @@
 import {
-    SAVE_UID, SAVE_UNIACID, SAVE_GOODS, SAVE_CANKU,SAVE_TIAOBOGOODS,SAVE_YOUHUIMINGXB,
+    SAVE_UID, SAVE_UNIACID, SAVE_GOODS, SAVE_CANKU, SAVE_TIAOBOGOODS, SAVE_YOUHUIMINGXB,
     SAVE_PACKAGEDGOODS
 } from './actionTypes'
 
@@ -10,8 +10,8 @@ const defaultState = {
     goodsList: [],
     tiaoboxqck: [],
     tiaobogoods: [],
-    youhuimxbiao:[],
-    packagedGoods:[]
+    youhuimxbiao: [],
+    packagedGoods: []
 
 
 }
@@ -49,7 +49,7 @@ export default (state = defaultState, action) => {
             newState.packagedGoods = action.data
             return newState
 
-            
+
 
 
         default:

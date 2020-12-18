@@ -17,8 +17,8 @@ export default class InventoryListDetails extends Component {
         }
     }
     componentDidMount() {
-        console.log(store.getState().tiaoboxqck)
-        console.log(store.getState().tiaobogoods)
+        // console.log(store.getState().tiaoboxqck)
+        // console.log(store.getState().tiaobogoods)
     }
 
     render() {
@@ -58,10 +58,10 @@ export default class InventoryListDetails extends Component {
                     </div>
                     {
                         store.getState().tiaobogoods.map((value, key) => {
-                            console.log(value)
+                            // console.log(value)
                             let tiao = value
                             return (
-                                <div className='tiao'>
+                                <div className='tiao' key={key}>
                                     <img className='t-img-l' src={tiao.img ? tiao.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
                                     <ul className='wen-zi'>
@@ -260,7 +260,7 @@ const WarehousingOrderxingStyle = styled.div`
         margin-left:.2rem;
     }
     .conten-top p{
-        margin-top: .28rem;
+        margin-top: .23rem;
         margin-left:.45rem;
         width:.33rem;
         height:.37rem;

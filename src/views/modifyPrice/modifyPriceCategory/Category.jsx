@@ -34,16 +34,20 @@ class Category extends Component {
       price: '',
       inputSearch:'',
       Bj:true,
-      Id:""
+      Id:"",
+      yuan_length:""
     }
   }
   mingxi() {
-    this.props.history.push('/Liebiao')
+    this.props.history.push('/modifyPriceCategorymx')
   }
-  getChildValue(aa, val) {
+  getChildValue(aa, val,goods) {
+    console.log(goods)
+
     this.setState({
       num: aa,
-      price: val
+      price: val,
+      yuan_length: goods.length
     })
   }
   inputChange(e){
@@ -118,9 +122,9 @@ class Category extends Component {
 
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-              <div className='left'>
+              <div className='left' >
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
+                <div className='yuan'>{this.state.yuan_length ? this.state.yuan_length : 0}</div>
               </div>
               <div style={{ display: "flex", marginTop: ".2rem" }}>
                 <div className='baocun' onClick={() => { this.click(1) }}>保存</div>
@@ -156,8 +160,8 @@ class Category extends Component {
       }
     }).then(res => {
       if (res.data.status === 4001) {
-        var result = res.data.data.map(o => { return { name: o.name } });
-        var Id = res.data.data.map(o => { return { id: o.id } });
+        var result = res.data.data.map(o => { return { name: o.label } });
+        var Id = res.data.data.map(o => { return { id: o.value } });
         var value = res.data.data.map(o => { return { code: o.code } });
         searchProduct({
           action: 'searchProduct', data: {
@@ -348,7 +352,7 @@ input::-webkit-input-placeholder {
 .left{
   padding-left:.48rem;
   padding-top:.45rem;
-  width:3rem;
+  width:5rem;
   
 }
 .right{

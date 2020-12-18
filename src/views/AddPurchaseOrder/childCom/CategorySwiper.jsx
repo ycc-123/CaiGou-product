@@ -8,14 +8,14 @@ function Tiao(value) {
     let tiao = value.item
     return (
         <div className='tiao'>
-            <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+            <img className='t-img-l' src={tiao.img ? tiao.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
             <ul className='wen-zi'>
                 <li className='wen-zi-t'>
-                    <div className='name'>{tiao.goods_name}</div>
+                    <div className='name'>{tiao.name}</div>
                 </li>
                 <li className='wen-zi-c'>
                     <div >商品编码：{tiao.barcode}</div>
-                    <p>{tiao.price}元/{tiao.unitname}</p>
+                    <p>{tiao.price}元/{tiao.danwei}</p>
                 </li>
                 <li className='wen-zi-f'>
                     <div></div>
@@ -33,8 +33,9 @@ export default class Liebiao extends Component {
         }
     }
     componentDidMount() {
+        console.log(store.getState().goodsList)
         if (store.getState().goodsList === []) {
-            Toast.info("无采购商品", 1.5)
+            // Toast.info("无采购商品", 1.5)
             this.setState({
                 goodsList: []
             })
@@ -48,14 +49,15 @@ export default class Liebiao extends Component {
         const scollConfig = {
             probeType: 1
         }
-
+        var day2 = new Date();
+        day2.setTime(day2.getTime());
+        var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+        var time=day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate()+" "+day2.getHours()+":"+day2.getMinutes()+":"+day2.getSeconds();
         return (
             <LiebiaoStyle>
                 <div>
                     <div className='search'>
-                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="goodsSearch"
-                            onChange={this.goodsChange.bind(this)}
-                            value={this.state.goodsSearch} />
+                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
                         <div className='img' onClick={() => { this.search() }}>
                             <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
                         </div>
@@ -66,15 +68,15 @@ export default class Liebiao extends Component {
                             <p>
                                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
                             </p>
-                            <div>{this.state.purchaseDetail.docno}</div>
+                            {/* <div>{this.state.purchaseDetail.docno}</div> */}
                         </div>
 
                         <div className='conten-c' style={{ paddingTop: ".25rem" }}>
-                            <p>单据日期：0</p>
-                            <p>创建时间：0</p>
+                            <p>单据日期：{s2}</p>
+                            <p>创建时间：{time}</p>
 
-                            <p>单据仓库：0</p>
-                            <p>单据状态：0</p>
+                            <p>单据仓库：{this.props.match.params.ck}</p>
+                            <p>单据状态：{"待提交"}</p>
                         </div>
                     </div>
                     <div className='footer'>
@@ -82,8 +84,8 @@ export default class Liebiao extends Component {
                         </div>
                 </div>
                 {
-                    this.state.purchaseItem.map((value, key) => {
-                        console.log(value)
+                    this.state.goodsList.map((value, key) => {
+                        // console.log(value)
                         return (
                             <Tiao item={value} key={key}></Tiao>
                         )
@@ -273,7 +275,7 @@ const LiebiaoStyle = styled.div`
         margin-left:.2rem;
     }
     .conten-top p{
-        margin-top: .28rem;
+        margin-top: .23rem;
         margin-left:.45rem;
         width:.33rem;
         height:.37rem;

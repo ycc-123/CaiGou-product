@@ -19,7 +19,7 @@ class CategoryRightgoods extends Component {
     if (login === '' ) {
       Toast.info('请填写实际账面数量')
     } else{
-      console.log(login, goods)
+      // console.log(login, goods)
       this.setState({
         login,
       
@@ -30,7 +30,7 @@ class CategoryRightgoods extends Component {
 
   render() {
     const { goods } = this.props
-    console.log(goods.costprice_cb)
+    // console.log(goods.costprice_cb)
 
     return (
       <CategoryRightgoodsStyle>

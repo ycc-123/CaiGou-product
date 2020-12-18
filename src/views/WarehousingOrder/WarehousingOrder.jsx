@@ -90,8 +90,8 @@ export default class WarehousingOrder extends Component {
                     {
                         this.state.data.map((value,key)=>{
                             return(
-                                <div className='caigoudan' >
-                                <Tiao item={value} key={key} history={this.props.history}/>
+                                <div className='caigoudan' key={key}>
+                                <Tiao item={value}  history={this.props.history}/>
                                 </div>
                             )
                         })
@@ -172,7 +172,7 @@ const WarehousingOrderStyle = styled.div`
     border-radius: .1rem;
 }
 .t-right{
-    width:100%;
+    width:8.8rem;
     display:flex;
     justify-content: space-between;
 }
@@ -209,7 +209,7 @@ const WarehousingOrderStyle = styled.div`
         max-height: 100%;
     }
     .dan-top p{
-        margin-top:.25rem;
+        margin-top:.22rem;
         margin-left:.37rem;
         width: .29rem;  
         height: .35rem;

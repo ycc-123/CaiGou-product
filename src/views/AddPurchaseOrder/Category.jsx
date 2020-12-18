@@ -33,16 +33,19 @@ class Category extends Component {
       num: '',
       price: '',
       inputSearch: '',
-      Id: ""
+      Id: "",
+      oldGoods:[]
     }
   }
   mingxi() {
-    this.props.history.push('/Liebiao')
+    this.props.history.push(`/Liebiao/${this.props.match.params.ck}`)
   }
-  getChildValue(aa, val) {
+  getChildValue(aa, val,goods) {
+    // console.log(aa,val,goods)
     this.setState({
       num: aa,
-      price: val
+      price: val,
+      oldGoods:goods
     })
   }
   inputChange(e) {
@@ -71,6 +74,7 @@ class Category extends Component {
   render() {
     const { title, type } = this.state
     let ida = this.props.match.params.id
+    // console.log(this.props.match.params.ck)
     return (
       <CategoryStyle>
         <DocumentTitle title={'新建采购单'} />
@@ -106,9 +110,9 @@ class Category extends Component {
           </div>
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-              <div className='left'>
+              <div className='left' >
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
+                <div className='yuan'>{this.state.price ? this.state.price : 0}</div>
               </div>
               <div style={{ display: "flex", marginTop: ".2rem" }}>
                 <div className='baocun' onClick={() => { this.click(1) }}>保存</div>
@@ -146,8 +150,8 @@ class Category extends Component {
       }
     }).then(res => {
       if (res.data.status === 4001) {
-        var result = res.data.data.map(o => { return { name: o.name } });
-        var Id = res.data.data.map(o => { return { id: o.id } });
+        var result = res.data.data.map(o => { return { name: o.label } });
+        var Id = res.data.data.map(o => { return { id: o.value } });
         var value = res.data.data.map(o => { return { code: o.code } });
         searchProduct({
           action: 'searchProduct', data: {
@@ -191,6 +195,21 @@ class Category extends Component {
         categoryid: this.state.id[index].id,
       }
     }).then(res => {
+      let cartList = this.state.oldGoods
+      let now = res.data.data.data?res.data.data.data:[]
+      console.log('之前', now)
+      console.log(cartList)
+        for (let i = 0; i < this.state.oldGoods.length; i++) {
+          console.log(this.state.oldGoods[i].name)
+          for (let j = 0; j < now.length; j++) {
+            console.log(now[j].name)
+            if (now[j].name === this.state.oldGoods[i].name) {
+              console.log(this.state.oldGoods[i].num)
+              now[j].pnum = this.state.oldGoods[i].num
+            }
+          }
+        }
+        console.log('之后', now)
       if (res.data.status === 4001) {
         this.setState({
           goods: res.data.data.data

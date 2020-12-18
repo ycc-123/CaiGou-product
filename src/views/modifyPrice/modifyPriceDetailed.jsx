@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseApplyDetail, submitPriceModify, getPriceModifyDetail } from 'network/Api'
+import {  submitPriceModify, getPriceModifyDetail } from 'network/Api'
 import { Toast,Button } from 'antd-mobile';
 import { store } from "store/index";
 import DocumentTitle from 'react-document-title'
@@ -26,7 +26,7 @@ export default class ApplyOrderx extends Component {
       }
     }).then((res) => {
       if (res.data.status === 4001) {
-        console.log(res)
+        // console.log(res)
         this.setState({
           quan: res.data.data.priceModify,
           tiao: res.data.data.data,
@@ -40,9 +40,7 @@ export default class ApplyOrderx extends Component {
 
   tijiao(e) {
     if (e === "提交成功") { } else {
-      console.log(1111)
-
-      if (true) {
+     
         // 默认
         let aa = {}
         let arr = []
@@ -55,21 +53,6 @@ export default class ApplyOrderx extends Component {
             return arr.push(aa);
         })
         let itemData = arr
-        // let in_out_num = []
-        // this.state.purchaseItem.map((v, k) => {
-        //     let innum = this.state.purchaseItem[k].gnum
-        //     return in_out_num.push(innum);
-        // })
-        // let sum = 0;
-        // in_out_num.forEach(item => {
-        //     sum = Number(sum)  + parseInt(item)
-        // })
-        // let deliveryData = {
-        //     id: this.props.match.params.id,
-        //     snum: this.state.count,
-        //     in_out_num: sum
-        // }
-        // console.log("默认", deliveryData, itemData)
          submitPriceModify({
             action: 'submitPriceModify', data: {
               uniacid: store.getState().uniacid,
@@ -86,66 +69,6 @@ export default class ApplyOrderx extends Component {
               Toast.info(res.data.msg, 1)
             }
           })
-        } else {
-        // let aa = {}
-        // let arr = []
-        // this.state.goods.map((v, k) => {
-        //     console.log(v, k)
-        //     aa = {
-        //         id: this.state.goods[k].id,
-        //         barcodeid: this.state.goods[k].barcodeid,
-        //         diffnum: this.state.goods[k].price - this.state.input[k],
-        //         innum: this.state.input[k],
-        //         goodsid: this.state.goods[k].goodsid
-        //     }
-        //     return arr.push(aa);
-        // })
-        // let itemData = arr
-        // console.log(itemData)
-        // let deliveryData = {
-        //     id: this.props.match.params.id,
-        //     snum: this.state.count,
-        //     in_out_num: this.state.num
-        // }
-        // console.log("22222", deliveryData, itemData)
-        // submitPurchaseDelivery({
-        //         action: 'submitPurchaseDelivery', data: {
-        //             uniacid: store.getState().uniacid,
-        //             uid: store.getState().uid,
-        //             itemData: itemData,
-        //             deliveryData: deliveryData,
-        //             type: "1",
-        //             status: "4"
-        //         }
-        //     }).then((res) => {
-        //         console.log(res.data)
-        //         if (res.data.status === 4001) {
-        //             window.location.reload();
-        //             Toast.success(res.data.msg, 2)
-        //         } else {
-        //             Toast.info(res.data.msg, 2)
-        //         }
-        //     })
-    }
-
-
-      // let itemData=[]
-      // submitPriceModify({
-      //   action: 'submitPriceModify', data: {
-      //     uniacid: store.getState().uniacid,
-      //     uid: store.getState().uid,
-      //     id: this.props.match.params.id,
-      //     status:2,
-      //     itemData:itemData
-      //   }
-      // }).then((res) => {
-      //   if (res.data.status === 4001) {
-      //     // window.location.reload();
-      //     Toast.success(res.data.msg, 1)
-      //   } else {
-      //     Toast.info(res.data.msg, 1)
-      //   }
-      // })
     }
   }
   seach() {
@@ -158,7 +81,7 @@ export default class ApplyOrderx extends Component {
       }
     }).then((res) => {
       if (res.data.status === 4001) {
-        console.log(res)
+        // console.log(res)
         this.setState({
           quan: res.data.data.priceModify,
           tiao: res.data.data.data,
@@ -211,7 +134,7 @@ export default class ApplyOrderx extends Component {
             {
               this.state.tiao.map((v, k) => {
                 return (
-                  <div className='tiao'>
+                  <div className='tiao' key={k}>
                     <img className='t-img-l' src={v.image ? v.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
                     <ul className='wen-zi'>
                       <li className='wen-zi-t'>
@@ -248,18 +171,6 @@ export default class ApplyOrderx extends Component {
                                 onClick={() => { this.tijiao(this.state.quan.statusName) }}
                             >{this.state.quan.statusName === "待提交" ? "提交" : "已提交"}
                             </div>
-                            {/* <Button
-                                style={{ display: this.state.quan.statusName === "待提交" ? "none" : "block", width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
-                                className="btn_modal"
-                                onClick={() =>
-                                    alert('提交', '是否确认提交调价单', [
-                                        { text: '取消', onPress: () => console.log('cancel') },
-                                        { text: '确定', onPress: () => this.tijiao(this.state.quan.statusName) },
-                                    ])
-                                }
-                            >
-                                confirm
-                        </Button> */}
                         </div>
                     </div>
         </div>
@@ -464,7 +375,7 @@ const ApplyOrderxStyle = styled.div`
         margin-left:.2rem;
     }
     .conten-top p{
-        margin-top: .28rem;
+        margin-top: .23rem;
         margin-left:.45rem;
         width:.33rem;
         height:.37rem;

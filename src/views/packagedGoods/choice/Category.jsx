@@ -38,23 +38,24 @@ class Category extends Component {
     }
   }
   mingxi() {
+    this.state.price===''?alert("请添加打包商品"):
     this.props.history.push('/choiceGoodsmx')
   }
   getChildValue(aa, val) {
-    console.log(aa);
+    console.log(aa,val);
     this.setState({
       num: aa,
       price: val
     })
   }
   inputChange(e) {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     this.setState({
       [e.target.name]: e.target.value
     })
   }
   Search() {
-    console.log(this.state.inputSearch)
+    // console.log(this.state.inputSearch)
     getStockList({
       action: 'getStockList', data: {
         uniacid: store.getState().uniacid,
@@ -75,7 +76,7 @@ class Category extends Component {
   }
   render() {
     const { title, type } = this.state
-    console.log(this.props.match.params.id)
+    // console.log(this.props.match.params.id)
     let pdid = this.props.match.params.ds
     let ckid = this.props.match.params.bz
     let bsid = this.props.match.params.id
@@ -119,7 +120,7 @@ class Category extends Component {
           <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
                   <div className='left' onClick={()=>{this.mingxi()}}>
                       <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                      <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
+                      <div className='yuan'>{this.state.num.length ? this.state.num.length : 0}</div>
                   </div>
                   <div style={{display:"flex",marginTop:".2rem"}}>
                       <div className='tijiao' onClick={()=>{this.props.history.push('/choiceGoodsmx')}}>提交</div>
@@ -130,7 +131,7 @@ class Category extends Component {
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
               onClick={() =>
-                alert('提交', '是否确认提交报损单', [
+                alert('提交', '是否确认提交', [
                   { text: '取消', onPress: () => console.log('cancel') },
                   { text: '确定', onPress: () => this.click() },
                 ])
@@ -149,15 +150,15 @@ class Category extends Component {
     this.child.myName()
   }
   componentDidMount = () => {
-    localStorage.clear()
+    // localStorage.clear()
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
       }
     }).then(res => {
       if (res.data.status === 4001) {
-        var result = res.data.data.map(o => { return { name: o.name } });
-        var Id = res.data.data.map(o => { return { id: o.id } });
+        var result = res.data.data.map(o => { return { name: o.label } });
+        var Id = res.data.data.map(o => { return { id: o.value } });
         var value = res.data.data.map(o => { return { code: o.code } });
         searchProduct({
           action: 'searchProduct', data: {
@@ -203,9 +204,34 @@ class Category extends Component {
         categoryid: this.state.id[index].id,
       }
     }).then(res => {
+      console.log(res.data.data.data)
+      let aa = {}
+      let arr =[]
+      this.state.num.map((v,k)=>{
+         aa={
+            name: this.state.price[k].name,
+            num: this.state.num[k],
+          }
+         return arr.push(aa);
+      })
+      console.log(arr)
+      let cartList = arr
+      let now = res.data.data.data?res.data.data.data:[]
+      console.log(cartList,"===========输入后传人的值")
+      console.log('之前', now)
+      for (let i = 0; i < cartList.length; i++) {
+        for (let j = 0; j < now.length; j++) {
+          if (now[j].name == cartList[i].name) {
+            now[j].realnum = cartList[i].num
+          }
+        }
+      }
+      console.log('之后', now)
+
+
       if (res.data.status === 4001) {
         this.setState({
-          goods: res.data.data.data,
+          goods: now,
           Bj: true
         })
       } else {

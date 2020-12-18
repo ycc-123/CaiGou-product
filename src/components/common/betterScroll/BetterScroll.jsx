@@ -23,7 +23,7 @@ class BetterScroll extends Component {
     )
   }
   componentDidMount() {
-    console.log(localStorage.getItem('user'))
+    // console.log(localStorage.getItem('user'))
     // const ver = navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/);
     /* alert(ver) */
     // 判断ios是否大于13.4
@@ -82,7 +82,7 @@ class BetterScroll extends Component {
     }) */
     // 销毁
     this.BScroll.on('destroy', () => {
-      console.log('销毁成功')
+      // console.log('销毁成功')
     })
     // 当ios系统大于13.4
     /* if (isIosVerLgThan1304) {
@@ -96,11 +96,11 @@ class BetterScroll extends Component {
       this.BScroll.refresh()
     })
 
-    console.log(this.BScroll.scroller.hooks)
+    // console.log(this.BScroll.scroller.hooks)
 
   }
   componentWillUnmount() {
-    console.log('销毁了')
+    // console.log('销毁了')
   }
 }
 

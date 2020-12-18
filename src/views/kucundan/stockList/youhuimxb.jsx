@@ -37,7 +37,7 @@ export default class Youhuimxb extends Component {
         var day2 = new Date();
         day2.setTime(day2.getTime());
         var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
-        console.log(s2)
+        // console.log(s2)
         this.setState({
             today_time: s2
         })
@@ -62,7 +62,7 @@ export default class Youhuimxb extends Component {
                 uniacid: store.getState().uniacid,
             }
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             
                     // console.log(shouyinyuan)
             if(res.data.status===4001){
@@ -109,7 +109,7 @@ export default class Youhuimxb extends Component {
         this.state.zuantai===false?this.setState({zuantai:true}):this.setState({zuantai:false})
     }
     queding(){
-        console.log(this.state.IDsj,"=======",this.state.IDsyy,this.state.end_time,this.state.start_time)
+        // console.log(this.state.IDsj,"=======",this.state.IDsyy,this.state.end_time,this.state.start_time)
         this.setState({
             zuantai:false,
         })
@@ -148,7 +148,7 @@ export default class Youhuimxb extends Component {
         })
     }
     search() {
-        console.log(this.state.inputSearch)
+        // console.log(this.state.inputSearch)
        
         getRetailList({
             action: 'getRetailList', data: {
@@ -172,7 +172,7 @@ export default class Youhuimxb extends Component {
         })
     }
     inputChange(e) {
-        console.log(e.target.value)
+        // console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -182,10 +182,9 @@ export default class Youhuimxb extends Component {
             probeType: 1
         }
         const {linshou}=this.state
-        // console.log(this.state.store_id)
         return (
             <YouhuimxbStyle>
-    <DocumentTitle title={'优惠明细表'} />
+            <DocumentTitle title={'优惠明细表'} />
 
                 <div>
                     <div style={{ display: "flex" }}>
@@ -205,9 +204,8 @@ export default class Youhuimxb extends Component {
                     <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "1.5rem" }} loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
                     {
                         linshou.map((v,k)=>{
-                            // console.log(v.all_fee)
                             return(
-                                <Youhuimxbs item={v} page={this.state.page} history={this.props.history}></Youhuimxbs>
+                                <Youhuimxbs item={v} page={this.state.page} history={this.props.history} key={k}></Youhuimxbs>
                             )
                         })
                     }
@@ -268,7 +266,6 @@ export default class Youhuimxb extends Component {
                                         <List.Item className='times' arrow="horizontal"></List.Item>
                                     </Picker>
                                 </li>
-
                             </ul>
                         </div>
 
@@ -292,24 +289,6 @@ export default class Youhuimxb extends Component {
 
                         <div className='btn' onClick={() => { this.queding() }}>确定</div>
                     </div>
-                    
-                    {/* <div className='caigoudan'>
-                        <div className='dan'>
-                            <div className='dan-top'>
-                                <p>
-                                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
-                                </p>
-                                <div className='caigoudanhao'>零售单号：111111111</div>
-                                <div className='zuantai'></div>
-                            </div>
-                            <div className='dan-footer'>
-                                <p>单据日期：11111</p>
-                                <p>所属商家：111111111111</p>
-                                <p>收银员：111111111111</p>
-                                <p>优惠总额：111111111111</p>
-                            </div>
-                        </div>
-                    </div> */}
                     <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
                     <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
                     </div>
@@ -334,15 +313,10 @@ export default class Youhuimxb extends Component {
             }
         }, 1000)
         if (this.isLoadMore) {
-            // console.log(111)
             getRetailList({
                 action: 'getRetailList', data: {
                     uniacid: store.getState().uniacid,
                     uid: store.getState().uid,
-                    // starttime:"2020-10-1 13:41:08",
-                    // endtime:"2020-10-24 13:41:08",
-                    // createid:'59',
-                    // store_id:"38",
                     limit: this.state.limit,
                     page: this.state.page
                 }
@@ -352,9 +326,6 @@ export default class Youhuimxb extends Component {
                 // 如果长度不等于得时候加载 那么是到底了
                 if (res.data.data.data.length < this.state.limit) {
                     this.isLoadMore = false
-                    /* let bottomTip = document.querySelector('.bottom-tip')
-                    bottomTip.style.visibility = 'visible'
-                    bottomTip.innerHTML = '商品已经全部加载完成' */
                 }
                 this.setState({
                     linshou: [...this.state.linshou, ...res.data.data.data],
@@ -372,9 +343,6 @@ export default class Youhuimxb extends Component {
                 })
             })
         } else {
-            /* let bottomTip = document.querySelector('.bottom-tip')
-            bottomTip.style.visibility = 'visible'
-            bottomTip.innerHTML = '商品已经全部加载完成' */
         }
     }
 }
@@ -421,7 +389,7 @@ const YouhuimxbStyle = styled.div`
     border-radius: .1rem;
 }
 .t-right{
-    width:100%;
+    width:8.8rem;
     display:flex;
     justify-content: space-between;
 }
@@ -445,12 +413,12 @@ const YouhuimxbStyle = styled.div`
     .caigoudanhao{
 
         width: 6.49rem;
-        height: 0.33rem;
-        margin-top:.25rem;
+        // height: 0.33rem;
+        // margin-top:.25rem;
         margin-left:.31rem;
         // width:7.09rem;
         height:.85rem;
-        // line-height:.85rem;
+        line-height:.85rem;
         font-size:.33rem;
         color: #333333;
     }
@@ -461,7 +429,7 @@ const YouhuimxbStyle = styled.div`
         max-height: 100%;
     }
     .dan-top p{
-        margin-top:.25rem;
+        margin-top:.22rem;
         margin-left:.37rem;
         width: .29rem;  
         height: .35rem;

@@ -308,7 +308,7 @@ export default class LossReport extends Component {
                         {
                             this.state.damageList.map((v, k) => {
                                 return (
-                                    <LossReportTiao item={v} />
+                                    <LossReportTiao item={v} key={k}/>
                                 )
                             })
                         }
@@ -324,6 +324,7 @@ export default class LossReport extends Component {
                                     this.state.result.map((v, k) => {
                                         return (
                                             <li onClick={(e) => { this.canku(v, k) }}
+                                            key={k}
                                                 style={{ background: this.state.ckkey === v.id ? "#fff5ed" : '', color: this.state.ckkey === v.id ? "#ed7913" : '', border: this.state.ckkey === v.id ? "1px solid #ed7913" : '' }}
                                             >{v.name}</li>
                                         )
@@ -381,6 +382,7 @@ export default class LossReport extends Component {
                                     this.state.childrens.map((v, k) => {
                                         return (
                                             <li onClick={(e) => { this.erjifenlei(v, k) }}
+                                            key={k}
                                                 style={{ background: this.state.ekey === k ? "#fff5ed" : '', color: this.state.ekey === k ? "#ed7913" : '', border: this.state.ekey === k ? "1px solid #ed7913" : '' }}
                                             >{v}</li>
                                         )

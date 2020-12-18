@@ -11,16 +11,13 @@ export default class youhuimxbs extends Component {
         }
     }
     componentDidMount(){
-        // console.log(this.props.item)
     }
     click(item){
-        // console.log(item)
         const actionuid = saveyouhuimxbiao(item)
         store.dispatch(actionuid)
         this.props.history.push(`/shouyinmxb/${this.props.item.id}/${this.props.page}`)
     }
     render() {
-        // console.log(this.props)
         let item = this.props.item
         return (
             <div className='caigoudan' onClick={()=>{this.click(item)}}>
@@ -31,7 +28,6 @@ export default class youhuimxbs extends Component {
                             </p>
                             <div className='t-right'>
                             <div className='caigoudanhao'>零售单号：{item.orderno}</div>
-                            {/* <div className='zuantai' style={{color:Color}}>{item.statusname}</div> */}
                             </div>
                         </div>
                         <div className='dan-footer'>

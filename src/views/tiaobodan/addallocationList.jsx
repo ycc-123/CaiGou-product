@@ -34,7 +34,7 @@ export default class AddInventoryList extends Component {
                     data: result
                 })
             } else {
-                Toast.info('网络错误', 2)
+                Toast.info(res.data.msg, 2)
             }
         })
     }
@@ -78,6 +78,7 @@ export default class AddInventoryList extends Component {
         })
     }
     render() {
+        
         return (
             <AddPurchaseOrderStyle>
                 <DocumentTitle title={'新建调拨单'} />

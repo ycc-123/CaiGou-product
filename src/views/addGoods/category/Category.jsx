@@ -134,8 +134,8 @@ class Category extends Component {
       }
     }).then(res => {
       if (res.data.status === 4001) {
-        var result = res.data.data.map(o => { return { name: o.name } });
-        var Id = res.data.data.map(o => { return { id: o.id } });
+        var result = res.data.data.map(o => { return { name: o.label } });
+        var Id = res.data.data.map(o => { return { id: o.value } });
         var value = res.data.data.map(o => { return { code: o.code } });
         searchProduct({
           action: 'searchProduct', data: {

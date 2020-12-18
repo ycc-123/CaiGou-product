@@ -30,21 +30,27 @@ class CategoryRightgoods extends Component {
 
   render() {
     const { goods } = this.props
+    let input=''
+    if(this.state.login!==''){
+      input=this.state.login
+    }else{
+      input=goods.realnum
+    }
     return (
       <CategoryRightgoodsStyle>
         <div className="rrr"></div>
-        <li className='category-goods clearfix'
-        >
+        <li className='category-goods clearfix'>
           <img className='category-img' src={goods.albumpath?goods.albumpath:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
           <div className='category-goods-info'>
             <div style={{fontSize:".35rem",color:'#1a1a1a',width:"4rem"}}>{goods.name}</div>
               <div className='shuliang' style={{color:'#1a1a1a',paddingTop:".1rem"}}>
-                   <article>商品编码：{goods.code}</article>
+                   <article>编码：{goods.code}</article>
                    <div>{goods.posprice}元/{goods.unitname}</div>
               </div>
             <div style={{display:"flex",justifyContent:"space-between"}}>
             {
-              this.state.login ? <div  style={{width:"100%",textAlign: "right",paddingTop:".2rem", color: "#CD2323", fontSize: ".35rem" }}>{this.state.login}</div> :
+              input ? <div  style={{width:"100%",textAlign: "right",paddingTop:".2rem", color: "#CD2323", fontSize: ".35rem" }}>
+                {input}</div> :
                 <img className='category-goods-img'
                   src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
                   alt="" />

@@ -5,7 +5,7 @@ import { createForm } from 'rc-form';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { createProduct, getUnitList, getProductCategoryAllChildren, getProductDetail, editProduct, getPackgeProductDetail } from 'network/Api'
+import { getProductCategoryAll, getUnitList, getProductCategoryAllChildren, getProductDetail, editProduct, getPackgeProductDetail } from 'network/Api'
 import { store } from "store/index";
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -64,16 +64,16 @@ const Into = (props) => {
                 setGoodlength(res.data.data);
             } else {}
         })
-        getProductCategoryAllChildren({
-            action: 'getProductCategoryAllChildren', data: {
+        getProductCategoryAll({
+            action: 'getProductCategoryAll', data: {
                 uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
+                // uid: store.getState().uid,
             }
         }).then((res) => {
             var result = res.data.data.map(o => {
                 return { value: o.id, label: o.name }
             });
-            setClassification(result)
+            setClassification(res.data.data)
         })
         getUnitList({
             action: 'getUnitList', data: {
@@ -124,8 +124,8 @@ const Into = (props) => {
                             <div className="right">
                                 <Picker
                                     data={classification}
-                                    cols={1}
-                                    className="forss"
+                                    cols={4}
+                                    // className="forss"
                                     extra={morengoods.category_name}
                                     value={goodCategory}
                                     onChange={e => { setGoodCategory(e) }}
@@ -317,7 +317,7 @@ const Into = (props) => {
                     uniacid: store.getState().uniacid,
                     uid: store.getState().uid,
                     id: params,
-                    categoryid: goodCategory.toString() ? goodCategory.toString() : morengoods.categoryid,
+                    categoryid: goodCategory[goodCategory.length-1] ? goodCategory[goodCategory.length-1] : morengoods.categoryid,
                     code: goodCode ? goodCode : morengoods.code,
                     posprice: retailPrice ? retailPrice : morengoods.posprice,
                     memberprice: setPrice ? setPrice : morengoods.memberprice,
@@ -444,7 +444,7 @@ const TAddGoodsStyle = styled.div`
     font-size:.35rem;
     padding-left:.1rem;
     text-align: left;
-    width:3rem;
+    width:8rem;
 }
 .am-list-item .am-list-line .am-list-arrow{
     margin-left:2.5rem !important;

@@ -196,7 +196,7 @@ const PurchaseOrderStyle = styled.div`
     border-radius: .1rem;
 }
 .t-right{
-    width:100%;
+    width:8.8rem;
     display:flex;
     justify-content: space-between;
 }
@@ -233,7 +233,7 @@ const PurchaseOrderStyle = styled.div`
         max-height: 100%;
     }
     .dan-top p{
-        margin-top:.25rem;
+        margin-top:.22rem;
         margin-left:.37rem;
         width: .29rem;  
         height: .35rem;

@@ -36,7 +36,7 @@ export default class Liebiao extends Component {
             {
                 this.state.goodsList.map((v,k)=>{
                     return(
-                        <div className='tiao'>
+                        <div className='tiao' key={k}>
                         <img className='t-img-l' src={v.img?v.img :"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"}  alt="网络卡" />
                         <ul className='wen-zi'>
                             <li className='wen-zi-t'>

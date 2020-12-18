@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getWarehouseList, getProductCategoryAll, createDamage } from 'network/Api'
+import { getWarehouseList,  createDamage } from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";

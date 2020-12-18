@@ -48,7 +48,7 @@ class Category extends Component {
     this.props.history.push('/Liebiao')
   }
   getChildValue(nums, goods, brr) {
-    // console.log(brr)
+    console.log(brr)
     let aa = {}
     let arr = []
     aa = {
@@ -69,7 +69,7 @@ class Category extends Component {
           itemData: itemData,
         }
       }).then(res => {
-        console.log(res)
+        // console.log(res)
         if (res.data.status === 4001) {
           this.setState({
             dataName: ["111"]
@@ -175,8 +175,8 @@ class Category extends Component {
   }
 
   click = (e) => {
-    console.log(Number(this.state.dataName.toString()))
-    console.log(Number(this.state.dataName.toString() === 111))
+    // console.log(Number(this.state.dataName.toString()))
+    // console.log(Number(this.state.dataName.toString() === 111))
     // this.child.myName(e)
 
     this.setState({
@@ -198,7 +198,7 @@ class Category extends Component {
         itemData: [],
       }
     }).then(res => {
-      console.log(res)
+      // console.log(res)
       if (res.data.status === 4001) {
         this.setState({
           dataName: ["111"]
@@ -216,8 +216,8 @@ class Category extends Component {
       }
     }).then(res => {
       if (res.data.status === 4001) {
-        var result = res.data.data.map(o => { return { name: o.name } });
-        var Id = res.data.data.map(o => { return { id: o.id } });
+        var result = res.data.data.map(o => { return { name: o.label } });
+        var Id = res.data.data.map(o => { return { id: o.value } });
         var value = res.data.data.map(o => { return { code: o.code } });
         getStockList({
           action: 'getStockList', data: {
@@ -229,7 +229,7 @@ class Category extends Component {
             page: "1",
           }
         }).then(res => {
-          console.log(Id[0].id)
+          // console.log(Id[0].id)
           if (res.data.status === 4001) {
             let mrqunangoods = []
             if (Boolean(res.data.data.data) === false) {
@@ -274,14 +274,13 @@ class Category extends Component {
         console.log(res.data.data.data)
         let cartList = this.state.gooda
         let now = res.data.data.data?res.data.data.data:[]
+        console.log(cartList,"============================================")
         console.log('之前', now)
         for (let i = 0; i < cartList.length; i++) {
-          console.log(i)
+          console.log(cartList[i].id)
           for (let j = 0; j < now.length; j++) {
-            console.log(j)
+            console.log(now[j].goods_name)
             if (now[j].goods_name == cartList[i].id) {
-              console.log(now[j].goods_name)
-              console.log(cartList[i].id)
               now[j].realnum = cartList[i].realnum
             }
           }

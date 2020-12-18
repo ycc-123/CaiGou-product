@@ -27,10 +27,10 @@ export default class shaixuan extends Component {
                 page:"1"
             }
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             if(res.data.status===4001){
                 var bb = res.data.data.data.map(o=>{return{id:o.id,name:o.name}});
-                    console.log(bb)
+                    // console.log(bb)
                     let aa=[{id:"",name:"全部仓库"}]
                     let result=[...aa,...bb]
                 this.setState({
@@ -47,12 +47,12 @@ export default class shaixuan extends Component {
                
             }
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             if(res.data.status===4001){
                 var bb = res.data.data.map(o=>{return{id:o.id,name:o.name}});
                 let aa=[{id:"",name:"全部分类"}]
                     let result=[...aa,...bb]
-                    console.log(result)
+                    // console.log(result)
                 this.setState({
                    fenleiName:result
 
@@ -64,17 +64,17 @@ export default class shaixuan extends Component {
     }
     // 获取二级分类
     yijifenlei(v,k){
-        console.log(v,k)
+        // console.log(v,k)
         showProductCategory({
             action: 'showProductCategory', data: {
                 uniacid: store.getState().uniacid,
                 id:v.id
             }
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             if(res.data.status===4001){
                 var result = res.data.data.childrens.map(o=>{return{id:o.id,name:o.name}});
-                    console.log(result)
+                    // console.log(result)
                 this.setState({
                     panduan:result===[]?false:true,
                     childrens:result,
@@ -91,7 +91,7 @@ export default class shaixuan extends Component {
         })
     }
     canku(v,k){
-        console.log(v.id)
+        // console.log(v.id)
         this.setState({
             cankuID:v.id,
             ckkey:v.id
@@ -108,7 +108,7 @@ export default class shaixuan extends Component {
         this.setState({
             xian:false
         })
-        console.log(this.state.yikey)
+        // console.log(this.state.yikey)
         getStockList({
             action: 'getStockList', data: {
                 uniacid: store.getState().uniacid,
@@ -134,7 +134,7 @@ export default class shaixuan extends Component {
         })
     }
     render() {
-        console.log( this.refs.scroll)
+        // console.log( this.refs.scroll)
         const scrollConfig = {
             probeType: 2
         }

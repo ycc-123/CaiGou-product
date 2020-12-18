@@ -69,7 +69,7 @@ class CategoryRight extends Component {
          }
         return arr.push(aa);
      })
-     console.log(arr)
+    //  console.log(arr)
     //  localStorage.setItem("aa",JSON.stringify(arr))
     this.props.aa(login, password,arr)
     })

@@ -51,14 +51,14 @@ export default class LossReport extends Component {
                 page: this.state.page
             }
         }).then((res) => {
-            console.log(res.data.data.data)
+            // console.log(res.data.data.data)
             if (res.data.status === 4001) {
                 this.setState({
                     GoodsList: res.data.data.data,
                     Goodszong: res.data.data.total
                 }, () => {
 
-                    this.refs.aaa.BScroll.refresh()
+                    this.refs.scroll.BScroll.refresh()
                 })
             } else {
                 this.setState({
@@ -70,7 +70,7 @@ export default class LossReport extends Component {
         var day2 = new Date();
         day2.setTime(day2.getTime());
         var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
-        console.log(s2)
+        // console.log(s2)
         this.setState({
             today_time: s2
         })
@@ -130,7 +130,7 @@ export default class LossReport extends Component {
         })
     }
     status(v, k) {
-        console.log(v)
+        // console.log(v)
         this.setState({
             ekey: k
         })
@@ -159,7 +159,7 @@ export default class LossReport extends Component {
         }
     }
     yijifenlei(v, k) {
-        console.log(v, k)
+        // console.log(v, k)
         this.setState({
             yikey: k
         })
@@ -173,7 +173,7 @@ export default class LossReport extends Component {
                 },
                 data: { date: "今天" }
             }).then(res => {
-                console.log(res.data.data.end);
+                // console.log(res.data.data.end);
                 let start = this.StrToGMT(res.data.data.start)
                 let end = this.StrToGMT(res.data.data.end)
                 this.setState({
@@ -193,7 +193,7 @@ export default class LossReport extends Component {
                 },
                 data: { date: "昨天" }
             }).then(res => {
-                console.log(res.data.data.end);
+                // console.log(res.data.data.end);
                 let start = this.StrToGMT(res.data.data.start)
                 let end = this.StrToGMT(res.data.data.end)
                 this.setState({
@@ -213,7 +213,7 @@ export default class LossReport extends Component {
                 },
                 data: { date: "近七天" }
             }).then(res => {
-                console.log(res.data.data.end);
+                // console.log(res.data.data.end);
                 let start = this.StrToGMT(res.data.data.start)
                 let end = this.StrToGMT(res.data.data.end)
                 this.setState({
@@ -233,7 +233,7 @@ export default class LossReport extends Component {
                 },
                 data: { date: "本月" }
             }).then(res => {
-                console.log(res.data.data.end);
+                // console.log(res.data.data.end);
                 let start = this.StrToGMT(res.data.data.start)
                 let end = this.StrToGMT(res.data.data.end)
                 this.setState({
@@ -250,18 +250,18 @@ export default class LossReport extends Component {
             this.setState({
                 xian: true
             }, () => {
-                this.refs.bbb.BScroll.refresh()
+                this.refs.scroll.BScroll.refresh()
             })
         } else {
             this.setState({
                 xian: false
             }, () => {
-                this.refs.bbb.BScroll.refresh()
+                this.refs.scroll.BScroll.refresh()
             })
         }
     }
     canku(v, k) {
-        console.log(v.id)
+        // console.log(v.id)
         this.setState({
             cankuID: v.id,
             ckkey: v.id
@@ -269,7 +269,7 @@ export default class LossReport extends Component {
         })
     }
     search() {
-        console.log(this.state.inputSearch)
+        // console.log(this.state.inputSearch)
         getRetailGoodsList({
             action: 'getRetailGoodsList', data: {
                 uniacid: store.getState().uniacid,
@@ -292,7 +292,7 @@ export default class LossReport extends Component {
         })
     }
     inputChange(e) {
-        console.log(e.target.value)
+        // console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -317,13 +317,13 @@ export default class LossReport extends Component {
                         <img className='sximg-search' onClick={() => { this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
                     </div>
                 </div>
-                <BetterScroll config={scrollConfig} ref='aaa' style={{ top: "1.2rem", bottom: "1.5rem" }} loadMore={this.loadMore}
+                <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.2rem", bottom: "1.5rem" }} loadMore={this.loadMore}
                     isLoadMore={this.isLoadMore}>
                     <div style={{ display: this.state.xian === false ? "block" : "none" }}>
                         {
                             this.state.GoodsList.map((v, k) => {
                                 return (
-                                    <GoodDiscounts item={v} />
+                                    <GoodDiscounts item={v} key={k} />
                                 )
                             })
                         }
@@ -332,8 +332,8 @@ export default class LossReport extends Component {
                             <LoadingMore isLoading={this.isLoadMore} />
                         }
                     </div>
-                </BetterScroll>
-                <BetterScroll config={scrollConfig} ref='bbb'>
+                {/* </BetterScroll> */}
+                {/* <BetterScroll config={scrollConfig} ref='bbb'> */}
                     <div className='fenglei' style={{ display: this.state.xian === false ? "none" : "block" }}>
                         <div><span style={{ color: "#333333" }}>仓库名称</span>
                             <ul>
@@ -456,8 +456,8 @@ export default class LossReport extends Component {
                     })
 
                     loading = false
-                    this.refs.aaa.BScroll.finishPullUp()
-                    this.refs.aaa.BScroll.refresh()
+                    this.refs.scroll.BScroll.finishPullUp()
+                    this.refs.scroll.BScroll.refresh()
                 })
             })
         } else {

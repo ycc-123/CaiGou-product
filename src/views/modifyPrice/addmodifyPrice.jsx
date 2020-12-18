@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getWarehouseList, getProductCategoryAll, createInventory,get_store,createPriceModify } from 'network/Api'
+import { get_store,createPriceModify } from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
@@ -29,7 +29,7 @@ export default class AddInventoryList extends Component {
 
       }
     }).then((res) => {
-      console.log(res)
+      // console.log(res)
       if (res.data.status === 4001) {
         var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
         this.setState({
@@ -51,7 +51,7 @@ export default class AddInventoryList extends Component {
             remark: this.state.inputbeiz,
         }
     }).then(res => {
-      console.log(res)
+      // console.log(res)
         if (res.data.status === 4001) {
             this.props.history.push(`/modifyPriceCategory/${res.data.data}`)
             Toast.success(res.data.msg, 2)

@@ -2,11 +2,9 @@ import React, { Component } from 'react'
 
 export default class StockListTiao extends Component {
     render() {
-        // console.log(this.props.v)
         let good=this.props.v
         return (
             <div className='tiao'>
-                        {/* <img className='t-img-l'  alt="" /> */}
             <img className='t-img-l' src={good.image?good.image:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
                         <ul className='wen-zi'>

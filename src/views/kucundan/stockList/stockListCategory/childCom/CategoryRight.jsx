@@ -39,7 +39,7 @@ class CategoryRight extends Component {
       width: '7.5rem',
     }
     const { goodsList } = this.props
-    console.log(this.props)
+    // console.log(this.props)
     return (
       <div className='categoryRight'>
         <ul>
@@ -59,7 +59,7 @@ class CategoryRight extends Component {
   //   let num=Number(this.state.num)+Number(login)
   //   let price=Number(this.state.price)+Number(login)*Number(password)
   //  this.props.aa(login, password)
-    console.log(login, password)
+    // console.log(login, password)
   //   let arr  = []
   //   arr.push(ww);
     let nums  = []
@@ -91,7 +91,7 @@ class CategoryRight extends Component {
         itemData:this.props.itemData,
       } }).then(res=>{
         if(res.data.status===4001){
-          console.log(res)
+          // console.log(res)
           Toast.success(res.data.msg, 2)
           this.props.history.push('/home')
 
@@ -100,11 +100,11 @@ class CategoryRight extends Component {
         }
       })
     }else{
-      console.log(this.state.login, this.state.password)
+      // console.log(this.state.login, this.state.password)
     let num =this.state.login
     let price =this.state.password
-    console.log(this.props.pdid)
-    console.log(this.props.ckid)
+    // console.log(this.props.pdid)
+    // console.log(this.props.ckid)
 
     // console.log(num.length)
 
@@ -113,7 +113,7 @@ class CategoryRight extends Component {
     
 
     num.map((v,k)=>{
-      console.log(v,k)
+      // console.log(v,k)
        aa={
         stockid:this.state.password[k].id,
         realnum:v,
@@ -123,9 +123,9 @@ class CategoryRight extends Component {
     })
     // const goodsList = saveGoods(arr)
     // store.dispatch(goodsList)
-    console.log(arr)
+    // console.log(arr)
     let itemData=arr
-    console.log(itemData)
+    // console.log(itemData)
     // let purchaseData={
       
     //   subtotal:this.state.price,
@@ -139,7 +139,7 @@ class CategoryRight extends Component {
       inventoryId:this.props.pdid,
       itemData:itemData,
     } }).then(res=>{
-      console.log(res)
+      // console.log(res)
       if(res.data.status===4001){
         Toast.success(res.data.msg, 2)
         this.props.history.push('/home')

@@ -48,24 +48,24 @@ class Category extends Component {
 
   }
   mingxi() {
-    console.log(111)
+    // console.log(111)
     this.props.history.push('/Liebiao')
   }
   getChildValue(aa, val) {
-    console.log(aa);
+    // console.log(aa);
     this.setState({
       num: aa,
       price: val
     })
   }
   inputChange(e) {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     this.setState({
       [e.target.name]: e.target.value
     })
   }
   Search() {
-    console.log(this.state.inputSearch)
+    // console.log(this.state.inputSearch)
     getStockList({
       action: 'getStockList', data: {
         uniacid: store.getState().uniacid,
@@ -97,7 +97,7 @@ class Category extends Component {
 }
   render() {
     const { title, type } = this.state
-    console.log(this.props.match.params.id)
+    // console.log(this.props.match.params.id)
     let pdid = this.props.match.params.id
     let ckid = this.props.match.params.ck
     return (
@@ -184,7 +184,7 @@ class Category extends Component {
     )
   }
   canku(v,k){
-    console.log(v.id)
+    // console.log(v.id)
     this.setState({
         cankuID:v.id,
     })
@@ -193,7 +193,7 @@ class Category extends Component {
     this.setState({
       xian:false,
     })
-    console.log(this.state.flid)
+    // console.log(this.state.flid)
     getStockList({
       action: 'getStockList', data: {
         uniacid: store.getState().uniacid,
@@ -242,7 +242,7 @@ class Category extends Component {
   }
 
   componentDidCache = () => {
-    console.log('缓存了')
+    // console.log('缓存了')
   }
 
   componentDidRecover = () => {
@@ -276,15 +276,15 @@ class Category extends Component {
         uniacid: store.getState().uniacid,
       }
     }).then(res => {
-      console.log(res.data.data)
+      // console.log(res.data.data)
       if (res.data.status === 4001) {
 
-        var result = res.data.data.map(o => { return { name: o.name } });
-        console.log(result)
-        var Id = res.data.data.map(o => { return { id: o.id } });
-        console.log(Id)
+        var result = res.data.data.map(o => { return { name: o.label } });
+        // console.log(result)
+        var Id = res.data.data.map(o => { return { id: o.value } });
+        // console.log(Id)
         var value = res.data.data.map(o => { return { code: o.code } });
-        console.log(value)
+        // console.log(value)
         getStockList({
           action: 'getStockList', data: {
             uniacid: store.getState().uniacid,
@@ -295,7 +295,7 @@ class Category extends Component {
             page: "1"
           }
         }).then(res => {
-          console.log(res)
+          // console.log(res)
           if (res.data.status === 4001) {
             let mrqunangoods = []
             if (Boolean(res.data.data.data) === false) {
@@ -303,7 +303,7 @@ class Category extends Component {
               mrqunangoods = []
             } else {
               mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-              console.log(mrqunangoods)
+              // console.log(mrqunangoods)
             }
             this.setState({
               flid:Id[0].id,
@@ -330,7 +330,7 @@ class Category extends Component {
         Toast.info('网络错误', 2)
       }
     })
-    console.log(this.state.id)
+    // console.log(this.state.id)
     getWarehouseList({
       action: 'getWarehouseList', data: {
           uniacid: store.getState().uniacid,
@@ -340,10 +340,10 @@ class Category extends Component {
           page:"1"
       }
   }).then((res) => {
-      console.log(res)
+      // console.log(res)
       if(res.data.status===4001){
           var bb = res.data.data.data.map(o=>{return{id:o.id,name:o.name}});
-              console.log(bb)
+              // console.log(bb)
               let aa=[{id:"",name:"全部仓库"}]
               let result=[...aa,...bb]
           this.setState({
@@ -356,7 +356,7 @@ class Category extends Component {
   }
 
   onChangeActive = index => {
-    console.log(index)
+    // console.log(index)
     getStockList({
       action: 'getStockList', data: {
         uniacid: store.getState().uniacid,

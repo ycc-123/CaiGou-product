@@ -9,7 +9,7 @@ const alert = Modal.alert;
 export default class Home extends Component {
   componentDidMount() {
     this.refs.scroll.BScroll.refresh()
-    console.log(localStorage.getItem('user'))
+    // console.log(localStorage.getItem('user'))
     console.log("uid=====", store.getState().uid)
     console.log("uniacid=====", store.getState().uniacid)
     // localStorage.clear()
@@ -75,7 +75,7 @@ export default class Home extends Component {
               </div>
               <div style={{position:"absolute",top:"2.2rem",left:".5rem"}}>版本信息</div>
               <div className="banben">
-                  v1.1.1.9.1
+                  v1.1.1.9.4
               </div>
               <p
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "1rem", left: "0rem", color: "transparent", background: "transparent" }}

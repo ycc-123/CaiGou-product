@@ -150,15 +150,15 @@ class Category extends Component {
         uniacid: store.getState().uniacid,
       }
     }).then(res => {
-      console.log(res.data.data)
+      // console.log(res.data.data)
       if (res.data.status === 4001) {
 
-        var result = res.data.data.map(o => { return { name: o.name } });
-        console.log(result)
-        var Id = res.data.data.map(o => { return { id: o.id } });
-        console.log(Id)
+        var result = res.data.data.map(o => { return { name: o.label } });
+        // console.log(result)
+        var Id = res.data.data.map(o => { return { id: o.value } });
+        // console.log(Id)
         var value = res.data.data.map(o => { return { code: o.code } });
-        console.log(value)
+        // console.log(value)
         getStockList({
           action: 'getStockList', data: {
             uniacid: store.getState().uniacid,
@@ -170,7 +170,7 @@ class Category extends Component {
 
           }
         }).then(res => {
-          console.log(res)
+          // console.log(res)
           if (res.data.status === 4001) {
             let mrqunangoods = []
             if (Boolean(res.data.data.data) === false) {
@@ -178,7 +178,7 @@ class Category extends Component {
               mrqunangoods = []
             } else {
               mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-              console.log(mrqunangoods)
+              // console.log(mrqunangoods)
             }
             // console.log(res.data.data.data)
             // var mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
@@ -201,11 +201,11 @@ class Category extends Component {
         Toast.info('网络错误', 2)
       }
     })
-    console.log(this.state.id)
+    // console.log(this.state.id)
   }
 
   onChangeActive = index => {
-    console.log(this.state.value[index])
+    // console.log(this.state.value[index])
     this.setState({
       indexId: this.state.id[index].id,
       index
@@ -220,7 +220,7 @@ class Category extends Component {
         categoryid: this.state.id[index].id,
       }
     }).then(res => {
-      console.log(res)
+      // console.log(res)
       let mrqunangoods = []
       if (res.data.status === 4001) {
         if (Boolean(res.data.data.data) === false) {
@@ -228,9 +228,9 @@ class Category extends Component {
           mrqunangoods = []
         } else {
           mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-          console.log(mrqunangoods)
+          // console.log(mrqunangoods)
         }
-        console.log(res.data.data.data)
+        // console.log(res.data.data.data)
 
         this.setState({
           mrqunangoods,

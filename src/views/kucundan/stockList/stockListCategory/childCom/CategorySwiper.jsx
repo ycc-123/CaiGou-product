@@ -13,7 +13,7 @@ export default class Liebiao extends Component {
         }
     }
     componentDidMount(){
-        console.log(store.getState().goodsList)
+        // console.log(store.getState().goodsList)
         if(store.getState().goodsList===[]){
             Toast.info("无采购商品",1.5)
             this.setState({
@@ -40,7 +40,7 @@ export default class Liebiao extends Component {
                 this.state.goodsList.map((v,k)=>{
                     // console.log(v)
                     return(
-                        <div className='tiao'>
+                        <div className='tiao' key={k}>
                         <img className='t-img-l' src={v.img?v.img :"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"}  alt="网络卡" />
                         <ul className='wen-zi'>
                             <li className='wen-zi-t'>

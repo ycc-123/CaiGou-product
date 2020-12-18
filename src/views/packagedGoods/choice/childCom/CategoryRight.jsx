@@ -47,7 +47,7 @@ class CategoryRight extends Component {
   }
   getChildrenMsg = (result,login,ww) => {
     let num=Number(this.state.num)+Number(login)
-   this.props.aa(num)
+   
     let arr  = []
     arr.push(ww);
 
@@ -59,6 +59,7 @@ class CategoryRight extends Component {
       login:[...this.state.login, ...nums],
       goods:[...this.state.goods, ...arr]
     },()=>{
+      this.props.aa(this.state.login,this.state.goods)
       let aa = {}
       let arr =[]
       this.state.goods.map((v,k)=>{

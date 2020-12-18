@@ -65,6 +65,18 @@ export default class AddPurchaseOrder extends Component {
     createPurchase() {
         let idgy = this.state.IDgy.toString()
         let idkc = this.state.IDck.toString()
+
+        let flname = {}
+        this.state.data.map((v, k) => {
+            if (v.value === idkc) {
+                flname = v
+            }
+        })
+        // let idkc = this.state.IDck.toString()
+        var parame = encodeURI(flname.label);
+        // var parame = encodeURI(flname.value);
+
+        console.log(parame)
         createPurchase({
             action: 'createPurchase', data: {
                 uniacid: store.getState().uniacid,
@@ -78,7 +90,7 @@ export default class AddPurchaseOrder extends Component {
             }
         }).then(res => {
             if (res.data.status === 4001) {
-                this.props.history.push(`/category/${res.data.data.id}`)
+                this.props.history.push(`/category/${res.data.data.id}/${parame}`)
                 Toast.success('新建采购单成功', 2)
             } else {
                 Toast.info(res.data.msg, 2)
@@ -132,10 +144,10 @@ export default class AddPurchaseOrder extends Component {
                                 <List.Item className='pdlx' arrow="horizontal"></List.Item>
                             </Picker>
                         </li>
-                        <li onClick={()=>{this.props.history.push('/home')}}>
+                        {/* <li onClick={()=>{this.props.history.push('/home')}}>
                             <div>引用采购申请：</div>
                             <div style={{color:"#a9a9a9",marginLeft:".3rem"}}>调用采购申请单</div>
-                        </li>
+                        </li> */}
                         <li>
                             <div>预付款：</div>
                             <input name="inputAmount"

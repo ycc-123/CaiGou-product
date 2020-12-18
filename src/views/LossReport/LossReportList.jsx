@@ -27,7 +27,7 @@ export default class ApplyOrder extends Component {
                 page: this.state.page
             }
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             if (res.data.status === 4001) {
                 this.setState({
                     tiao: res.data.data.data
@@ -60,7 +60,7 @@ export default class ApplyOrder extends Component {
                 page: "1"
             }
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             if (res.data.status === 4001) {
                 this.setState({
                     tiao: res.data.data.data
@@ -129,14 +129,13 @@ export default class ApplyOrder extends Component {
                             onClick={() => { this.add() }}
                             className='add'>新增<span style={{ fontSize: ".4rem" }}>+</span></div>
                     </div>
-
                     <div className='caigoudan' >
                         <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0" }} loadMore={this.loadMore}
                             isLoadMore={this.isLoadMore}>
                             {
                                 this.state.tiao.map((v, k) => {
                                     return (
-                                        <div className='dan' >
+                                        <div className='dan' key={k}>
                                             <div onClick={() => { this.props.history.push(`/LossReportDetail/${v.id}`) }}>
                                                 <div className='dan-top'>
                                                     <p>
@@ -161,7 +160,6 @@ export default class ApplyOrder extends Component {
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div className='btn_sh' style={{ display: "none" }}>审核</div>
                                         </div>
                                     )
@@ -170,7 +168,6 @@ export default class ApplyOrder extends Component {
                         </BetterScroll>
                     </div>
                 </div>
-                
                     <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
                         <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
                     </div>
@@ -206,7 +203,7 @@ const ApplyOrderStyle = styled.div`
     border-radius: .1rem;
 }
 .t-right{
-    width:100%;
+    width:8.8rem;
     display:flex;
     justify-content: space-between;
 }
@@ -243,7 +240,7 @@ const ApplyOrderStyle = styled.div`
         max-height: 100%;
     }
     .dan-top p{
-        margin-top:.25rem;
+        margin-top:.22rem;
         margin-left:.37rem;
         width: .29rem;  
         height: .35rem;

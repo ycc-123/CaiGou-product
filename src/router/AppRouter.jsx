@@ -50,6 +50,8 @@ import modifyPrice from 'views/modifyPrice/modifyPrice'
 import modifyPriceDetailed from 'views/modifyPrice/modifyPriceDetailed'
 import addmodifyPrice from 'views/modifyPrice/addmodifyPrice'
 import modifyPriceCategory from 'views/modifyPrice/modifyPriceCategory/Category'
+import modifyPriceCategorymx from 'views/modifyPrice/modifyPriceCategory/childCom/CategorySwiper'
+
 
 
 
@@ -64,7 +66,7 @@ const AppRouter = () => {
     <Router>
       {/* 缓存路由 */}
       <CacheSwitch>
-      <CacheRoute path='/category/:id' when='always' component={category}></CacheRoute>
+      <CacheRoute path='/category/:id/:ck' when='always' component={category}></CacheRoute>
       <CacheRoute path='/choiceGoods/:id' when='always' component={choiceGoods}></CacheRoute>
       <CacheRoute path='/pandianCategory/:id/:ck/:fl/:name' when='always' component={pandianCategory}></CacheRoute>
 
@@ -95,7 +97,7 @@ const AppRouter = () => {
         <Route path='/PurchaseOrderDetailed/:id' exact component={PurchaseOrderDetailed} ></Route>
         <Route path='/PurchaseOrder' exact component={PurchaseOrder} ></Route>
         <Route path='/AddPurchaseOrder' exact component={AddPurchaseOrder} ></Route>
-        <Route path='/Liebiao' exact component={Liebiao} ></Route>
+        <Route path='/Liebiao/:ck' exact component={Liebiao} ></Route>
         {/* 优惠明细表 */}
         <Route path='/Youhuimxb' exact component={Youhuimxb} ></Route>
         <Route path='/Shouyinmxb/:id/:page' exact component={Shouyinmxb} ></Route>
@@ -128,6 +130,8 @@ const AppRouter = () => {
         <Route path='/addmodifyPrice' exact component={addmodifyPrice} ></Route>
         <Route path='/modifyPriceDetailed/:id' exact component={modifyPriceDetailed} ></Route>
         <Route path='/modifyPriceCategory/:id' exact component={modifyPriceCategory} ></Route>
+        <Route path='/modifyPriceCategorymx' exact component={modifyPriceCategorymx} ></Route>
+
 
 
         {/* 测试 */}

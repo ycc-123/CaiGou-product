@@ -45,10 +45,10 @@ export default class stockList extends Component {
                 page:this.state.page
             }
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             if(res.data.status===4001){
                 var result = res.data.data.data.map(o=>{return{id:o.warehouseid,name:o.name}});
-                    console.log(result)
+                    // console.log(result)
                 this.setState({
                     goods: res.data.data.data,
                     totalcostprice: res.data.data.totalcostprice,
@@ -73,10 +73,10 @@ export default class stockList extends Component {
                 page:"1"
             }
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             if(res.data.status===4001){
                 var bb = res.data.data.data.map(o=>{return{id:o.id,name:o.name}});
-                    console.log(bb)
+                    // console.log(bb)
                     let aa=[{id:"",name:"全部仓库"}]
                     let result=[...aa,...bb]
                 this.setState({
@@ -93,12 +93,12 @@ export default class stockList extends Component {
                
             }
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             if(res.data.status===4001){
                 var bb = res.data.data.map(o=>{return{id:o.id,name:o.name}});
                 let aa=[{id:"1",name:"全部分类"}]
                     let result=[...aa,...bb]
-                    console.log(result)
+                    // console.log(result)
                 this.setState({
                    fenleiName:result
 
@@ -111,7 +111,7 @@ export default class stockList extends Component {
     }
     // 获取二级分类
     yijifenlei(v,k){
-        console.log(v,k)
+        // console.log(v,k)
         this.setState({
             yikey:v.id
         })
@@ -124,10 +124,10 @@ export default class stockList extends Component {
                 page:this.state.page
             }
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             if(res.data.status===4001){
                 var result = res.data.data.data.map(o=>{return{id:o.warehouseid,name:o.name}});
-                    console.log(result)
+                    // console.log(result)
                 this.setState({
                     goods: res.data.data.data,
                     totalcostprice: res.data.data.totalcostprice,
@@ -147,10 +147,10 @@ export default class stockList extends Component {
                 id:v.id
             }
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             if(res.data.status===4001){
                 var result = res.data.data.childrens.map(o=>{return{id:o.id,name:o.name}});
-                    console.log(result)
+                    // console.log(result)
                 this.setState({
                     panduan:result===[]?false:true,
                     childrens:result,
@@ -184,7 +184,7 @@ export default class stockList extends Component {
         }
     }
     canku(v,k){
-        console.log(v.id)
+        // console.log(v.id)
         this.setState({
             cankuID:v.id,
             ckkey:v.id
@@ -201,7 +201,7 @@ export default class stockList extends Component {
         this.setState({
             xian:false
         })
-        console.log(this.state.yikey)
+        // console.log(this.state.yikey)
         getStockList({
             action: 'getStockList', data: {
                 uniacid: store.getState().uniacid,
@@ -234,7 +234,7 @@ export default class stockList extends Component {
         })
     }
     search(){
-        console.log(this.state.inputSearch)
+        // console.log(this.state.inputSearch)
         getStockList({
             action: 'getStockList', data: {
                 uniacid: store.getState().uniacid,
@@ -242,10 +242,10 @@ export default class stockList extends Component {
                 search:this.state.inputSearch,
             }
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             if(res.data.status===4001){
                 var result = res.data.data.data.map(o=>{return{id:o.warehouseid,name:o.name}});
-                    console.log(result)
+                    // console.log(result)
                 this.setState({
                     goods: res.data.data.data,
                     totalcostprice: res.data.data.totalcostprice,
@@ -259,7 +259,7 @@ export default class stockList extends Component {
         })
     }
     inputChange(e){
-        console.log(e.target.value)
+        // console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -273,7 +273,7 @@ export default class stockList extends Component {
     
       }
     render() {
-        console.log(this.state.childrens)
+        // console.log(this.state.childrens)
         const scrollConfig = {
             probeType: 1
         }
@@ -281,7 +281,7 @@ export default class stockList extends Component {
             probeType: 1
         }
 
-        console.log(this.state.goods)
+        // console.log(this.state.goods)
         return (
             <StockListStyle>
     <DocumentTitle title={'库存单'} />

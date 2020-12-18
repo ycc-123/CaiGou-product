@@ -1,188 +1,172 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseList ,getPriceModifyList} from 'network/Api'
+import { getPriceModifyList } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
-// import Tiao from './Tiao'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 import { LoadingMore } from 'common/loading'
 
 export default class ModifyPrice extends Component {
-    constructor() {
-        super()
-        this.state = {
-            data: [],
-            limit: 10,
-            page: 1,
-            inputSearch: '',
-            kongbj: true
-        }
-        this.isLoadMore = true
+  constructor() {
+    super()
+    this.state = {
+      data: [],
+      limit: 10,
+      page: 1,
+      inputSearch: '',
+      kongbj: true
     }
-    componentDidMount() {
-        getPriceModifyList({
-            action: 'getPriceModifyList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                // type: "1",
-                limit: this.state.limit,
-                page: this.state.page
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                this.setState({
-                    data: res.data.data.data
-                }, () => {
-                    this.refs.scroll.BScroll.refresh()
-                })
-            } else {
-                this.setState({
-                    kongbj: false
-                })
-                Toast.info(res.data.msg, 2)
-            }
-        })
-    }
-    inputChange(e) {
+    this.isLoadMore = true
+  }
+  componentDidMount() {
+    getPriceModifyList({
+      action: 'getPriceModifyList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        limit: this.state.limit,
+        page: this.state.page
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
         this.setState({
-            [e.target.name]: e.target.value
+          data: res.data.data.data
+        }, () => {
+          this.refs.scroll.BScroll.refresh()
         })
-    }
-    Search() {
-        getPriceModifyList({
-            action: 'getPriceModifyList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                search: this.state.inputSearch,
-                limit: this.state.limit,
-                page: this.state.page
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                this.setState({
-                    data: res.data.data.data
-                }, () => {
-                    this.refs.scroll.BScroll.refresh()
-                })
-            } else {
-                this.setState({
-                    kongbj: false
-                })
-                Toast.info(res.data.msg, 2)
-            }
+      } else {
+        this.setState({
+          kongbj: false
         })
+        Toast.info(res.data.msg, 2)
+      }
+    })
+  }
+  inputChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  Search() {
+    getPriceModifyList({
+      action: 'getPriceModifyList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        search: this.state.inputSearch,
+        limit: this.state.limit,
+        page: this.state.page
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        this.setState({
+          data: res.data.data.data
+        }, () => {
+          this.refs.scroll.BScroll.refresh()
+        })
+      } else {
+        this.setState({
+          kongbj: false
+        })
+        Toast.info(res.data.msg, 2)
+      }
+    })
+  }
+  render() {
+    const scrollConfig = {
+      probeType: 1
     }
-    render() {
-        const scrollConfig = {
-            probeType: 1
-        }
-        // let Color = ''
-        // if (statusname === "提交成功") {
-        //     Color = "#22a31b"
-        // } else if (statusname === "待提交") {
-        //     Color = "#d92929"
-        // }
-        return (
-            <ModifyPriceStyle>
-                <DocumentTitle title={'调价单'} />
-                <div style={{ display: "flex" }}>
-                    <div className='search'>
-                        <input type="search" className='input' placeholder="请输入调价单单号或门店名称" name="inputSearch"
-                            onChange={this.inputChange.bind(this)}
-                            value={this.state.inputSearch} />
-                        <div className='img' onClick={() => { this.Search() }}>
-                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-                        </div>
+    return (
+      <ModifyPriceStyle>
+        <DocumentTitle title={'调价单'} />
+        <div style={{ display: "flex" }}>
+          <div className='search'>
+            <input type="search" className='input' placeholder="请输入调价单单号或门店名称" name="inputSearch"
+              onChange={this.inputChange.bind(this)}
+              value={this.state.inputSearch} />
+            <div className='img' onClick={() => { this.Search() }}>
+              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+            </div>
+          </div>
+          <div
+            onClick={() => { this.props.history.push(`/addmodifyPrice`) }}
+            className='add'>新增<span style={{ fontSize: ".4rem" }}>+</span></div>
+        </div>
+        <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0rem" }} loadMore={this.loadMore}
+          isLoadMore={this.isLoadMore}>
+          {
+            this.state.data.map((value, key) => {
+              let item = value
+              return (
+                <div className='caigoudan'  key={key}>
+                  <div className='dan' onClick={(e) => { this.props.history.push(`/modifyPriceDetailed/${item.id}`) }}>
+                    <div className='dan-top' >
+                      <p>
+                        <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
+                      </p>
+                      <div className='t-right'>
+                        <div className='caigoudanhao'>调价单号：{item.docno}</div>
+                        <div className='zuantai' style={{ color: item.statusName === "提交成功" ? "#22a31b" : "#d92929" }}>{item.statusName}</div>
+                      </div>
                     </div>
-                    <div
-                        onClick={() => { this.props.history.push(`/addmodifyPrice`) }}
-                        className='add'>新增<span style={{ fontSize: ".4rem" }}>+</span></div>
+                    <div className='dan-footer' >
+                      <p>单据日期：{item.docdate}</p>
+                      <p>创建时间：{item.createtime}</p>
+                      <p>调价门店：{item.storeName}</p>
+                    </div>
+                  </div>
                 </div>
-                <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0rem" }} loadMore={this.loadMore}
-                    isLoadMore={this.isLoadMore}>
-                    {
-                        this.state.data.map((value, key) => {
-                            let item =value
-                            return (
-                                <div className='caigoudan'  >
-                                    <div className='dan' onClick={(e) => { this.props.history.push(`/modifyPriceDetailed/${item.id}`) }}>
-                                        <div className='dan-top' >
-                                            <p>
-                                                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
-                                            </p>
-                                            <div className='t-right'>
-                                                <div className='caigoudanhao'>调价单号：{item.docno}</div>
-                                                <div className='zuantai' style={{ color: item.statusName === "提交成功"?"#22a31b":"#d92929" }}>{item.statusName}</div>
-                                            </div>
-                                        </div>
-                                        <div className='dan-footer' >
-                                            <p>单据日期：{item.docdate}</p>
-                                            <p>创建时间：{item.createtime}</p>
-                                            <p>调价门店：{item.storeName}</p>
-                                        </div>
-                                        {/* <div className='btn_tj' onClick={() => { this.submit(item) }}
-                                            style={{ display: item.statusname === "待提交" ? "block" : 'none' }}
-                                        >提交</div>
-
-                                        <div className='btn_sh' onClick={() => { this.shenghe(item) }}
-                                            style={{ display: item.statusname === "待审核" ? "block" : 'none' }}
-                                        >审核</div>*/}
-                                    </div> 
-                                </div>
-                            )
-                        })
-                    }
-                    {
-                        this.state.data.length > 0 &&
-                        <LoadingMore isLoading={this.isLoadMore} />
-                    }
-                </BetterScroll>
-                <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
-                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
-                </div>
-            </ModifyPriceStyle>
-        )
-    }
-    loadMore = () => {
-        // 加载数据时转圈
-        let loading = true
-        setTimeout(() => {
-            if (loading) {
-                this.setState({
-
-                    loadingMore: true
-                })
-            }
-        }, 1000)
-        if (this.isLoadMore) {
-            getPurchaseList({
-                action: 'getPurchaseList', data: {
-                    uniacid: store.getState().uniacid,
-                    uid: store.getState().uid,
-                    type: "1",
-                    limit: this.state.limit,
-                    page: this.state.page
-                }
-            }).then(res => {
-                if (res.data.data.data.length < this.state.limit) {
-                    this.isLoadMore = false
-                }
-                this.setState({
-                    data: [...this.state.data, ...res.data.data.data],
-                    loadingMore: false
-                }, () => {
-                    let page = this.state.page
-                    this.setState({
-                        page: page += 1
-                    })
-                    loading = false
-                    this.refs.scroll.BScroll.finishPullUp()
-                    this.refs.scroll.BScroll.refresh()
-                })
+              )
             })
-        } else {}
-    }
+          }
+          {
+            this.state.data.length > 0 &&
+            <LoadingMore isLoading={this.isLoadMore} />
+          }
+        </BetterScroll>
+        <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
+          <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
+        </div>
+      </ModifyPriceStyle>
+    )
+  }
+  loadMore = () => {
+    // 加载数据时转圈
+    let loading = true
+    setTimeout(() => {
+      if (loading) {
+        this.setState({
+
+          loadingMore: true
+        })
+      }
+    }, 1000)
+    if (this.isLoadMore) {
+      getPriceModifyList({
+        action: 'getPriceModifyList', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          limit: this.state.limit,
+          page: this.state.page
+        }
+      }).then((res) => {
+        if (res.data.data.data.length < this.state.limit) {
+          this.isLoadMore = false
+        }
+        this.setState({
+          data: [...this.state.data, ...res.data.data.data],
+          loadingMore: false
+        }, () => {
+          let page = this.state.page
+          this.setState({
+            page: page += 1
+          })
+          loading = false
+          this.refs.scroll.BScroll.finishPullUp()
+          this.refs.scroll.BScroll.refresh()
+        })
+      })
+    } else { }
+  }
 }
 const ModifyPriceStyle = styled.div`
 .kongbj img{
@@ -226,7 +210,7 @@ const ModifyPriceStyle = styled.div`
     border-radius: .1rem;
 }
 .t-right{
-    width:100%;
+    width:8.8rem;
     display:flex;
     justify-content: space-between;
 }
@@ -263,7 +247,7 @@ const ModifyPriceStyle = styled.div`
         max-height: 100%;
     }
     .dan-top p{
-        margin-top:.25rem;
+        margin-top:.22rem;
         margin-left:.37rem;
         width: .29rem;  
         height: .35rem;
