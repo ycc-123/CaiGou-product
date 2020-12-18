@@ -73,6 +73,7 @@ export default class PurchaseOrderDetailed extends Component {
         this.state.purchaseItem.map((value, key) => {
             price.push(value.subtotal)
             num.push(value.gnum)
+            return ""
         })
         let prices = 0
         let nums = 0

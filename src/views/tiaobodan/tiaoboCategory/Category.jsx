@@ -6,8 +6,7 @@ import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
 import { getProductCategoryAll, getStockList } from 'network/Api'
-import { _categoryRight } from 'network/category'
-import { Toast, Button, Modal } from 'antd-mobile';
+import { Toast, Modal } from 'antd-mobile';
 const alert = Modal.alert;
 const scollConfig = {
   probeType: 1
@@ -29,20 +28,22 @@ class Category extends Component {
       defaultIndex: 0,
       type: 'goods',
       id: [],
-      num: '',
+      num: [],
       price: '',
       inputSearch: '',
       mrqunangoods: [],
-      Id: ""
+      Id: "",
+      oldGoods:[]
     }
   }
   mingxi() {
     this.props.history.push('/tiaoboxq')
   }
   getChildValue(aa, val) {
+    console.log(aa,val)
     this.setState({
       num: aa,
-      price: val
+      oldGoods: val
     })
   }
   inputChange(e) {
@@ -150,11 +151,9 @@ class Category extends Component {
         uniacid: store.getState().uniacid,
       }
     }).then(res => {
-      // console.log(res.data.data)
       if (res.data.status === 4001) {
 
         var result = res.data.data.map(o => { return { name: o.label } });
-        // console.log(result)
         var Id = res.data.data.map(o => { return { id: o.value } });
         // console.log(Id)
         var value = res.data.data.map(o => { return { code: o.code } });
@@ -205,7 +204,6 @@ class Category extends Component {
   }
 
   onChangeActive = index => {
-    // console.log(this.state.value[index])
     this.setState({
       indexId: this.state.id[index].id,
       index
@@ -220,18 +218,39 @@ class Category extends Component {
         categoryid: this.state.id[index].id,
       }
     }).then(res => {
-      // console.log(res)
       let mrqunangoods = []
+      console.log(res.data.data.data)
+      let aa = {}
+      let arr =[]
+      this.state.num.map((v,k)=>{
+         aa={
+            name: this.state.oldGoods[k].name,
+            num: this.state.num[k],
+          }
+         return arr.push(aa);
+      })
+      console.log(arr)
+      let cartList = arr
+      let now = res.data.data.data?res.data.data.data:[]
+      console.log(cartList,"===========输入后传人的值")
+      console.log('之前', now)
+      for (let i = 0; i < cartList.length; i++) {
+        for (let j = 0; j < now.length; j++) {
+          if (now[j].name == cartList[i].name) {
+            now[j].realnum = cartList[i].num
+          }
+        }
+      }
+      console.log('之后', now)
+
+
       if (res.data.status === 4001) {
         if (Boolean(res.data.data.data) === false) {
           Toast.info("无商品", 1)
           mrqunangoods = []
         } else {
           mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-          // console.log(mrqunangoods)
         }
-        // console.log(res.data.data.data)
-
         this.setState({
           mrqunangoods,
           goods: res.data.data.data === null ? [] : res.data.data.data
@@ -243,39 +262,10 @@ class Category extends Component {
         Toast.info(res.data.msg, 2)
       }
     })
-
-
-
-
-    const { appConfig } = store.getState()
-    let { title } = this.state
-    if (!this.state.goods) {
-      const right_config = {
-        action: 'getGoodsByCategory',
-        data: {
-          uniacid: appConfig.uniacid,
-          openid: appConfig.wxUserInfo.openid,
-          cid: this.state.title[index].id,
-          pagesize: 100
-        }
-      }
-      _categoryRight(right_config).then(res => {
-        title[index].goods = (res.data && res.data.data && res.data.data.list) || []
-        this.setState({
-          ys: res.data.data.issell,
-          kc: res.data.data.showPubStock,
-          title,
-          defaultIndex: index
-        })
-      })
-    } else {
       this.setState({
         defaultIndex: index
       })
-    }
   }
-
-
 }
 const CategoryStyle = styled.div`
 .baocun{

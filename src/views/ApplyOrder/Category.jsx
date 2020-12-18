@@ -6,8 +6,8 @@ import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
 import { getProductCategoryAll, searchProduct } from 'network/Api'
-import {  _categoryRight } from 'network/category'
 import { Toast ,Modal } from 'antd-mobile';
+
 const alert = Modal.alert;
 const scollConfig = {
   probeType: 1
@@ -29,18 +29,20 @@ class Category extends Component {
       defaultIndex: 0,
       type: 'goods',
       id: [],
-      num: '',
+      num: [],
       price: '',
-      inputSearch:''
+      inputSearch:'',
+      oldGoods:[]
     }
   }
   mingxi() {
     this.props.history.push('/Liebiao')
   }
   getChildValue(aa, val) {
+    console.log(aa,val)
     this.setState({
       num: aa,
-      price: val
+      oldGoods: val
     })
   }
   inputChange(e){
@@ -108,7 +110,7 @@ class Category extends Component {
               <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
                   <div className='left'>
                       <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                      <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
+                      <div className='yuan'>{this.state.num.length ? this.state.num.length : 0}</div>
                   </div>
                   <div style={{display:"flex",marginTop:".2rem"}}>
                       <div className='baocun' onClick={()=>{this.click(1)}} >保存</div>
@@ -191,6 +193,29 @@ class Category extends Component {
       }
     }).then(res => {
       if (res.data.status === 4001) {
+        console.log(res.data.data.data)
+        let aa = {}
+        let arr =[]
+        this.state.num.map((v,k)=>{
+           aa={
+              name: this.state.oldGoods[k].name,
+              num: this.state.num[k],
+            }
+           return arr.push(aa);
+        })
+        console.log(arr)
+        let cartList = arr
+        let now = res.data.data.data?res.data.data.data:[]
+        console.log(cartList,"===========输入后传人的值")
+        console.log('之前', now)
+        for (let i = 0; i < cartList.length; i++) {
+          for (let j = 0; j < now.length; j++) {
+            if (now[j].name == cartList[i].name) {
+              now[j].realnum = cartList[i].num
+            }
+          }
+        }
+        console.log('之后', now)
         this.setState({
           goods: res.data.data.data
         })

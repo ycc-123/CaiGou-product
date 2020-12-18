@@ -5,9 +5,8 @@ import CategoryLeftItem from './childCom/CategoryLeftItem'
 import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
-import { getProductCategoryAll, searchProduct, getStockList,checkSubmitInventory } from 'network/Api'
-import { _categoryRight } from 'network/category'
-import { Toast, Button, Modal } from 'antd-mobile';
+import { searchProduct, getStockList,checkSubmitInventory } from 'network/Api'
+import { Toast, Modal } from 'antd-mobile';
 const alert = Modal.alert;
 const scollConfig = {
   probeType: 1

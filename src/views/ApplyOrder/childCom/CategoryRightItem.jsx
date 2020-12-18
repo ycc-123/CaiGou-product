@@ -23,6 +23,12 @@ class CategoryRightgoods extends Component {
 
   render() {
     const { goods } = this.props
+    let input=''
+    if(this.state.login!==''){
+      input=this.state.login
+    }else{
+      input=goods.realnum
+    }
     return (
       <CategoryRightgoodsStyle>
         <div className="rrr"></div>
@@ -37,9 +43,9 @@ class CategoryRightgoods extends Component {
               </div>
             <div style={{display:"flex",justifyContent:"space-between"}}>
             {
-              this.state.login ? 
+              input ? 
               <div  style={{width:"100%",textAlign: "right",paddingTop:".2rem", color: "#CD2323", fontSize: ".35rem" }}>
-                {this.state.login}</div> : <img className='category-goods-img'
+                {input}</div> : <img className='category-goods-img'
                   src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
                   alt="" />
             }

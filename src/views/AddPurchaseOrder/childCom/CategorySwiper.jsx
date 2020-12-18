@@ -80,7 +80,7 @@ export default class Liebiao extends Component {
                         </div>
                     </div>
                     <div className='footer'>
-                        采购备注：0
+                        采购备注：{this.props.match.params.bz}
                         </div>
                 </div>
                 {

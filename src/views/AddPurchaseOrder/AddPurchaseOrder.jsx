@@ -71,12 +71,13 @@ export default class AddPurchaseOrder extends Component {
             if (v.value === idkc) {
                 flname = v
             }
+            return ""
         })
         // let idkc = this.state.IDck.toString()
         var parame = encodeURI(flname.label);
         // var parame = encodeURI(flname.value);
 
-        console.log(parame)
+        console.log(this.state.inputbeiz===''?22:33)
         createPurchase({
             action: 'createPurchase', data: {
                 uniacid: store.getState().uniacid,
@@ -90,7 +91,7 @@ export default class AddPurchaseOrder extends Component {
             }
         }).then(res => {
             if (res.data.status === 4001) {
-                this.props.history.push(`/category/${res.data.data.id}/${parame}`)
+                this.props.history.push(`/category/${res.data.data.id}/${parame}/${this.state.inputbeiz===''?0:this.state.inputbeiz}`)
                 Toast.success('新建采购单成功', 2)
             } else {
                 Toast.info(res.data.msg, 2)

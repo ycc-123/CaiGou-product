@@ -6,7 +6,6 @@ import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
 import { getProductCategoryAll, searchProduct } from 'network/Api'
-import { _categoryRight } from 'network/category'
 import { Toast } from 'antd-mobile';
 
 const scollConfig = {

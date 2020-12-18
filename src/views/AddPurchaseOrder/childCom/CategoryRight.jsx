@@ -51,13 +51,12 @@ class CategoryRight extends Component {
   getChildrenMsg = (result, login, password, ww) => {
     let num = Number(this.state.num) + Number(login)
     let price = Number(this.state.price) + Number(login) * Number(password)
-    // this.props.aa(num, price,this.state.goods)
     let arr = []
     arr.push(ww);
 
     let nums = []
     nums.push(login);
-
+    console.log(nums)
     let prices = []
     prices.push(password);
     this.setState({
@@ -69,7 +68,7 @@ class CategoryRight extends Component {
     }, () => {
       let num = this.state.login
       let price = this.state.password
-      this.props.aa(this.state.num, this.state.price,this.state.goods)
+      this.props.aa(this.state.login,price,this.state.goods)
       let aa = {}
       let arr = []
 

@@ -2,10 +2,9 @@
 import React, { Component } from 'react'
 import CategoryRightItem from './CategoryRightItem'
 import BetterScroll from 'common/betterScroll/BetterScroll'
-import { submitInventory,searchProduct } from 'network/Api'
+import { submitInventory } from 'network/Api'
 import {  Toast } from 'antd-mobile';
 import { store} from 'store/index'
-import { saveGoods} from 'store/actionCreators'
 
 class CategoryRight extends Component {
   constructor(){
@@ -85,7 +84,6 @@ class CategoryRight extends Component {
       // })
     }else{
     let num =this.state.login
-    let price =this.state.password
     let aa = {}
     let arr =[]
     num.map((v,k)=>{

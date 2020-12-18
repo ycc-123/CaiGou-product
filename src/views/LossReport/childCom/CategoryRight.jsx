@@ -42,7 +42,6 @@ class CategoryRight extends Component {
   }
   getChildrenMsg = (result,login,ww) => {
     let num=Number(this.state.num)+Number(login)
-   this.props.aa(num)
     let arr  = []
     arr.push(ww);
     let nums  = []
@@ -51,6 +50,9 @@ class CategoryRight extends Component {
       num,
       login:[...this.state.login, ...nums],
       goods:[...this.state.goods, ...arr]
+    },()=>{
+   this.props.aa(this.state.login,this.state.goods)
+
     })
 }
   componentDidMount(){
@@ -84,6 +86,12 @@ class CategoryRight extends Component {
         this.home()
       }else{
         Toast.info(res.data.msg, 2)
+        if(res.data.msg==="库存不足无法减库存"){
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+          
+        }
       }
     })
   } 

@@ -6,8 +6,7 @@ import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
 import { getProductCategoryAll, getStockList,searchProduct } from 'network/Api'
-import { _categoryRight } from 'network/category'
-import { Toast, Button, Modal } from 'antd-mobile';
+import { Toast, Modal } from 'antd-mobile';
 const alert = Modal.alert;
 
 const scollConfig = {

@@ -22,6 +22,7 @@ class Category extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      oldGoods:[],
       indexId: '',
       value: [],
       title: [],
@@ -41,9 +42,10 @@ class Category extends Component {
     this.props.history.push('/tiaoboxq')
   }
   getChildValue(aa, val) {
+    console.log(aa, val)
     this.setState({
       num: aa,
-      price: val
+      oldGoods: val
     })
   }
   inputChange(e) {
@@ -114,7 +116,7 @@ class Category extends Component {
           <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
                   <div className='left'>
                       <div style={{width: ".8rem",height: ".8rem"}}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/baoshun.png" alt="" /></div>
-                      <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
+                      <div className='yuan'>{this.state.num.length ? this.state.num.length : 0}</div>
                   </div>
                   <div style={{display:"flex",marginTop:".2rem"}}>
                       <div className='tijiao' >提交</div>
@@ -232,6 +234,25 @@ class Category extends Component {
       }
     }).then(res => {
       let mrqunangoods = []
+      let aa = {}
+      let arr =[]
+      let nums = this.state.num?this.state.num:[]
+      nums.map((v,k)=>{
+         aa={
+            name: this.state.oldGoods[k].name,
+            num: this.state.num[k],
+          }
+         return arr.push(aa);
+      })
+      let cartList = arr
+      let now = res.data.data.data?res.data.data.data:[]
+      for (let i = 0; i < cartList.length; i++) {
+        for (let j = 0; j < now.length; j++) {
+          if (now[j].name == cartList[i].name) {
+            now[j].realnum = cartList[i].num
+          }
+        }
+      }
       if (res.data.status === 4001) {
         if (Boolean(res.data.data.data) === false) {
           Toast.info("无商品", 1)

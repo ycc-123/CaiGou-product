@@ -6,7 +6,6 @@ import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
 import { getProductCategoryAll, searchProduct } from 'network/Api'
-import { _categoryRight } from 'network/category'
 import { Toast, Modal } from 'antd-mobile';
 const alert = Modal.alert;
 
@@ -30,7 +29,7 @@ class Category extends Component {
       defaultIndex: 0,
       type: 'goods',
       id: [],
-      num: '',
+      num: [],
       price: '',
       inputSearch: '',
       Id: "",
@@ -38,14 +37,14 @@ class Category extends Component {
     }
   }
   mingxi() {
-    this.props.history.push(`/Liebiao/${this.props.match.params.ck}`)
+    this.props.history.push(`/Liebiao/${this.props.match.params.ck}/${this.props.match.params.bz}`)
   }
-  getChildValue(aa, val,goods) {
-    // console.log(aa,val,goods)
+  getChildValue(num,price,goods) {
+    console.log(num,goods)
     this.setState({
-      num: aa,
-      price: val,
-      oldGoods:goods
+      num: num,
+      oldGoods:goods,
+      price:price
     })
   }
   inputChange(e) {
@@ -74,7 +73,8 @@ class Category extends Component {
   render() {
     const { title, type } = this.state
     let ida = this.props.match.params.id
-    // console.log(this.props.match.params.ck)
+    let bz = this.props.match.params.bz
+    console.log(bz)
     return (
       <CategoryStyle>
         <DocumentTitle title={'新建采购单'} />
@@ -110,7 +110,9 @@ class Category extends Component {
           </div>
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-              <div className='left' >
+              <div className='left' 
+              // onClick={()=>{this.mingxi()}}
+              >
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                 <div className='yuan'>{this.state.price ? this.state.price : 0}</div>
               </div>
@@ -195,21 +197,29 @@ class Category extends Component {
         categoryid: this.state.id[index].id,
       }
     }).then(res => {
-      let cartList = this.state.oldGoods
+      console.log(res.data.data.data)
+      let aa = {}
+      let arr =[]
+      this.state.num.map((v,k)=>{
+         aa={
+            name: this.state.oldGoods[k].name,
+            num: this.state.num[k],
+          }
+         return arr.push(aa);
+      })
+      console.log(arr)
+      let cartList = arr
       let now = res.data.data.data?res.data.data.data:[]
+      console.log(cartList,"===========输入后传人的值")
       console.log('之前', now)
-      console.log(cartList)
-        for (let i = 0; i < this.state.oldGoods.length; i++) {
-          console.log(this.state.oldGoods[i].name)
-          for (let j = 0; j < now.length; j++) {
-            console.log(now[j].name)
-            if (now[j].name === this.state.oldGoods[i].name) {
-              console.log(this.state.oldGoods[i].num)
-              now[j].pnum = this.state.oldGoods[i].num
-            }
+      for (let i = 0; i < cartList.length; i++) {
+        for (let j = 0; j < now.length; j++) {
+          if (now[j].name == cartList[i].name) {
+            now[j].realnum = cartList[i].num
           }
         }
-        console.log('之后', now)
+      }
+      console.log('之后', now)
       if (res.data.status === 4001) {
         this.setState({
           goods: res.data.data.data

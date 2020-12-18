@@ -6,7 +6,6 @@ import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiaomx'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
-const alert = Modal.alert;
 
 export default class WarehousingOrderxing extends Component {
     constructor() {
@@ -240,6 +239,7 @@ export default class WarehousingOrderxing extends Component {
                                 )
                             })
                         }
+
                     </BetterScroll>
                     <div className='foot'>
                     <div className="foot_t">

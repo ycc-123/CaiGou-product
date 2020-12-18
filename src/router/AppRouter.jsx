@@ -66,7 +66,7 @@ const AppRouter = () => {
     <Router>
       {/* 缓存路由 */}
       <CacheSwitch>
-      <CacheRoute path='/category/:id/:ck' when='always' component={category}></CacheRoute>
+      <CacheRoute path='/category/:id/:ck/:bz' when='always' component={category}></CacheRoute>
       <CacheRoute path='/choiceGoods/:id' when='always' component={choiceGoods}></CacheRoute>
       <CacheRoute path='/pandianCategory/:id/:ck/:fl/:name' when='always' component={pandianCategory}></CacheRoute>
 
@@ -97,7 +97,7 @@ const AppRouter = () => {
         <Route path='/PurchaseOrderDetailed/:id' exact component={PurchaseOrderDetailed} ></Route>
         <Route path='/PurchaseOrder' exact component={PurchaseOrder} ></Route>
         <Route path='/AddPurchaseOrder' exact component={AddPurchaseOrder} ></Route>
-        <Route path='/Liebiao/:ck' exact component={Liebiao} ></Route>
+        <Route path='/Liebiao/:ck/:bz' exact component={Liebiao} ></Route>
         {/* 优惠明细表 */}
         <Route path='/Youhuimxb' exact component={Youhuimxb} ></Route>
         <Route path='/Shouyinmxb/:id/:page' exact component={Shouyinmxb} ></Route>

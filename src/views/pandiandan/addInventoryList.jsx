@@ -63,6 +63,7 @@ export default class AddInventoryList extends Component {
             if (v.value === idgy) {
                 flname = v
             }
+            return ""
         })
         let idkc = this.state.IDck.toString()
         var parame = encodeURI(flname.label);

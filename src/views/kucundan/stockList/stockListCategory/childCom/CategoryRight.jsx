@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import CategoryRightItem from './CategoryRightItem'
 
 import BetterScroll from 'common/betterScroll/BetterScroll'
-import { submitInventory,searchProduct } from 'network/Api'
+import { submitInventory } from 'network/Api'
 // import { store } from 'store/index'
 import {  Toast } from 'antd-mobile';
 

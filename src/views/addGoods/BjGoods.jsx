@@ -4,7 +4,7 @@ import { Picker, Toast, List, Switch } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { getUnitList, getProductCategoryAllChildren, getProductCategoryAll,getProductDetail, editProduct } from 'network/Api'
+import { getUnitList, getProductCategoryAll,getProductDetail, editProduct } from 'network/Api'
 import { store } from "store/index";
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -15,7 +15,6 @@ const Into = (props) => {
     const [goodName, setgoodName] = useState('');
     const [goodCategory, setGoodCategory] = useState('');
     const [goodCode, setGoodCode] = useState('');
-    const [stockUnit, setStockUnit] = useState('');
     const [sellUnit, setSellUnit] = useState('');
     const [retailPrice, setRetailPrice] = useState('');
     const [setPrice, setSetPrice] = useState('');

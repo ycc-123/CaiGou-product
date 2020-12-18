@@ -51,7 +51,6 @@ class CategoryRight extends Component {
   getChildrenMsg = (result, login, password, ww) => {
     let num = Number(this.state.num) + Number(login)
     let price = Number(this.state.price) + Number(login) * Number(password)
-    this.props.aa(num, price)
     let arr = []
     arr.push(ww);
 
@@ -65,9 +64,9 @@ class CategoryRight extends Component {
       price,
       login: [...this.state.login, ...nums],
       password: [...this.state.password, ...prices],
-
       goods: [...this.state.goods, ...arr]
     }, () => {
+    this.props.aa(this.state.login,this.state.goods)
       let num = this.state.login
       let price = this.state.password
       let aa = {}
@@ -125,6 +124,11 @@ class CategoryRight extends Component {
           this.props.history.push('/home')
         } else {
           Toast.info(res.data.msg, 2)
+          if(res.data.msg==="库存不足，无法移库"){
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          }
         }
       })
     }
