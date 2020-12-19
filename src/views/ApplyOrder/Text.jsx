@@ -1,119 +1,165 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { createProduct, getUnitList, getProductCategoryAll,getProductCategoryAllChildren} from 'network/Api'
+import { createProduct, getUnitList, getProductCategoryAll, getProductCategoryAllChildren } from 'network/Api'
 
-import { Cascader ,Divider} from 'antd';
+import { Cascader, Divider } from 'antd';
 import 'antd/dist/antd.css';
 import { Picker, List, WhiteSpace } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import arrayTreeFilter from 'array-tree-filter';
+import SwiperCore, {Pagination} from 'swiper';
 
-import { district, provinceLite } from 'antd-mobile-demo-data';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.less';
+import 'swiper/components/pagination/pagination.less';
+SwiperCore.use([Pagination])
 
-const CustomChildren = props => (
-  <div
-    onClick={props.onClick}
-    style={{ backgroundColor: '#fff', paddingLeft: 15 }}
-  >
-    <div className="test" style={{ display: 'flex', height: '45px', lineHeight: '45px' }}>
-      <div style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{props.children}</div>
-      <div style={{ textAlign: 'right', color: '#888', marginRight: 15 }}>{props.extra}</div>
-    </div>
-  </div>
-);
+// import { district, provinceLite } from 'antd-mobile-demo-data';
+
+// const CustomChildren = props => (
+//   <div
+//     onClick={props.onClick}
+//     style={{ backgroundColor: '#fff', paddingLeft: 15 }}
+//   >
+//     <div className="test" style={{ display: 'flex', height: '45px', lineHeight: '45px' }}>
+//       <div style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{props.children}</div>
+//       <div style={{ textAlign: 'right', color: '#888', marginRight: 15 }}>{props.extra}</div>
+//     </div>
+//   </div>
+// );
 export default class text extends Component {
-    constructor() {
-        super()
-        this.state = {
-            showModal: false,
-            inputsl: '',
-            inputjg: '',
-            aa:[]
-        }
-    }
-    /*
-   * 弹窗
-   */
-    showDialogBtn() {
-        this.setState({
-            showModal: true
-        })
-    }
-    /**
-     * 隐藏模态对话框
-     */
-    hideModal() {
-        this.setState({
-            showModal: false
-        })
-    }
-    /**
-     * 对话框取消按钮点击事件
-     */
-    onCancel() {
-        // console.log("取消")
-        this.hideModal();
-    }
-    /**
-     * 对话框确认按钮点击事件
-     */
-    onConfirm() {
-        // console.log("确定" + this.state.inputsl, this.state.inputjg)
-        this.hideModal();
-    }
-    inputChangesl(e) {
-        // console.log(e.target.value)
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-    inputChangejg(e) {
-        // console.log(e.target.value)
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
+  // constructor() {
+  //     super()
+  //     this.state = {
+  //         showModal: false,
+  //         inputsl: '',
+  //         inputjg: '',
+  //         aa:[]
+  //     }
+  // }
 
-    componentDidMount(){
-  
-      getProductCategoryAll({
-        action: 'getProductCategoryAll', data: {
-            uniacid: "53",
-            // uid:store.getState().uid,
+  state = {}
+  swiperRef = React.createRef();
 
-        }
-    }).then((res) => {
-      console.log(res.data.data)
-      this.setState({
-        aa:res.data.data
-      })
-    })
-  }
 
-  onsortChange = (value,selectedOptions) => {
 
-    var date = new Date();
-    this.setState({
-      value_sort: value ? value[value.length-1] : '',
-    })
-  }
 
-  dropdownRender(menus) {
+
+
+  //   /*
+  //  * 弹窗
+  //  */
+  //   showDialogBtn() {
+  //       this.setState({
+  //           showModal: true
+  //       })
+  //   }
+  //   /**
+  //    * 隐藏模态对话框
+  //    */
+  //   hideModal() {
+  //       this.setState({
+  //           showModal: false
+  //       })
+  //   }
+  //   /**
+  //    * 对话框取消按钮点击事件
+  //    */
+  //   onCancel() {
+  //       // console.log("取消")
+  //       this.hideModal();
+  //   }
+  //   /**
+  //    * 对话框确认按钮点击事件
+  //    */
+  //   onConfirm() {
+  //       // console.log("确定" + this.state.inputsl, this.state.inputjg)
+  //       this.hideModal();
+  //   }
+  //   inputChangesl(e) {
+  //       // console.log(e.target.value)
+  //       this.setState({
+  //           [e.target.name]: e.target.value
+  //       })
+  //   }
+  //   inputChangejg(e) {
+  //       // console.log(e.target.value)
+  //       this.setState({
+  //           [e.target.name]: e.target.value
+  //       })
+  //   }
+
+  //   componentDidMount(){
+
+  //     getProductCategoryAll({
+  //       action: 'getProductCategoryAll', data: {
+  //           uniacid: "53",
+  //           // uid:store.getState().uid,
+
+  //       }
+  //   }).then((res) => {
+  //     console.log(res.data.data)
+  //     this.setState({
+  //       aa:res.data.data
+  //     })
+  //   })
+  // }
+
+  // onsortChange = (value,selectedOptions) => {
+
+  //   var date = new Date();
+  //   this.setState({
+  //     value_sort: value ? value[value.length-1] : '',
+  //   })
+  // }
+
+  // dropdownRender(menus) {
+  //   return (
+  //     <div>
+  //       {menus}
+  //       <Divider style={{ margin: 0 }} />
+  //       <div style={{ padding: 8 }}>The footer is not very short.</div>
+  //     </div>
+  //   );
+  // }
+
+
+
+
+
+
+  render() {
     return (
-      <div>
-        {menus}
-        <Divider style={{ margin: 0 }} />
-        <div style={{ padding: 8 }}>The footer is not very short.</div>
-      </div>
-    );
-  }
+      <TextStyle>
+
+        <Swiper style={{ width: "100%", height: "7rem", background: "pink", fontSize: ".5rem", }}
+          spaceBetween={5}
+          slidesPerView={1}
+          onSlideChange={() => console.log('slide change')}
+          onSwiper={(swiper) => console.log(swiper)}
+          pagination={{ clickable: true }}
+         
+        >
+          <SwiperSlide>
+            1
+          </SwiperSlide>
+          <SwiperSlide>Slide 2</SwiperSlide>
+          <SwiperSlide>Slide 3</SwiperSlide>
+          <SwiperSlide>Slide 4</SwiperSlide>
+          <div className="swiper-pagination"></div>
+          <div class="swiper-scrollbar"></div>
+    </Swiper>
+
+
+   
+        
 
 
 
-    render() {
-        return (
-            <TextStyle>
-              <div className='ss'>
+
+
+
+        {/* <div className='ss'>
              <Cascader className="ant-cascader-menu" style={{
                   width: '5rem',
                   height:"1rem",
@@ -144,45 +190,45 @@ export default class text extends Component {
           onDismiss={console.log(district)}
         >
           <CustomChildren>Customized children</CustomChildren>
-        </Picker>
-              </TextStyle>
+        </Picker> */}
+      </TextStyle>
 
-              // {/* <canvas id="drawing" width="200" height="200">A drawing of something.</canvas>  */}
-              // {/* <div style={{width:"10rem",height:"1rem",background:'red'}}></div> */}
-              //   {/* <button class="show-btn" onClick={() => { this.showDialogBtn() }}>1111111111111111111111111111111</button>
-              //   <div className="modal-mask"
-              //       //   onClick={()=>{this.hideModal()}} 
-              //       style={{ display: this.state.showModal === false ? "none" : "block" }}
-              //   ></div>
-              //   <div className="modal-dialog"
-              //       style={{ display: this.state.showModal === false ? "none" : "block" }}
-              //   >
-              //       <div className="modal-title">邮箱</div>
-              //       <div className="centen-m-t">请填写采购数量与单价</div>
-              //       <div className="modal-content">
-              //           <div className="modal-input">
-              //               <p>
-              //                   <input className="input" placeholder="请填写采购数量" name="inputsl"
-              //                       onChange={this.inputChangesl.bind(this)}
-              //                       value={this.state.inputsl} type="text" />
-              //               </p>
-              //               <div style={{ width: "100%", height: ".2rem" }}></div>
-              //               <p>
-              //                   <input className="input" placeholder="请填写采购单价" name="inputjg"
-              //                       onChange={this.inputChangejg.bind(this)}
-              //                       value={this.state.inputjg} type="text" />
-              //               </p>
-              //               <div style={{ width: "100%", height: ".1rem" }}></div>
-              //           </div>
-              //       </div>
-              //       <div className="modal-footer">
-              //           <div className="btn-cancel" onClick={() => { this.onCancel() }} >取消</div>
-              //           <div className="btn-confirm" onClick={() => { this.onConfirm() }} >确定</div>
-              //       </div>
-              //   </div> */}
-            
-        )
-    }
+      // {/* <canvas id="drawing" width="200" height="200">A drawing of something.</canvas>  */}
+      // {/* <div style={{width:"10rem",height:"1rem",background:'red'}}></div> */}
+      //   {/* <button class="show-btn" onClick={() => { this.showDialogBtn() }}>1111111111111111111111111111111</button>
+      //   <div className="modal-mask"
+      //       //   onClick={()=>{this.hideModal()}} 
+      //       style={{ display: this.state.showModal === false ? "none" : "block" }}
+      //   ></div>
+      //   <div className="modal-dialog"
+      //       style={{ display: this.state.showModal === false ? "none" : "block" }}
+      //   >
+      //       <div className="modal-title">邮箱</div>
+      //       <div className="centen-m-t">请填写采购数量与单价</div>
+      //       <div className="modal-content">
+      //           <div className="modal-input">
+      //               <p>
+      //                   <input className="input" placeholder="请填写采购数量" name="inputsl"
+      //                       onChange={this.inputChangesl.bind(this)}
+      //                       value={this.state.inputsl} type="text" />
+      //               </p>
+      //               <div style={{ width: "100%", height: ".2rem" }}></div>
+      //               <p>
+      //                   <input className="input" placeholder="请填写采购单价" name="inputjg"
+      //                       onChange={this.inputChangejg.bind(this)}
+      //                       value={this.state.inputjg} type="text" />
+      //               </p>
+      //               <div style={{ width: "100%", height: ".1rem" }}></div>
+      //           </div>
+      //       </div>
+      //       <div className="modal-footer">
+      //           <div className="btn-cancel" onClick={() => { this.onCancel() }} >取消</div>
+      //           <div className="btn-confirm" onClick={() => { this.onConfirm() }} >确定</div>
+      //       </div>
+      //   </div> */}
+
+    )
+  }
 }
 const TextStyle = styled.div`
 

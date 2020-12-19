@@ -51,6 +51,9 @@ import modifyPriceDetailed from 'views/modifyPrice/modifyPriceDetailed'
 import addmodifyPrice from 'views/modifyPrice/addmodifyPrice'
 import modifyPriceCategory from 'views/modifyPrice/modifyPriceCategory/Category'
 import modifyPriceCategorymx from 'views/modifyPrice/modifyPriceCategory/childCom/CategorySwiper'
+// 收银订单明细表
+import CashierOrder from 'views/CashierOrderDetails/CashierOrder'
+import CashierOrderDetails from 'views/CashierOrderDetails/CashierOrderDetails'
 
 
 
@@ -131,6 +134,11 @@ const AppRouter = () => {
         <Route path='/modifyPriceDetailed/:id' exact component={modifyPriceDetailed} ></Route>
         <Route path='/modifyPriceCategory/:id' exact component={modifyPriceCategory} ></Route>
         <Route path='/modifyPriceCategorymx' exact component={modifyPriceCategorymx} ></Route>
+        {/* 收银订单明细表 */}
+        <Route path='/CashierOrderDetails' exact component={CashierOrderDetails} ></Route>
+        <Route path='/CashierOrder' exact component={CashierOrder} ></Route>
+
+
 
 
 
