@@ -135,7 +135,7 @@ const AppRouter = () => {
         <Route path='/modifyPriceCategory/:id' exact component={modifyPriceCategory} ></Route>
         <Route path='/modifyPriceCategorymx' exact component={modifyPriceCategorymx} ></Route>
         {/* 收银订单明细表 */}
-        <Route path='/CashierOrderDetails' exact component={CashierOrderDetails} ></Route>
+        <Route path='/CashierOrderDetails/:id' exact component={CashierOrderDetails} ></Route>
         <Route path='/CashierOrder' exact component={CashierOrder} ></Route>
 
 

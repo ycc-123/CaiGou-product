@@ -539,3 +539,24 @@ export function submitPriceModify(config) {
     data: config.data
   })
 }
+
+// 收银订单列表
+
+export function getOrderList(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+// 收银订单明细
+
+export function getOrderDetail(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getRetailList ,get_cashier,get_store} from 'network/Api'
+import {getOrderList, getRetailList ,get_cashier,get_store} from 'network/Api'
 import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { Picker, List, DatePicker } from 'antd-mobile';
@@ -27,12 +27,10 @@ function Youhuimxbs(v){
                         <div className='dan-footer'>
                             <p>单据日期：{item.createtime}</p>
                             <p>所属门店：{item.storeName}</p>
-                            <p>收银员：{item.all_fee}</p>
-                            <p>支付方式：{item.all_fee}</p>
-                            <p>原价总额：{item.all_fee}</p>
-                            <p>应收金额：{item.all_fee}</p>
-
-
+                            <p>收银员：{item.createName}</p>
+                            <p>支付方式：{item.pay_type_name}</p>
+                            <p>原价总额：{item.totalmoney}</p>
+                            <p>应收金额：{item.price}</p>
                         </div>
                     </div>
              </div>
@@ -58,7 +56,15 @@ export default class CashierOrderDetails extends Component {
             end_time:'',
             start_time:'',
             today_time:"",
-            kongbj:true
+            kongbj:true,
+            status:[{value: "0", label: "待付款"},{value: "1", label: "已付款"},{value: "4", label: "全部退款"},{value: "6", label: "部分退款"}],
+            zhifu:[{value: "0", label: "现金"},{value: "1", label: "微信刷卡"},{value: "2", label: "支付宝当面付"},{value: "3", label: "会员余额"},{value: "4", label: "银行卡"},{value: "5", label: "个人微信扫码"},{value: "6", label: "个人支付宝扫码"},{value: "7", label: "组合支付"},{value: "8", label: "购物卡"}],
+            Value_status:"",
+            ID_status:"",
+            zhifu_Value:"",
+            zhifu_ID:"",
+            inputmembername:"",
+            inputorder:""
         }
         this.isLoadMore = true
     }
@@ -78,7 +84,7 @@ export default class CashierOrderDetails extends Component {
         }).then((res) => {
             // console.log(res)
             var supplier = res.data.data.map(o=>{return{value:o.id,label:o.name}});
-                    // console.log(supplier)
+                    console.log(supplier)
             if(res.data.status===4001){
                 this.setState({
                     store_id:supplier
@@ -106,8 +112,8 @@ export default class CashierOrderDetails extends Component {
         })
         let IDsyy=this.state.IDsyy.toString()
         let IDsj=this.state.IDsj.toString()
-        getRetailList({
-            action: 'getRetailList', data: {
+        getOrderList({
+            action: 'getOrderList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 starttime:this.state.start_time,
@@ -118,7 +124,7 @@ export default class CashierOrderDetails extends Component {
                 page: this.state.page
             }
         }).then((res) => {
-            // console.log(res)
+            console.log(res)
             if(res.data.status===4001){
                 this.setState({
                 linshou:res.data.data.data,
@@ -139,20 +145,26 @@ export default class CashierOrderDetails extends Component {
         this.state.zuantai===false?this.setState({zuantai:true}):this.setState({zuantai:false})
     }
     queding(){
-        // console.log(this.state.IDsj,"=======",this.state.IDsyy,this.state.end_time,this.state.start_time)
+        console.log(this.state.zhifu_ID)
         this.setState({
             zuantai:false,
         })
+        let zhifu_ID=this.state.zhifu_ID.toString()
+        let ID_status=this.state.ID_status.toString()
         let IDsyy=this.state.IDsyy.toString()
         let IDsj=this.state.IDsj.toString()
-        getRetailList({
-            action: 'getRetailList', data: {
+        getOrderList({
+            action: 'getOrderList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 starttime:this.state.start_time,
                 endtime:this.state.end_time,
                 createid:IDsyy,
                 store_id:IDsj,
+                status:ID_status,
+                pay_type:zhifu_ID,
+                realname:this.state.inputmembername,
+                member_mobile:this.state.inputorder,
                 limit: this.state.limit,
                 page: this.state.page
             }
@@ -180,8 +192,8 @@ export default class CashierOrderDetails extends Component {
     search() {
         // console.log(this.state.inputSearch)
        
-        getRetailList({
-            action: 'getRetailList', data: {
+        getOrderList({
+            action: 'getOrderList', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 search:this.state.inputSearch,
@@ -207,8 +219,21 @@ export default class CashierOrderDetails extends Component {
             [e.target.name]: e.target.value
         })
     }
+    inputChange(e) {
+        // console.log(e.target.value)
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    inputChange(e) {
+        // console.log(e.target.value)
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
     mingxi(aa){
-        this.props.history.push("/CashierOrderDetails")
+        console.log(aa)
+        this.props.history.push(`/CashierOrderDetails/${aa}`)
     }
     render() {
         const scrollConfig = {
@@ -323,6 +348,61 @@ export default class CashierOrderDetails extends Component {
                             </ul>
                         </div>
 
+                        <div >单据状态
+                            <ul>
+                                <li>
+                                    <Picker
+                                        data={this.state.status}
+                                        cols={1}
+                                        className="forss"
+                                        extra=""
+                                        value={this.state.Value_status}
+                                        onChange={v => this.setState({ Value_status: v })}
+                                        onOk={v => this.setState({ ID_status: v })}
+                                    >
+                                        <List.Item className='status' arrow="horizontal"></List.Item>
+                                    </Picker>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div >支付方式：
+                            <ul>
+                                <li>
+                                    <Picker
+                                        data={this.state.zhifu}
+                                        cols={1}
+                                        className="forss"
+                                        extra=""
+                                        value={this.state.zhifu_Value}
+                                        onChange={v => this.setState({ zhifu_Value: v })}
+                                        onOk={v => this.setState({ zhifu_ID: v })}
+                                    >
+                                        <List.Item className='zhifu' arrow="horizontal"></List.Item>
+                                    </Picker>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div >会员名称：
+                            <ul>
+                                <li>
+                                    <input className="member-name" type="text" placeholder="请输入会员名称" name="inputmembername"
+                            onChange={this.inputChange.bind(this)}
+                            value={this.state.inputmembername}/>
+                                </li>
+                            </ul>
+                        </div>
+                        <div >手机号
+                            <ul>
+                                <li>
+                                   <input className="tell" type="text" placeholder="请输入零售单号" name="inputorder"
+                            onChange={this.inputChange.bind(this)}
+                            value={this.state.inputorder}/>
+                                </li>
+                            </ul>
+                        </div>
+
                         <div className='btn' onClick={() => { this.queding() }}>确定</div>
                     </div>
                     <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
@@ -349,8 +429,8 @@ export default class CashierOrderDetails extends Component {
             }
         }, 1000)
         if (this.isLoadMore) {
-            getRetailList({
-                action: 'getRetailList', data: {
+            getOrderList({
+                action: 'getOrderList', data: {
                     uniacid: store.getState().uniacid,
                     uid: store.getState().uid,
                     limit: this.state.limit,
@@ -383,6 +463,18 @@ export default class CashierOrderDetails extends Component {
     }
 }
 const YouhuimxbStyle = styled.div`
+.member-name{
+    border:none;
+    height:.7rem;
+    width:100%;
+    background: transparent;
+}
+.tell{
+    border:none;
+    height:.7rem;
+    width:100%;
+    background: transparent;
+}
 .sximg{
     height:.5rem;
     width:.5rem;
@@ -735,13 +827,25 @@ const YouhuimxbStyle = styled.div`
     position:absolute;
     left:0rem;
     top:4.4rem;
-    // padding-top:.3rem;
     color: #a9a9a9;
     width:12rem;
-    // height:1rem;
     background-color: transparent;
-    // border:1px solid #dcdcdc;
-    // background-color: #f6f6f6;
+}
+.status{
+    position:absolute;
+    left:0rem;
+    top:6.3rem;
+    color: #a9a9a9;
+    width:12rem;
+    background-color: transparent;
+}
+.zhifu{
+    position:absolute;
+    left:0rem;
+    top:8.2rem;
+    color: #a9a9a9;
+    width:12rem;
+    background-color: transparent;
 }
 .times{
     position:absolute;

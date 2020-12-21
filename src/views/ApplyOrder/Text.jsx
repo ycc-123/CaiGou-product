@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { createProduct, getUnitList, getProductCategoryAll, getProductCategoryAllChildren } from 'network/Api'
 
-import { Cascader, Divider } from 'antd';
-import 'antd/dist/antd.css';
+// import { Cascader, Divider } from 'antd';
+// import 'antd/dist/antd.css';
 import { Picker, List, WhiteSpace } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import arrayTreeFilter from 'array-tree-filter';

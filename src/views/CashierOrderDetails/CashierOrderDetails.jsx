@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getRetailDetail } from 'network/Api'
+import { getRetailDetail,getOrderDetail } from 'network/Api'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 import { Toast } from 'antd-mobile';
@@ -25,8 +25,8 @@ export default class Shouyinmxb extends Component {
     }
     componentDidMount() {
         // console.log()
-        getRetailDetail({
-            action: 'getRetailDetail', data: {
+        getOrderDetail({
+            action: 'getOrderDetail', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 orderid: this.props.match.params.id
@@ -52,8 +52,8 @@ export default class Shouyinmxb extends Component {
         })
     }
     search() {
-        getRetailDetail({
-            action: 'getRetailDetail', data: {
+        getOrderDetail({
+            action: 'getOrderDetail', data: {
                 uniacid: store.getState().uniacid,
                 uid: store.getState().uid,
                 search: this.state.goodsSearch,
@@ -108,36 +108,36 @@ export default class Shouyinmxb extends Component {
                                 <div className='dan-footer' style={{ paddingTop: ".25rem" }}>
                                 <p >单据日期：{this.state.order.createtime}</p>
                                 <p>所属商家：{this.state.order.storeName}</p>
-                                <p>收银员：{this.state.order.pay_type_name}</p>
+                                <p>收银员：{this.state.order.refund_createName}</p>
                                 <p>支付方式：{this.state.order.statusName}</p>
-                                <p>应收金额：{this.state.order.totalmoney}</p>
-                                <p>实收金额：{this.state.order.totalmoney}</p>
-                                <p>找零金额：{this.state.order.all_fee}</p>
-                                <p>会员名称：{this.state.order.total_discount_fee}</p>
-                                <p style={{ paddingBottom: ".25rem", marginBottom: "0" }}>手机号：{this.state.order.price}</p>
+                                <p>应收金额：{this.state.order.price}</p>
+                                <p>实收金额：{this.state.order.pay_price}</p>
+                                <p>找零金额：{this.state.order.countsm}</p>
+                                <p>会员名称：{this.state.order.addname}</p>
+                                <p style={{ paddingBottom: ".25rem", marginBottom: "0" }}>手机号：{this.state.order.mobile}</p>
                             </div>
                                 </SwiperSlide>
                                 <SwiperSlide>
                                 <div className='dan-footer' style={{ paddingTop: ".25rem" }}>
                                 <p >使用积分：{this.state.order.createtime}</p>
                                 <p>积分优惠：{this.state.order.storeName}</p>
-                                <p>原价总额：{this.state.order.pay_type_name}</p>
+                                <p>原价总额：{this.state.order.totalmoney}</p>
                                 <p>小计总额：{this.state.order.statusName}</p>
-                                <p>小计优惠：{this.state.order.totalmoney}</p>
-                                <p>总计优惠：{this.state.order.totalmoney}</p>
+                                <p>小计优惠：{this.state.order.all_fee}</p>
+                                <p>总计优惠：{this.state.order.all_fee}</p>
                                 <p>优惠总额：{this.state.order.all_fee}</p>
-                                <p>优惠折扣：{this.state.order.total_discount_fee}</p>
+                                <p>优惠折扣：{this.state.order.discount_num}</p>
                                 <p style={{ paddingBottom: ".25rem", marginBottom: "0" }}>抹零：{this.state.order.price}</p>
                                 </div>
                                 </SwiperSlide>
                                 <SwiperSlide>
                                 <div className='dan-footer' style={{ paddingTop: ".25rem",height:"" }}>
-                                <p >退款金额：{this.state.order.createtime}</p>
-                                <p>退款原因：{this.state.order.storeName}</p>
-                                <p>订单状态：{this.state.order.pay_type_name}</p>
-                                <p>退款门店：{this.state.order.statusName}</p>
-                                <p>退款收银员：</p>
-                                <p>退款时间：</p>
+                                <p >退款金额：{this.state.order.refund_fee}</p>
+                                <p>退款原因：{this.state.order.reason}</p>
+                                <p>订单状态：{this.state.order.statusName}</p>
+                                <p>退款门店：{this.state.order.refund_store}</p>
+                                <p>退款收银员：{this.state.order.refund_createName}</p>
+                                <p>退款时间：{this.state.order.refund_time}</p>
                                 <p></p>
                                 <p></p>
                                 <p style={{ paddingBottom: ".25rem", marginBottom: "0" }}></p>
