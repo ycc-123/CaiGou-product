@@ -8,237 +8,237 @@ import { store } from "store/index";
 
 const alert = Modal.alert;
 function Tiao(value) {
-    let tiao = value.item
-    return (
-        <div className='tiao'>
-            <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+  let tiao = value.item
+  return (
+    <div className='tiao'>
+      <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
-            <ul className='wen-zi'>
-                <li className='wen-zi-t'>
-                    <div className='name'>{tiao.goods_name}</div>
-                </li>
-                <li className='wen-zi-c'>
-                    <div >商品编码：{tiao.barcode}</div>
-                    <p>{tiao.price}元/{tiao.unitname}</p>
-                </li>
+      <ul className='wen-zi'>
+        <li className='wen-zi-t'>
+          <div className='name'>{tiao.goods_name}</div>
+        </li>
+        <li className='wen-zi-c'>
+          <div >商品编码：{tiao.barcode}</div>
+          <p>{tiao.price}元/{tiao.unitname}</p>
+        </li>
 
-                <li className='wen-zi-f'>
-                    <div></div>
-                    <p>采购数量：<span>{tiao.gnum}</span></p>
+        <li className='wen-zi-f'>
+          <div></div>
+          <p>采购数量：<span>{tiao.gnum}</span></p>
 
-                </li>
-            </ul>
-        </div>
-    )
+        </li>
+      </ul>
+    </div>
+  )
 }
 export default class PurchaseOrderDetailed extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            purchaseDetail: {},
-            id: this.props.match.params.id,
-            data: [],
-            purchaseItem: [],
-            goodsSearch: ''
-        }
+  constructor(props) {
+    super(props)
+    this.state = {
+      purchaseDetail: {},
+      id: this.props.match.params.id,
+      data: [],
+      purchaseItem: [],
+      goodsSearch: ''
     }
-    componentDidMount() {
-        getPurchaseDetail({
-            action: 'getPurchaseDetail', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                purchaseId: this.props.match.params.id,
-                type: "1",
-                limit: "30",
-                page: "1"
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                let count = res.data.data.count
-                this.setState({
-                    purchaseDetail: res.data.data.purchaseDetail,
-                    purchaseItem: res.data.data.purchaseItem,
-                    count,
-                }, () => {
-                    this.refs.scroll.BScroll.refresh()
-                })
-            } else {
-                Toast.info('网络错误', 2)
-            }
-        })
-    }
-    shengHe() {
-        let price = []
-        let num = []
-        this.state.purchaseItem.map((value, key) => {
-            price.push(value.subtotal)
-            num.push(value.gnum)
-            return ""
-        })
-        let prices = 0
-        let nums = 0
-        price.forEach(item => {
-            prices = prices + Number(item)
-        })
-        num.forEach(item => {
-            nums = nums + Number(item)
-        })
-        let purchaseData = { subtotal: prices, snum: nums }
-        if (this.state.purchaseDetail.statusname === "待提交") {
-            submitPurchase({
-                action: 'submitPurchase', data: {
-                    uniacid: store.getState().uniacid,
-                    uid: store.getState().uid,
-                    purchaseId: this.props.match.params.id,
-                    type: "1",
-                    status: "2",
-                    itemData: [],
-                    purchaseData: purchaseData
-                }
-            }).then((res) => {
-                if (res.data.status === 4001) {
-                    window.location.reload();
-                    Toast.success(res.data.msg, 2)
-                } else {
-                    Toast.info(res.data.msg, 2)
-                }
-            })
-        } else {
-            let id = this.props.match.params.id.split()
-            changePurchaseStatus({
-                action: 'changePurchaseStatus', data: {
-                    uniacid: store.getState().uniacid,
-                    uid: store.getState().uid,
-                    purchaseId_list: id,
-                    type: "1",
-                    status: "4"
-                }
-            }).then((res) => {
-                if (res.data.status === 4001) {
-                    window.location.reload();
-                    Toast.success(res.data.msg, 2)
-                } else {
-                    Toast.info(res.data.msg, 2)
-                }
-            })
-        }
-    }
-
-    search() {
-        getPurchaseDetail({
-            action: 'getPurchaseDetail', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                purchaseId: this.props.match.params.id,
-                search: this.state.goodsSearch,
-                type: "1",
-                limit: "30",
-                page: "1"
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                let count = res.data.data.count
-                this.setState({
-                    purchaseDetail: res.data.data.purchaseDetail,
-                    purchaseItem: res.data.data.purchaseItem,
-                    count,
-                }, () => {
-                    this.refs.scroll.BScroll.refresh()
-                })
-            } else {
-                Toast.info('网络错误', 2)
-            }
-        })
-    }
-    goodsChange(e) {
+  }
+  componentDidMount() {
+    getPurchaseDetail({
+      action: 'getPurchaseDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        purchaseId: this.props.match.params.id,
+        type: "1",
+        limit: "30",
+        page: "1"
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        let count = res.data.data.count
         this.setState({
-            [e.target.name]: e.target.value
+          purchaseDetail: res.data.data.purchaseDetail,
+          purchaseItem: res.data.data.purchaseItem,
+          count,
+        }, () => {
+          this.refs.scroll.BScroll.refresh()
         })
+      } else {
+        Toast.info('网络错误', 2)
+      }
+    })
+  }
+  shengHe() {
+    let price = []
+    let num = []
+    this.state.purchaseItem.map((value, key) => {
+      price.push(value.subtotal)
+      num.push(value.gnum)
+      return ""
+    })
+    let prices = 0
+    let nums = 0
+    price.forEach(item => {
+      prices = prices + Number(item)
+    })
+    num.forEach(item => {
+      nums = nums + Number(item)
+    })
+    let purchaseData = { subtotal: prices, snum: nums }
+    if (this.state.purchaseDetail.statusname === "待提交") {
+      submitPurchase({
+        action: 'submitPurchase', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          purchaseId: this.props.match.params.id,
+          type: "1",
+          status: "2",
+          itemData: [],
+          purchaseData: purchaseData
+        }
+      }).then((res) => {
+        if (res.data.status === 4001) {
+          window.location.reload();
+          Toast.success(res.data.msg, 2)
+        } else {
+          Toast.info(res.data.msg, 2)
+        }
+      })
+    } else {
+      let id = this.props.match.params.id.split()
+      changePurchaseStatus({
+        action: 'changePurchaseStatus', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          purchaseId_list: id,
+          type: "1",
+          status: "4"
+        }
+      }).then((res) => {
+        if (res.data.status === 4001) {
+          window.location.reload();
+          Toast.success(res.data.msg, 2)
+        } else {
+          Toast.info(res.data.msg, 2)
+        }
+      })
     }
-    render() {
-        const scrollConfig = {
-            probeType: 1
-        }
-        let Color = ''
-        if (this.state.purchaseDetail.statusname === "审核成功") {
-            Color = "#22a31b"
-        } else if (this.state.purchaseDetail.statusname === "待提交") {
-            Color = "#d92929"
-        } else if (this.state.purchaseDetail.statusname === "待审核") {
-            Color = "#ed5f21"
-        }
-        return (
-            <PurchaseOrderDetailedStyle>
-                <DocumentTitle title={'采购单明细'} />
+  }
 
-                <div>
-                    <div className='search'>
-                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="goodsSearch"
-                            onChange={this.goodsChange.bind(this)}
-                            value={this.state.goodsSearch} />
-                        <div className='img' onClick={() => { this.search() }}>
-                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-                        </div>
-                    </div>
+  search() {
+    getPurchaseDetail({
+      action: 'getPurchaseDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        purchaseId: this.props.match.params.id,
+        search: this.state.goodsSearch,
+        type: "1",
+        limit: "30",
+        page: "1"
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        let count = res.data.data.count
+        this.setState({
+          purchaseDetail: res.data.data.purchaseDetail,
+          purchaseItem: res.data.data.purchaseItem,
+          count,
+        }, () => {
+          this.refs.scroll.BScroll.refresh()
+        })
+      } else {
+        Toast.info('网络错误', 2)
+      }
+    })
+  }
+  goodsChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  render() {
+    const scrollConfig = {
+      probeType: 1
+    }
+    let Color = ''
+    if (this.state.purchaseDetail.statusname === "审核成功") {
+      Color = "#22a31b"
+    } else if (this.state.purchaseDetail.statusname === "待提交") {
+      Color = "#d92929"
+    } else if (this.state.purchaseDetail.statusname === "待审核") {
+      Color = "#ed5f21"
+    }
+    return (
+      <PurchaseOrderDetailedStyle>
+        <DocumentTitle title={'采购单明细'} />
 
-                    <div className='conten'>
-                        <div className='conten-top'>
-                            <p>
-                                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
-                            </p>
-                            <div>{this.state.purchaseDetail.docno}</div>
-                        </div>
+        <div>
+          <div className='search'>
+            <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="goodsSearch"
+              onChange={this.goodsChange.bind(this)}
+              value={this.state.goodsSearch} />
+            <div className='img' onClick={() => { this.search() }}>
+              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+            </div>
+          </div>
 
-                        <div className='conten-c' style={{ paddingTop: ".25rem" }}>
-                            <p>单据日期：{this.state.purchaseDetail.docdate}</p>
-                            <p>创建时间：{this.state.purchaseDetail.createtime}</p>
-                            <p>采购仓库：{this.state.purchaseDetail.warehousename}</p>
-                            <p>单据状态：<span style={{ color: Color }}>{this.state.purchaseDetail.statusname}</span></p>
-                        </div>
+          <div className='conten'>
+            <div className='conten-top'>
+              <p>
+                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+              </p>
+              <div>{this.state.purchaseDetail.docno}</div>
+            </div>
 
-                        <div className='footer'>
-                            采购备注：{this.state.purchaseDetail.remark}
-                        </div>
-                    </div>
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)" }}>
-                        {
-                            this.state.purchaseItem.map((value, key) => {
-                                return (
-                                    <Tiao item={value} key={key}></Tiao>
-                                )
-                            })
-                        }
-                    </BetterScroll>
-                    <div className='foot'>
-                        <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-                            <div className='left'>
-                                <div style={{ width: "1.28rem", height: ".68rem" }}>
-                                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                                <div className='yuan'>{this.state.purchaseItem.length}</div>
-                            </div>
-                            <div style={{ background: this.state.purchaseDetail.statusname === "审核成功" ? "#B4B4B4" : '' }}
-                                className='right'
-                                onClick={() => { this.shengHe() }}
-                            >{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}
-                            </div>
-                            <Button
-                                style={{ display: this.state.purchaseDetail.statusname === "待提交" ? "none" : "block", width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
-                                className="btn_modal"
-                                onClick={() =>
-                                    alert('审核', '是否确认审核采购单', [
-                                        { text: '取消', onPress: () => console.log('cancel') },
-                                        { text: '确定', onPress: () => this.shengHe() },
-                                    ])
-                                }
-                            >
-                                confirm
+            <div className='conten-c' style={{ paddingTop: ".25rem" }}>
+              <p>单据日期：{this.state.purchaseDetail.docdate}</p>
+              <p>创建时间：{this.state.purchaseDetail.createtime}</p>
+              <p>采购仓库：{this.state.purchaseDetail.warehousename}</p>
+              <p>单据状态：<span style={{ color: Color }}>{this.state.purchaseDetail.statusname}</span></p>
+            </div>
+
+            <div className='footer'>
+              采购备注：{this.state.purchaseDetail.remark}
+            </div>
+          </div>
+          <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)" }}>
+            {
+              this.state.purchaseItem.map((value, key) => {
+                return (
+                  <Tiao item={value} key={key}></Tiao>
+                )
+              })
+            }
+          </BetterScroll>
+          <div className='foot'>
+            <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+              <div className='left'>
+                <div style={{ width: "1.28rem", height: ".68rem" }}>
+                  <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                <div className='yuan'>{this.state.purchaseItem.length}</div>
+              </div>
+              <div style={{ background: this.state.purchaseDetail.statusname === "审核成功" ? "#B4B4B4" : '' }}
+                className='right'
+                onClick={() => { this.shengHe() }}
+              >{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}
+              </div>
+              <Button
+                style={{ display: this.state.purchaseDetail.statusname === "待提交" ? "none" : "block", width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
+                className="btn_modal"
+                onClick={() =>
+                  alert('审核', '是否确认审核采购单', [
+                    { text: '取消', onPress: () => console.log('cancel') },
+                    { text: '确定', onPress: () => this.shengHe() },
+                  ])
+                }
+              >
+                confirm
                         </Button>
-                        </div>
-                    </div>
-                </div>
-            </PurchaseOrderDetailedStyle>
-        )
-    }
+            </div>
+          </div>
+        </div>
+      </PurchaseOrderDetailedStyle>
+    )
+  }
 }
 const PurchaseOrderDetailedStyle = styled.div`
 .am-button::before {

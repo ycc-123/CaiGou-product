@@ -7,82 +7,82 @@ import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 
 export default class AddInventoryList extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            data: [],
-            inputbeiz: '',
-            sValue: '',
-            IDck: ""
-        }
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: [],
+      inputbeiz: '',
+      sValue: '',
+      IDck: ""
     }
-    componentDidMount() {
-        getWarehouseList({
-            action: 'getWarehouseList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                type: "1",
-                limit: "1000",
-                page: "1"
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                var result = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
-                this.setState({
-                    data: result
-                })
-            } else {
-                Toast.info('网络错误', 2)
-            }
-        })
-    }
-    createPurchase() {
-        let idgy = this.state.sValue.toString()
-        let bz = '1'
-        this.props.history.push(`/Sqcgcategory/${idgy}/${this.state.inputbeiz ? this.state.inputbeiz : bz}`)
-    }
-    inputChangebz(e) {
+  }
+  componentDidMount() {
+    getWarehouseList({
+      action: 'getWarehouseList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        type: "1",
+        limit: "1000",
+        page: "1"
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        var result = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
         this.setState({
-            [e.target.name]: e.target.value
+          data: result
         })
-    }
-    render() {
-        return (
-            <AddPurchaseOrderStyle>
-                <DocumentTitle title={'新建采购申请单'} />
+      } else {
+        Toast.info('网络错误', 2)
+      }
+    })
+  }
+  createPurchase() {
+    let idgy = this.state.sValue.toString()
+    let bz = '1'
+    this.props.history.push(`/Sqcgcategory/${idgy}/${this.state.inputbeiz ? this.state.inputbeiz : bz}`)
+  }
+  inputChangebz(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  render() {
+    return (
+      <AddPurchaseOrderStyle>
+        <DocumentTitle title={'新建采购申请单'} />
 
-                <div>
-                    <ul className='biao'>
-                        <li><span>*</span>申请仓库：
+        <div>
+          <ul className='biao'>
+            <li><span>*</span>申请仓库：
                                 <Picker
-                                data={this.state.data}
-                                cols={1}
-                                className="forss"
-                                extra="请选择申请仓库"
-                                value={this.state.sValue}
-                                onChange={v => this.setState({ sValue: v })}
-                                onOk={v => this.setState({ IDck: v })}
-                            >
-                                <List.Item className='times' arrow="horizontal"></List.Item>
-                            </Picker>
-                        </li>
+                data={this.state.data}
+                cols={1}
+                className="forss"
+                extra="请选择申请仓库"
+                value={this.state.sValue}
+                onChange={v => this.setState({ sValue: v })}
+                onOk={v => this.setState({ IDck: v })}
+              >
+                <List.Item className='times' arrow="horizontal"></List.Item>
+              </Picker>
+            </li>
 
-                        <li style={{ border: "none" }}>
-                            <div>备注：</div>
-                            <input name="inputbeiz"
-                                onChange={this.inputChangebz.bind(this)}
-                                value={this.state.inputbeiz} type="text" />
-                        </li>
-                    </ul>
+            <li style={{ border: "none" }}>
+              <div>备注：</div>
+              <input name="inputbeiz"
+                onChange={this.inputChangebz.bind(this)}
+                value={this.state.inputbeiz} type="text" />
+            </li>
+          </ul>
 
-                    <div className='foot'>
-                        <div className='left'></div>
-                        <div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
-                    </div>
-                </div>
-            </AddPurchaseOrderStyle>
-        )
-    }
+          <div className='foot'>
+            <div className='left'></div>
+            <div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
+          </div>
+        </div>
+      </AddPurchaseOrderStyle>
+    )
+  }
 }
 const AddPurchaseOrderStyle = styled.div`
     .wrapper .CommissionHeader{

@@ -6,173 +6,173 @@ import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 
 export default class AddPurchaseOrder extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            Value: '',
-            sValue: '',
-            data: [],
-            supplier: [],
-            IDck: [],
-            IDgy: [],
-            inputAmount: '',
-            inputHetong: '',
-            inputbeiz: '',
-            jj: true
-        }
+  constructor(props) {
+    super(props)
+    this.state = {
+      Value: '',
+      sValue: '',
+      data: [],
+      supplier: [],
+      IDck: [],
+      IDgy: [],
+      inputAmount: '',
+      inputHetong: '',
+      inputbeiz: '',
+      jj: true
     }
-    
-    componentDidMount() {
-        getWarehouseList({
-            action: 'getWarehouseList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                type: "1",
-                limit: "1000",
-                page: "1"
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                var result = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
-                this.setState({
-                    data: result
-                })
-            } else {
-                Toast.info(res.data.msg, 2)
-            }
-        })
-        getSupplierList({
-            action: 'getSupplierList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                limit: "1000",
-                page: "1"
-            }
-        }).then(res => {
-            if (res.data.status === 4001) {
-                var supplier = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
-                this.setState({
-                    supplier
-                })
-            } else {
-                this.setState({
-                    jj: false
-                })
-                Toast.info(res.data.msg, 2)
-            }
-        })
-    }
-    createPurchase() {
-        let idgy = this.state.IDgy.toString()
-        let idkc = this.state.IDck.toString()
+  }
 
-        let flname = {}
-        this.state.data.map((v, k) => {
-            if (v.value === idkc) {
-                flname = v
-            }
-            return ""
+  componentDidMount() {
+    getWarehouseList({
+      action: 'getWarehouseList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        type: "1",
+        limit: "1000",
+        page: "1"
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        var result = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
+        this.setState({
+          data: result
         })
-        // let idkc = this.state.IDck.toString()
-        var parame = encodeURI(flname.label);
-        // var parame = encodeURI(flname.value);
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
+    getSupplierList({
+      action: 'getSupplierList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        limit: "1000",
+        page: "1"
+      }
+    }).then(res => {
+      if (res.data.status === 4001) {
+        var supplier = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
+        this.setState({
+          supplier
+        })
+      } else {
+        this.setState({
+          jj: false
+        })
+        Toast.info(res.data.msg, 2)
+      }
+    })
+  }
+  createPurchase() {
+    let idgy = this.state.IDgy.toString()
+    let idkc = this.state.IDck.toString()
 
-        console.log(this.state.inputbeiz===''?22:33)
-        createPurchase({
-            action: 'createPurchase', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                type: "1",
-                supplierid: idgy,
-                warehouseid: idkc,
-                beforepay: this.state.inputAmount,
-                contract: this.state.inputHetong,
-                remark: this.state.inputbeiz,
-            }
-        }).then(res => {
-            if (res.data.status === 4001) {
-                this.props.history.push(`/category/${res.data.data.id}/${parame}/${this.state.inputbeiz===''?0:this.state.inputbeiz}`)
-                Toast.success('新建采购单成功', 2)
-            } else {
-                Toast.info(res.data.msg, 2)
-            }
-        })
-    }
-    inputChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-    inputChangeht(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-    inputChangebz(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-    render() {
-        return (
-            <AddPurchaseOrderStyle>
-                <DocumentTitle title={'新建采购单'} />
-                <div>
-                    <ul className='biao'>
-                        <li><span>*</span>采购仓库：
+    let flname = {}
+    this.state.data.map((v, k) => {
+      if (v.value === idkc) {
+        flname = v
+      }
+      return ""
+    })
+    // let idkc = this.state.IDck.toString()
+    var parame = encodeURI(flname.label);
+    // var parame = encodeURI(flname.value);
+
+    console.log(this.state.inputbeiz === '' ? 22 : 33)
+    createPurchase({
+      action: 'createPurchase', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        type: "1",
+        supplierid: idgy,
+        warehouseid: idkc,
+        beforepay: this.state.inputAmount,
+        contract: this.state.inputHetong,
+        remark: this.state.inputbeiz,
+      }
+    }).then(res => {
+      if (res.data.status === 4001) {
+        this.props.history.push(`/category/${res.data.data.id}/${parame}/${this.state.inputbeiz === '' ? 0 : this.state.inputbeiz}`)
+        Toast.success('新建采购单成功', 2)
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
+  }
+  inputChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  inputChangeht(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  inputChangebz(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  render() {
+    return (
+      <AddPurchaseOrderStyle>
+        <DocumentTitle title={'新建采购单'} />
+        <div>
+          <ul className='biao'>
+            <li><span>*</span>采购仓库：
                             <Picker
-                                data={this.state.data}
-                                cols={1}
-                                className="forss"
-                                extra="请选择采购仓库"
-                                value={this.state.sValue}
-                                onChange={v => this.setState({ sValue: v })}
-                                onOk={v => this.setState({ IDck: v })}
-                            >
-                                <List.Item className='times' arrow="horizontal"></List.Item>
-                            </Picker>
-                        </li>
-                        <li><span>*</span>供应商：
+                data={this.state.data}
+                cols={1}
+                className="forss"
+                extra="请选择采购仓库"
+                value={this.state.sValue}
+                onChange={v => this.setState({ sValue: v })}
+                onOk={v => this.setState({ IDck: v })}
+              >
+                <List.Item className='times' arrow="horizontal"></List.Item>
+              </Picker>
+            </li>
+            <li><span>*</span>供应商：
                         <Picker
-                                data={this.state.supplier}
-                                cols={1}
-                                className="forss"
-                                extra="请选择供应商"
-                                value={this.state.Value}
-                                onChange={v => this.setState({ Value: v })}
-                                onOk={v => this.setState({ IDgy: v })}
-                            >
-                                <List.Item className='pdlx' arrow="horizontal"></List.Item>
-                            </Picker>
-                        </li>
-                        {/* <li onClick={()=>{this.props.history.push('/home')}}>
+                data={this.state.supplier}
+                cols={1}
+                className="forss"
+                extra="请选择供应商"
+                value={this.state.Value}
+                onChange={v => this.setState({ Value: v })}
+                onOk={v => this.setState({ IDgy: v })}
+              >
+                <List.Item className='pdlx' arrow="horizontal"></List.Item>
+              </Picker>
+            </li>
+            {/* <li onClick={()=>{this.props.history.push('/home')}}>
                             <div>引用采购申请：</div>
                             <div style={{color:"#a9a9a9",marginLeft:".3rem"}}>调用采购申请单</div>
                         </li> */}
-                        <li>
-                            <div>预付款：</div>
-                            <input name="inputAmount"
-                                onChange={this.inputChange.bind(this)}
-                                value={this.state.inputAmount} type="text" /></li>
-                        <li>
-                            <div>合同编号：</div>
-                            <input name="inputHetong"
-                                onChange={this.inputChangeht.bind(this)}
-                                value={this.state.inputHetong} type="text" /></li>
-                        <li style={{ border: "none" }}>
-                            <div>备注：</div>
-                            <input name="inputbeiz"
-                                onChange={this.inputChangebz.bind(this)}
-                                value={this.state.inputbeiz} type="text" /></li>
-                    </ul>
-                    <div className='foot'>
-                        <div></div>
-                        <div className='btn' onClick={() => { this.state.jj === false ? console.log() : this.createPurchase() }}>下一步</div>
-                    </div>
-                </div>
-            </AddPurchaseOrderStyle>
-        )
-    }
+            <li>
+              <div>预付款：</div>
+              <input name="inputAmount"
+                onChange={this.inputChange.bind(this)}
+                value={this.state.inputAmount} type="text" /></li>
+            <li>
+              <div>合同编号：</div>
+              <input name="inputHetong"
+                onChange={this.inputChangeht.bind(this)}
+                value={this.state.inputHetong} type="text" /></li>
+            <li style={{ border: "none" }}>
+              <div>备注：</div>
+              <input name="inputbeiz"
+                onChange={this.inputChangebz.bind(this)}
+                value={this.state.inputbeiz} type="text" /></li>
+          </ul>
+          <div className='foot'>
+            <div></div>
+            <div className='btn' onClick={() => { this.state.jj === false ? console.log() : this.createPurchase() }}>下一步</div>
+          </div>
+        </div>
+      </AddPurchaseOrderStyle>
+    )
+  }
 }
 const AddPurchaseOrderStyle = styled.div`
 .wrapper .CommissionHeader{

@@ -6,188 +6,188 @@ import BetterScroll from 'common/betterScroll/BetterScroll'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 export default class InventoryListDetails extends Component {
-    constructor() {
-        super()
-        this.state = {
-            result: [],
-            arr: 0,
-            data: {},
-            inventoryData: [],
-            itemData: [],
-            goods: [],
-            num: '',
-            count: '',
-            input: [],
-            inputSearch: '',
-            supplier: []
-        }
+  constructor() {
+    super()
+    this.state = {
+      result: [],
+      arr: 0,
+      data: {},
+      inventoryData: [],
+      itemData: [],
+      goods: [],
+      num: '',
+      count: '',
+      input: [],
+      inputSearch: '',
+      supplier: []
     }
-    componentDidMount() {
+  }
+  componentDidMount() {
 
-        getWarehouseChangeDetail({
-            action: 'getWarehouseChangeDetail', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                id: this.props.match.params.id,
-                limit: "30",
-                page: "1"
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                this.setState({
-                    count: res.data.data.count,
-                    inventoryData: res.data.data.delivery,
-                    itemData: res.data.data.items
-                }, () => {
-                    this.refs.scroll.BScroll.refresh()
-                })
-            } else {
-                Toast.info(res.data.msg, 2)
-            }
-        })
-    }
-    shengHe(e) {
-        let aa = {}
-        let arr = []
-        this.state.itemData.map((v, k) => {
-            aa = {
-                stockid: v.stockid,
-                realnum: v.gnum,
-            }
-            return arr.push(aa);
-        })
-        submitWarehouseChange({
-            action: 'submitWarehouseChange', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                status: "2",
-                warehouseChangeId: this.props.match.params.id,
-                itemData: arr,
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                window.location.reload();
-                Toast.success(res.data.msg, 2)
-            } else {
-                Toast.info(res.data.msg, 2)
-            }
-        })
-    }
-    seach() {
-        getWarehouseChangeDetail({
-            action: 'getWarehouseChangeDetail', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                id: this.props.match.params.id,
-                search: this.state.inputSearch,
-                limit: "30",
-                page: "1"
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                this.setState({
-                    count: res.data.data.count,
-                    inventoryData: res.data.data.delivery,
-                    itemData: res.data.data.items
-                }, () => {
-                    this.refs.scroll.BScroll.refresh()
-                })
-            } else {
-                Toast.info(res.data.msg, 2)
-            }
-        })
-    }
-    inputChange(e) {
+    getWarehouseChangeDetail({
+      action: 'getWarehouseChangeDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        id: this.props.match.params.id,
+        limit: "30",
+        page: "1"
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
         this.setState({
-            [e.target.name]: e.target.value
+          count: res.data.data.count,
+          inventoryData: res.data.data.delivery,
+          itemData: res.data.data.items
+        }, () => {
+          this.refs.scroll.BScroll.refresh()
         })
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
+  }
+  shengHe(e) {
+    let aa = {}
+    let arr = []
+    this.state.itemData.map((v, k) => {
+      aa = {
+        stockid: v.stockid,
+        realnum: v.gnum,
+      }
+      return arr.push(aa);
+    })
+    submitWarehouseChange({
+      action: 'submitWarehouseChange', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        status: "2",
+        warehouseChangeId: this.props.match.params.id,
+        itemData: arr,
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        window.location.reload();
+        Toast.success(res.data.msg, 2)
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
+  }
+  seach() {
+    getWarehouseChangeDetail({
+      action: 'getWarehouseChangeDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        id: this.props.match.params.id,
+        search: this.state.inputSearch,
+        limit: "30",
+        page: "1"
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        this.setState({
+          count: res.data.data.count,
+          inventoryData: res.data.data.delivery,
+          itemData: res.data.data.items
+        }, () => {
+          this.refs.scroll.BScroll.refresh()
+        })
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
+  }
+  inputChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  render() {
+    const scrollConfig = {
+      probeType: 1
     }
-    render() {
-        const scrollConfig = {
-            probeType: 1
-        }
-        let Color = ''
-        if (this.state.inventoryData.statusname === "提交成功") {
-            Color = "#22a31b"
-        } else if (this.state.inventoryData.statusname === "待提交") {
-            Color = "#d92929"
-        } else if (this.state.inventoryData.statusname === "待审核") {
-            Color = "#ed5f21"
-        }
-        return (
-            <WarehousingOrderxingStyle>
-                <DocumentTitle title={'调拨单明细'} />
-
-                <div>
-                    <div className='search'>
-                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
-                            onChange={this.inputChange.bind(this)}
-                            value={this.state.inputSearch} />
-                        <div className='img' onClick={() => { this.seach() }}>
-                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-                        </div>
-                    </div>
-
-                    <div className='conten'>
-                        <div className='conten-top'>
-                            <p>
-                                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
-                            </p>
-                            <div>{this.state.inventoryData.docno}</div>
-                        </div>
-
-                        <div className='conten-c' style={{ paddingTop: ".25rem" }}>
-                            <p>单据日期：{this.state.inventoryData.docdate}</p>
-                            <p>转出仓库：{this.state.inventoryData.outwarehouseName}</p>
-                            <p>转入仓库：{this.state.inventoryData.inwarehouseName}</p>
-                            <p>单据状态：<span style={{ color: Color }}>{this.state.inventoryData.statusname}</span></p>
-                        </div>
-
-                        <div className='footer'>
-                            备注：{this.state.inventoryData.remark}
-                        </div>
-                    </div>
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)" }}>
-                        {
-                            this.state.itemData.map((value, key) => {
-                                let tiao = value
-                                return (
-                                    <div className='tiao' key={key}>
-                                        <img className='t-img-l' 
-                                        src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-                                        <ul className='wen-zi'>
-                                            <li className='wen-zi-c'>
-                                                <div >{tiao.barcode}</div>
-                                                <p>{tiao.transfer_price}元/{tiao.unitname}</p></li>
-                                            <li className='wen-zi-t'>
-                                                <div className='name'>{tiao.goods_name}</div>
-                                            </li>
-                                            <li className='wen-zi-f'>
-                                                <div>数量：{tiao.gnum}</div>
-                                                <p>总价：{tiao.transfer_price * tiao.gnum}</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                )
-                            })
-                        }
-                    </BetterScroll>
-                    <div className='foot'>
-                        <div className='left'>
-                            移库总数：<span>{this.state.inventoryData.transfer_totalnumber}</span>
-                            <span style={{ marginLeft: ".75rem" }}></span>
-                            移库总额：<span>{this.state.inventoryData.transfer_totalmoney}</span>
-                        </div>
-                        <div 
-                            style={{ background: this.state.inventoryData.statusname === "提交成功" ? "#B4B4B4" : '' }} 
-                            className='right' onClick={(e) => { this.shengHe(this.state.inventoryData.statusname) }}>
-                            {this.state.inventoryData.statusname === "待提交" ? "提交" : "已提交"}
-                        </div>
-                    </div>
-                </div>
-            </WarehousingOrderxingStyle>
-        )
+    let Color = ''
+    if (this.state.inventoryData.statusname === "提交成功") {
+      Color = "#22a31b"
+    } else if (this.state.inventoryData.statusname === "待提交") {
+      Color = "#d92929"
+    } else if (this.state.inventoryData.statusname === "待审核") {
+      Color = "#ed5f21"
     }
+    return (
+      <WarehousingOrderxingStyle>
+        <DocumentTitle title={'调拨单明细'} />
+
+        <div>
+          <div className='search'>
+            <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
+              onChange={this.inputChange.bind(this)}
+              value={this.state.inputSearch} />
+            <div className='img' onClick={() => { this.seach() }}>
+              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+            </div>
+          </div>
+
+          <div className='conten'>
+            <div className='conten-top'>
+              <p>
+                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+              </p>
+              <div>{this.state.inventoryData.docno}</div>
+            </div>
+
+            <div className='conten-c' style={{ paddingTop: ".25rem" }}>
+              <p>单据日期：{this.state.inventoryData.docdate}</p>
+              <p>转出仓库：{this.state.inventoryData.outwarehouseName}</p>
+              <p>转入仓库：{this.state.inventoryData.inwarehouseName}</p>
+              <p>单据状态：<span style={{ color: Color }}>{this.state.inventoryData.statusname}</span></p>
+            </div>
+
+            <div className='footer'>
+              备注：{this.state.inventoryData.remark}
+            </div>
+          </div>
+          <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)" }}>
+            {
+              this.state.itemData.map((value, key) => {
+                let tiao = value
+                return (
+                  <div className='tiao' key={key}>
+                    <img className='t-img-l'
+                      src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+                    <ul className='wen-zi'>
+                      <li className='wen-zi-c'>
+                        <div >{tiao.barcode}</div>
+                        <p>{tiao.transfer_price}元/{tiao.unitname}</p></li>
+                      <li className='wen-zi-t'>
+                        <div className='name'>{tiao.goods_name}</div>
+                      </li>
+                      <li className='wen-zi-f'>
+                        <div>数量：{tiao.gnum}</div>
+                        <p>总价：{tiao.transfer_price * tiao.gnum}</p>
+                      </li>
+                    </ul>
+                  </div>
+                )
+              })
+            }
+          </BetterScroll>
+          <div className='foot'>
+            <div className='left'>
+              移库总数：<span>{this.state.inventoryData.transfer_totalnumber}</span>
+                <span style={{ marginLeft: ".75rem" }}></span>
+              移库总额：<span>{this.state.inventoryData.transfer_totalmoney}</span>
+            </div>
+            <div
+              style={{ background: this.state.inventoryData.statusname === "提交成功" ? "#B4B4B4" : '' }}
+              className='right' onClick={(e) => { this.shengHe(this.state.inventoryData.statusname) }}>
+              {this.state.inventoryData.statusname === "待提交" ? "提交" : "已提交"}
+            </div>
+          </div>
+        </div>
+      </WarehousingOrderxingStyle>
+    )
+  }
 }
 const WarehousingOrderxingStyle = styled.div`
 .am-button::before {

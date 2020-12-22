@@ -1,466 +1,478 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import {getOrderList, getRetailList ,get_cashier,get_store} from 'network/Api'
+import { getOrderList, get_cashier, get_store } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { Picker, List, DatePicker } from 'antd-mobile';
-// import Youhuimxbs from './youhuimxbs'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 import { LoadingMore } from 'common/loading'
 
-function Youhuimxbs(v){
-//    console.log(v)
-   let item=v.value
+function Youhuimxbs(v) {
+  let item = v.value
+  let statusname = item.statusName
+  let Color = ''
+  if (statusname === "已付款") {
+    Color = "#00B500"
+  } else if (statusname === "未付款") {
 
-    return(
-            <div className='caigoudan' >
-                <div className='dan'>
-                        <div className='dan-top'>
-                            <p>
-                            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt=""/>
-                            </p>
-                            <div className='t-right'>
-                            <div className='caigoudanhao'>零售单号：{item.orderno}</div>
-                            </div>
-                        </div>
-                        <div className='dan-footer'>
-                            <p>单据日期：{item.createtime}</p>
-                            <p>所属门店：{item.storeName}</p>
-                            <p>收银员：{item.createName}</p>
-                            <p>支付方式：{item.pay_type_name}</p>
-                            <p>原价总额：{item.totalmoney}</p>
-                            <p>应收金额：{item.price}</p>
-                        </div>
-                    </div>
-             </div>
-    )
+  } else if (statusname === "部分退款") {
+    Color = "red"
+  } else if (statusname === "全部退款") {
+    Color = "red"
+  }
+  return (
+    <div className='caigoudan' >
+      <div className='dan'>
+        <div className='dan-top'>
+          <p>
+            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
+          </p>
+          <div className='t-right'>
+            <div className='caigoudanhao'>零售单号：{item.orderno}</div>
+            <div className='zuantai' style={{ color: Color }}>{item.statusName}</div>
+          </div>
+        </div>
+        <div className='dan-footer'>
+          <p>单据日期：{item.createtime}</p>
+          <p>所属门店：{item.storeName}</p>
+          <p>收银员：{item.createName}</p>
+          <p>支付方式：{item.pay_type_name}</p>
+          <p>原价总额：{item.totalmoney}</p>
+          <p>应收金额：{item.price}</p>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default class CashierOrderDetails extends Component {
-    constructor() {
-        super()
-        this.state = {
-            total:{},
-            inputSearch:'',
-            start:"",
-            end:"",
-            store_id:[],
-            shouyinyuan:[],
-            linshou:[],
-            limit: "10",
-            page: "1",
-            zuantai:false,
-            IDsyy:'',
-            IDsj:'',
-            end_time:'',
-            start_time:'',
-            today_time:"",
-            kongbj:true,
-            status:[{value: "0", label: "待付款"},{value: "1", label: "已付款"},{value: "4", label: "全部退款"},{value: "6", label: "部分退款"}],
-            zhifu:[{value: "0", label: "现金"},{value: "1", label: "微信刷卡"},{value: "2", label: "支付宝当面付"},{value: "3", label: "会员余额"},{value: "4", label: "银行卡"},{value: "5", label: "个人微信扫码"},{value: "6", label: "个人支付宝扫码"},{value: "7", label: "组合支付"},{value: "8", label: "购物卡"}],
-            Value_status:"",
-            ID_status:"",
-            zhifu_Value:"",
-            zhifu_ID:"",
-            inputmembername:"",
-            inputorder:""
-        }
-        this.isLoadMore = true
+  constructor() {
+    super()
+    this.state = {
+      total: {},
+      inputSearch: '',
+      start: "",
+      end: "",
+      store_id: [],
+      shouyinyuan: [],
+      linshou: [],
+      limit: "10",
+      page: "1",
+      zuantai: false,
+      IDsyy: '',
+      IDsj: '',
+      end_time: '',
+      start_time: '',
+      today_time: "",
+      kongbj: true,
+      status: [{ value: "0", label: "待付款" }, { value: "1", label: "已付款" }, { value: "4", label: "全部退款" }, { value: "6", label: "部分退款" }],
+      zhifu: [{ value: "0", label: "现金" }, { value: "1", label: "微信扫码" }, { value: "2", label: "支付宝扫码" }, { value: "3", label: "会员余额" }, { value: "4", label: "银行卡" }, { value: "5", label: "个人微信" }, { value: "6", label: "个人支付宝" }, { value: "7", label: "混合支付" }, { value: "8", label: "购物卡" }],
+      Value_status: "",
+      ID_status: "",
+      zhifu_Value: "",
+      zhifu_ID: "",
+      inputmembername: "",
+      inputorder: ""
     }
-    componentDidMount() {
+    this.isLoadMore = true
+  }
+  componentDidMount() {
+    var day2 = new Date();
+    day2.setTime(day2.getTime());
+    var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+    this.setState({
+      today_time: s2
+    })
+    get_store({
+      action: 'get_store', data: {
+        uniacid: store.getState().uniacid,
+      }
+    }).then((res) => {
+      var supplier = res.data.data.map(o => { return { value: o.id, label: o.name } });
+      console.log(supplier)
+      if (res.data.status === 4001) {
+        this.setState({
+          store_id: supplier
+        })
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
+    get_cashier({
+      action: 'get_cashier', data: {
+        uniacid: store.getState().uniacid,
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        var shouyinyuan = res.data.data.map(o => { return { value: o.id, label: o.nick_name } });
+        this.setState({
+          shouyinyuan
+        })
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
+    let IDsyy = this.state.IDsyy.toString()
+    let IDsj = this.state.IDsj.toString()
+    getOrderList({
+      action: 'getOrderList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        starttime: this.state.start_time,
+        endtime: this.state.end_time,
+        createid: IDsyy,
+        store_id: IDsj,
+        limit: this.state.limit,
+        page: this.state.page
+      }
+    }).then((res) => {
+      console.log(res)
+      if (res.data.status === 4001) {
+        this.setState({
+          linshou: res.data.data.data,
+          total: res.data.data.total
+        }, () => {
+          this.refs.scroll.BScroll.refresh()
+        })
+      } else {
+        this.setState({
+          kongbj: false
+        })
+        Toast.info(res.data.msg, 2)
+      }
 
-        var day2 = new Date();
-        day2.setTime(day2.getTime());
-        var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
-        // console.log(s2)
+    })
+  }
+  shaixuan() {
+    if (this.state.zuantai === false) {
+      this.setState({
+        zuantai: true
+      }, () => {
+        this.refs.scroll.BScroll.refresh()
+      })
+    } else {
+      this.setState({
+        zuantai: false
+      }, () => {
+        this.refs.scroll.BScroll.refresh()
+      })
+    }
+  }
+  queding() {
+    console.log(this.state.zhifu_ID)
+    this.setState({
+      zuantai: false,
+    })
+    let zhifu_ID = this.state.zhifu_ID.toString()
+    let ID_status = this.state.ID_status.toString()
+    let IDsyy = this.state.IDsyy.toString()
+    let IDsj = this.state.IDsj.toString()
+    getOrderList({
+      action: 'getOrderList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        starttime: this.state.start_time,
+        endtime: this.state.end_time,
+        createid: IDsyy,
+        store_id: IDsj,
+        status: ID_status,
+        pay_type: zhifu_ID,
+        realname: this.state.inputmembername,
+        member_mobile: this.state.inputorder,
+        limit: this.state.limit,
+        page: this.state.page
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
         this.setState({
-            today_time: s2
+          linshou: res.data.data.data,
+          total: res.data.data.total,
+          kongbj: true
+        }, () => {
+          this.refs.scroll.BScroll.refresh()
         })
-        get_store({
-            action: 'get_store', data: {
-                uniacid: store.getState().uniacid,
-            }
-        }).then((res) => {
-            // console.log(res)
-            var supplier = res.data.data.map(o=>{return{value:o.id,label:o.name}});
-                    console.log(supplier)
-            if(res.data.status===4001){
-                this.setState({
-                    store_id:supplier
-                })
-            }else{
-                Toast.info(res.data.msg,2)
-            }
-        })
-        get_cashier({
-            action: 'get_cashier', data: {
-                uniacid: store.getState().uniacid,
-            }
-        }).then((res) => {
-            // console.log(res)
-            
-                    // console.log(shouyinyuan)
-            if(res.data.status===4001){
-                var shouyinyuan = res.data.data.map(o=>{return{value:o.id,label:o.nick_name}});
-                this.setState({
-                    shouyinyuan
-                })
-            }else{
-                Toast.info(res.data.msg,2)
-            }
-        })
-        let IDsyy=this.state.IDsyy.toString()
-        let IDsj=this.state.IDsj.toString()
-        getOrderList({
-            action: 'getOrderList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                starttime:this.state.start_time,
-                endtime:this.state.end_time,
-                createid:IDsyy,
-                store_id:IDsj,
-                limit: this.state.limit,
-                page: this.state.page
-            }
-        }).then((res) => {
-            console.log(res)
-            if(res.data.status===4001){
-                this.setState({
-                linshou:res.data.data.data,
-                total:res.data.data.total
-            },()=>{
-                this.refs.scroll.BScroll.refresh()
-            })
-            }else{
-                this.setState({
-                    kongbj:false
-                })
-                Toast.info(res.data.msg,2)
-            }
-            
-        })
-    }
-    shaixuan(){
-        this.state.zuantai===false?this.setState({zuantai:true}):this.setState({zuantai:false})
-    }
-    queding(){
-        console.log(this.state.zhifu_ID)
+      } else {
+        Toast.info(res.data.msg, 1)
         this.setState({
-            zuantai:false,
+          kongbj: false,
+          linshou: [],
+          total: {}
         })
-        let zhifu_ID=this.state.zhifu_ID.toString()
-        let ID_status=this.state.ID_status.toString()
-        let IDsyy=this.state.IDsyy.toString()
-        let IDsj=this.state.IDsj.toString()
-        getOrderList({
-            action: 'getOrderList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                starttime:this.state.start_time,
-                endtime:this.state.end_time,
-                createid:IDsyy,
-                store_id:IDsj,
-                status:ID_status,
-                pay_type:zhifu_ID,
-                realname:this.state.inputmembername,
-                member_mobile:this.state.inputorder,
-                limit: this.state.limit,
-                page: this.state.page
-            }
-        }).then((res) => {
-            if(res.data.status===4001){
-                this.setState({
-                linshou:res.data.data.data,
-                total:res.data.data.total,
-                kongbj:true
-            },()=>{
-                // this.refs.scroll.BScroll.refresh()
-            })
-            }else{
-                Toast.info(res.data.msg,1)
-                this.setState({
-                    kongbj:false,
-                    linshou:[],
-                    total:{}
-                   
-                })
-            }
-            
-        })
-    }
-    search() {
-        // console.log(this.state.inputSearch)
-       
-        getOrderList({
-            action: 'getOrderList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                search:this.state.inputSearch,
-                limit: this.state.limit,
-                page: this.state.page
-            }
-        }).then((res) => {
-            if(res.data.status===4001){
-                this.setState({
-                linshou:res.data.data.data
-            },()=>{
-                // this.refs.scroll.BScroll.refresh()
-            })
-            }else{
-                Toast.info(res.data.msg,1)
-            }
-            
-        })
-    }
-    inputChange(e) {
-        // console.log(e.target.value)
+      }
+    })
+  }
+  search() {
+    getOrderList({
+      action: 'getOrderList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        search: this.state.inputSearch,
+        limit: this.state.limit,
+        page: this.state.page
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
         this.setState({
-            [e.target.name]: e.target.value
+          linshou: res.data.data.data
+        }, () => {
+          // this.refs.scroll.BScroll.refresh()
         })
-    }
-    inputChange(e) {
-        // console.log(e.target.value)
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-    inputChange(e) {
-        // console.log(e.target.value)
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-    mingxi(aa){
-        console.log(aa)
-        this.props.history.push(`/CashierOrderDetails/${aa}`)
-    }
-    render() {
-        const scrollConfig = {
-            probeType: 1
-        }
-        const {linshou}=this.state
-        return (
-            <YouhuimxbStyle>
-            <DocumentTitle title={'优惠明细表'} />
+      } else {
+        Toast.info(res.data.msg, 1)
+      }
 
-                <div>
-                    <div style={{ display: "flex" }}>
-                        <div className='search' >
-                            <input type="search" className='input' placeholder="请输入零售单号" name="inputSearch"
-                            onChange={this.inputChange.bind(this)}
-                            value={this.state.inputSearch} />
-                            <div className='img' onClick={()=>{this.search()}}>
-                                <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-                            </div>
-                        </div>
-                        <div className='sximg' onClick={()=>{this.shaixuan()}}>
-                            <img className='sximg-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
-                        </div>
+    })
+  }
+  inputChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  inputChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  inputChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  mingxi(aa) {
+    console.log(aa)
+    this.props.history.push(`/CashierOrderDetails/${aa}`)
+  }
+  render() {
+    const scrollConfig = {
+      probeType: 1
+    }
+    const { linshou } = this.state
+    return (
+      <YouhuimxbStyle>
+        <DocumentTitle title={'收银订单明细表'} />
+
+        <div>
+          <div style={{ display: "flex" }}>
+            <div className='search' >
+              <input type="search" className='input' placeholder="请输入零售单号" name="inputSearch"
+                onChange={this.inputChange.bind(this)}
+                value={this.state.inputSearch} />
+              <div className='img' onClick={() => { this.search() }}>
+                <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+              </div>
+            </div>
+            <div className='sximg' onClick={() => { this.shaixuan() }}>
+              <img className='sximg-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
+            </div>
+          </div>
+
+          <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "1.5rem" }} loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
+            <div style={{ display: this.state.zuantai === false ? "block" : "none" }}>
+              {
+                linshou.map((v, k) => {
+                  return (
+                    <div onClick={() => { this.mingxi(v.id) }}>
+                      <Youhuimxbs value={v} page={this.state.page} history={this.props.history} key={k}></Youhuimxbs>
                     </div>
-
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "1.5rem" }} loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
-                    {
-                        linshou.map((v,k)=>{
-                            // console.log(v)
-                            return(
-                                <div onClick={()=>{this.mingxi(v.id)}}>
-                                <Youhuimxbs value={v} page={this.state.page} history={this.props.history} key={k}></Youhuimxbs>
-                                </div>
-                            )
-                        })
-                    }
-                    {
-
-                        linshou.length > 0 &&
-                        <LoadingMore isLoading={this.isLoadMore} />
-                    }
-                    </BetterScroll>
-
-
-                    <div className='fenglei' style={{display:this.state.zuantai===false?"none":"block"}}>
-                        <div>日期
-                            <ul>
-                                <p><span style={{position:"absolute",top:".85rem",left:"4.7rem"}}>~</span>
-                                <article className='articleone'></article>
-                                    <DatePicker
-                                    mode="date"
-                                        value={this.state.start}
-                                        extra={this.state.today_time}
-                                        // value={this.state.dates}
-                                        onChange={v => this.setState({
-                                            start:v,
-                                            start_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() + ' '+ v.getHours()+ ':'+ v.getMinutes() + ':'+v.getSeconds()
-                                        })}
-                                    >
-                                        <List.Item className="start" arrow="horizontal"></List.Item>
-                                    </DatePicker>
-                                
-                                <article className='articletwo'></article>
-                                    <DatePicker
-                                    mode="date"
-                                        extra={this.state.today_time}
-                                        value={this.state.end}
-                                        onChange={v => this.setState({
-                                            end:v,
-                                            end_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() + ' '+ v.getHours()+ ':'+ v.getMinutes() + ':'+v.getSeconds()
-                                        })}
-                                    >
-                                        <List.Item className="end" arrow="horizontal"></List.Item>
-                                    </DatePicker>
-                                </p>
-                            </ul>
-                        </div>
-
-                        <div>所属商家
-                            <ul>
-                                <li>
-                                    <Picker
-                                        data={this.state.store_id}
-                                        cols={1}
-                                        className="forss"
-                                        extra="所属商家"
-                                        value={this.state.sValue}
-                                        onChange={v => this.setState({ sValue: v })}
-                                        onOk={v => this.setState({ IDsj: v })}
-                                    >
-                                        <List.Item className='times' arrow="horizontal"></List.Item>
-                                    </Picker>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div >收银员
-                            <ul>
-                                <li>
-                                    <Picker
-                                        data={this.state.shouyinyuan}
-                                        cols={1}
-                                        className="forss"
-                                        extra="收银员"
-                                        value={this.state.Value}
-                                        onChange={v => this.setState({ Value: v })}
-                                        onOk={v => this.setState({ IDsyy: v })}
-                                    >
-                                        <List.Item className='time' arrow="horizontal"></List.Item>
-                                    </Picker>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div >单据状态
-                            <ul>
-                                <li>
-                                    <Picker
-                                        data={this.state.status}
-                                        cols={1}
-                                        className="forss"
-                                        extra=""
-                                        value={this.state.Value_status}
-                                        onChange={v => this.setState({ Value_status: v })}
-                                        onOk={v => this.setState({ ID_status: v })}
-                                    >
-                                        <List.Item className='status' arrow="horizontal"></List.Item>
-                                    </Picker>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div >支付方式：
-                            <ul>
-                                <li>
-                                    <Picker
-                                        data={this.state.zhifu}
-                                        cols={1}
-                                        className="forss"
-                                        extra=""
-                                        value={this.state.zhifu_Value}
-                                        onChange={v => this.setState({ zhifu_Value: v })}
-                                        onOk={v => this.setState({ zhifu_ID: v })}
-                                    >
-                                        <List.Item className='zhifu' arrow="horizontal"></List.Item>
-                                    </Picker>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div >会员名称：
-                            <ul>
-                                <li>
-                                    <input className="member-name" type="text" placeholder="请输入会员名称" name="inputmembername"
-                            onChange={this.inputChange.bind(this)}
-                            value={this.state.inputmembername}/>
-                                </li>
-                            </ul>
-                        </div>
-                        <div >手机号
-                            <ul>
-                                <li>
-                                   <input className="tell" type="text" placeholder="请输入零售单号" name="inputorder"
-                            onChange={this.inputChange.bind(this)}
-                            value={this.state.inputorder}/>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div className='btn' onClick={() => { this.queding() }}>确定</div>
-                    </div>
-                    <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
-                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
-                    </div>
-                    <div className='foot'>
-                    <div>当前结果：<span>{this.state.total.total_price?this.state.total.total_price:0}</span></div>
-                    <div style={{ marginRight: ".3rem" }}>总计优惠：<span>{this.state.total.total_fee?this.state.total.total_fee:0}</span></div>
-                </div>
-
-
-                </div>
-            </YouhuimxbStyle>
-        )
-    }
-    loadMore = () => {
-        // 加载数据时转圈
-        let loading = true
-        setTimeout(() => {
-            if (loading) {
-                this.setState({
-                    loadingMore: true
+                  )
                 })
-            }
-        }, 1000)
-        if (this.isLoadMore) {
-            getOrderList({
-                action: 'getOrderList', data: {
-                    uniacid: store.getState().uniacid,
-                    uid: store.getState().uid,
-                    limit: this.state.limit,
-                    page: this.state.page
-                }
-            }).then((res) => {
-                // console.log(res.data.data.data)
+              }
+              {
 
-                // 如果长度不等于得时候加载 那么是到底了
-                if (res.data.data.data.length < this.state.limit) {
-                    this.isLoadMore = false
-                }
-                this.setState({
-                    linshou: [...this.state.linshou, ...res.data.data.data],
-                    loadingMore: false
-                }, () => {
-                    let page=Number(this.state.page)
-                    this.setState({
-                        page: page  += 1
-                    })
+                linshou.length > 0 &&
+                <LoadingMore isLoading={this.isLoadMore} />
+              }
+            </div>
 
+            <div className='fenglei' style={{ display: this.state.zuantai === false ? "none" : "block" }}>
+              <div>日期
+                            <ul>
+                  <p><span style={{ position: "absolute", top: ".85rem", left: "4.7rem" }}>~</span>
+                    <article className='articleone'></article>
+                    <DatePicker
+                      mode="date"
+                      value={this.state.start}
+                      extra={this.state.today_time}
+                      onChange={v => this.setState({
+                        start: v,
+                        start_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() + ' ' + v.getHours() + ':' + v.getMinutes() + ':' + v.getSeconds()
+                      })}
+                    >
+                      <List.Item className="start" arrow="horizontal"></List.Item>
+                    </DatePicker>
 
-                    loading = false
-                    this.refs.scroll.BScroll.finishPullUp()
-                    this.refs.scroll.BScroll.refresh()
-                })
-            })
-        } else {
+                    <article className='articletwo'></article>
+                    <DatePicker
+                      mode="date"
+                      extra={this.state.today_time}
+                      value={this.state.end}
+                      onChange={v => this.setState({
+                        end: v,
+                        end_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() + ' ' + v.getHours() + ':' + v.getMinutes() + ':' + v.getSeconds()
+                      })}
+                    >
+                      <List.Item className="end" arrow="horizontal"></List.Item>
+                    </DatePicker>
+                  </p>
+                </ul>
+              </div>
+
+              <div>所属商家
+                            <ul>
+                  <li>
+                    <Picker
+                      data={this.state.store_id}
+                      cols={1}
+                      className="forss"
+                      extra="所属商家"
+                      value={this.state.sValue}
+                      onChange={v => this.setState({ sValue: v })}
+                      onOk={v => this.setState({ IDsj: v })}
+                    >
+                      <List.Item className='times' arrow="horizontal"></List.Item>
+                    </Picker>
+                  </li>
+                </ul>
+              </div>
+
+              <div >收银员
+                            <ul>
+                  <li>
+                    <Picker
+                      data={this.state.shouyinyuan}
+                      cols={1}
+                      className="forss"
+                      extra="收银员"
+                      value={this.state.Value}
+                      onChange={v => this.setState({ Value: v })}
+                      onOk={v => this.setState({ IDsyy: v })}
+                    >
+                      <List.Item className='time' arrow="horizontal"></List.Item>
+                    </Picker>
+                  </li>
+                </ul>
+              </div>
+
+              <div >单据状态
+                            <ul>
+                  <li>
+                    <Picker
+                      data={this.state.status}
+                      cols={1}
+                      className="forss"
+                      extra=""
+                      value={this.state.Value_status}
+                      onChange={v => this.setState({ Value_status: v })}
+                      onOk={v => this.setState({ ID_status: v })}
+                    >
+                      <List.Item className='status' arrow="horizontal"></List.Item>
+                    </Picker>
+                  </li>
+                </ul>
+              </div>
+
+              <div >支付方式：
+                            <ul>
+                  <li>
+                    <Picker
+                      data={this.state.zhifu}
+                      cols={1}
+                      className="forss"
+                      extra=""
+                      value={this.state.zhifu_Value}
+                      onChange={v => this.setState({ zhifu_Value: v })}
+                      onOk={v => this.setState({ zhifu_ID: v })}
+                    >
+                      <List.Item className='zhifu' arrow="horizontal"></List.Item>
+                    </Picker>
+                  </li>
+                </ul>
+              </div>
+
+              <div >会员名称：
+                            <ul>
+                  <li>
+                    <input className="member-name" type="text" placeholder="" name="inputmembername"
+                      onChange={this.inputChange.bind(this)}
+                      value={this.state.inputmembername} />
+                  </li>
+                </ul>
+              </div>
+              <div >手机号
+                            <ul>
+                  <li>
+                    <input className="tell" type="text" placeholder="" name="inputorder"
+                      onChange={this.inputChange.bind(this)}
+                      value={this.state.inputorder} />
+                  </li>
+                </ul>
+              </div>
+
+              <div className='btn' onClick={() => { this.queding() }}>确定</div>
+            </div>
+          </BetterScroll>
+          <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
+            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
+          </div>
+          <div className='foot'>
+            <div style={{ marginRight: ".3rem" }}>总计金额：<span>{this.state.total.all_total_price ? this.state.total.all_total_price : 0}</span></div>
+            <div>当前结果：<span>{this.state.total.total_price ? this.state.total.total_price : 0}</span></div>
+          </div>
+        </div>
+      </YouhuimxbStyle>
+    )
+  }
+  loadMore = () => {
+    // 加载数据时转圈
+    let loading = true
+    setTimeout(() => {
+      if (loading) {
+        this.setState({
+          loadingMore: true
+        })
+      }
+    }, 1000)
+    if (this.isLoadMore) {
+      let zhifu_ID = this.state.zhifu_ID.toString()
+      let ID_status = this.state.ID_status.toString()
+      let IDsyy = this.state.IDsyy.toString()
+      let IDsj = this.state.IDsj.toString()
+      getOrderList({
+        action: 'getOrderList', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          starttime: this.state.start_time,
+          endtime: this.state.end_time,
+          createid: IDsyy,
+          store_id: IDsj,
+          status: ID_status,
+          pay_type: zhifu_ID,
+          realname: this.state.inputmembername,
+          member_mobile: this.state.inputorder,
+          limit: this.state.limit,
+          page: this.state.page
         }
-    }
+      }).then((res) => {
+        // 如果长度不等于得时候加载 那么是到底了
+        if (res.data.data.data.length < this.state.limit) {
+          this.isLoadMore = false
+        }
+        this.setState({
+          linshou: [...this.state.linshou, ...res.data.data.data],
+          loadingMore: false
+        }, () => {
+          let page = Number(this.state.page)
+          this.setState({
+            page: page += 1
+          })
+          loading = false
+          this.refs.scroll.BScroll.finishPullUp()
+          this.refs.scroll.BScroll.refresh()
+        })
+      })
+    } else { }
+  }
 }
 const YouhuimxbStyle = styled.div`
 .member-name{
@@ -805,7 +817,7 @@ const YouhuimxbStyle = styled.div`
     // padding-top:.5rem;
     color:#a9a9a9;
     text-align: left;
-    font-size:.45rem;
+    font-size:.35rem;
     padding-left:.1rem;
     width:3rem;
 }
@@ -814,19 +826,11 @@ const YouhuimxbStyle = styled.div`
     // background-image: none;
     // opacity:0;
 }
-.onetimes{
-    position:absolute;
-    left:1.8rem;
-    top:-.2rem;
-    // padding-top:.3rem;
-    color: red;
-    width:12rem;
-    background-color: transparent;
-}
+
 .time{
     position:absolute;
     left:0rem;
-    top:4.4rem;
+    top:4.5rem;
     color: #a9a9a9;
     width:12rem;
     background-color: transparent;
@@ -834,7 +838,7 @@ const YouhuimxbStyle = styled.div`
 .status{
     position:absolute;
     left:0rem;
-    top:6.3rem;
+    top:6.4rem;
     color: #a9a9a9;
     width:12rem;
     background-color: transparent;
@@ -842,7 +846,7 @@ const YouhuimxbStyle = styled.div`
 .zhifu{
     position:absolute;
     left:0rem;
-    top:8.2rem;
+    top:8.3rem;
     color: #a9a9a9;
     width:12rem;
     background-color: transparent;
@@ -850,7 +854,7 @@ const YouhuimxbStyle = styled.div`
 .times{
     position:absolute;
     left:0rem;
-    top:2.5rem;
+    top:2.6rem;
     // padding-top:.3rem;
     color: #a9a9a9;
     width:12rem;
@@ -860,22 +864,6 @@ const YouhuimxbStyle = styled.div`
     background-image: none;
     opacity:0;
     // 
-}
-.articleone{
-    position:absolute;
-    top:.85rem;
-    left:.2rem;
-    width:4.1rem;
-    height:1rem;
-    // border:1px solid #dcdcdc;
-}
-.articletwo{
-    position:absolute;
-    top:.85rem;
-    left:5.4rem;
-    width:4.2rem;
-    height:1rem;
-    // border:1px solid #dcdcdc;
 }
 .fenglei div ul p{
     width:9.3rem;

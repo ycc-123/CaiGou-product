@@ -1,97 +1,97 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getWarehouseList,  createDamage } from 'network/Api'
+import { getWarehouseList, createDamage } from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 
 export default class AddInventoryList extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            data:[],
-            inputbeiz:'',
-            sValue:'',
-            IDck:""
-        }
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: [],
+      inputbeiz: '',
+      sValue: '',
+      IDck: ""
     }
-    componentDidMount() {
-        getWarehouseList({
-            action: 'getWarehouseList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                type: "1",
-                limit: "1000",
-                page: "1"
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                var result = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
-                this.setState({
-                    data: result
-                })
-            } else {
-                Toast.info(res.data.msg, 2)
-            }
-        })
-    }
-    createPurchase(){
-        let idgy = this.state.sValue.toString()
-        let bz='1'
-        createDamage({
-            action: 'createDamage', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                warehouseid:idgy,
-                remark:this.state.inputbeiz
-            }
-        }).then((res) => {
-            if(res.data.status===4001){
-                this.props.history.push(`/bsCategory/${idgy}/${this.state.inputbeiz?this.state.inputbeiz:bz}/${res.data.data}`)
-            }else{
-                Toast(res.data.msg,2)
-            }
-        })
-    }
-    inputChangebz(e) {
+  }
+  componentDidMount() {
+    getWarehouseList({
+      action: 'getWarehouseList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        type: "1",
+        limit: "1000",
+        page: "1"
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        var result = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
         this.setState({
-            [e.target.name]: e.target.value
+          data: result
         })
-    }
-    render() {
-        return (
-            <AddPurchaseOrderStyle>
-                <DocumentTitle title={'新建报损单'} />
-                <div>
-                    <ul className='biao'>
-                        <li><span>*</span>报损仓库：
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
+  }
+  createPurchase() {
+    let idgy = this.state.sValue.toString()
+    let bz = '1'
+    createDamage({
+      action: 'createDamage', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        warehouseid: idgy,
+        remark: this.state.inputbeiz
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        this.props.history.push(`/bsCategory/${idgy}/${this.state.inputbeiz ? this.state.inputbeiz : bz}/${res.data.data}`)
+      } else {
+        Toast(res.data.msg, 2)
+      }
+    })
+  }
+  inputChangebz(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  render() {
+    return (
+      <AddPurchaseOrderStyle>
+        <DocumentTitle title={'新建报损单'} />
+        <div>
+          <ul className='biao'>
+            <li><span>*</span>报损仓库：
                                 <Picker
-                                data={this.state.data}
-                                cols={1}
-                                className="forss"
-                                extra="请选择报损仓库"
-                                value={this.state.sValue}
-                                onChange={v => this.setState({ sValue: v })}
-                                onOk={v => this.setState({ IDck: v })}
-                            >
-                                <List.Item className='times' arrow="horizontal"></List.Item>
-                            </Picker>
-                        </li>
-                        <li style={{ border: "none" }}>
-                            <div>备注：</div>
-                            <input name="inputbeiz"
-                                onChange={this.inputChangebz.bind(this)}
-                                value={this.state.inputbeiz} type="text" /></li>
-                    </ul>
-                    <div className='foot'>
-                        <div className='left'></div>
-                        <div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
-                    </div>
-                </div>
-            </AddPurchaseOrderStyle>
-        )
-    }
+                data={this.state.data}
+                cols={1}
+                className="forss"
+                extra="请选择报损仓库"
+                value={this.state.sValue}
+                onChange={v => this.setState({ sValue: v })}
+                onOk={v => this.setState({ IDck: v })}
+              >
+                <List.Item className='times' arrow="horizontal"></List.Item>
+              </Picker>
+            </li>
+            <li style={{ border: "none" }}>
+              <div>备注：</div>
+              <input name="inputbeiz"
+                onChange={this.inputChangebz.bind(this)}
+                value={this.state.inputbeiz} type="text" /></li>
+          </ul>
+          <div className='foot'>
+            <div className='left'></div>
+            <div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
+          </div>
+        </div>
+      </AddPurchaseOrderStyle>
+    )
+  }
 }
 const AddPurchaseOrderStyle = styled.div`
     .wrapper .CommissionHeader{

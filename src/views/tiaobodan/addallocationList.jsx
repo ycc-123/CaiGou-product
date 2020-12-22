@@ -8,123 +8,123 @@ import { store } from "store/index";
 import { saveCanku } from 'store/actionCreators'
 
 export default class AddInventoryList extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            sValue: '',
-            data: [],
-            IDck: [],
-            inputbeiz: '',
-            lxValue: '',
-        }
-    }
-    componentDidMount() {
-        getWarehouseList({
-            action: 'getWarehouseList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                type: "1",
-                limit: "1000",
-                page: "1"
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                var result = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
-                this.setState({
-                    data: result
-                })
-            } else {
-                Toast.info(res.data.msg, 2)
-            }
-        })
-    }
-    createPurchase() {
-        let idgy = this.state.IDck === '' ? '' : this.state.IDck.toString()
-        let idkc = this.state.lxID === '' ? '' : this.state.lxID.toString()
-        createWarehouseChange({
-            action: 'createWarehouseChange', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                outwarehouseid: idgy,
-                inwarehouseid: idkc,
-                remark: this.state.inputbeiz,
-            }
-        }).then(res => {
-            if (res.data.status === 4001) {
-                this.props.history.push(`/tiaoboCategory/${res.data.data.id}/${idgy}`)
-                Toast.success(res.data.msg, 2)
-                let arr = []
-                let aa = {}
-                this.state.data.map((v, k) => {
-                    if (v.value === idgy) {
-                        aa = v
-                        return arr.push(aa, this.state.inputbeiz);
-                    }
-                    if (v.value === idkc) {
-                        aa = v
-                        return arr.push(aa, res.data.data.docno);
-                    }
-                    return ""
-                })
-                const tiaoboxqck = saveCanku(arr)
-                store.dispatch(tiaoboxqck)
-            } else {
-                Toast.info(res.data.msg, 2)
-            }
-        })
-    }
-    inputChangebz(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-    render() {
-        
-        return (
-            <AddPurchaseOrderStyle>
-                <DocumentTitle title={'新建调拨单'} />
-                <div>
-                    <ul className='biao'>
-                        <li><span>*</span>转出仓库：
-                                <Picker
-                                data={this.state.data}
-                                cols={1}
-                                className="forss"
-                                extra="请选择转出仓库"
-                                value={this.state.sValue}
-                                onChange={v => this.setState({ sValue: v })}
-                                onOk={v => this.setState({ IDck: v })}
-                            >
-                                <List.Item className='times' arrow="horizontal"></List.Item>
-                            </Picker>
-                        </li>
-                        <li><span>*</span>转入仓库：
-                                <Picker
-                                data={this.state.data}
-                                cols={1}
-                                className="forss"
-                                extra="请选择转入仓库"
-                                value={this.state.lxValue}
-                                onChange={v => this.setState({ lxValue: v })}
-                                onOk={v => this.setState({ lxID: v.toString() })}
-                            >
-                                <List.Item className='pdlx' arrow="horizontal"></List.Item>
-                            </Picker>
-                        </li>
-                        <li style={{ border: "none" }}>
-                            <div>备注：</div>
-                            <input name="inputbeiz"
-                                onChange={this.inputChangebz.bind(this)}
-                                value={this.state.inputbeiz} type="text" /></li>
-                    </ul>
-                    <div className='foot' style={{ justifyContent: 'space-between' }}>
-                        <div className='left'></div>
-                        <div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
-                    </div>
-                </div>
-            </AddPurchaseOrderStyle>
-        )
-    }
+	constructor(props) {
+		super(props)
+		this.state = {
+			sValue: '',
+			data: [],
+			IDck: [],
+			inputbeiz: '',
+			lxValue: '',
+		}
+	}
+	componentDidMount() {
+		getWarehouseList({
+			action: 'getWarehouseList', data: {
+				uniacid: store.getState().uniacid,
+				uid: store.getState().uid,
+				type: "1",
+				limit: "1000",
+				page: "1"
+			}
+		}).then((res) => {
+			if (res.data.status === 4001) {
+				var result = res.data.data.data.map(o => { return { value: o.id, label: o.name } });
+				this.setState({
+					data: result
+				})
+			} else {
+				Toast.info(res.data.msg, 2)
+			}
+		})
+	}
+	createPurchase() {
+		let idgy = this.state.IDck === '' ? '' : this.state.IDck.toString()
+		let idkc = this.state.lxID === '' ? '' : this.state.lxID.toString()
+		createWarehouseChange({
+			action: 'createWarehouseChange', data: {
+				uniacid: store.getState().uniacid,
+				uid: store.getState().uid,
+				outwarehouseid: idgy,
+				inwarehouseid: idkc,
+				remark: this.state.inputbeiz,
+			}
+		}).then(res => {
+			if (res.data.status === 4001) {
+				this.props.history.push(`/tiaoboCategory/${res.data.data.id}/${idgy}`)
+				Toast.success(res.data.msg, 2)
+				let arr = []
+				let aa = {}
+				this.state.data.map((v, k) => {
+					if (v.value === idgy) {
+						aa = v
+						return arr.push(aa, this.state.inputbeiz);
+					}
+					if (v.value === idkc) {
+						aa = v
+						return arr.push(aa, res.data.data.docno);
+					}
+					return ""
+				})
+				const tiaoboxqck = saveCanku(arr)
+				store.dispatch(tiaoboxqck)
+			} else {
+				Toast.info(res.data.msg, 2)
+			}
+		})
+	}
+	inputChangebz(e) {
+		this.setState({
+			[e.target.name]: e.target.value
+		})
+	}
+	render() {
+
+		return (
+			<AddPurchaseOrderStyle>
+				<DocumentTitle title={'新建调拨单'} />
+				<div>
+					<ul className='biao'>
+						<li><span>*</span>转出仓库：
+                <Picker
+								data={this.state.data}
+								cols={1}
+								className="forss"
+								extra="请选择转出仓库"
+								value={this.state.sValue}
+								onChange={v => this.setState({ sValue: v })}
+								onOk={v => this.setState({ IDck: v })}
+							>
+								<List.Item className='times' arrow="horizontal"></List.Item>
+							</Picker>
+						</li>
+						<li><span>*</span>转入仓库：
+                <Picker
+								data={this.state.data}
+								cols={1}
+								className="forss"
+								extra="请选择转入仓库"
+								value={this.state.lxValue}
+								onChange={v => this.setState({ lxValue: v })}
+								onOk={v => this.setState({ lxID: v.toString() })}
+							>
+								<List.Item className='pdlx' arrow="horizontal"></List.Item>
+							</Picker>
+						</li>
+						<li style={{ border: "none" }}>
+							<div>备注：</div>
+							<input name="inputbeiz"
+								onChange={this.inputChangebz.bind(this)}
+								value={this.state.inputbeiz} type="text" /></li>
+					</ul>
+					<div className='foot' style={{ justifyContent: 'space-between' }}>
+						<div className='left'></div>
+						<div className='right' onClick={() => { this.createPurchase() }}>下一步</div>
+					</div>
+				</div>
+			</AddPurchaseOrderStyle>
+		)
+	}
 }
 const AddPurchaseOrderStyle = styled.div`
     .wrapper .CommissionHeader{

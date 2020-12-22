@@ -4,67 +4,67 @@ import { store } from "store/index";
 import DocumentTitle from 'react-document-title'
 
 export default class ApplyOrderx extends Component {
-    constructor() {
-        super()
-        this.state = {
-            quan: [],
-            tiao: [],
-            sum: '',
-            remark: '',
-            inputSearch: "",
-            goods:[]
-        }
+  constructor() {
+    super()
+    this.state = {
+      quan: [],
+      tiao: [],
+      sum: '',
+      remark: '',
+      inputSearch: "",
+      goods: []
     }
-    componentDidMount() {
-        this.setState({
-            goods: store.getState().packagedGoods
-        })
-    }
-    inputChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-    render() {
-        return (
-            <ApplyOrderxStyle>
-                <DocumentTitle title={'打包商品明细'} />
-                <div>
-                    <div className='search'>
-                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
-                            onChange={this.inputChange.bind(this)}
-                            value={this.state.inputSearch} />
-                        <div className='img' onClick={() => { this.seach() }}>
-                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-                        </div>
-                    </div>
-                    {
-                        JSON.parse(localStorage.getItem("packagedGoods")).map((v, k) => {
-                            return (
-                                <div className='tiao' key={k}>
-                                    <img className='t-img-l' src={v.img ? v.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-                                    <ul className='wen-zi'>
-                                        <li className='wen-zi-t'>
-                                            <div className='name'>{v.name}</div>
-                                        </li>
-                                        <li className='wen-zi-c'>
-                                            <div >商品编码：{v.code}</div>
-                                            <p>{v.posprice}元/{v.unitname}</p>
-                                        </li>
+  }
+  componentDidMount() {
+    this.setState({
+      goods: store.getState().packagedGoods
+    })
+  }
+  inputChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  render() {
+    return (
+      <ApplyOrderxStyle>
+        <DocumentTitle title={'打包商品明细'} />
+        <div>
+          <div className='search'>
+            <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
+              onChange={this.inputChange.bind(this)}
+              value={this.state.inputSearch} />
+            <div className='img' onClick={() => { this.seach() }}>
+              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+            </div>
+          </div>
+          {
+            JSON.parse(localStorage.getItem("packagedGoods")).map((v, k) => {
+              return (
+                <div className='tiao' key={k}>
+                  <img className='t-img-l' src={v.img ? v.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+                  <ul className='wen-zi'>
+                    <li className='wen-zi-t'>
+                      <div className='name'>{v.name}</div>
+                    </li>
+                    <li className='wen-zi-c'>
+                      <div >商品编码：{v.code}</div>
+                      <p>{v.posprice}元/{v.unitname}</p>
+                    </li>
 
-                                        <li className='wen-zi-f'>
-                                            <div></div>
-                                            <p>打包数量：<span>{v.num}</span></p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            )
-                        })
-                    }
+                    <li className='wen-zi-f'>
+                      <div></div>
+                      <p>打包数量：<span>{v.num}</span></p>
+                    </li>
+                  </ul>
                 </div>
-            </ApplyOrderxStyle>
-        )
-    }
+              )
+            })
+          }
+        </div>
+      </ApplyOrderxStyle>
+    )
+  }
 }
 const ApplyOrderxStyle = styled.div`
 .baocun{

@@ -5,7 +5,7 @@ import CategoryLeftItem from './childCom/CategoryLeftItem'
 import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
-import { searchProduct, getStockList,checkSubmitInventory } from 'network/Api'
+import { searchProduct, getStockList, checkSubmitInventory } from 'network/Api'
 import { Toast, Modal } from 'antd-mobile';
 const alert = Modal.alert;
 const scollConfig = {
@@ -33,10 +33,10 @@ class Category extends Component {
       inputSearch: '',
       mrqunangoods: [],
       Id: "",
-      sum:[],
-      dataName:[],
-      weilin:'存在下列实际数量为0的商品是否提交',
-      wulin:'是否确认提交盘点单'
+      sum: [],
+      dataName: [],
+      weilin: '存在下列实际数量为0的商品是否提交',
+      wulin: '是否确认提交盘点单'
     }
   }
   mingxi() {
@@ -44,36 +44,38 @@ class Category extends Component {
   }
   getChildValue(nums, goods) {
     let aa = {}
-    let arr =[]
-       aa={
-        stockid:goods.id,
-        realnum:nums,
+    let arr = []
+    aa = {
+      stockid: goods.id,
+      realnum: nums,
+    }
+    arr.push(aa);
+    this.setState({
+      sum: [...this.state.sum, ...arr]
+    }, () => {
+      let itemData = this.state.sum
+      checkSubmitInventory({
+        action: 'checkSubmitInventory', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          inventoryId: this.props.match.params.id,
+          itemData: itemData,
         }
-       arr.push(aa);
-       this.setState({
-        sum:[...this.state.sum,...arr]
-       },()=>{
-        let itemData=this.state.sum
-    checkSubmitInventory({ action: 'checkSubmitInventory', data: {
-      uniacid: store.getState().uniacid,
-      uid:store.getState().uid,
-      inventoryId:this.props.match.params.id,
-      itemData:itemData,
-    } }).then(res=>{
-      // console.log(res)
-      if(res.data.status===4001){
-        this.setState({
-          dataName:["0"]
-        })
-      }else{
-        this.setState({
-          dataName:res.data.data
-        })
-      }
+      }).then(res => {
+        // console.log(res)
+        if (res.data.status === 4001) {
+          this.setState({
+            dataName: ["0"]
+          })
+        } else {
+          this.setState({
+            dataName: res.data.data
+          })
+        }
+      })
     })
-       })
 
-    
+
 
 
 
@@ -147,9 +149,9 @@ class Category extends Component {
                 </BetterScroll>}
               </ul>
             </div>
-              <CategoryRight itemData={this.state.mrqunangoods} 
-              index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} ckid={ckid} pdid={pdid} 
-              aa={this.getChildValue.bind(this)} history={this.props.history} />
+              <CategoryRight itemData={this.state.mrqunangoods}
+                index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} ckid={ckid} pdid={pdid}
+                aa={this.getChildValue.bind(this)} history={this.props.history} />
             </Fragment> : <Fragment>
               </Fragment>}
           </div>
@@ -165,11 +167,11 @@ class Category extends Component {
               </div>
             </div>
 
-            <div 
+            <div
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "7.78rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
-              onClick={() =>{this.click(1)}
-                
+              onClick={() => { this.click(1) }
+
               }
             >
               confirm
@@ -185,13 +187,13 @@ class Category extends Component {
   click = (e) => {
     // console.log(this.state.dataName.toString())
     // this.child.myName(e)
-   
+
     this.setState({
-      Id:"1111"
-    },()=>{
-      alert(Number(this.state.dataName.toString())===0?this.state.wulin:this.state.weilin, Number(this.state.dataName.toString())===0?"":this.state.dataName.join(","), [
+      Id: "1111"
+    }, () => {
+      alert(Number(this.state.dataName.toString()) === 0 ? this.state.wulin : this.state.weilin, Number(this.state.dataName.toString()) === 0 ? "" : this.state.dataName.join(","), [
         { text: '取消', onPress: () => console.log('cancel') },
-        { text: '确定', onPress: () =>this.child.myName(e) },
+        { text: '确定', onPress: () => this.child.myName(e) },
       ])
     })
   }
@@ -215,30 +217,32 @@ class Category extends Component {
         this.setState({
           mrqunangoods,
           goods: res.data.data.data
-      })
+        })
       }
     })
 
 
-    checkSubmitInventory({ action: 'checkSubmitInventory', data: {
-      uniacid: store.getState().uniacid,
-      uid:store.getState().uid,
-      inventoryId:this.props.match.params.id,
-      itemData:[],
-    } }).then(res=>{
+    checkSubmitInventory({
+      action: 'checkSubmitInventory', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        inventoryId: this.props.match.params.id,
+        itemData: [],
+      }
+    }).then(res => {
       // console.log(res)
-      if(res.data.status===4001){
+      if (res.data.status === 4001) {
         this.setState({
-          dataName:["0"]
+          dataName: ["0"]
         })
-      }else{
+      } else {
         this.setState({
-          dataName:res.data.data
+          dataName: res.data.data
         })
       }
     })
 
-    
+
   }
 }
 const CategoryStyle = styled.div`

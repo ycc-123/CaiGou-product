@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import {  submitPriceModify, getPriceModifyDetail } from 'network/Api'
+import { submitPriceModify, getPriceModifyDetail } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import { store } from "store/index";
 import DocumentTitle from 'react-document-title'
@@ -40,35 +40,35 @@ export default class ApplyOrderx extends Component {
 
   tijiao(e) {
     if (e === "提交成功") { } else {
-     
-        // 默认
-        let aa = {}
-        let arr = []
-        this.state.tiao.map((v, k) => {
-            aa = {
-                barcodeid: this.state.tiao[k].barcodeid,
-                newposprice: this.state.tiao[k].newposprice,
-                newmemberprice: this.state.tiao[k].newmemberprice,
-            }
-            return arr.push(aa);
-        })
-        let itemData = arr
-         submitPriceModify({
-            action: 'submitPriceModify', data: {
-              uniacid: store.getState().uniacid,
-              uid: store.getState().uid,
-              id: this.props.match.params.id,
-              status:2,
-              itemData:itemData
-            }
-          }).then((res) => {
-            if (res.data.status === 4001) {
-              window.location.reload();
-              Toast.success(res.data.msg, 1)
-            } else {
-              Toast.info(res.data.msg, 1)
-            }
-          })
+
+      // 默认
+      let aa = {}
+      let arr = []
+      this.state.tiao.map((v, k) => {
+        aa = {
+          barcodeid: this.state.tiao[k].barcodeid,
+          newposprice: this.state.tiao[k].newposprice,
+          newmemberprice: this.state.tiao[k].newmemberprice,
+        }
+        return arr.push(aa);
+      })
+      let itemData = arr
+      submitPriceModify({
+        action: 'submitPriceModify', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          id: this.props.match.params.id,
+          status: 2,
+          itemData: itemData
+        }
+      }).then((res) => {
+        if (res.data.status === 4001) {
+          window.location.reload();
+          Toast.success(res.data.msg, 1)
+        } else {
+          Toast.info(res.data.msg, 1)
+        }
+      })
     }
   }
   seach() {
@@ -76,7 +76,7 @@ export default class ApplyOrderx extends Component {
       action: 'getPriceModifyDetail', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        search:this.state.inputSearch,
+        search: this.state.inputSearch,
         id: this.props.match.params.id
       }
     }).then((res) => {
@@ -160,19 +160,19 @@ export default class ApplyOrderx extends Component {
 
           </BetterScroll>
           <div className='foot'>
-                        <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-                            <div className='left'>
-                                <div style={{ width: "1.28rem", height: ".68rem" }}>
-                                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                                <div className='yuan'>{this.state.tiao.length}</div>
-                            </div>
-                            <div style={{ background: this.state.quan.statusName === "提交成功" ? "#B4B4B4" : '' }}
-                                className='right'
-                                onClick={() => { this.tijiao(this.state.quan.statusName) }}
-                            >{this.state.quan.statusName === "待提交" ? "提交" : "已提交"}
-                            </div>
-                        </div>
-                    </div>
+            <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+              <div className='left'>
+                <div style={{ width: "1.28rem", height: ".68rem" }}>
+                  <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                <div className='yuan'>{this.state.tiao.length}</div>
+              </div>
+              <div style={{ background: this.state.quan.statusName === "提交成功" ? "#B4B4B4" : '' }}
+                className='right'
+                onClick={() => { this.tijiao(this.state.quan.statusName) }}
+              >{this.state.quan.statusName === "待提交" ? "提交" : "已提交"}
+              </div>
+            </div>
+          </div>
         </div>
       </ApplyOrderxStyle>
     )

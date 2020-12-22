@@ -2,87 +2,86 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { store } from "store/index";
 export default class InventoryListDetails extends Component {
-    constructor() {
-        super()
-        this.state = {
-            zcck: store.getState().tiaoboxqck[0].label ? store.getState().tiaoboxqck[0].label : "",
-            zrvk: store.getState().tiaoboxqck[2].label ? store.getState().tiaoboxqck[2].label : "",
-            danhao: store.getState().tiaoboxqck[3] ? store.getState().tiaoboxqck[3] : "",
-            beiz: store.getState().tiaoboxqck[1] ? store.getState().tiaoboxqck[1] : ""
-            // zcck:1111,
-            // zrvk:222,
-            // danhao:333,
-            // beiz:444
-        }
+  constructor() {
+    super()
+    this.state = {
+      zcck: store.getState().tiaoboxqck[0].label ? store.getState().tiaoboxqck[0].label : "",
+      zrvk: store.getState().tiaoboxqck[2].label ? store.getState().tiaoboxqck[2].label : "",
+      danhao: store.getState().tiaoboxqck[3] ? store.getState().tiaoboxqck[3] : "",
+      beiz: store.getState().tiaoboxqck[1] ? store.getState().tiaoboxqck[1] : ""
+      // zcck:1111,
+      // zrvk:222,
+      // danhao:333,
+      // beiz:444
     }
-    componentDidMount() {
-        // console.log(store.getState().tiaoboxqck)
-        // console.log(store.getState().tiaobogoods)
+  }
+  componentDidMount() {
+    // console.log(store.getState().tiaoboxqck)
+    // console.log(store.getState().tiaobogoods)
+  }
+
+  render() {
+    const scrollConfig = {
+      probeType: 1
     }
+    var day2 = new Date();
+    day2.setTime(day2.getTime());
+    var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+    return (
+      <WarehousingOrderxingStyle>
+        <div>
+          <div className='search'>
+            <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
+            <div className='img' onClick={() => { }}>
+              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+            </div>
+          </div>
+          <div className='conten'>
+            <div className='conten-top'>
+              <p>
+                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+              </p>
+              <div>{this.state.beiz}</div>
+            </div>
 
-    render() {
-        const scrollConfig = {
-            probeType: 1
-        }
-        var day2 = new Date();
-        day2.setTime(day2.getTime());
-        var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
-        return (
-            <WarehousingOrderxingStyle>
-                <div>
-                    <div className='search'>
-                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
-                        <div className='img' onClick={() => { }}>
-                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-                        </div>
-                    </div>
-                    <div className='conten'>
-                        <div className='conten-top'>
-                            <p>
-                                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
-                            </p>
-                            <div>{this.state.beiz}</div>
-                        </div>
+            <div className='conten-c' style={{ paddingTop: ".25rem" }}>
+              <p>单据日期：{this.state.s2}</p>
+              <p>转出仓库：{this.state.zcck}</p>
+              <p>转入仓库：{this.state.zrvk}</p>
+              <p>单据状态：<span style={{ color: "#d92929" }}>待提交</span></p>
+            </div>
 
-                        <div className='conten-c' style={{ paddingTop: ".25rem" }}>
-                            <p>单据日期：{this.state.s2}</p>
-                            <p>转出仓库：{this.state.zcck}</p>
-                            <p>转入仓库：{this.state.zrvk}</p>
-                            <p>单据状态：<span style={{ color: "#d92929" }}>待提交</span></p>
-                        </div>
+            <div className='footer'>
+              备注：{this.state.danhao}
+            </div>
+          </div>
+          {
+            store.getState().tiaobogoods.map((value, key) => {
+              let tiao = value
+              return (
+                <div className='tiao' key={key}>
+                  <img className='t-img-l' src={tiao.img ? tiao.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
-                        <div className='footer'>
-                            备注：{this.state.danhao}
-                        </div>
-                    </div>
-                    {
-                        store.getState().tiaobogoods.map((value, key) => {
-                            // console.log(value)
-                            let tiao = value
-                            return (
-                                <div className='tiao' key={key}>
-                                    <img className='t-img-l' src={tiao.img ? tiao.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-
-                                    <ul className='wen-zi'>
-                                        <li className='wen-zi-c'>
-                                            <div >{tiao.barcode}</div>
-                                            <p>{tiao.price}元/{tiao.unit_name}</p></li>
-                                        <li className='wen-zi-t'>
-                                            <div className='name'>{tiao.name}</div>
-                                        </li>
-                                        <li className='wen-zi-f'>
-                                            <div>数量：{tiao.gnum}</div>
-                                            <p>总价：{tiao.price * tiao.gnum}</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            )
-                        })
-                    }
+                  <ul className='wen-zi'>
+                    <li className='wen-zi-c'>
+                      <div >{tiao.barcode}</div>
+                      <p>{tiao.price}元/{tiao.unit_name}</p></li>
+                    <li className='wen-zi-t'>
+                      <div className='name'>{tiao.name}</div>
+                    </li>
+                    <li className='wen-zi-f'>
+                      <div>数量：{tiao.gnum}</div>
+                      <p>总价：{tiao.price * tiao.gnum}</p>
+                    </li>
+                  </ul>
                 </div>
-            </WarehousingOrderxingStyle>
-        )
-    }
+              )
+            })
+          }
+        </div>
+      </WarehousingOrderxingStyle>
+    )
+  }
 }
 const WarehousingOrderxingStyle = styled.div`
 .am-button::before {

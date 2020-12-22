@@ -40,7 +40,7 @@ export default class Home extends Component {
           <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>采购管理</div>
           <ul>
             <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/ApplyOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/shengqing.png" alt="" /></li>
-            <li style={{ marginLeft: ".3rem" }} onClick={() => { this.props.history.push('/PurchaseOrder')} }><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/caigoudan.png" alt="" /></li>
+            <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/PurchaseOrder')} }><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/caigoudan.png" alt="" /></li>
           </ul>
 
 
@@ -49,7 +49,7 @@ export default class Home extends Component {
           <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>仓储管理</div>
           <ul>
             <li style={{ marginLeft: ".6rem" }} onClick={() => { this.props.history.push('/stockCategory') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kucundan.png" alt="" /></li>
-            <li style={{ height: "1.6rem", width: "1.95rem", marginLeft: ".4rem" }} onClick={() => { this.props.history.push('/WarehousingOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/rkdan.png" alt="" /></li>
+            <li style={{ height: "1.6rem", width: "1.95rem", marginLeft: ".3rem" }} onClick={() => { this.props.history.push('/WarehousingOrder') }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/rkdan.png" alt="" /></li>
             <li onClick={()=>{this.props.history.push('/Pandian')}} style={{marginLeft:".3rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/pandiandan.png" alt=""/></li>
             <li onClick={()=>{this.props.history.push('/LossReportList')}} style={{marginLeft:".1rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/baosdan.png" alt=""/></li>
             <li onClick={()=>{this.props.history.push('/allocationOrder')}} style={{marginLeft:".5rem",marginTop:".6rem"}}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/tiaobodan.png" alt=""/></li>
@@ -77,7 +77,7 @@ export default class Home extends Component {
               </div>
               <div style={{position:"absolute",top:"2.2rem",left:".5rem"}}>版本信息</div>
               <div className="banben">
-                  v1.1.1.9.1
+                  v1.1.2.1.0
               </div>
               <p
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "1rem", left: "0rem", color: "transparent", background: "transparent" }}

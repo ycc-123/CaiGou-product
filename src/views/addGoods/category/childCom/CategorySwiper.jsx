@@ -4,58 +4,58 @@ import { Toast } from 'antd-mobile';
 import { store } from 'store/index'
 
 export default class Liebiao extends Component {
-    constructor() {
-        super()
-        this.state = {
-            goodsList: []
+  constructor() {
+    super()
+    this.state = {
+      goodsList: []
+    }
+  }
+  componentDidMount() {
+    if (store.getState().goodsList === []) {
+      Toast.info("无采购商品", 1.5)
+      this.setState({
+        goodsList: []
+      })
+    } else {
+      this.setState({
+        goodsList: store.getState().goodsList
+      })
+    }
+  }
+  render() {
+    return (
+      <LiebiaoStyle>
+        <div>
+          <div className='search' >
+            <input type="search" className='input' placeholder="请输入采购单号/仓库名称" />
+            <div className='img'>
+              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+            </div>
+          </div>
+        </div>
+        {
+          this.state.goodsList.map((v, k) => {
+            return (
+              <div className='tiao' key={k}>
+                <img className='t-img-l' src={v.img ? v.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="网络卡" />
+                <ul className='wen-zi'>
+                  <li className='wen-zi-t'>
+                    <div className='name'>{v.name}</div>
+                    <p>{v.num}{v.danwei}</p>
+                  </li>
+                  <li className='wen-zi-f'>
+                    <div>￥：{v.price}元/{v.danwei}</div>
+                    <p>{v.amount}
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            )
+          })
         }
-    }
-    componentDidMount() {
-        if (store.getState().goodsList === []) {
-            Toast.info("无采购商品", 1.5)
-            this.setState({
-                goodsList: []
-            })
-        } else {
-            this.setState({
-                goodsList: store.getState().goodsList
-            })
-        }
-    }
-    render() {
-        return (
-            <LiebiaoStyle>
-                <div>
-                    <div className='search' >
-                        <input type="search" className='input' placeholder="请输入采购单号/仓库名称" />
-                        <div className='img'>
-                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-                        </div>
-                    </div>
-                </div>
-                {
-                    this.state.goodsList.map((v, k) => {
-                        return (
-                            <div className='tiao' key={k}>
-                                <img className='t-img-l' src={v.img ? v.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="网络卡" />
-                                <ul className='wen-zi'>
-                                    <li className='wen-zi-t'>
-                                        <div className='name'>{v.name}</div>
-                                        <p>{v.num}{v.danwei}</p>
-                                    </li>
-                                    <li className='wen-zi-f'>
-                                        <div>￥：{v.price}元/{v.danwei}</div>
-                                        <p>{v.amount}
-                                        </p>
-                                    </li>
-                                </ul>
-                            </div>
-                        )
-                    })
-                }
-            </LiebiaoStyle>
-        )
-    }
+      </LiebiaoStyle>
+    )
+  }
 }
 
 const LiebiaoStyle = styled.div`

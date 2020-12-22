@@ -9,332 +9,332 @@ import { store } from "store/index";
 import { useHistory, useParams } from 'react-router-dom';
 
 const Into = (props) => {
-    const history = useHistory()
-    const params = useParams().id
-    const bt_ref = useRef()
-    const [goodName, setgoodName] = useState('');
-    const [goodCategory, setGoodCategory] = useState('');
-    const [goodCode, setGoodCode] = useState('');
-    const [sellUnit, setSellUnit] = useState('');
-    const [retailPrice, setRetailPrice] = useState('');
-    const [setPrice, setSetPrice] = useState('');
-    const [memberInterests, setMemberInterests] = useState()
-    const [isProduct, setisProduct] = useState()
-    const [memberPrice, setMemberPrice] = useState()
-    const [matchGood, setMatchGood] = useState();
-    const [matchCode, setMatchCode] = useState('')
-    const [goodSort, setGoodSort] = useState('');
-    const [goodlength, setGoodlength] = useState('');
-    const [unit, setUnit] = useState([]);
-    const [classification, setClassification] = useState([]);
-    const [morengoods, setMorengoods] = useState({});
+  const history = useHistory()
+  const params = useParams().id
+  const bt_ref = useRef()
+  const [goodName, setgoodName] = useState('');
+  const [goodCategory, setGoodCategory] = useState('');
+  const [goodCode, setGoodCode] = useState('');
+  const [sellUnit, setSellUnit] = useState('');
+  const [retailPrice, setRetailPrice] = useState('');
+  const [setPrice, setSetPrice] = useState('');
+  const [memberInterests, setMemberInterests] = useState()
+  const [isProduct, setisProduct] = useState()
+  const [memberPrice, setMemberPrice] = useState()
+  const [matchGood, setMatchGood] = useState();
+  const [matchCode, setMatchCode] = useState('')
+  const [goodSort, setGoodSort] = useState('');
+  const [goodlength, setGoodlength] = useState('');
+  const [unit, setUnit] = useState([]);
+  const [classification, setClassification] = useState([]);
+  const [morengoods, setMorengoods] = useState({});
 
-    const scrollConfig = {
-        probeType: 1
+  const scrollConfig = {
+    probeType: 1
+  }
+
+  useEffect(() => {
+    getProductDetail({
+      action: 'getProductDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        id: params,
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        setMorengoods(res.data.data);
+        setMemberInterests(res.data.data.is_membership === "2" ? true : false);
+        setMemberPrice(res.data.data.is_memberprice === "1" ? false : true);
+        setMatchGood(res.data.data.is_plu_goods === "1" ? false : true);
+      } else {
+        Toast.fail(res.data.msg, 2)
+      }
+    })
+    getPackgeProductDetail({
+      action: 'getPackgeProductDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        id: params,
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        setGoodlength(res.data.data);
+      } else { }
+    })
+    getProductCategoryAll({
+      action: 'getProductCategoryAll', data: {
+        uniacid: store.getState().uniacid,
+        // uid: store.getState().uid,
+      }
+    }).then((res) => {
+      setClassification(res.data.data)
+    })
+    getUnitList({
+      action: 'getUnitList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+      }
+    }).then((res) => {
+      var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
+      setUnit(result)
+    })
+    try {
+      bt_ref.current.BScroll.refresh()
+    } catch (error) {
     }
+    return () => {
+    }
+  }, [])
+  return (
+    <>
+      <BetterScroll config={scrollConfig} style={{ height: 'calc(100vh - 1.6rem)' }} ref={bt_ref}>
+        <TAddGoodsStyle>
+          <DocumentTitle title={'编辑商品'} />
+          <div className="type flex-column" style={{ background: "#F8F8F8" }}>
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <span>商品编码: </span>
+              </div>
+              <div className="right">
+                <input style={{ background: "#F8F8F8" }}
+                  readonly="readonly"
+                  value={goodCode}
+                  type="text"
+                  placeholder={morengoods.code}
+                  onChange={e => { setGoodCode(e.target.value) }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="type flex-column">
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <span>商品分类: </span>
+              </div>
+              <div className="right">
+                <Picker
+                  data={classification}
+                  cols={4}
+                  // className="forss"
+                  extra={morengoods.category_name}
+                  value={goodCategory}
+                  onChange={e => { setGoodCategory(e) }}
+                  onOk={v => setGoodCategory(v)}
+                >
+                  <List.Item className='time' arrow="horizontal"></List.Item>
+                </Picker>
+              </div>
+            </div>
+          </div>
+          <div className="type flex-column" >
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <span>商品名称:</span>
+              </div>
+              <div className="right">
+                <input
+                  value={goodName}
+                  type="text"
+                  placeholder={morengoods.name}
+                  onChange={e => { setgoodName(e.target.value) }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="type flex-column">
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <span>售出单位: </span>
+              </div>
+              <div className="right">
+                <Picker
+                  data={unit}
+                  cols={1}
+                  className="forss"
+                  extra={morengoods.unit_name}
+                  value={sellUnit}
+                  onChange={e => { setSellUnit(e) }}
+                  onOk={v => setSellUnit(v)}
+                >
+                  <List.Item className='scdwtimes' arrow="horizontal"></List.Item>
+                </Picker>
+              </div>
+            </div>
+          </div>
+        </TAddGoodsStyle>
+        <AddGoodsStyle>
+          <div className="type flex-column">
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <p style={{ fontSize: ".35rem" }}>商品排序: </p>
 
-    useEffect(() => {
-        getProductDetail({
-            action: 'getProductDetail', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                id: params,
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                setMorengoods(res.data.data);
-                setMemberInterests(res.data.data.is_membership === "2" ? true : false);
-                setMemberPrice(res.data.data.is_memberprice === "1" ? false : true);
-                setMatchGood(res.data.data.is_plu_goods === "1" ? false : true);
-            } else {
-                Toast.fail(res.data.msg, 2)
-            }
-        })
-        getPackgeProductDetail({
-            action: 'getPackgeProductDetail', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                id: params,
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                setGoodlength(res.data.data);
-            } else {}
-        })
-        getProductCategoryAll({
-            action: 'getProductCategoryAll', data: {
-                uniacid: store.getState().uniacid,
-                // uid: store.getState().uid,
-            }
-        }).then((res) => {
-            setClassification(res.data.data)
-        })
-        getUnitList({
-            action: 'getUnitList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-            }
-        }).then((res) => {
-            var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
-            setUnit(result)
-        })
-        try {
-            bt_ref.current.BScroll.refresh()
-        } catch (error) {
-        }
-        return () => {
-        }
-    }, [])
-    return (
-        <>
-            <BetterScroll config={scrollConfig} style={{ height: 'calc(100vh - 1.6rem)' }} ref={bt_ref}>
-                <TAddGoodsStyle>
-                    <DocumentTitle title={'编辑商品'} />
-                    <div className="type flex-column" style={{ background: "#F8F8F8" }}>
-                        <div className="item flex-row" style={{
-                            justifyContent: 'space-between'
-                        }}>
-                            <div className="left">
-                                <span>商品编码: </span>
-                            </div>
-                            <div className="right">
-                                <input style={{ background: "#F8F8F8" }}
-                                    readonly="readonly"
-                                    value={goodCode}
-                                    type="text"
-                                    placeholder={morengoods.code}
-                                    onChange={e => { setGoodCode(e.target.value) }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="type flex-column">
-                        <div className="item flex-row" style={{
-                            justifyContent: 'space-between'
-                        }}>
-                            <div className="left">
-                                <span>商品分类: </span>
-                            </div>
-                            <div className="right">
-                                <Picker
-                                    data={classification}
-                                    cols={4}
-                                    // className="forss"
-                                    extra={morengoods.category_name}
-                                    value={goodCategory}
-                                    onChange={e => { setGoodCategory(e) }}
-                                    onOk={v => setGoodCategory(v)}
-                                >
-                                    <List.Item className='time' arrow="horizontal"></List.Item>
-                                </Picker>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="type flex-column" >
-                        <div className="item flex-row" style={{
-                            justifyContent: 'space-between'
-                        }}>
-                            <div className="left">
-                                <span>商品名称:</span>
-                            </div>
-                            <div className="right">
-                                <input
-                                    value={goodName}
-                                    type="text"
-                                    placeholder={morengoods.name}
-                                    onChange={e => { setgoodName(e.target.value) }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="type flex-column">
-                        <div className="item flex-row" style={{
-                            justifyContent: 'space-between'
-                        }}>
-                            <div className="left">
-                                <span>售出单位: </span>
-                            </div>
-                            <div className="right">
-                                <Picker
-                                    data={unit}
-                                    cols={1}
-                                    className="forss"
-                                    extra={morengoods.unit_name}
-                                    value={sellUnit}
-                                    onChange={e => { setSellUnit(e) }}
-                                    onOk={v => setSellUnit(v)}
-                                >
-                                    <List.Item className='scdwtimes' arrow="horizontal"></List.Item>
-                                </Picker>
-                            </div>
-                        </div>
-                    </div>
-                </TAddGoodsStyle>
-                <AddGoodsStyle>
-                    <div className="type flex-column">
-                        <div className="item flex-row" style={{
-                            justifyContent: 'space-between'
-                        }}>
-                            <div className="left">
-                                <p style={{ fontSize: ".35rem" }}>商品排序: </p>
+              </div>
+              <div className="right">
+                <input
+                  value={goodSort}
+                  type="text"
+                  placeholder={morengoods.sequence}
+                  onChange={e => { setGoodSort(e.target.value) }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="type flex-column">
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <span>零售价: </span>
+              </div>
+              <div className="right">
+                <input
+                  value={retailPrice}
+                  type="text"
+                  placeholder={morengoods.posprice}
+                  onChange={e => { setRetailPrice(e.target.value) }}
+                />
+              </div>
+            </div>
+          </div>
+          <List
+            renderHeader={() => ''}
+          >
+            <List.Item
+              extra={<Switch
+                checked={isProduct}
+                onChange={() => { setisProduct(!isProduct) }}
+              />}
+            >更多信息</List.Item>
+            <div className='xian'></div>
 
-                            </div>
-                            <div className="right">
-                                <input
-                                    value={goodSort}
-                                    type="text"
-                                    placeholder={morengoods.sequence}
-                                    onChange={e => { setGoodSort(e.target.value) }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="type flex-column">
-                        <div className="item flex-row" style={{
-                            justifyContent: 'space-between'
-                        }}>
-                            <div className="left">
-                                <span>零售价: </span>
-                            </div>
-                            <div className="right">
-                                <input
-                                    value={retailPrice}
-                                    type="text"
-                                    placeholder={morengoods.posprice}
-                                    onChange={e => { setRetailPrice(e.target.value) }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <List
-                        renderHeader={() => ''}
-                    >
-                        <List.Item
-                            extra={<Switch
-                                checked={isProduct}
-                                onChange={() => { setisProduct(!isProduct) }}
-                            />}
-                        >更多信息</List.Item>
-                        <div className='xian'></div>
-
-                        <div style={{ display: isProduct ? "block" : "none" }}>
-                            <List.Item
-                                extra={<Switch
-                                    checked={memberInterests}
-                                    onChange={() => { setMemberInterests(!memberInterests) }}
-                                />}
-                            >启用会员权益
+            <div style={{ display: isProduct ? "block" : "none" }}>
+              <List.Item
+                extra={<Switch
+                  checked={memberInterests}
+                  onChange={() => { setMemberInterests(!memberInterests) }}
+                />}
+              >启用会员权益
                     <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1rem" }}>是否启用会员权益</span>
-                            </List.Item>
-                            <div className='xian'></div>
-                            <List.Item
-                                extra={<Switch
-                                    checked={memberPrice}
-                                    onChange={() => { setMemberPrice(!memberPrice) }}
-                                />}
-                            >启用会员价
+              </List.Item>
+              <div className='xian'></div>
+              <List.Item
+                extra={<Switch
+                  checked={memberPrice}
+                  onChange={() => { setMemberPrice(!memberPrice) }}
+                />}
+              >启用会员价
                     <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>是否启用会员价</span>
-                            </List.Item>
-                            <div className='xian'></div>
+              </List.Item>
+              <div className='xian'></div>
 
-                            <div className="type flex-column" style={{ display: memberPrice === true ? "block" : "none" }}>
-                                <div className="item flex-row" style={{
-                                    justifyContent: 'space-between'
-                                }}>
-                                    <div className="left">
-                                        <p style={{ fontSize: ".35rem" }}>会员价</p>
-                                    </div>
-                                    <div className="right">
-                                        <input
-                                            value={setPrice}
-                                            type="text"
-                                            placeholder={morengoods.memberprice}
-                                            onChange={e => { setSetPrice(e.target.value) }}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <List.Item
-                                extra={<Switch style={{ border: "none" }}
-                                    checked={matchGood}
-                                    onChange={() => { setMatchGood(!matchGood) }}
-                                />}
-                            >分体称商品
-                            <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>设置为分体称商品</span>
-                            </List.Item>
-                            <div className='xian'></div>
-                            <div className="type flex-column" style={{ display: matchGood ? "block" : "none" }}>
-                                <div className="item flex-row" style={{
-                                    justifyContent: 'space-between'
-                                }}>
-                                    <div className="left">
-                                        <p style={{ fontSize: ".35rem" }}>分体称PLU编号</p>
-                                    </div>
-                                    <div className="right">
-                                        <input
-                                            value={matchCode}
-                                            type="text"
-                                            placeholder={morengoods.plu_goods_keyboard_id}
-                                            onChange={e => { setMatchCode(e.target.value) }}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </List>
-                </AddGoodsStyle>
-            </BetterScroll>
-            <FAddGoodsStyle>
-                <div className='foot'>
-                    <div className='left' onClick={() => { history.push(`/PackagedBjGoodsmx/${params}`) }}>
-                        <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                        <div className='yuan'>{goodlength.packgeListCount ? goodlength.packgeListCount : 0}</div>
-                    </div>
-                    <div className='raa' onClick={e => { check() }}>提交</div>
+              <div className="type flex-column" style={{ display: memberPrice === true ? "block" : "none" }}>
+                <div className="item flex-row" style={{
+                  justifyContent: 'space-between'
+                }}>
+                  <div className="left">
+                    <p style={{ fontSize: ".35rem" }}>会员价</p>
+                  </div>
+                  <div className="right">
+                    <input
+                      value={setPrice}
+                      type="text"
+                      placeholder={morengoods.memberprice}
+                      onChange={e => { setSetPrice(e.target.value) }}
+                    />
+                  </div>
                 </div>
-            </FAddGoodsStyle>
-        </>
-    )
-    function check() {
-        if (memberInterests && memberPrice) {
-            Toast.info("会员价和会员权益不能同时开启", 2)
-        } else {
-            let aa = {}
-            unit.map((v, k) => {
-                if (v.label === morengoods.unit_name) {
-                    aa = v
-                }
-                return ""
-            })
-            let cc = aa.value
-            editProduct({
-                action: 'editProduct', data: {
-                    uniacid: store.getState().uniacid,
-                    uid: store.getState().uid,
-                    id: params,
-                    categoryid: goodCategory[goodCategory.length-1] ? goodCategory[goodCategory.length-1] : morengoods.categoryid,
-                    code: goodCode ? goodCode : morengoods.code,
-                    posprice: retailPrice ? retailPrice : morengoods.posprice,
-                    memberprice: setPrice ? setPrice : morengoods.memberprice,
-                    name: goodName ? goodName : morengoods.name,
-                    unit: sellUnit.toString() ? sellUnit.toString() : cc,
-                    is_membership: memberInterests === true ? "2" : "1" ? memberInterests === true ? "2" : "1" : morengoods.is_membership,
-                    is_memberprice: memberPrice === true ? "2" : "1" ? memberPrice === true ? "2" : "1" : morengoods.is_memberprice,
-                    is_plu_goods: matchGood === true ? "2" : "1" ? matchGood === true ? "2" : "1" : morengoods.is_plu_goods,
-                    plu_goods_keyboard_id: matchCode ? matchCode : morengoods.plu_goods_keyboard_id,
-                    sequence: goodSort ? goodSort : morengoods.sequence,
-                    packge_ids: "1"
-                }
-            }).then((res) => {
-                if (res.data.status === 4001) {
-                    history.push('/PackagedGoods')
-                    Toast.success(res.data.msg, 2)
-                } else {
-                    Toast.info(res.data.msg, 2)
-                }
-            })
+              </div>
+              <List.Item
+                extra={<Switch style={{ border: "none" }}
+                  checked={matchGood}
+                  onChange={() => { setMatchGood(!matchGood) }}
+                />}
+              >分体称商品
+                            <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>设置为分体称商品</span>
+              </List.Item>
+              <div className='xian'></div>
+              <div className="type flex-column" style={{ display: matchGood ? "block" : "none" }}>
+                <div className="item flex-row" style={{
+                  justifyContent: 'space-between'
+                }}>
+                  <div className="left">
+                    <p style={{ fontSize: ".35rem" }}>分体称PLU编号</p>
+                  </div>
+                  <div className="right">
+                    <input
+                      value={matchCode}
+                      type="text"
+                      placeholder={morengoods.plu_goods_keyboard_id}
+                      onChange={e => { setMatchCode(e.target.value) }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </List>
+        </AddGoodsStyle>
+      </BetterScroll>
+      <FAddGoodsStyle>
+        <div className='foot'>
+          <div className='left' onClick={() => { history.push(`/PackagedBjGoodsmx/${params}`) }}>
+            <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+            <div className='yuan'>{goodlength.packgeListCount ? goodlength.packgeListCount : 0}</div>
+          </div>
+          <div className='raa' onClick={e => { check() }}>提交</div>
+        </div>
+      </FAddGoodsStyle>
+    </>
+  )
+  function check() {
+    if (memberInterests && memberPrice) {
+      Toast.info("会员价和会员权益不能同时开启", 2)
+    } else {
+      let aa = {}
+      unit.map((v, k) => {
+        if (v.label === morengoods.unit_name) {
+          aa = v
         }
+        return ""
+      })
+      let cc = aa.value
+      editProduct({
+        action: 'editProduct', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          id: params,
+          categoryid: goodCategory[goodCategory.length - 1] ? goodCategory[goodCategory.length - 1] : morengoods.categoryid,
+          code: goodCode ? goodCode : morengoods.code,
+          posprice: retailPrice ? retailPrice : morengoods.posprice,
+          memberprice: setPrice ? setPrice : morengoods.memberprice,
+          name: goodName ? goodName : morengoods.name,
+          unit: sellUnit.toString() ? sellUnit.toString() : cc,
+          is_membership: memberInterests === true ? "2" : "1" ? memberInterests === true ? "2" : "1" : morengoods.is_membership,
+          is_memberprice: memberPrice === true ? "2" : "1" ? memberPrice === true ? "2" : "1" : morengoods.is_memberprice,
+          is_plu_goods: matchGood === true ? "2" : "1" ? matchGood === true ? "2" : "1" : morengoods.is_plu_goods,
+          plu_goods_keyboard_id: matchCode ? matchCode : morengoods.plu_goods_keyboard_id,
+          sequence: goodSort ? goodSort : morengoods.sequence,
+          packge_ids: "1"
+        }
+      }).then((res) => {
+        if (res.data.status === 4001) {
+          history.push('/PackagedGoods')
+          Toast.success(res.data.msg, 2)
+        } else {
+          Toast.info(res.data.msg, 2)
+        }
+      })
     }
+  }
 }
 const FAddGoodsStyle = styled.div`
 .yuan{

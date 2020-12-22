@@ -97,7 +97,7 @@ export default class ModifyPrice extends Component {
             this.state.data.map((value, key) => {
               let item = value
               return (
-                <div className='caigoudan'  key={key}>
+                <div className='caigoudan' key={key}>
                   <div className='dan' onClick={(e) => { this.props.history.push(`/modifyPriceDetailed/${item.id}`) }}>
                     <div className='dan-top' >
                       <p>

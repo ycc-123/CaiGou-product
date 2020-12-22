@@ -259,44 +259,44 @@ class Category extends Component {
   }
 
   onChangeActive = index => {
-      getStockList({
-        action: 'getStockList', data: {
-          uniacid: store.getState().uniacid,
-          uid: store.getState().uid,
-          warehouseid: this.props.match.params.ck,
-          categoryid: this.state.id[index].id,
-          limit: "100",
-          page: "1",
-        }
-      }).then(res => {
-        console.log(res.data.data.data)
-        let cartList = this.state.gooda
-        let now = res.data.data.data?res.data.data.data:[]
-        console.log(cartList,"============================================")
-        console.log('之前', now)
-        for (let i = 0; i < cartList.length; i++) {
-          console.log(cartList[i].id)
-          for (let j = 0; j < now.length; j++) {
-            console.log(now[j].goods_name)
-            if (now[j].goods_name == cartList[i].id) {
-              now[j].realnum = cartList[i].realnum
-            }
+    getStockList({
+      action: 'getStockList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        warehouseid: this.props.match.params.ck,
+        categoryid: this.state.id[index].id,
+        limit: "100",
+        page: "1",
+      }
+    }).then(res => {
+      console.log(res.data.data.data)
+      let cartList = this.state.gooda
+      let now = res.data.data.data ? res.data.data.data : []
+      console.log(cartList, "============================================")
+      console.log('之前', now)
+      for (let i = 0; i < cartList.length; i++) {
+        console.log(cartList[i].id)
+        for (let j = 0; j < now.length; j++) {
+          console.log(now[j].goods_name)
+          if (now[j].goods_name == cartList[i].id) {
+            now[j].realnum = cartList[i].realnum
           }
         }
-        console.log('之后', now)
-        if (res.data.status === 4001) {
-          // 保存分类id
-          this.setState({
-            goods: now
-          })
-        } else {
-          this.setState({
-            goods: []
-          })
-          Toast.info(res.data.msg, 2)
-        }
-      })
-    
+      }
+      console.log('之后', now)
+      if (res.data.status === 4001) {
+        // 保存分类id
+        this.setState({
+          goods: now
+        })
+      } else {
+        this.setState({
+          goods: []
+        })
+        Toast.info(res.data.msg, 2)
+      }
+    })
+
     this.setState({
       defaultIndex: index
     })

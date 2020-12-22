@@ -6,167 +6,167 @@ import { Toast } from 'antd-mobile';
 import { store } from "store/index";
 import DocumentTitle from 'react-document-title'
 export default class ApplyOrderx extends Component {
-    constructor() {
-        super()
-        this.state = {
-            quan: [],
-            tiao: [],
-            sum: '',
-            remark: '',
-            inputSearch: ""
-        }
+  constructor() {
+    super()
+    this.state = {
+      quan: [],
+      tiao: [],
+      sum: '',
+      remark: '',
+      inputSearch: ""
     }
-    componentDidMount() {
-        getPurchaseApplyDetail({
-            action: 'getPurchaseApplyDetail', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                id: this.props.match.params.id
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                let aa = {}
-                let arr = []
-                res.data.data.item.map((v, k) => {
-                    aa = v.goodsnum
-                    return arr.push(aa);
-                })
-                let sum = 0;
-                arr.forEach(item => {
-                    sum = sum + Number(item)
-                })
-                this.setState({
-                    quan: res.data.data,
-                    remark: res.data.data.remark,
-                    tiao: res.data.data.item ? res.data.data.item : [],
-                    sum
-                },()=>{
-                    this.refs.scroll.BScroll.refresh()
-                })
-            } else {
-                Toast.info(res.data.msg, 2)
-            }
+  }
+  componentDidMount() {
+    getPurchaseApplyDetail({
+      action: 'getPurchaseApplyDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        id: this.props.match.params.id
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        let aa = {}
+        let arr = []
+        res.data.data.item.map((v, k) => {
+          aa = v.goodsnum
+          return arr.push(aa);
         })
-    }
-
-    tijiao(e) {
-        if (e === "提交成功") { } else {
-            submitPurchaseApply({
-                action: 'submitPurchaseApply', data: {
-                    uniacid: store.getState().uniacid,
-                    uid: store.getState().uid,
-                    id: this.props.match.params.id,
-                }
-            }).then((res) => {
-                if (res.data.status === 4001) {
-                    window.location.reload();
-                    Toast.success(res.data.msg, 1)
-                } else {
-                    Toast.info(res.data.msg, 1)
-                }
-            })
-        }
-
-    }
-    seach() {
-        getPurchaseApplyDetail({
-            action: 'getPurchaseApplyDetail', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                id: this.props.match.params.id,
-                search: this.state.inputSearch,
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                this.setState({
-                    tiao: res.data.data.item ? res.data.data.item : [],
-                })
-            } else {
-                Toast.info(res.data.msg, 2)
-            }
+        let sum = 0;
+        arr.forEach(item => {
+          sum = sum + Number(item)
         })
-    }
-    inputChange(e) {
         this.setState({
-            [e.target.name]: e.target.value
+          quan: res.data.data,
+          remark: res.data.data.remark,
+          tiao: res.data.data.item ? res.data.data.item : [],
+          sum
+        }, () => {
+          this.refs.scroll.BScroll.refresh()
         })
-    }
-    render() {
-        const scrollConfig = {
-            probeType: 1
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
+  }
+
+  tijiao(e) {
+    if (e === "提交成功") { } else {
+      submitPurchaseApply({
+        action: 'submitPurchaseApply', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          id: this.props.match.params.id,
         }
-        return (
-            <ApplyOrderxStyle>
-                <DocumentTitle title={'采购申请单明细'} />
-                <div>
-                    <div className='search'>
-                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
-                            onChange={this.inputChange.bind(this)}
-                            value={this.state.inputSearch} />
-                        <div className='img' onClick={() => { this.seach() }}>
-                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-                        </div>
-                    </div>
-
-                    <div className='conten'>
-                        <div className='conten-top'>
-                            <p>
-                                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
-                            </p>
-                            <div>{this.state.quan.docno}</div>
-                        </div>
-                        <div className='conten-c' style={{ paddingTop: ".25rem" }}>
-                            <p>单据日期：{this.state.quan.docdate}</p>
-                            <p>创建时间：{this.state.quan.createtime}</p>
-                            <p>申请仓库：{this.state.quan.warehouseName}</p>
-                            <p>申请数量：{this.state.sum}</p>
-                            <p>单据状态：<span style={{ color: "#ed5f21" }}>{this.state.quan.statusname}</span></p>
-                        </div>
-                        <div className='footer'>
-                            采购备注：{this.state.quan.remark}
-                        </div>
-                    </div>
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)"}}>
-
-                    {
-                        this.state.tiao.map((v, k) => {
-                            return (
-                                <div className='tiao' key={k}>
-                                    <img className='t-img-l' src={v.image ? v.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-                                    <ul className='wen-zi'>
-                                        <li className='wen-zi-t'>
-                                            <div className='name'>{v.goodsname}</div>
-                                        </li>
-                                        <li className='wen-zi-c'>
-                                            <div >商品编码：{v.barcode}</div>
-                                            <p>{v.price}元/{v.unit_name}</p>
-                                        </li>
-                                        <li className='wen-zi-f'>
-                                            <div></div>
-                                            <p>申请数量：<span>{v.goodsnum}</span></p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            )
-                        })
-                    }
-                    </BetterScroll>
-                    <div className='foot'>
-                        <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-                            <div className='left'>
-                                <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                                <div className='yuan'>{this.state.tiao.length}</div>
-                            </div>
-                            <div style={{ display: "flex", marginTop: ".2rem" }}>
-                                <div className='tijiao' style={{ background: this.state.quan.statusname === "提交成功" ? "#B4B4B4" : '' }}
-                                    onClick={(e) => { this.tijiao(this.state.quan.statusname) }}>提交</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </ApplyOrderxStyle>
-        )
+      }).then((res) => {
+        if (res.data.status === 4001) {
+          window.location.reload();
+          Toast.success(res.data.msg, 1)
+        } else {
+          Toast.info(res.data.msg, 1)
+        }
+      })
     }
+
+  }
+  seach() {
+    getPurchaseApplyDetail({
+      action: 'getPurchaseApplyDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        id: this.props.match.params.id,
+        search: this.state.inputSearch,
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        this.setState({
+          tiao: res.data.data.item ? res.data.data.item : [],
+        })
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
+  }
+  inputChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  render() {
+    const scrollConfig = {
+      probeType: 1
+    }
+    return (
+      <ApplyOrderxStyle>
+        <DocumentTitle title={'采购申请单明细'} />
+        <div>
+          <div className='search'>
+            <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
+              onChange={this.inputChange.bind(this)}
+              value={this.state.inputSearch} />
+            <div className='img' onClick={() => { this.seach() }}>
+              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+            </div>
+          </div>
+
+          <div className='conten'>
+            <div className='conten-top'>
+              <p>
+                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+              </p>
+              <div>{this.state.quan.docno}</div>
+            </div>
+            <div className='conten-c' style={{ paddingTop: ".25rem" }}>
+              <p>单据日期：{this.state.quan.docdate}</p>
+              <p>创建时间：{this.state.quan.createtime}</p>
+              <p>申请仓库：{this.state.quan.warehouseName}</p>
+              <p>申请数量：{this.state.sum}</p>
+              <p>单据状态：<span style={{ color: "#ed5f21" }}>{this.state.quan.statusname}</span></p>
+            </div>
+            <div className='footer'>
+              采购备注：{this.state.quan.remark}
+            </div>
+          </div>
+          <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)" }}>
+
+            {
+              this.state.tiao.map((v, k) => {
+                return (
+                  <div className='tiao' key={k}>
+                    <img className='t-img-l' src={v.image ? v.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+                    <ul className='wen-zi'>
+                      <li className='wen-zi-t'>
+                        <div className='name'>{v.goodsname}</div>
+                      </li>
+                      <li className='wen-zi-c'>
+                        <div >商品编码：{v.barcode}</div>
+                        <p>{v.price}元/{v.unit_name}</p>
+                      </li>
+                      <li className='wen-zi-f'>
+                        <div></div>
+                        <p>申请数量：<span>{v.goodsnum}</span></p>
+                      </li>
+                    </ul>
+                  </div>
+                )
+              })
+            }
+          </BetterScroll>
+          <div className='foot'>
+            <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+              <div className='left'>
+                <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                <div className='yuan'>{this.state.tiao.length}</div>
+              </div>
+              <div style={{ display: "flex", marginTop: ".2rem" }}>
+                <div className='tijiao' style={{ background: this.state.quan.statusname === "提交成功" ? "#B4B4B4" : '' }}
+                  onClick={(e) => { this.tijiao(this.state.quan.statusname) }}>提交</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ApplyOrderxStyle>
+    )
+  }
 }
 const ApplyOrderxStyle = styled.div`
 .baocun{

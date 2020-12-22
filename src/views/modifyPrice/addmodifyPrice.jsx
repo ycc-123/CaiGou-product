@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { get_store,createPriceModify } from 'network/Api'
+import { get_store, createPriceModify } from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
@@ -44,20 +44,20 @@ export default class AddInventoryList extends Component {
   createPurchase() {
     let idkc = this.state.IDck.toString()
     createPriceModify({
-        action: 'createPriceModify', data: {
-            uniacid: store.getState().uniacid,
-            uid: store.getState().uid,
-            storeid: idkc,
-            remark: this.state.inputbeiz,
-        }
+      action: 'createPriceModify', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        storeid: idkc,
+        remark: this.state.inputbeiz,
+      }
     }).then(res => {
       // console.log(res)
-        if (res.data.status === 4001) {
-            this.props.history.push(`/modifyPriceCategory/${res.data.data}`)
-            Toast.success(res.data.msg, 2)
-    } else {
+      if (res.data.status === 4001) {
+        this.props.history.push(`/modifyPriceCategory/${res.data.data}`)
+        Toast.success(res.data.msg, 2)
+      } else {
         Toast.info(res.data.msg, 2)
-    }
+      }
     })
   }
 

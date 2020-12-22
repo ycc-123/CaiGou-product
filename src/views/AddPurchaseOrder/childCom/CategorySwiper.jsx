@@ -5,95 +5,95 @@ import { store } from 'store/index'
 import BetterScroll from 'common/betterScroll/BetterScroll'
 
 function Tiao(value) {
-    let tiao = value.item
-    return (
-        <div className='tiao'>
-            <img className='t-img-l' src={tiao.img ? tiao.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-            <ul className='wen-zi'>
-                <li className='wen-zi-t'>
-                    <div className='name'>{tiao.name}</div>
-                </li>
-                <li className='wen-zi-c'>
-                    <div >商品编码：{tiao.barcode}</div>
-                    <p>{tiao.price}元/{tiao.danwei}</p>
-                </li>
-                <li className='wen-zi-f'>
-                    <div></div>
-                    <p>采购数量：<span>{tiao.gnum}</span></p>
-                </li>
-            </ul>
-        </div>
-    )
+  let tiao = value.item
+  return (
+    <div className='tiao'>
+      <img className='t-img-l' src={tiao.img ? tiao.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+      <ul className='wen-zi'>
+        <li className='wen-zi-t'>
+          <div className='name'>{tiao.name}</div>
+        </li>
+        <li className='wen-zi-c'>
+          <div >商品编码：{tiao.barcode}</div>
+          <p>{tiao.price}元/{tiao.danwei}</p>
+        </li>
+        <li className='wen-zi-f'>
+          <div></div>
+          <p>采购数量：<span>{tiao.gnum}</span></p>
+        </li>
+      </ul>
+    </div>
+  )
 }
 export default class Liebiao extends Component {
-    constructor() {
-        super()
-        this.state = {
-            goodsList: []
-        }
+  constructor() {
+    super()
+    this.state = {
+      goodsList: []
     }
-    componentDidMount() {
-        console.log(store.getState().goodsList)
-        if (store.getState().goodsList === []) {
-            // Toast.info("无采购商品", 1.5)
-            this.setState({
-                goodsList: []
-            })
-        } else {
-            this.setState({
-                goodsList: store.getState().goodsList
-            })
-        }
+  }
+  componentDidMount() {
+    console.log(store.getState().goodsList)
+    if (store.getState().goodsList === []) {
+      // Toast.info("无采购商品", 1.5)
+      this.setState({
+        goodsList: []
+      })
+    } else {
+      this.setState({
+        goodsList: store.getState().goodsList
+      })
     }
-    render() {
-        const scollConfig = {
-            probeType: 1
-        }
-        var day2 = new Date();
-        day2.setTime(day2.getTime());
-        var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
-        var time=day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate()+" "+day2.getHours()+":"+day2.getMinutes()+":"+day2.getSeconds();
-        return (
-            <LiebiaoStyle>
-                <div>
-                    <div className='search'>
-                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
-                        <div className='img' onClick={() => { this.search() }}>
-                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-                        </div>
-                    </div>
-
-                    <div className='conten'>
-                        <div className='conten-top'>
-                            <p>
-                                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
-                            </p>
-                            {/* <div>{this.state.purchaseDetail.docno}</div> */}
-                        </div>
-
-                        <div className='conten-c' style={{ paddingTop: ".25rem" }}>
-                            <p>单据日期：{s2}</p>
-                            <p>创建时间：{time}</p>
-
-                            <p>单据仓库：{this.props.match.params.ck}</p>
-                            <p>单据状态：{"待提交"}</p>
-                        </div>
-                    </div>
-                    <div className='footer'>
-                        采购备注：{this.props.match.params.bz}
-                        </div>
-                </div>
-                {
-                    this.state.goodsList.map((value, key) => {
-                        // console.log(value)
-                        return (
-                            <Tiao item={value} key={key}></Tiao>
-                        )
-                    })
-                }
-            </LiebiaoStyle>
-        )
+  }
+  render() {
+    const scollConfig = {
+      probeType: 1
     }
+    var day2 = new Date();
+    day2.setTime(day2.getTime());
+    var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+    var time = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate() + " " + day2.getHours() + ":" + day2.getMinutes() + ":" + day2.getSeconds();
+    return (
+      <LiebiaoStyle>
+        <div>
+          <div className='search'>
+            <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
+            <div className='img' onClick={() => { this.search() }}>
+              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+            </div>
+          </div>
+
+          <div className='conten'>
+            <div className='conten-top'>
+              <p>
+                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+              </p>
+              {/* <div>{this.state.purchaseDetail.docno}</div> */}
+            </div>
+
+            <div className='conten-c' style={{ paddingTop: ".25rem" }}>
+              <p>单据日期：{s2}</p>
+              <p>创建时间：{time}</p>
+
+              <p>单据仓库：{this.props.match.params.ck}</p>
+              <p>单据状态：{"待提交"}</p>
+            </div>
+          </div>
+          <div className='footer'>
+            采购备注：{this.props.match.params.bz}
+          </div>
+        </div>
+        {
+          this.state.goodsList.map((value, key) => {
+            // console.log(value)
+            return (
+              <Tiao item={value} key={key}></Tiao>
+            )
+          })
+        }
+      </LiebiaoStyle>
+    )
+  }
 }
 
 const LiebiaoStyle = styled.div`

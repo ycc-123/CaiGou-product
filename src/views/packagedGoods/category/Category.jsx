@@ -21,8 +21,8 @@ class Category extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      jj:true,
-      indexId:'',
+      jj: true,
+      indexId: '',
       value: [],
       title: [],
       goods: [],
@@ -31,9 +31,9 @@ class Category extends Component {
       id: [],
       num: '',
       price: '',
-      inputSearch:'',
-      Bj:true,
-      Id:""
+      inputSearch: '',
+      Bj: true,
+      Id: ""
     }
   }
   mingxi() {
@@ -45,29 +45,29 @@ class Category extends Component {
       price: val
     })
   }
-  inputChange(e){
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+  inputChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
-  Search(){
+  Search() {
     searchProduct({
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         categoryid: this.state.indexId,
-        is_packge:"1",
-        limit:"1000",
-        page:1,
-        search:this.state.inputSearch
+        is_packge: "1",
+        limit: "1000",
+        page: 1,
+        search: this.state.inputSearch
       }
     }).then(res => {
-      if(res.data.status===4001){
+      if (res.data.status === 4001) {
         this.setState({
-            goods: res.data.data.data
+          goods: res.data.data.data
         })
-      }else{
-        Toast.info(res.data.msg,2)
+      } else {
+        Toast.info(res.data.msg, 2)
       }
     })
   }
@@ -76,20 +76,20 @@ class Category extends Component {
     let ida = this.props.match.params.id
     return (
       <CategoryStyle>
-    <DocumentTitle title={'打包商品'} />
+        <DocumentTitle title={'打包商品'} />
         <Fragment>
-          <div style={{display:"flex"}}>
-          <div className='search'>
-            <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch" 
-                                    onChange={this.inputChange.bind(this)}
-                                    value={this.state.inputSearch}/>
-            <div className='img' onClick={() => { this.Search() }}>
-              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+          <div style={{ display: "flex" }}>
+            <div className='search'>
+              <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"
+                onChange={this.inputChange.bind(this)}
+                value={this.state.inputSearch} />
+              <div className='img' onClick={() => { this.Search() }}>
+                <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+              </div>
             </div>
-          </div>
-          <div
-          onClick={()=>{this.state.jj===false?console.log(): this.props.history.push('/editPackagedGoods')}}
-           className='add'>新增<span style={{fontSize:".4rem"}}>+</span></div>
+            <div
+              onClick={() => { this.state.jj === false ? console.log() : this.props.history.push('/editPackagedGoods') }}
+              className='add'>新增<span style={{ fontSize: ".4rem" }}>+</span></div>
           </div>
           <div className='category-main'>
             {type === 'goods' ? <Fragment><div className='categoryLeft'>
@@ -108,11 +108,11 @@ class Category extends Component {
                 </BetterScroll>}
               </ul>
             </div>
-             { <CategoryRight index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} 
-             id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />}
-             <div className='Bj' style={{display:this.state.Bj===false?"block":"none"}}>
-                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
-                </div></Fragment> : <Fragment></Fragment>}
+              {<CategoryRight index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef}
+                id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />}
+              <div className='Bj' style={{ display: this.state.Bj === false ? "block" : "none" }}>
+                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
+              </div></Fragment> : <Fragment></Fragment>}
           </div>
         </Fragment>
       </CategoryStyle>
@@ -138,9 +138,9 @@ class Category extends Component {
           action: 'searchProduct', data: {
             uniacid: store.getState().uniacid,
             uid: store.getState().uid,
-            is_packge:"1",
-            limit:"1000",
-            page:1,
+            is_packge: "1",
+            limit: "1000",
+            page: 1,
             categoryid: Id[0].id,
           }
         }).then(res => {
@@ -158,9 +158,9 @@ class Category extends Component {
           value
         })
       } else {
-      this.setState({
-        jj:false
-      })
+        this.setState({
+          jj: false
+        })
         Toast.info(res.data.msg, 2)
       }
     })
@@ -168,16 +168,16 @@ class Category extends Component {
 
   onChangeActive = index => {
     this.setState({
-      indexId:this.state.id[index].id,
+      indexId: this.state.id[index].id,
       index
     })
     searchProduct({
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        is_packge:"1",
-        limit:"1000",
-        page:1,
+        is_packge: "1",
+        limit: "1000",
+        page: 1,
         categoryid: this.state.id[index].id,
       }
     }).then(res => {
@@ -189,14 +189,14 @@ class Category extends Component {
       } else {
         this.setState({
           goods: [],
-          Bj: false  
+          Bj: false
         })
         Toast.info(res.data.msg, 2)
       }
     })
-      this.setState({
-        defaultIndex: index
-      })
+    this.setState({
+      defaultIndex: index
+    })
   }
 }
 const CategoryStyle = styled.div`

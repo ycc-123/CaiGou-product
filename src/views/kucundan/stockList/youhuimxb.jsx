@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getRetailList ,get_cashier,get_store} from 'network/Api'
+import { getRetailList, get_cashier, get_store } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { Picker, List, DatePicker } from 'antd-mobile';
@@ -10,341 +10,341 @@ import { store } from "store/index";
 import { LoadingMore } from 'common/loading'
 
 export default class Youhuimxb extends Component {
-    constructor() {
-        super()
-        this.state = {
-            total:{},
-            inputSearch:'',
-            start:"",
-            end:"",
-            store_id:[],
-            shouyinyuan:[],
-            linshou:[],
-            limit: "10",
-            page: "1",
-            zuantai:false,
-            IDsyy:'',
-            IDsj:'',
-            end_time:'',
-            start_time:'',
-            today_time:"",
-            kongbj:true
-        }
-        this.isLoadMore = true
+  constructor() {
+    super()
+    this.state = {
+      total: {},
+      inputSearch: '',
+      start: "",
+      end: "",
+      store_id: [],
+      shouyinyuan: [],
+      linshou: [],
+      limit: "10",
+      page: "1",
+      zuantai: false,
+      IDsyy: '',
+      IDsj: '',
+      end_time: '',
+      start_time: '',
+      today_time: "",
+      kongbj: true
     }
-    componentDidMount() {
+    this.isLoadMore = true
+  }
+  componentDidMount() {
 
-        var day2 = new Date();
-        day2.setTime(day2.getTime());
-        var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
-        // console.log(s2)
+    var day2 = new Date();
+    day2.setTime(day2.getTime());
+    var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+    // console.log(s2)
+    this.setState({
+      today_time: s2
+    })
+    get_store({
+      action: 'get_store', data: {
+        uniacid: store.getState().uniacid,
+      }
+    }).then((res) => {
+      // console.log(res)
+      var supplier = res.data.data.map(o => { return { value: o.id, label: o.name } });
+      // console.log(supplier)
+      if (res.data.status === 4001) {
         this.setState({
-            today_time: s2
+          store_id: supplier
         })
-        get_store({
-            action: 'get_store', data: {
-                uniacid: store.getState().uniacid,
-            }
-        }).then((res) => {
-            // console.log(res)
-            var supplier = res.data.data.map(o=>{return{value:o.id,label:o.name}});
-                    // console.log(supplier)
-            if(res.data.status===4001){
-                this.setState({
-                    store_id:supplier
-                })
-            }else{
-                Toast.info(res.data.msg,2)
-            }
-        })
-        get_cashier({
-            action: 'get_cashier', data: {
-                uniacid: store.getState().uniacid,
-            }
-        }).then((res) => {
-            // console.log(res)
-            
-                    // console.log(shouyinyuan)
-            if(res.data.status===4001){
-                var shouyinyuan = res.data.data.map(o=>{return{value:o.id,label:o.nick_name}});
-                this.setState({
-                    shouyinyuan
-                })
-            }else{
-                Toast.info(res.data.msg,2)
-            }
-        })
-        let IDsyy=this.state.IDsyy.toString()
-        let IDsj=this.state.IDsj.toString()
-        getRetailList({
-            action: 'getRetailList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                starttime:this.state.start_time,
-                endtime:this.state.end_time,
-                createid:IDsyy,
-                store_id:IDsj,
-                limit: this.state.limit,
-                page: this.state.page
-            }
-        }).then((res) => {
-            // console.log(res)
-            if(res.data.status===4001){
-                this.setState({
-                linshou:res.data.data.data,
-                total:res.data.data.total
-            },()=>{
-                this.refs.scroll.BScroll.refresh()
-            })
-            }else{
-                this.setState({
-                    kongbj:false
-                })
-                Toast.info(res.data.msg,2)
-            }
-            
-        })
-    }
-    shaixuan(){
-        this.state.zuantai===false?this.setState({zuantai:true}):this.setState({zuantai:false})
-    }
-    queding(){
-        // console.log(this.state.IDsj,"=======",this.state.IDsyy,this.state.end_time,this.state.start_time)
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
+    get_cashier({
+      action: 'get_cashier', data: {
+        uniacid: store.getState().uniacid,
+      }
+    }).then((res) => {
+      // console.log(res)
+
+      // console.log(shouyinyuan)
+      if (res.data.status === 4001) {
+        var shouyinyuan = res.data.data.map(o => { return { value: o.id, label: o.nick_name } });
         this.setState({
-            zuantai:false,
+          shouyinyuan
         })
-        let IDsyy=this.state.IDsyy.toString()
-        let IDsj=this.state.IDsj.toString()
-        getRetailList({
-            action: 'getRetailList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                starttime:this.state.start_time,
-                endtime:this.state.end_time,
-                createid:IDsyy,
-                store_id:IDsj,
-                limit: this.state.limit,
-                page: this.state.page
-            }
-        }).then((res) => {
-            if(res.data.status===4001){
-                this.setState({
-                linshou:res.data.data.data,
-                total:res.data.data.total,
-                kongbj:true
-            },()=>{
-                // this.refs.scroll.BScroll.refresh()
-            })
-            }else{
-                Toast.info(res.data.msg,1)
-                this.setState({
-                    kongbj:false,
-                    linshou:[],
-                    total:{}
-                   
-                })
-            }
-            
-        })
-    }
-    search() {
-        // console.log(this.state.inputSearch)
-       
-        getRetailList({
-            action: 'getRetailList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                search:this.state.inputSearch,
-                limit: this.state.limit,
-                page: this.state.page
-            }
-        }).then((res) => {
-            if(res.data.status===4001){
-                this.setState({
-                linshou:res.data.data.data
-            },()=>{
-                // this.refs.scroll.BScroll.refresh()
-            })
-            }else{
-                Toast.info(res.data.msg,1)
-            }
-            
-        })
-    }
-    inputChange(e) {
-        // console.log(e.target.value)
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
+    let IDsyy = this.state.IDsyy.toString()
+    let IDsj = this.state.IDsj.toString()
+    getRetailList({
+      action: 'getRetailList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        starttime: this.state.start_time,
+        endtime: this.state.end_time,
+        createid: IDsyy,
+        store_id: IDsj,
+        limit: this.state.limit,
+        page: this.state.page
+      }
+    }).then((res) => {
+      // console.log(res)
+      if (res.data.status === 4001) {
         this.setState({
-            [e.target.name]: e.target.value
+          linshou: res.data.data.data,
+          total: res.data.data.total
+        }, () => {
+          this.refs.scroll.BScroll.refresh()
         })
+      } else {
+        this.setState({
+          kongbj: false
+        })
+        Toast.info(res.data.msg, 2)
+      }
+
+    })
+  }
+  shaixuan() {
+    this.state.zuantai === false ? this.setState({ zuantai: true }) : this.setState({ zuantai: false })
+  }
+  queding() {
+    // console.log(this.state.IDsj,"=======",this.state.IDsyy,this.state.end_time,this.state.start_time)
+    this.setState({
+      zuantai: false,
+    })
+    let IDsyy = this.state.IDsyy.toString()
+    let IDsj = this.state.IDsj.toString()
+    getRetailList({
+      action: 'getRetailList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        starttime: this.state.start_time,
+        endtime: this.state.end_time,
+        createid: IDsyy,
+        store_id: IDsj,
+        limit: this.state.limit,
+        page: this.state.page
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        this.setState({
+          linshou: res.data.data.data,
+          total: res.data.data.total,
+          kongbj: true
+        }, () => {
+          // this.refs.scroll.BScroll.refresh()
+        })
+      } else {
+        Toast.info(res.data.msg, 1)
+        this.setState({
+          kongbj: false,
+          linshou: [],
+          total: {}
+
+        })
+      }
+
+    })
+  }
+  search() {
+    // console.log(this.state.inputSearch)
+
+    getRetailList({
+      action: 'getRetailList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        search: this.state.inputSearch,
+        limit: this.state.limit,
+        page: this.state.page
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        this.setState({
+          linshou: res.data.data.data
+        }, () => {
+          // this.refs.scroll.BScroll.refresh()
+        })
+      } else {
+        Toast.info(res.data.msg, 1)
+      }
+
+    })
+  }
+  inputChange(e) {
+    // console.log(e.target.value)
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  render() {
+    const scrollConfig = {
+      probeType: 1
     }
-    render() {
-        const scrollConfig = {
-            probeType: 1
-        }
-        const {linshou}=this.state
-        return (
-            <YouhuimxbStyle>
-            <DocumentTitle title={'优惠明细表'} />
+    const { linshou } = this.state
+    return (
+      <YouhuimxbStyle>
+        <DocumentTitle title={'优惠明细表'} />
 
-                <div>
-                    <div style={{ display: "flex" }}>
-                        <div className='search' >
-                            <input type="search" className='input' placeholder="请输入零售单号" name="inputSearch"
-                            onChange={this.inputChange.bind(this)}
-                            value={this.state.inputSearch} />
-                            <div className='img' onClick={()=>{this.search()}}>
-                                <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-                            </div>
-                        </div>
-                        <div className='sximg' onClick={()=>{this.shaixuan()}}>
-                            <img className='sximg-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
-                        </div>
-                    </div>
+        <div>
+          <div style={{ display: "flex" }}>
+            <div className='search' >
+              <input type="search" className='input' placeholder="请输入零售单号" name="inputSearch"
+                onChange={this.inputChange.bind(this)}
+                value={this.state.inputSearch} />
+              <div className='img' onClick={() => { this.search() }}>
+                <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+              </div>
+            </div>
+            <div className='sximg' onClick={() => { this.shaixuan() }}>
+              <img className='sximg-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
+            </div>
+          </div>
 
-                    <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "1.5rem" }} loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
-                    {
-                        linshou.map((v,k)=>{
-                            return(
-                                <Youhuimxbs item={v} page={this.state.page} history={this.props.history} key={k}></Youhuimxbs>
-                            )
-                        })
-                    }
-                    {
-
-                        linshou.length > 0 &&
-                        <LoadingMore isLoading={this.isLoadMore} />
-                    }
-                    </BetterScroll>
-
-
-                    <div className='fenglei' style={{display:this.state.zuantai===false?"none":"block"}}>
-                        <div>日期
-                            <ul>
-                                <p><span style={{position:"absolute",top:".85rem",left:"4.7rem"}}>~</span>
-                                <article className='articleone'></article>
-                                    <DatePicker
-                                    mode="date"
-                                        value={this.state.start}
-                                        extra={this.state.today_time}
-                                        // value={this.state.dates}
-                                        onChange={v => this.setState({
-                                            start:v,
-                                            start_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() + ' '+ v.getHours()+ ':'+ v.getMinutes() + ':'+v.getSeconds()
-                                        })}
-                                    >
-                                        <List.Item className="start" arrow="horizontal"></List.Item>
-                                    </DatePicker>
-                                
-                                <article className='articletwo'></article>
-                                    <DatePicker
-                                    mode="date"
-                                        extra={this.state.today_time}
-                                        value={this.state.end}
-                                        onChange={v => this.setState({
-                                            end:v,
-                                            end_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() + ' '+ v.getHours()+ ':'+ v.getMinutes() + ':'+v.getSeconds()
-                                        })}
-                                    >
-                                        <List.Item className="end" arrow="horizontal"></List.Item>
-                                    </DatePicker>
-                                </p>
-                            </ul>
-                        </div>
-
-                        <div>所属商家
-                            <ul>
-                                <li>
-                                    <Picker
-                                        data={this.state.store_id}
-                                        cols={1}
-                                        className="forss"
-                                        extra="所属商家"
-                                        value={this.state.sValue}
-                                        onChange={v => this.setState({ sValue: v })}
-                                        onOk={v => this.setState({ IDsj: v })}
-                                    >
-                                        <List.Item className='times' arrow="horizontal"></List.Item>
-                                    </Picker>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div >收银员
-                            <ul>
-                                <li>
-                                    <Picker
-                                        data={this.state.shouyinyuan}
-                                        cols={1}
-                                        className="forss"
-                                        extra="收银员"
-                                        value={this.state.Value}
-                                        onChange={v => this.setState({ Value: v })}
-                                        onOk={v => this.setState({ IDsyy: v })}
-                                    >
-                                        <List.Item className='time' arrow="horizontal"></List.Item>
-                                    </Picker>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div className='btn' onClick={() => { this.queding() }}>确定</div>
-                    </div>
-                    <div className='kongbj' style={{display:this.state.kongbj===false?"block":"none"}}>
-                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt=""/>
-                    </div>
-                    <div className='foot'>
-                    <div>当前结果：<span>{this.state.total.total_price?this.state.total.total_price:0}</span></div>
-                    <div style={{ marginRight: ".3rem" }}>总计优惠：<span>{this.state.total.total_fee?this.state.total.total_fee:0}</span></div>
-                </div>
-
-
-                </div>
-            </YouhuimxbStyle>
-        )
-    }
-    loadMore = () => {
-        // 加载数据时转圈
-        let loading = true
-        setTimeout(() => {
-            if (loading) {
-                this.setState({
-                    loadingMore: true
-                })
+          <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "1.5rem" }} loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
+            {
+              linshou.map((v, k) => {
+                return (
+                  <Youhuimxbs item={v} page={this.state.page} history={this.props.history} key={k}></Youhuimxbs>
+                )
+              })
             }
-        }, 1000)
-        if (this.isLoadMore) {
-            getRetailList({
-                action: 'getRetailList', data: {
-                    uniacid: store.getState().uniacid,
-                    uid: store.getState().uid,
-                    limit: this.state.limit,
-                    page: this.state.page
-                }
-            }).then((res) => {
-                // console.log(res.data.data.data)
+            {
 
-                // 如果长度不等于得时候加载 那么是到底了
-                if (res.data.data.data.length < this.state.limit) {
-                    this.isLoadMore = false
-                }
-                this.setState({
-                    linshou: [...this.state.linshou, ...res.data.data.data],
-                    loadingMore: false
-                }, () => {
-                    let page=Number(this.state.page)
-                    this.setState({
-                        page: page  += 1
-                    })
+              linshou.length > 0 &&
+              <LoadingMore isLoading={this.isLoadMore} />
+            }
+          </BetterScroll>
 
 
-                    loading = false
-                    this.refs.scroll.BScroll.finishPullUp()
-                    this.refs.scroll.BScroll.refresh()
-                })
-            })
-        } else {
+          <div className='fenglei' style={{ display: this.state.zuantai === false ? "none" : "block" }}>
+            <div>日期
+                            <ul>
+                <p><span style={{ position: "absolute", top: ".85rem", left: "4.7rem" }}>~</span>
+                  <article className='articleone'></article>
+                  <DatePicker
+                    mode="date"
+                    value={this.state.start}
+                    extra={this.state.today_time}
+                    // value={this.state.dates}
+                    onChange={v => this.setState({
+                      start: v,
+                      start_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() + ' ' + v.getHours() + ':' + v.getMinutes() + ':' + v.getSeconds()
+                    })}
+                  >
+                    <List.Item className="start" arrow="horizontal"></List.Item>
+                  </DatePicker>
+
+                  <article className='articletwo'></article>
+                  <DatePicker
+                    mode="date"
+                    extra={this.state.today_time}
+                    value={this.state.end}
+                    onChange={v => this.setState({
+                      end: v,
+                      end_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() + ' ' + v.getHours() + ':' + v.getMinutes() + ':' + v.getSeconds()
+                    })}
+                  >
+                    <List.Item className="end" arrow="horizontal"></List.Item>
+                  </DatePicker>
+                </p>
+              </ul>
+            </div>
+
+            <div>所属商家
+                            <ul>
+                <li>
+                  <Picker
+                    data={this.state.store_id}
+                    cols={1}
+                    className="forss"
+                    extra="所属商家"
+                    value={this.state.sValue}
+                    onChange={v => this.setState({ sValue: v })}
+                    onOk={v => this.setState({ IDsj: v })}
+                  >
+                    <List.Item className='times' arrow="horizontal"></List.Item>
+                  </Picker>
+                </li>
+              </ul>
+            </div>
+
+            <div >收银员
+                            <ul>
+                <li>
+                  <Picker
+                    data={this.state.shouyinyuan}
+                    cols={1}
+                    className="forss"
+                    extra="收银员"
+                    value={this.state.Value}
+                    onChange={v => this.setState({ Value: v })}
+                    onOk={v => this.setState({ IDsyy: v })}
+                  >
+                    <List.Item className='time' arrow="horizontal"></List.Item>
+                  </Picker>
+                </li>
+              </ul>
+            </div>
+
+            <div className='btn' onClick={() => { this.queding() }}>确定</div>
+          </div>
+          <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
+            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
+          </div>
+          <div className='foot'>
+            <div>当前结果：<span>{this.state.total.total_price ? this.state.total.total_price : 0}</span></div>
+            <div style={{ marginRight: ".3rem" }}>总计优惠：<span>{this.state.total.total_fee ? this.state.total.total_fee : 0}</span></div>
+          </div>
+
+
+        </div>
+      </YouhuimxbStyle>
+    )
+  }
+  loadMore = () => {
+    // 加载数据时转圈
+    let loading = true
+    setTimeout(() => {
+      if (loading) {
+        this.setState({
+          loadingMore: true
+        })
+      }
+    }, 1000)
+    if (this.isLoadMore) {
+      getRetailList({
+        action: 'getRetailList', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          limit: this.state.limit,
+          page: this.state.page
         }
+      }).then((res) => {
+        // console.log(res.data.data.data)
+
+        // 如果长度不等于得时候加载 那么是到底了
+        if (res.data.data.data.length < this.state.limit) {
+          this.isLoadMore = false
+        }
+        this.setState({
+          linshou: [...this.state.linshou, ...res.data.data.data],
+          loadingMore: false
+        }, () => {
+          let page = Number(this.state.page)
+          this.setState({
+            page: page += 1
+          })
+
+
+          loading = false
+          this.refs.scroll.BScroll.finishPullUp()
+          this.refs.scroll.BScroll.refresh()
+        })
+      })
+    } else {
     }
+  }
 }
 const YouhuimxbStyle = styled.div`
 .sximg{

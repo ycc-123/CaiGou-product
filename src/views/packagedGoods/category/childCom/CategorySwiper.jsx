@@ -6,96 +6,96 @@ import { store } from "store/index";
 import DocumentTitle from 'react-document-title'
 
 export default class ApplyOrderx extends Component {
-    constructor() {
-        super()
-        this.state = {
-            goods:[],
-            inputSearch: ""
-        }
+  constructor() {
+    super()
+    this.state = {
+      goods: [],
+      inputSearch: ""
     }
-    componentDidMount() {
-        getPackgeProductDetail({
-            action: 'getPackgeProductDetail', data: {
-                uniacid: store.getState().uniacid,
-                uid:store.getState().uid,
-                id: this.props.match.params.id,
-                limit:"1000",
-                page:"1"
-            }
-        }).then((res) => {
-            if(res.data.status===4001){
-                this.setState({
-                    goods: res.data.data.packgeList
-                })
-            }else{
-                Toast.info(res.data.msg,2)
-            }
-        })
-    }
-    seach() {
-        getPackgeProductDetail({
-            action: 'getPackgeProductDetail', data: {
-                uniacid: store.getState().uniacid,
-                uid:store.getState().uid,
-                id: this.props.match.params.id,
-                search:this.state.inputSearch,
-                limit:"1000",
-                page:"1"
-            }
-        }).then((res) => {
-            if(res.data.status===4001){
-                this.setState({
-                    goods: res.data.data.packgeList
-                })
-            }else{
-                Toast.info(res.data.msg,2)
-            }
-        })
-    }
-    inputChange(e) {
+  }
+  componentDidMount() {
+    getPackgeProductDetail({
+      action: 'getPackgeProductDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        id: this.props.match.params.id,
+        limit: "1000",
+        page: "1"
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
         this.setState({
-            [e.target.name]: e.target.value
+          goods: res.data.data.packgeList
         })
-    }
-    render() {
-        return (
-            <ApplyOrderxStyle>
-                <DocumentTitle title={'打包商品选择明细'} />
-                <div>
-                    <div className='search'>
-                        <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
-                            onChange={this.inputChange.bind(this)}
-                            value={this.state.inputSearch} />
-                        <div className='img' onClick={() => { this.seach() }}>
-                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-                        </div>
-                    </div>
-                    {
-                        this.state.goods.map((v, k) => {
-                            return (
-                                <div className='tiao' key={k}>
-                                    <img className='t-img-l' src={v.albumpath ? v.albumpath : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-                                    <ul className='wen-zi'>
-                                        <li className='wen-zi-t'>
-                                            <div className='name'>{v.name}</div>
-                                        </li>
-                                        <li className='wen-zi-c'>
-                                            <div >商品编码：{v.barcode}</div>
-                                            <p>{v.posprice}元/{v.unitname}</p>
-                                        </li>
-                                        <li className='wen-zi-f'>
-                                            <div></div>
-                                            <p>打包数量：<span>{v.num}</span></p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            )
-                        })
-                    }
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
+  }
+  seach() {
+    getPackgeProductDetail({
+      action: 'getPackgeProductDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        id: this.props.match.params.id,
+        search: this.state.inputSearch,
+        limit: "1000",
+        page: "1"
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        this.setState({
+          goods: res.data.data.packgeList
+        })
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
+  }
+  inputChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  render() {
+    return (
+      <ApplyOrderxStyle>
+        <DocumentTitle title={'打包商品选择明细'} />
+        <div>
+          <div className='search'>
+            <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
+              onChange={this.inputChange.bind(this)}
+              value={this.state.inputSearch} />
+            <div className='img' onClick={() => { this.seach() }}>
+              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+            </div>
+          </div>
+          {
+            this.state.goods.map((v, k) => {
+              return (
+                <div className='tiao' key={k}>
+                  <img className='t-img-l' src={v.albumpath ? v.albumpath : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+                  <ul className='wen-zi'>
+                    <li className='wen-zi-t'>
+                      <div className='name'>{v.name}</div>
+                    </li>
+                    <li className='wen-zi-c'>
+                      <div >商品编码：{v.barcode}</div>
+                      <p>{v.posprice}元/{v.unitname}</p>
+                    </li>
+                    <li className='wen-zi-f'>
+                      <div></div>
+                      <p>打包数量：<span>{v.num}</span></p>
+                    </li>
+                  </ul>
                 </div>
-            </ApplyOrderxStyle>
-        )
-    }
+              )
+            })
+          }
+        </div>
+      </ApplyOrderxStyle>
+    )
+  }
 }
 const ApplyOrderxStyle = styled.div`
 .baocun{

@@ -7,194 +7,194 @@ import { store } from "store/index";
 import { Toast } from 'antd-mobile';
 
 export default class ApplyOrder extends Component {
-    constructor() {
-        super()
-        this.state = {
-            tiao: [],
-            inputSearch: '',
-            limit: "10",
-            page: "1",
-            kongbj: true
-        }
-        this.isLoadMore = true
+  constructor() {
+    super()
+    this.state = {
+      tiao: [],
+      inputSearch: '',
+      limit: "10",
+      page: "1",
+      kongbj: true
     }
-    componentDidMount() {
-        getPurchaseApplyList({
-            action: 'getPurchaseApplyList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                limit: this.state.limit,
-                page: this.state.page
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                this.setState({
-                    tiao: res.data.data.data
-                }, () => {
-                    this.refs.scroll.BScroll.refresh()
-                })
-            } else {
-                this.setState({
-                    kongbj: false
-                })
-            }
-        })
-    }
-    inputChange(e) {
+    this.isLoadMore = true
+  }
+  componentDidMount() {
+    getPurchaseApplyList({
+      action: 'getPurchaseApplyList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        limit: this.state.limit,
+        page: this.state.page
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
         this.setState({
-            [e.target.name]: e.target.value
+          tiao: res.data.data.data
+        }, () => {
+          this.refs.scroll.BScroll.refresh()
         })
-    }
-    search() {
-        getPurchaseApplyList({
-            action: 'getPurchaseApplyList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                search: this.state.inputSearch,
-                limit: "1000",
-                page: "1"
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                this.setState({
-                    tiao: res.data.data.data
-                }, () => {
-                    this.refs.scroll.BScroll.refresh()
-                })
-            }
+      } else {
+        this.setState({
+          kongbj: false
         })
-    }
-    loadMore = () => {
-        // 加载数据时转圈
-        let loading = true
-        setTimeout(() => {
-            if (loading) {
-                this.setState({
+      }
+    })
+  }
+  inputChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  search() {
+    getPurchaseApplyList({
+      action: 'getPurchaseApplyList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        search: this.state.inputSearch,
+        limit: "1000",
+        page: "1"
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        this.setState({
+          tiao: res.data.data.data
+        }, () => {
+          this.refs.scroll.BScroll.refresh()
+        })
+      }
+    })
+  }
+  loadMore = () => {
+    // 加载数据时转圈
+    let loading = true
+    setTimeout(() => {
+      if (loading) {
+        this.setState({
 
-                    loadingMore: true
-                })
-            }
-        }, 1000)
-        if (this.isLoadMore) {
-            getPurchaseApplyList({
-                action: 'getPurchaseApplyList', data: {
-                    uniacid: store.getState().uniacid,
-                    uid: store.getState().uid,
-                    limit: this.state.limit,
-                    page: this.state.page
-                }
-            }).then((res) => {
-                let good = res.data.data.data.length
-                if (good < this.state.limit) {
-                    this.isLoadMore = false
-                }
-                this.setState({
-                    tiao: [...this.state.tiao, ...res.data.data.data],
-                    loadingMore: false
-                }, () => {
-                    let page = Number(this.state.page)
-                    this.setState({
-                        page: page += 1
-                    })
-
-                    loading = false
-                    this.refs.scroll.BScroll.finishPullUp()
-                    this.refs.scroll.BScroll.refresh()
-                })
-            })
-        } else {
-        }
-    }
-    submit(v) {
-        submitPurchaseApply({
-            action: 'submitPurchaseApply', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                id: v.id
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                window.location.reload();
-                Toast.success(res.data.msg, 1)
-            } else {
-                Toast.info(res.data.msg, 1)
-            }
+          loadingMore: true
         })
-    }
-    render() {
-        const scrollConfig = {
-            probeType: 1
+      }
+    }, 1000)
+    if (this.isLoadMore) {
+      getPurchaseApplyList({
+        action: 'getPurchaseApplyList', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          limit: this.state.limit,
+          page: this.state.page
         }
-        return (
-            <ApplyOrderStyle>
-                <DocumentTitle title={'采购申请单'} />
-                <div>
-                    <div style={{ display: "flex" }}>
-                        <div className='search'>
-                            <input type="search" className='input' placeholder="请输入采购申请单号" name="inputSearch"
-                                onChange={this.inputChange.bind(this)}
-                                value={this.state.inputSearch} />
-                            <div className='img' onClick={() => { this.search() }}>
-                                <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-                            </div>
+      }).then((res) => {
+        let good = res.data.data.data.length
+        if (good < this.state.limit) {
+          this.isLoadMore = false
+        }
+        this.setState({
+          tiao: [...this.state.tiao, ...res.data.data.data],
+          loadingMore: false
+        }, () => {
+          let page = Number(this.state.page)
+          this.setState({
+            page: page += 1
+          })
+
+          loading = false
+          this.refs.scroll.BScroll.finishPullUp()
+          this.refs.scroll.BScroll.refresh()
+        })
+      })
+    } else {
+    }
+  }
+  submit(v) {
+    submitPurchaseApply({
+      action: 'submitPurchaseApply', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        id: v.id
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        window.location.reload();
+        Toast.success(res.data.msg, 1)
+      } else {
+        Toast.info(res.data.msg, 1)
+      }
+    })
+  }
+  render() {
+    const scrollConfig = {
+      probeType: 1
+    }
+    return (
+      <ApplyOrderStyle>
+        <DocumentTitle title={'采购申请单'} />
+        <div>
+          <div style={{ display: "flex" }}>
+            <div className='search'>
+              <input type="search" className='input' placeholder="请输入采购申请单号" name="inputSearch"
+                onChange={this.inputChange.bind(this)}
+                value={this.state.inputSearch} />
+              <div className='img' onClick={() => { this.search() }}>
+                <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+              </div>
+            </div>
+            <div
+              onClick={() => { this.state.kongbj === false ? console.log() : this.props.history.push('/addApplyOrder') }}
+              className='add'>新增<span style={{ fontSize: ".4rem" }}>+</span></div>
+          </div>
+
+          <div className='caigoudan' >
+            <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0" }} loadMore={this.loadMore}
+              isLoadMore={this.isLoadMore}>
+              {
+                this.state.tiao.map((v, k) => {
+                  let Color = ''
+                  if (v.statusname === "提交成功") {
+                    Color = "#22a31b"
+                  } else if (v.statusname === "待提交") {
+                    Color = "#ED5F21"
+                  }
+                  return (
+                    <div className='dan' key={k}>
+                      <div onClick={() => { this.props.history.push(`/ApplyOrderx/${v.id}`) }}>
+                        <div className='dan-top'>
+                          <p>
+                            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
+                          </p>
+                          <div className='t-right'>
+                            <div className='caigoudanhao'>采购单号：{v.docno}</div>
+                            <div className='zuantai' style={{ color: Color }}>{v.statusname}</div>
+                          </div>
                         </div>
-                        <div
-                            onClick={() => { this.state.kongbj === false ? console.log() : this.props.history.push('/addApplyOrder') }}
-                            className='add'>新增<span style={{ fontSize: ".4rem" }}>+</span></div>
+                        <div className='dan-footer'>
+                          <div >
+                            <div >
+                              <p>单据日期：{v.docdate}</p>
+                              <p>创建时间：{v.createtime}</p>
+                              <p>申请门店：{v.docdate}</p>
+                              <p>申请数量：{v.totalnum}</p>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className='btn_sh' onClick={() => { this.submit(v) }}
+                        style={{ display: v.statusname === "提交成功" ? "none" : '' }}
+                      >提交</div>
                     </div>
-
-                    <div className='caigoudan' >
-                        <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "0" }} loadMore={this.loadMore}
-                            isLoadMore={this.isLoadMore}>
-                            {
-                                this.state.tiao.map((v, k) => {
-                                    let Color = ''
-                                    if (v.statusname === "提交成功") {
-                                        Color = "#22a31b"
-                                    } else if (v.statusname === "待提交") {
-                                        Color = "#ED5F21"
-                                    }
-                                    return (
-                                        <div className='dan' key={k}>
-                                            <div onClick={() => { this.props.history.push(`/ApplyOrderx/${v.id}`) }}>
-                                                <div className='dan-top'>
-                                                    <p>
-                                                        <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
-                                                    </p>
-                                                    <div className='t-right'>
-                                                        <div className='caigoudanhao'>采购单号：{v.docno}</div>
-                                                        <div className='zuantai' style={{ color: Color }}>{v.statusname}</div>
-                                                    </div>
-                                                </div>
-                                                <div className='dan-footer'>
-                                                    <div >
-                                                        <div >
-                                                            <p>单据日期：{v.docdate}</p>
-                                                            <p>创建时间：{v.createtime}</p>
-                                                            <p>申请门店：{v.docdate}</p>
-                                                            <p>申请数量：{v.totalnum}</p>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className='btn_sh' onClick={() => { this.submit(v) }}
-                                                style={{ display: v.statusname === "提交成功" ? "none" : '' }}
-                                            >提交</div>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </BetterScroll>
-                    </div>
-                </div>
-                <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
-                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
-                </div>
-            </ApplyOrderStyle>
-        )
-    }
+                  )
+                })
+              }
+            </BetterScroll>
+          </div>
+        </div>
+        <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
+          <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
+        </div>
+      </ApplyOrderStyle>
+    )
+  }
 }
 const ApplyOrderStyle = styled.div`
 .kongbj img{

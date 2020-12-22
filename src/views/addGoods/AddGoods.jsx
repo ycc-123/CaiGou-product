@@ -11,307 +11,307 @@ import { useHistory } from 'react-router-dom';
 
 
 const Into = (props) => {
-    const history = useHistory()
-    const bt_ref = useRef()
-    const [goodName, setgoodName] = useState('');
-    const [goodCategory, setGoodCategory] = useState([]);
-    const [goodCode, setGoodCode] = useState('');
-    const [stockUnit, setStockUnit] = useState('');
-    const [sellUnit, setSellUnit] = useState('');
-    const [retailPrice, setRetailPrice] = useState('');
-    const [setPrice, setSetPrice] = useState('');
-    const [memberInterests, setMemberInterests] = useState(false)
-    const [isProduct, setisProduct] = useState(false)
-    const [memberPrice, setMemberPrice] = useState(false)
-    const [matchGood, setMatchGood] = useState(false);
-    const [matchCode, setMatchCode] = useState('')
-    const [goodSort, setGoodSort] = useState('');
-    const [unit, setUnit] = useState([]);
-    const [classification, setClassification] = useState([]);
+  const history = useHistory()
+  const bt_ref = useRef()
+  const [goodName, setgoodName] = useState('');
+  const [goodCategory, setGoodCategory] = useState([]);
+  const [goodCode, setGoodCode] = useState('');
+  const [stockUnit, setStockUnit] = useState('');
+  const [sellUnit, setSellUnit] = useState('');
+  const [retailPrice, setRetailPrice] = useState('');
+  const [setPrice, setSetPrice] = useState('');
+  const [memberInterests, setMemberInterests] = useState(false)
+  const [isProduct, setisProduct] = useState(false)
+  const [memberPrice, setMemberPrice] = useState(false)
+  const [matchGood, setMatchGood] = useState(false);
+  const [matchCode, setMatchCode] = useState('')
+  const [goodSort, setGoodSort] = useState('');
+  const [unit, setUnit] = useState([]);
+  const [classification, setClassification] = useState([]);
 
-    const scrollConfig = {
-        probeType: 1
+  const scrollConfig = {
+    probeType: 1
+  }
+  useEffect(() => {
+    getProductCategoryAll({
+      action: 'getProductCategoryAll', data: {
+        uniacid: store.getState().uniacid,
+        // uid: store.getState().uid,
+      }
+    }).then((res) => {
+      var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
+      setClassification(res.data.data)
+    })
+    getUnitList({
+      action: 'getUnitList', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+      }
+    }).then((res) => {
+      var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
+      setUnit(result)
+    })
+    try {
+      bt_ref.current.BScroll.refresh()
+    } catch (error) {
     }
-    useEffect(() => {
-        getProductCategoryAll({
-            action: 'getProductCategoryAll', data: {
-                uniacid: store.getState().uniacid,
-                // uid: store.getState().uid,
-            }
-        }).then((res) => {
-            var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
-            setClassification(res.data.data)
-        })
-        getUnitList({
-            action: 'getUnitList', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-            }
-        }).then((res) => {
-            var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
-            setUnit(result)
-        })
-        try {
-            bt_ref.current.BScroll.refresh()
-        } catch (error) {
-        }
 
-        return () => {
-        }
-    }, [])
-    useEffect(() => {
-        console.log(goodCategory[goodCategory.length-1])
-        getProductCode({
-            action: 'getProductCode', data: {
-                uniacid: store.getState().uniacid,
-                categoryid: goodCategory[goodCategory.length-1],
-            }
-        }).then((res) => {
-            setGoodCode(res.data.data)
-        })
-    }, [goodCategory])
-    return (
-        <>
-            <BetterScroll config={scrollConfig} style={{ height: 'calc(100vh - 1.6rem)' }} ref={bt_ref}>
-                <TAddGoodsStyle>
-                    <DocumentTitle title={'新增商品'} />
-                    <div className="type flex-column">
-                        <div className="item flex-row" style={{
-                            justifyContent: 'space-between'
-                        }}>
-                            <div className="left">
-                                <span>商品名称:</span>
-                            </div>
-                            <div className="right">
-                                <input
-                                    value={goodName}
-                                    type="text"
-                                    placeholder='请输入商品名称'
-                                    onChange={e => { setgoodName(e.target.value) }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="type flex-column">
-                        <div className="item flex-row" style={{
-                            justifyContent: 'space-between'
-                        }}>
-                            <div className="left">
-                                <span>商品分类: </span>
-                            </div>
-                            <div className="right">
-                                <Picker
-                                    data={classification}
-                                    cols={4}
-                                    // className="forss"
-                                    extra="选择商品分类"
-                                    value={goodCategory}
-                                    onChange={e => { setGoodCategory(e) }}
-                                    onOk={e => { code() }}
-                                >
-                                    <List.Item className='time' arrow="horizontal"></List.Item>
-                                </Picker>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="type flex-column">
-                        <div className="item flex-row" style={{
-                            justifyContent: 'space-between'
-                        }}>
-                            <div className="left">
-                                <span>商品编码: </span>
-                            </div>
-                            <div className="right">
-                                <input
-                                    readonly="readonly"
-                                    value={goodCode.uniacid === store.getState().uniacid ? "" : goodCode}
-                                    type="text"
-                                    placeholder='条码唯一,提交后不支持修改'
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="type flex-column">
-                        <div className="item flex-row" style={{
-                            justifyContent: 'space-between'
-                        }}>
-                            <div className="left">
-                                <span>售出单位: </span>
-                            </div>
-                            <div className="right">
-                                <Picker
-                                    data={unit}
-                                    cols={1}
-                                    className="forss"
-                                    extra="选择售出单位"
-                                    value={sellUnit}
-                                    onChange={e => { setSellUnit(e) }}
-                                    onOk={v => setSellUnit(v)}
-                                >
-                                    <List.Item className='scdwtimes' arrow="horizontal"></List.Item>
-                                </Picker>
-                            </div>
-                        </div>
-                    </div>
-                </TAddGoodsStyle>
-                <AddGoodsStyle>
-                    <div className="type flex-column">
-                        <div className="item flex-row" style={{
-                            justifyContent: 'space-between'
-                        }}>
-                            <div className="left">
-                                <p style={{ fontSize: ".35rem" }}>商品排序: </p>
-                            </div>
-                            <div className="right">
-                                <input
-                                    value={goodSort}
-                                    type="text"
-                                    placeholder='数字越大越靠前'
-                                    onChange={e => { setGoodSort(e.target.value) }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="type flex-column">
-                        <div className="item flex-row" style={{
-                            justifyContent: 'space-between'
-                        }}>
-                            <div className="left">
-                                <span>零售价: </span>
-                            </div>
-                            <div className="right">
-                                <input
-                                    value={retailPrice}
-                                    type="text"
-                                    placeholder='收银端零售价'
-                                    onChange={e => { setRetailPrice(e.target.value) }}
-                                />
-                            </div>
-                        </div>
-                    </div>
+    return () => {
+    }
+  }, [])
+  useEffect(() => {
+    console.log(goodCategory[goodCategory.length - 1])
+    getProductCode({
+      action: 'getProductCode', data: {
+        uniacid: store.getState().uniacid,
+        categoryid: goodCategory[goodCategory.length - 1],
+      }
+    }).then((res) => {
+      setGoodCode(res.data.data)
+    })
+  }, [goodCategory])
+  return (
+    <>
+      <BetterScroll config={scrollConfig} style={{ height: 'calc(100vh - 1.6rem)' }} ref={bt_ref}>
+        <TAddGoodsStyle>
+          <DocumentTitle title={'新增商品'} />
+          <div className="type flex-column">
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <span>商品名称:</span>
+              </div>
+              <div className="right">
+                <input
+                  value={goodName}
+                  type="text"
+                  placeholder='请输入商品名称'
+                  onChange={e => { setgoodName(e.target.value) }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="type flex-column">
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <span>商品分类: </span>
+              </div>
+              <div className="right">
+                <Picker
+                  data={classification}
+                  cols={4}
+                  // className="forss"
+                  extra="选择商品分类"
+                  value={goodCategory}
+                  onChange={e => { setGoodCategory(e) }}
+                  onOk={e => { code() }}
+                >
+                  <List.Item className='time' arrow="horizontal"></List.Item>
+                </Picker>
+              </div>
+            </div>
+          </div>
+          <div className="type flex-column">
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <span>商品编码: </span>
+              </div>
+              <div className="right">
+                <input
+                  readonly="readonly"
+                  value={goodCode.uniacid === store.getState().uniacid ? "" : goodCode}
+                  type="text"
+                  placeholder='条码唯一,提交后不支持修改'
+                />
+              </div>
+            </div>
+          </div>
+          <div className="type flex-column">
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <span>售出单位: </span>
+              </div>
+              <div className="right">
+                <Picker
+                  data={unit}
+                  cols={1}
+                  className="forss"
+                  extra="选择售出单位"
+                  value={sellUnit}
+                  onChange={e => { setSellUnit(e) }}
+                  onOk={v => setSellUnit(v)}
+                >
+                  <List.Item className='scdwtimes' arrow="horizontal"></List.Item>
+                </Picker>
+              </div>
+            </div>
+          </div>
+        </TAddGoodsStyle>
+        <AddGoodsStyle>
+          <div className="type flex-column">
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <p style={{ fontSize: ".35rem" }}>商品排序: </p>
+              </div>
+              <div className="right">
+                <input
+                  value={goodSort}
+                  type="text"
+                  placeholder='数字越大越靠前'
+                  onChange={e => { setGoodSort(e.target.value) }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="type flex-column">
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <span>零售价: </span>
+              </div>
+              <div className="right">
+                <input
+                  value={retailPrice}
+                  type="text"
+                  placeholder='收银端零售价'
+                  onChange={e => { setRetailPrice(e.target.value) }}
+                />
+              </div>
+            </div>
+          </div>
 
-                    <List
-                        renderHeader={() => ''}
-                    >
-                        <List.Item
-                            extra={<Switch
-                                checked={isProduct}
-                                onChange={() => { setisProduct(!isProduct) }}
-                            />}
-                        >更多信息</List.Item>
-                        <div className='xian'></div>
+          <List
+            renderHeader={() => ''}
+          >
+            <List.Item
+              extra={<Switch
+                checked={isProduct}
+                onChange={() => { setisProduct(!isProduct) }}
+              />}
+            >更多信息</List.Item>
+            <div className='xian'></div>
 
-                        <div style={{ display: isProduct ? "block" : "none" }}>
-                            <List.Item
-                                extra={<Switch
-                                    checked={memberInterests}
-                                    onChange={() => { setMemberInterests(!memberInterests) }}
-                                />}
-                            >启用会员权益
+            <div style={{ display: isProduct ? "block" : "none" }}>
+              <List.Item
+                extra={<Switch
+                  checked={memberInterests}
+                  onChange={() => { setMemberInterests(!memberInterests) }}
+                />}
+              >启用会员权益
                     <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1rem" }}>是否启用会员权益</span>
-                            </List.Item>
-                            <div className='xian'></div>
-                            <div style={{ display: memberInterests ? "none" : "block" }}>
-                                <List.Item
-                                    extra={<Switch
-                                        checked={memberPrice}
-                                        onChange={() => { setMemberPrice(!memberPrice) }}
-                                    />}
-                                >启用会员价
+              </List.Item>
+              <div className='xian'></div>
+              <div style={{ display: memberInterests ? "none" : "block" }}>
+                <List.Item
+                  extra={<Switch
+                    checked={memberPrice}
+                    onChange={() => { setMemberPrice(!memberPrice) }}
+                  />}
+                >启用会员价
                     <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>是否启用会员价</span>
-                                </List.Item>
-                                <div className='xian'></div></div>
+                </List.Item>
+                <div className='xian'></div></div>
 
-                            <div className="type flex-column" style={(memberInterests) ? { display: "none" } : { display: memberPrice ? "block" : "none" }}>
-                                <div className="item flex-row" style={{
-                                    justifyContent: 'space-between'
-                                }}>
-                                    <div className="left">
-                                        <p style={{ fontSize: ".35rem" }}>会员价</p>
-                                    </div>
-                                    <div className="right">
-                                        <input
-                                            value={setPrice}
-                                            type="text"
-                                            placeholder='设置会员价'
-                                            onChange={e => { setSetPrice(e.target.value) }}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <List.Item
-                                extra={<Switch style={{ border: "none" }}
-                                    checked={matchGood}
-                                    onChange={() => { setMatchGood(!matchGood) }}
-                                />}
-                            >分体称商品
-                            <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>设置为分体称商品</span>
-                            </List.Item>
-                            <div className='xian'></div>
-
-
-                            <div className="type flex-column" style={{ display: matchGood === false ? "none" : "block" }}>
-                                <div className="item flex-row" style={{
-                                    justifyContent: 'space-between'
-                                }}>
-                                    <div className="left">
-                                        <p style={{ fontSize: ".35rem" }}>分体称PLU编号</p>
-                                    </div>
-                                    <div className="right">
-                                        <input
-                                            value={matchCode}
-                                            type="text"
-                                            placeholder='设置分体称PLU编号'
-
-                                            onChange={e => { setMatchCode(e.target.value) }}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </List>
-                </AddGoodsStyle>
-            </BetterScroll>
-
-            <FAddGoodsStyle>
-                <div className='foot'>
-                    <div className='lbb'></div>
-                    <div className='raa' onClick={e => { check() }}>提交</div>
+              <div className="type flex-column" style={(memberInterests) ? { display: "none" } : { display: memberPrice ? "block" : "none" }}>
+                <div className="item flex-row" style={{
+                  justifyContent: 'space-between'
+                }}>
+                  <div className="left">
+                    <p style={{ fontSize: ".35rem" }}>会员价</p>
+                  </div>
+                  <div className="right">
+                    <input
+                      value={setPrice}
+                      type="text"
+                      placeholder='设置会员价'
+                      onChange={e => { setSetPrice(e.target.value) }}
+                    />
+                  </div>
                 </div>
-            </FAddGoodsStyle>
-        </>
-    )
+              </div>
+              <List.Item
+                extra={<Switch style={{ border: "none" }}
+                  checked={matchGood}
+                  onChange={() => { setMatchGood(!matchGood) }}
+                />}
+              >分体称商品
+                            <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>设置为分体称商品</span>
+              </List.Item>
+              <div className='xian'></div>
 
-    function code() {
-        // console.log(goodCategory.toString())
 
-    }
-    function check() {
-        createProduct({
-            action: 'createProduct', data: {
-                uniacid: store.getState().uniacid,
-                uid: store.getState().uid,
-                categoryid: goodCategory.toString(),
-                code: goodCode,
-                posprice: retailPrice,
-                memberprice: setPrice,
-                name: goodName,
-                unit: sellUnit.toString(),
-                is_membership: memberInterests === true ? "2" : "1",
-                is_memberprice: memberPrice === true ? "2" : "1",
-                is_plu_goods: matchGood === true ? "2" : "1",
-                plu_goods_keyboard_id: matchCode,
-                sequence: goodSort,
-            }
-        }).then((res) => {
-            if (res.data.status === 4001) {
-                history.push('/bjsygoods')
-                Toast.success(res.data.msg, 2)
-            } else {
-                Toast.info(res.data.msg, 2)
-            }
-        })
-    }
+              <div className="type flex-column" style={{ display: matchGood === false ? "none" : "block" }}>
+                <div className="item flex-row" style={{
+                  justifyContent: 'space-between'
+                }}>
+                  <div className="left">
+                    <p style={{ fontSize: ".35rem" }}>分体称PLU编号</p>
+                  </div>
+                  <div className="right">
+                    <input
+                      value={matchCode}
+                      type="text"
+                      placeholder='设置分体称PLU编号'
+
+                      onChange={e => { setMatchCode(e.target.value) }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </List>
+        </AddGoodsStyle>
+      </BetterScroll>
+
+      <FAddGoodsStyle>
+        <div className='foot'>
+          <div className='lbb'></div>
+          <div className='raa' onClick={e => { check() }}>提交</div>
+        </div>
+      </FAddGoodsStyle>
+    </>
+  )
+
+  function code() {
+    // console.log(goodCategory.toString())
+
+  }
+  function check() {
+    createProduct({
+      action: 'createProduct', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        categoryid: goodCategory.toString(),
+        code: goodCode,
+        posprice: retailPrice,
+        memberprice: setPrice,
+        name: goodName,
+        unit: sellUnit.toString(),
+        is_membership: memberInterests === true ? "2" : "1",
+        is_memberprice: memberPrice === true ? "2" : "1",
+        is_plu_goods: matchGood === true ? "2" : "1",
+        plu_goods_keyboard_id: matchCode,
+        sequence: goodSort,
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        history.push('/bjsygoods')
+        Toast.success(res.data.msg, 2)
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
+  }
 }
 const FAddGoodsStyle = styled.div`
 .lbb{

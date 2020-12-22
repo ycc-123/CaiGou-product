@@ -55,8 +55,8 @@ class Category extends Component {
   }
   Search() {
     // console.log(this.state.inputSearch)
-    getStockList({
-      action: 'getStockList', data: {
+    searchProduct({
+      action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         categoryid: this.state.indexId,
@@ -206,7 +206,8 @@ class Category extends Component {
       console.log(res.data.data.data)
       let aa = {}
       let arr =[]
-      this.state.num.map((v,k)=>{
+      let num=this.state.num?this.state.num:[]
+      num.map((v,k)=>{
          aa={
             name: this.state.price[k].name,
             num: this.state.num[k],

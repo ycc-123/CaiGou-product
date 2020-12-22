@@ -26,7 +26,7 @@ export default class ApplyOrderx extends Component {
       action: 'getPriceModifyDetail', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        search:this.state.inputSearch,
+        search: this.state.inputSearch,
         id: this.props.match.params.id
       }
     }).then((res) => {
