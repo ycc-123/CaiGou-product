@@ -73,7 +73,8 @@ export default class CashierOrderDetails extends Component {
       zhifu_Value: "",
       zhifu_ID: "",
       inputmembername: "",
-      inputorder: ""
+      inputorder: "",
+      loading: true
     }
     this.isLoadMore = true
   }
@@ -208,13 +209,15 @@ export default class CashierOrderDetails extends Component {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         search: this.state.inputSearch,
-        limit: this.state.limit,
-        page: this.state.page
+        // limit: this.state.limit,
+        // page: this.state.page
       }
     }).then((res) => {
       if (res.data.status === 4001) {
         this.setState({
-          linshou: res.data.data.data
+          linshou: res.data.data.data,
+          total: res.data.data.total,
+          loading: false
         }, () => {
           // this.refs.scroll.BScroll.refresh()
         })
@@ -281,7 +284,8 @@ export default class CashierOrderDetails extends Component {
               {
 
                 linshou.length > 0 &&
-                <LoadingMore isLoading={this.isLoadMore} />
+                <div style={{ display: this.state.loading === false ? "none" : "block" }}>
+                  <LoadingMore isLoading={this.isLoadMore} /></div>
               }
             </div>
 
@@ -296,7 +300,7 @@ export default class CashierOrderDetails extends Component {
                       extra={this.state.today_time}
                       onChange={v => this.setState({
                         start: v,
-                        start_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() + ' ' + v.getHours() + ':' + v.getMinutes() + ':' + v.getSeconds()
+                        start_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() 
                       })}
                     >
                       <List.Item className="start" arrow="horizontal"></List.Item>
@@ -309,7 +313,7 @@ export default class CashierOrderDetails extends Component {
                       value={this.state.end}
                       onChange={v => this.setState({
                         end: v,
-                        end_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() + ' ' + v.getHours() + ':' + v.getMinutes() + ':' + v.getSeconds()
+                        end_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate()
                       })}
                     >
                       <List.Item className="end" arrow="horizontal"></List.Item>
@@ -417,7 +421,7 @@ export default class CashierOrderDetails extends Component {
           </div>
           <div className='foot'>
             <div style={{ marginRight: ".3rem" }}>总计金额：<span>{this.state.total.all_total_price ? this.state.total.all_total_price : 0}</span></div>
-            <div>当前结果：<span>{this.state.total.total_price ? this.state.total.total_price : 0}</span></div>
+            <div style={{ marginRight: ".3rem" }}>当前结果：<span>{this.state.total.total_price ? this.state.total.total_price : 0}</span></div>
           </div>
         </div>
       </YouhuimxbStyle>
