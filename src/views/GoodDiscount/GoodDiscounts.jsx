@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 export default class GoodDiscounts extends Component {
   render() {
     let item = this.props.item
-    // console.log(item.goods_name.length)
     return (
       <div className='tiao'>
         <ul className='header'>

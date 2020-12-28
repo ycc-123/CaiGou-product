@@ -113,6 +113,16 @@ export default class AddPurchaseOrder extends Component {
       [e.target.name]: e.target.value
     })
   }
+  shengqingmoban(){
+    let idgy = this.state.IDgy.toString()
+    let idkc = this.state.IDck.toString()
+    if(Boolean(idgy)===true && Boolean(idkc)===true){
+      this.props.history.push(`/QuoteApplyOrder/${idkc}/${idgy}`)
+    }else{
+      Toast.info("请先选择采购仓库和供应商",2)
+    }
+    // console.log(Boolean(idgy),"================",Boolean(idkc))
+  }
   render() {
     return (
       <AddPurchaseOrderStyle>
@@ -145,10 +155,12 @@ export default class AddPurchaseOrder extends Component {
                 <List.Item className='pdlx' arrow="horizontal"></List.Item>
               </Picker>
             </li>
-            {/* <li onClick={()=>{this.props.history.push('/home')}}>
-                            <div>引用采购申请：</div>
-                            <div style={{color:"#a9a9a9",marginLeft:".3rem"}}>调用采购申请单</div>
-                        </li> */}
+            <li onClick={()=>{this.shengqingmoban()
+              
+            }}>
+                <div>引用采购申请：</div>
+                <div style={{color:"#a9a9a9",marginLeft:".3rem"}}>调用采购申请单</div>
+              </li>
             <li>
               <div>预付款：</div>
               <input name="inputAmount"
@@ -179,7 +191,6 @@ const AddPurchaseOrderStyle = styled.div`
     height:1.09rem;
 }
 .wrapper .CommissionHeader .navbar li{
-    // height:1.09rem;
     padding-top:.15rem;
 }
 .wrapper .CommissionHeader .navbar .active{
@@ -194,7 +205,6 @@ const AddPurchaseOrderStyle = styled.div`
     width:6rem;
 }
 .am-list-item .am-list-line .am-list-extra{
-    // padding-top:.5rem;
     color:#a9a9a9;
     text-align: left;
     font-size:.35rem;
@@ -203,15 +213,12 @@ const AddPurchaseOrderStyle = styled.div`
 }
 .am-list-item .am-list-line .am-list-arrow{
     margin-left:2.5rem !important;
-    // background-image: none;
-    // opacity:0;
 }
 
 .pdlx{
     position:absolute;
     left:2.5rem;
     top:1.4rem;
-    // padding-top:.3rem;
     color: #a9a9a9;
     width:12rem;
     background-color: transparent;
@@ -220,7 +227,6 @@ const AddPurchaseOrderStyle = styled.div`
     position:absolute;
     left:2.5rem;
     top:2.65rem;
-    // padding-top:.3rem;
     color: #a9a9a9;
     width:12rem;
     background-color: transparent;
@@ -229,7 +235,6 @@ const AddPurchaseOrderStyle = styled.div`
     position:absolute;
     left:2.5rem;
     top:.1rem;
-    // padding-top:.3rem;
     color: #a9a9a9;
     width:12rem;
     background-color: transparent;
@@ -237,7 +242,6 @@ const AddPurchaseOrderStyle = styled.div`
 .am-list-arrow am-list-arrow-horizontal{
     background-image: none;
     opacity:0;
-    // 
 }
 
 
@@ -293,7 +297,6 @@ const AddPurchaseOrderStyle = styled.div`
     padding-left:.3rem;
     color:#646464;
     padding-top:.3rem;
-    // text-align:center;
     font-size:.35rem;
     color:#646464; 
     width: 100%;

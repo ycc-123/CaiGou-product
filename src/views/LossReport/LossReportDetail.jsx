@@ -108,6 +108,7 @@ export default class ApplyOrderx extends Component {
     })
   }
   render() {
+    const {quan}=this.state
     return (
       <ApplyOrderxStyle>
         <DocumentTitle title={'报损单明细'} />
@@ -126,16 +127,16 @@ export default class ApplyOrderx extends Component {
               <p>
                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
               </p>
-              <div>{this.state.quan.ydocno}</div>
+              <div>{quan.ydocno}</div>
             </div>
             <div className='conten-c' style={{ paddingTop: ".25rem" }}>
-              <p>单据日期：{this.state.quan.createtime}</p>
-              <p>报损仓库：{this.state.quan.warehouseName}</p>
+              <p>单据日期：{quan.createtime}</p>
+              <p>报损仓库：{quan.warehouseName}</p>
               <p>报损数量：{this.state.sum}</p>
-              <p>单据状态：<span style={{ color: this.state.quan.statusName === "已审核" ? "rgb(34, 163, 27)" : "" }}>{this.state.quan.statusName}</span></p>
+              <p>单据状态：<span style={{ color: quan.statusName === "已审核" ? "rgb(34, 163, 27)" : "" }}>{quan.statusName}</span></p>
             </div>
             <div className='footer'>
-              备注：{this.state.quan.remark}
+              备注：{quan.remark}
             </div>
           </div>
           {
@@ -166,11 +167,11 @@ export default class ApplyOrderx extends Component {
                 <div style={{ width: ".8rem", height: ".8rem" }}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/baoshun.png" alt="" /></div>
                 <div className='yuan'>{this.state.tiao.length}</div>
               </div>
-              <div className="foot_c">总额：<span style={{ color: "#cf2424" }}>{this.state.quan.totalPrice}</span></div>
+              <div className="foot_c">总额：<span style={{ color: "#cf2424" }}>{quan.totalPrice}</span></div>
               <div className='right'
-                style={{ background: this.state.quan.statusName === "已审核" ? "#B4B4B4" : '' }}
-                onClick={(e) => { this.tijiao(this.state.quan.statusName) }}>
-                {this.state.quan.statusName === "已审核" ? "已审核" : '审核'}
+                style={{ background: quan.statusName === "已审核" ? "#B4B4B4" : '' }}
+                onClick={(e) => { this.tijiao(quan.statusName) }}>
+                {quan.statusName === "已审核" ? "已审核" : '审核'}
               </div>
             </div>
           </div>

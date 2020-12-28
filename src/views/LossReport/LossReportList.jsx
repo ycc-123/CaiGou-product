@@ -27,7 +27,6 @@ export default class ApplyOrder extends Component {
         page: this.state.page
       }
     }).then((res) => {
-      // console.log(res)
       if (res.data.status === 4001) {
         this.setState({
           tiao: res.data.data.data

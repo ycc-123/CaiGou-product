@@ -107,13 +107,15 @@ export default class InventoryListDetails extends Component {
       probeType: 1
     }
     let Color = ''
-    if (this.state.inventoryData.statusname === "提交成功") {
+    const {inventoryData}=this.state
+    if (inventoryData.statusname === "提交成功") {
       Color = "#22a31b"
-    } else if (this.state.inventoryData.statusname === "待提交") {
+    } else if (inventoryData.statusname === "待提交") {
       Color = "#d92929"
-    } else if (this.state.inventoryData.statusname === "待审核") {
+    } else if (inventoryData.statusname === "待审核") {
       Color = "#ed5f21"
     }
+    
     return (
       <WarehousingOrderxingStyle>
         <DocumentTitle title={'调拨单明细'} />
@@ -133,18 +135,18 @@ export default class InventoryListDetails extends Component {
               <p>
                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
               </p>
-              <div>{this.state.inventoryData.docno}</div>
+              <div>{inventoryData.docno}</div>
             </div>
 
             <div className='conten-c' style={{ paddingTop: ".25rem" }}>
-              <p>单据日期：{this.state.inventoryData.docdate}</p>
-              <p>转出仓库：{this.state.inventoryData.outwarehouseName}</p>
-              <p>转入仓库：{this.state.inventoryData.inwarehouseName}</p>
-              <p>单据状态：<span style={{ color: Color }}>{this.state.inventoryData.statusname}</span></p>
+              <p>单据日期：{inventoryData.docdate}</p>
+              <p>转出仓库：{inventoryData.outwarehouseName}</p>
+              <p>转入仓库：{inventoryData.inwarehouseName}</p>
+              <p>单据状态：<span style={{ color: Color }}>{inventoryData.statusname}</span></p>
             </div>
 
             <div className='footer'>
-              备注：{this.state.inventoryData.remark}
+              备注：{inventoryData.remark}
             </div>
           </div>
           <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)" }}>
@@ -174,14 +176,14 @@ export default class InventoryListDetails extends Component {
           </BetterScroll>
           <div className='foot'>
             <div className='left'>
-              移库总数：<span>{this.state.inventoryData.transfer_totalnumber}</span>
+              移库总数：<span>{inventoryData.transfer_totalnumber}</span>
                 <span style={{ marginLeft: ".75rem" }}></span>
-              移库总额：<span>{this.state.inventoryData.transfer_totalmoney}</span>
+              移库总额：<span>{inventoryData.transfer_totalmoney}</span>
             </div>
             <div
-              style={{ background: this.state.inventoryData.statusname === "提交成功" ? "#B4B4B4" : '' }}
-              className='right' onClick={(e) => { this.shengHe(this.state.inventoryData.statusname) }}>
-              {this.state.inventoryData.statusname === "待提交" ? "提交" : "已提交"}
+              style={{ background: inventoryData.statusname === "提交成功" ? "#B4B4B4" : '' }}
+              className='right' onClick={(e) => { this.shengHe(inventoryData.statusname) }}>
+              {inventoryData.statusname === "待提交" ? "提交" : "已提交"}
             </div>
           </div>
         </div>

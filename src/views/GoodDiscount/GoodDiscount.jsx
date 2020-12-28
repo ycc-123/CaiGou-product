@@ -547,11 +547,8 @@ const LossReportStyle = styled.div`
     position:relative;
     width:10rem;
     background-color: #f6f6f6;
-    // height:4rem;
 }
 .btn{
-    // position:absolute;
-    // bottom:.2rem;
     color:#fff;
     margin-top:.2rem;
     width:100%;
@@ -599,7 +596,6 @@ const LossReportStyle = styled.div`
     width: 3.2rem;
     height: 100%;
     color:#262626;
-    // background-color: pink;
 }
 .wen-zi-f{
     display:flex;
@@ -610,29 +606,21 @@ const LossReportStyle = styled.div`
     justify-content: space-between;
     width: 7.5rem;
     height: .6rem;
-    // background-color: yellow;
 }
 .wen-zi{
-    
-    // padding-top:.2rem;
     margin-left: .2rem;
     width: 7.5rem;
     height: 1.7rem;
-    // background-color: red;
 }
 .t-img-l{
     margin-left: .3rem;
-    // margin-top:.2rem;
     width: 1.5rem;
     height: 1.5rem;
-    // background-color: orange;
 }
 .t-img{
-    // padding-top: .2rem;
     margin-left: .2rem;
     width: 1.5rem;
     height: 1.8rem;
-    // background-color: red;
 }
 .tiao{
     background-color: #fff;
@@ -642,7 +630,6 @@ const LossReportStyle = styled.div`
 }
 .conten{
     display:flex;
-    
 }
 
 .sximg{
@@ -664,8 +651,6 @@ input::-webkit-input-placeholder {
   .img{
     width: .55rem;  
     height: .55rem; 
-    // line-height: .5rem; 
-    // margin-left:3.8rem;
   }
   .img-search{
     margin-top:.12rem;
@@ -679,18 +664,14 @@ input::-webkit-input-placeholder {
     font-size:.37rem;
     border:none;
     width:7.7rem;
-    // margin-top:.21rem;
     margin-left:.17rem;
     height: .75rem;
     line-height: .75rem;
-    // background-color: red;
-  
   }
   .search{
     display:flex;
     margin-top:.21rem;
     margin-bottom:.21rem;
-
     margin-left:.32rem;
     width:8.6rem;
     height: .75rem;

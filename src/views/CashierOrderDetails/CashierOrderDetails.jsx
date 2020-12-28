@@ -7,11 +7,6 @@ import { Toast } from 'antd-mobile';
 
 import Swiper from 'swiper'
 import "swiper/swiper.less"
-// import SwiperCore, { Pagination } from 'swiper';
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import 'swiper/swiper.less';
-// import 'swiper/components/pagination/pagination.less';
-// SwiperCore.use([Pagination])
 
 export default class Shouyinmxb extends Component {
   constructor() {
@@ -25,8 +20,16 @@ export default class Shouyinmxb extends Component {
   }
   componentDidMount() {
     new Swiper('.swiper-container', {
+      autoplay:true,
+  //     effect : 'cube',
+  // cubeEffect: {
+  //   slideShadows: true,
+  //   shadow: true,
+  //   shadowOffset: 100,
+  //   shadowScale: 0.6
+  // },
       direction: 'horizontal', // 垂直切换选项
-      loop: true, // 循环模式选项
+      loop: false, // 循环模式选项
 
       // 如果需要分页器
       pagination: {
@@ -154,69 +157,17 @@ export default class Shouyinmxb extends Component {
                       <p>退款门店：{this.state.order.refund_store}</p>
                       <p>退款收银员：{this.state.order.refund_createName}</p>
                       <p>退款时间：{this.state.order.refund_time}</p>
-                      <p style={{ paddingBottom: "1.85rem", marginBottom: "0" }}></p>
+                      <p style={{color:"transparent"}}>退款时间：{this.state.order.refund_time}</p>
+                      <p style={{ color:"transparent" }}>退款时间：{this.state.order.refund_time}</p>
+                      <p style={{color:"transparent", paddingBottom: ".25rem", marginBottom: "0" }}>退款时间：{this.state.order.refund_time}</p>
+
+
                     </div>
                   </div>
                 </div>
                 {/* <!-- 如果需要分页器 -->    */}
                 <div className="swiper-pagination"></div>
-                {/* <!-- 如果需要导航按钮 --> */}
-                {/* <div className="swiper-button-prev"></div> */}
-                {/* <div className="swiper-button-next"></div> */}
-
-                {/* <!-- 如果需要滚动条 --> */}
-                {/* <div className="swiper-scrollbar"></div> */}
               </div>
-              {/* 
-              <Swiper style={{ height: "6rem", }}
-                spaceBetween={5}
-                slidesPerView={1}
-                onSlideChange={() => console.log('slide change')}
-                onSwiper={(swiper) => console.log(swiper)}
-                pagination={{ clickable: true }}
-              >
-                <SwiperSlide>
-                  <div className='dan-footer' style={{ paddingTop: ".25rem" }}>
-                    <p >单据日期：{this.state.order.createtime}</p>
-                    <p>所属商家：{this.state.order.storeName}</p>
-                    <p>收银员：{this.state.order.createName}</p>
-                    <p>支付方式：{this.state.order.pay_type_name}</p>
-                    <p>应收金额：{this.state.order.price}</p>
-                    <p>实收金额：{this.state.order.pay_price}</p>
-                    <p>找零金额：{this.state.order.countsm}</p>
-                    <p>会员名称：{this.state.order.addname}</p>
-                    <p style={{ paddingBottom: ".25rem", marginBottom: "0" }}>手机号：{this.state.order.mobile}</p>
-                  </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                  <div className='dan-footer' style={{ paddingTop: ".25rem" }}>
-                    <p >使用积分：{this.state.order.use_score}</p>
-                    <p>积分优惠：{this.state.order.score_discount}</p>
-                    <p>原价总额：{this.state.order.totalmoney}</p>
-                    <p>小计总额：{this.state.order.totalmoney}</p>
-                    <p>小计优惠：{this.state.order.total_small_fee}</p>
-                    <p>总计优惠：{this.state.order.total_discount_fee}</p>
-                    <p>优惠总额：{this.state.order.all_fee}</p>
-                    <p>优惠折扣：{this.state.order.discount_num}</p>
-                    <p style={{ paddingBottom: ".25rem", marginBottom: "0" }}>抹零：{this.state.order.price}</p>
-                  </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                  <div className='dan-footer' style={{ paddingTop: ".25rem", height: "" }}>
-                    <p >退款金额：{this.state.order.refund_fee}</p>
-                    <p>退款原因：{this.state.order.reason}</p>
-                    <p>订单状态：{this.state.order.statusName}</p>
-                    <p>退款门店：{this.state.order.refund_store}</p>
-                    <p>退款收银员：{this.state.order.refund_createName}</p>
-                    <p>退款时间：{this.state.order.refund_time}</p>
-                    <p style={{ paddingBottom: "1.85rem", marginBottom: "0" }}></p>
-                  </div>
-                </SwiperSlide>
-
-                <div className="swiper-pagination"></div>
-                <div class="swiper-scrollbar"></div>
-              </Swiper>
-             */}
             </div>
             <div>
               <ul className='title' style={{ height: ".97rem", lineHeight: ".97rem" }}>
@@ -257,15 +208,15 @@ const ShouyinmxbStyle = styled.div`
     justify-content: space-between;
 }
 .swiper-pagination-bullet{
-    width:.18rem;
-    height:.18rem;
+    width:.15rem;
+    height:.15rem;
 }
 .swiper-pagination-bullet-active{
     background:#ed7913;
+    width:.5rem;
+    height:.15rem;
+    border-radius:.1rem;
 }
-
-
-
 
 .conten ul li div{
     // margin-left:2rem;

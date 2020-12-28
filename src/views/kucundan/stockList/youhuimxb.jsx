@@ -296,8 +296,6 @@ export default class Youhuimxb extends Component {
             <div>当前结果：<span>{this.state.total.total_price ? this.state.total.total_price : 0}</span></div>
             <div style={{ marginRight: ".3rem" }}>总计优惠：<span>{this.state.total.total_fee ? this.state.total.total_fee : 0}</span></div>
           </div>
-
-
         </div>
       </YouhuimxbStyle>
     )

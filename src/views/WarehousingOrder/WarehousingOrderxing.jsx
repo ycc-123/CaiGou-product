@@ -184,12 +184,13 @@ export default class WarehousingOrderxing extends Component {
     const scrollConfig = {
       probeType: 1
     }
+    const { purchaseDetail }=this.state
     let Color = ''
-    if (this.state.purchaseDetail.statusname === "审核通过") {
+    if (purchaseDetail.statusname === "审核通过") {
       Color = "#22a31b"
-    } else if (this.state.purchaseDetail.statusname === "待提交") {
+    } else if (purchaseDetail.statusname === "待提交") {
       Color = "#d92929"
-    } else if (this.state.purchaseDetail.statusname === "待审核") {
+    } else if (purchaseDetail.statusname === "待审核") {
       Color = "#ed5f21"
     }
     return (
@@ -209,16 +210,16 @@ export default class WarehousingOrderxing extends Component {
               <p>
                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
               </p>
-              <div>{this.state.purchaseDetail.docno}</div>
+              <div>{purchaseDetail.docno}</div>
             </div>
             <div className='conten-c' style={{ paddingTop: ".25rem" }}>
-              <p>单据日期：{this.state.purchaseDetail.docdate}</p>
-              <p>单据仓库：{this.state.purchaseDetail.warehousename}</p>
-              <p>单据状态：<span style={{ color: Color }}>{this.state.purchaseDetail.statusname}</span></p>
+              <p>单据日期：{purchaseDetail.docdate}</p>
+              <p>单据仓库：{purchaseDetail.warehousename}</p>
+              <p>单据状态：<span style={{ color: Color }}>{purchaseDetail.statusname}</span></p>
             </div>
 
             <div className='footer'>
-              采购备注：{this.state.purchaseDetail.remark}
+              采购备注：{purchaseDetail.remark}
             </div>
           </div>
           <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)" }}>
@@ -234,22 +235,22 @@ export default class WarehousingOrderxing extends Component {
           <div className='foot'>
             <div className="foot_t">
               <p>
-                采购总量：{this.state.purchaseDetail.snum}
+                采购总量：{purchaseDetail.snum}
               </p>
               <p>
-                入库总量：{this.state.purchaseDetail.in_out_num}
+                入库总量：{purchaseDetail.in_out_num}
               </p>
             </div>
             <div className="foot_c">
               差异数量：
                             <span style={{ color: "#cf2424" }}>
-                {Number(this.state.purchaseDetail.snum) - Number(this.state.purchaseDetail.in_out_num)}
+                {Number(purchaseDetail.snum) - Number(purchaseDetail.in_out_num)}
               </span>
             </div>
             <div className="btn"
-              style={{ background: this.state.purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }}
-              onClick={(e) => { this.shengHe(this.state.purchaseDetail.statusname) }}>
-              {this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}
+              style={{ background: purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }}
+              onClick={(e) => { this.shengHe(purchaseDetail.statusname) }}>
+              {purchaseDetail.statusname === "待提交" ? "提交" : "审核"}
             </div>
           </div>
         </div>

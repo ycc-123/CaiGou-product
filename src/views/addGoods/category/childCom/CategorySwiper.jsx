@@ -79,7 +79,6 @@ const LiebiaoStyle = styled.div`
     width: 3.2rem;
     height: 100%;
     color:#1a1a1a;
-    // background-color: pink;
 }
 .wen-zi-f{
     display:flex;
@@ -90,7 +89,6 @@ const LiebiaoStyle = styled.div`
     justify-content: space-between;
     width: 7.5rem;
     height: 1.1rem;
-    // background-color: yellow;
 }
 .wen-zi{
     
@@ -98,17 +96,14 @@ const LiebiaoStyle = styled.div`
     margin-left: .2rem;
     width: 7.5rem;
     height: 1.7rem;
-    // background-color: red;
 }
 .t-img-l{
     margin-left: .2rem;
     margin-top:.2rem;
     width: 1.5rem;
     height: 1.5rem;
-    // background-color: orange;
 }
 .t-img{
-    // padding-top: .2rem;
     margin-left: .2rem;
     width: 1.5rem;
     height: 1.8rem;
@@ -145,8 +140,6 @@ input::-webkit-input-placeholder {
     margin-top:.1rem;
     margin-left:.3rem;
     height: .6rem;
-    // background-color: red;
-
 }
 .search{
     display:flex;
@@ -155,7 +148,6 @@ input::-webkit-input-placeholder {
     height: .8rem;
     border-radius:.5rem;
     background-color: #fff;
-
 }
 
 

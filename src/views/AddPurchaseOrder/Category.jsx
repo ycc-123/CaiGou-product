@@ -111,10 +111,10 @@ class Category extends Component {
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
               <div className='left' 
-              // onClick={()=>{this.mingxi()}}
+              onClick={()=>{this.mingxi()}}
               >
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                <div className='yuan'>{this.state.price ? this.state.price : 0}</div>
+                <div className='yuan'>{this.state.oldGoods.length ? this.state.oldGoods.length : 0}</div>
               </div>
               <div style={{ display: "flex", marginTop: ".2rem" }}>
                 <div className='baocun' onClick={() => { this.click(1) }}>保存</div>
@@ -266,7 +266,6 @@ input::-webkit-input-placeholder {
 .img{
   width: .55rem;  
   height: .55rem; 
-  // line-height: .5rem; 
   margin-left:2.45rem;
 }
 .img-search{
@@ -281,12 +280,9 @@ input::-webkit-input-placeholder {
   font-size:.37rem;
   border:none;
   width:6rem;
-  // margin-top:.21rem;
   margin-left:.17rem;
   height: .75rem;
   line-height: .75rem;
-  // background-color: red;
-
 }
 .search{
   display:flex;
@@ -301,17 +297,8 @@ input::-webkit-input-placeholder {
 
 }
 
-
-
-
-
-
-
-
 .yuan{
-  // padding-top:.1rem;
   text-align:center;
-  // margin:auto;
   position:absolute;
   top: .2rem;
   left:1.3rem;
@@ -328,7 +315,6 @@ input::-webkit-input-placeholder {
 }
 .foot_conton{
   width: 12rem;
-  // height: 100%rem;
   line-height:1.6rem;
   text-align:center;
   font-size:.4rem;
@@ -352,7 +338,6 @@ input::-webkit-input-placeholder {
   height: 1.6rem;
   background-color: #fff;
   position:absolute;
-  // bottom:0;
 }
 
 
@@ -415,7 +400,6 @@ input::-webkit-input-placeholder {
 .categoryRight {
   position: relative;
   display: inline-block;
-  // left: .16rem;
   width: 7.5rem;
   height: calc(100vh - 2.7rem);
   overflow: hidden;
@@ -423,11 +407,7 @@ input::-webkit-input-placeholder {
 
 .category-title {
   text-align:center;
-  // display: flex;
-  // align-items: center;
-  // justify-content: flex-start;
   font-weight: 500;
-  // padding-left: .1rem;
   flex-wrap: wrap;
   line-height: 1.17rem;
   width: 100%;
@@ -438,14 +418,12 @@ input::-webkit-input-placeholder {
 }
 
 .category-title-active {
-  // border-left: .13rem solid #ff833a;
   background-color: #ff833a;
   color: #fff;
 }
 
 .category-left-head {
   width: 100%;
-  // height: .8rem;
   background: #f5f5f5;
 }
 

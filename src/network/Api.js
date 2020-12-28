@@ -204,15 +204,6 @@ export function submitPurchaseApply(config) {
 
 }
 
-// 报损单列表
-// export function getDamageList(config) {
-//   return requestPost({
-//     params: {
-//       action: config.action
-//     },
-//     data: config.data
-//   })
-// }
 // 商品优惠明细列表
 export function getRetailGoodsList(config) {
   return requestPost({

@@ -143,9 +143,6 @@ class Category extends Component {
     this.child.myName(e)
   }
   componentDidMount = () => {
-
-    // this.refs.scroll.BScroll.refresh()
-    // const { appConfig } = store.getState()
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,

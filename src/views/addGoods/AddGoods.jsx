@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components'
 import { Picker, Toast, List, Switch } from 'antd-mobile';
-import { createForm } from 'rc-form';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
@@ -36,7 +35,6 @@ const Into = (props) => {
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
-        // uid: store.getState().uid,
       }
     }).then((res) => {
       var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
@@ -619,26 +617,12 @@ const AddGoodsStyle = styled.div`
     position:absolute;
     bottom:0;
 }
-
-
-
-
-
-
-
-
   .xian{
       width:100%;
       height:1px;
       background: #ddd;
 
   }
-
-
-
-
-
-
  .am-list-line::after {
     background-color: transparent !important;
 }

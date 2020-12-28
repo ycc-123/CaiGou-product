@@ -215,7 +215,8 @@ const Into = (props) => {
                     <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>是否启用会员价</span>
                 </List.Item>
                 <div className='xian'></div></div>
-              <div className="type flex-column" style={(memberInterests) ? { display: "none" } : { display: memberPrice ? "block" : "none" }}>
+              <div className="type flex-column" 
+              style={(memberInterests) ? { display: "none" } : { display: memberPrice ? "block" : "none" }}>
                 <div className="item flex-row" style={{
                   justifyContent: 'space-between'
                 }}>

@@ -18,7 +18,7 @@ import 'assets/css/basic.css'
 // let uniacid = getParamsString('uniacid')
 // let uid = getParamsString('uid')
 
-// 正式站
+// // 正式站
 // let uid = "5372"
 // let uniacid = "826"
 

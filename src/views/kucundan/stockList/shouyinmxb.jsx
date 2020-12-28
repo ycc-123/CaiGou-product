@@ -67,6 +67,7 @@ export default class Shouyinmxb extends Component {
   }
   render() {
     // console.log(this.state)
+    const {order}=this.state
     return (
       <ShouyinmxbStyle>
         <DocumentTitle title={'优惠明细表'} />
@@ -85,17 +86,17 @@ export default class Shouyinmxb extends Component {
                 <p>
                   <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
                 </p>
-                <div className='caigoudanhao'>{this.state.order.orderno}</div>
+                <div className='caigoudanhao'>{order.orderno}</div>
               </div>
               <div className='dan-footer' style={{ paddingTop: ".25rem" }}>
-                <p >单据日期：{this.state.order.createtime}</p>
-                <p>所属商家：{this.state.order.storeName}</p>
-                <p>支付方式：{this.state.order.pay_type_name}</p>
-                <p>订单状态：{this.state.order.statusName}</p>
-                <p>原价总额：{this.state.order.totalmoney}</p>
-                <p>总价优惠：{this.state.order.all_fee}</p>
-                <p>小计优惠：{this.state.order.total_discount_fee}</p>
-                <p style={{ paddingBottom: ".25rem", marginBottom: "0" }}>实收金额：{this.state.order.price}</p>
+                <p >单据日期：{order.createtime}</p>
+                <p>所属商家：{order.storeName}</p>
+                <p>支付方式：{order.pay_type_name}</p>
+                <p>订单状态：{order.statusName}</p>
+                <p>原价总额：{order.totalmoney}</p>
+                <p>总价优惠：{order.all_fee}</p>
+                <p>小计优惠：{order.total_discount_fee}</p>
+                <p style={{ paddingBottom: ".25rem", marginBottom: "0" }}>实收金额：{order.price}</p>
               </div>
             </div>
             <div>
@@ -131,12 +132,6 @@ export default class Shouyinmxb extends Component {
   }
 }
 const ShouyinmxbStyle = styled.div`
-
-
-
-
-
-
 .conten ul li div{
     // margin-left:2rem;
     width:4rem;

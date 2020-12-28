@@ -53,7 +53,6 @@ const Into = (props) => {
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
-        // uid: store.getState().uid,
       }
     }).then((res) => {
       var result = res.data.data.map(o => {
@@ -281,14 +280,12 @@ const Into = (props) => {
           </List>
         </AddGoodsStyle>
       </BetterScroll>
-
       <FAddGoodsStyle>
         <div className='foot'>
           <div className='lbb'></div>
           <div className='raa' onClick={e => { check() }}>提交</div>
         </div>
       </FAddGoodsStyle>
-
     </>
   )
   function check() {
@@ -500,13 +497,10 @@ const AddGoodsStyle = styled.div`
   background: #F5F5F5;
   color: #787878;
 
-
-
   .wrapper .CommissionHeader{
     height:1.09rem;
 }
 .wrapper .CommissionHeader .navbar li{
-    // height:1.09rem;
     padding-top:.15rem;
 }
 .wrapper .CommissionHeader .navbar .active{
@@ -535,14 +529,11 @@ const AddGoodsStyle = styled.div`
 }
 .am-list-item .am-list-line .am-list-arrow{
     margin-left:2.5rem !important;
-    // background-image: none;
-    // opacity:0;
 }
 .kcdwtimes{
     position:absolute;
     left:1.8rem;
     top:2.9rem;
-    // padding-top:.3rem;
     color: red;
     width:12rem;
     background-color: transparent;
@@ -551,7 +542,6 @@ const AddGoodsStyle = styled.div`
     position:absolute;
     left:2.2rem;
     top:3.6rem;
-    // padding-top:.3rem;
     color: red;
     width:12rem;
     background-color: transparent;
@@ -561,7 +551,6 @@ const AddGoodsStyle = styled.div`
     left:2.2rem;
     top:1.2rem;
     text-align: left !important;
-    // padding-top:.3rem;
     color: #b4b4b4;
     font-size:.35rem;
     width:12rem;
@@ -571,7 +560,6 @@ const AddGoodsStyle = styled.div`
 .am-list-arrow am-list-arrow-horizontal{
     background-image: none;
     opacity:0;
-    // 
 }
 
   .xian{
@@ -580,24 +568,15 @@ const AddGoodsStyle = styled.div`
       background: #ddd;
 
   }
-
-
-
-
-
-
  .am-list-line::after {
     background-color: transparent !important;
 }
   .am-list-item .am-list-line .am-list-content{
       font-size:.35rem;
       color: #787878;
-
-      
   }
 
   .type {
-
     background-color: white;
   }
   .type .item {

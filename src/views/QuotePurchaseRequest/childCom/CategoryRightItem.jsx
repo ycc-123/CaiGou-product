@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import { Toast } from 'antd-mobile';
+import { Modal, Button, Toast } from 'antd-mobile';
+const prompt = Modal.prompt;
 
 class CategoryRightgoods extends Component {
   constructor(props) {
@@ -13,13 +14,12 @@ class CategoryRightgoods extends Component {
     }
     this.click = true
   }
-  
   zjian = (login, password, goods) => {
-    if (login === '') {
+    if (login === '' ) {
       Toast.info('请填写采购数量')
-    } else if (password === '') {
+    } else if(password === ''){
       Toast.info('请填写采购单价')
-    } else {
+    }else{
       this.setState({
         login,
         password
@@ -30,16 +30,45 @@ class CategoryRightgoods extends Component {
 
   render() {
     const { goods } = this.props
+    let input=''
+    if(this.state.login!==''){
+      input=this.state.login
+    }else{
+      input=goods.realnum
+    }
     return (
       <CategoryRightgoodsStyle>
         <div className="rrr"></div>
-        <li className='category-goods clearfix'
-          onClick={() => { this.props.history.push(`/BjGoods/${goods.id}`) }}
-        >
-          <img className='category-img' src={goods.albumpath ? goods.albumpath : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+        <li className='category-goods clearfix'>
+          <img className='category-img' src={goods.albumpath?goods.albumpath:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
           <div className='category-goods-info'>
-            <p>{goods.name}</p>
-            <div className='price'>¥：{goods.posprice}元/{goods.unitname}</div>
+            <div style={{fontSize:".35rem",color:'#1a1a1a',width:"4rem"}}>{goods.name}</div>
+              <div className='shuliang' style={{color:'#1a1a1a',paddingTop:".1rem"}}>
+                   <article>编码：{goods.code}</article>
+                   <div>{goods.posprice}元/{goods.unitname}</div>
+              </div>
+            <div style={{display:"flex",justifyContent:"space-between"}}>
+            {
+              input ? <div  style={{width:"100%",textAlign: "right",paddingTop:".2rem", color: "#CD2323", fontSize: ".35rem" }}>
+                {input}</div> :
+                <img className='category-goods-img'
+                  src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
+                  alt="" />
+            }
+            </div>
+            <Button
+              style={{ position: "absolute", top: ".3rem", left: "4.6rem", color: "transparent", background: "transparent" }}
+              className="btn_modal"
+              onClick={() => prompt(
+                '添加',
+                '请填写采购数量与单价',
+                (login, text) => this.zjian(login, text, goods),
+                'login-password',
+                null,
+                ['请填写采购数量', '请填写采购单价'],
+              )}
+              visible={false}
+            >111111</Button>
           </div>
         </li>
       </CategoryRightgoodsStyle>
@@ -48,6 +77,21 @@ class CategoryRightgoods extends Component {
 }
 
 const CategoryRightgoodsStyle = styled.div`
+.category-goods-img {
+  margin-top:.2rem;
+  margin-left:4.65rem;
+  width: 0.43rem;
+  height: 0.43rem;
+}
+.shuliang span{
+  margin-left:1.5rem;
+}
+.shuliang{
+  // margin-top:.8rem;
+  font-size:.29rem;
+  display:flex;
+  justify-content: space-between;
+}
 .am-button::before{
   border:none !important;
 }
@@ -85,10 +129,13 @@ const CategoryRightgoodsStyle = styled.div`
 .category-goods {
   position: relative;
   overflow: hidden;
+  // width: 7.17rem;
   height: 1.85rem;
   line-height: 1;
   padding: .24rem .37rem;
-  border-bottom:1px solid #dadada;
+  border-bottom:1px solid #ccc;
+  // margin-bottom: .17rem;
+  // border-radius: .2rem;
   background-color: #fff;
 }
 .category-img {
@@ -96,29 +143,24 @@ const CategoryRightgoodsStyle = styled.div`
   float: left;
   width: 1.33rem;
   height: 1.33rem;
-  margin-right: .33rem;
+  margin-right: .32rem;
 }
 .category-goods-info {
   position: relative;
-  width: calc(100% - 2.3704rem);
+  width: calc(100% - 1.65rem);
   height: 100%;
   float: left;
 }
 .category-goods-info p:first-child {
-  font-size: 0.37rem;
+  font-size: .32rem;
+  // margin-bottom: .24rem;
+  // margin-top: .05rem;
+  text-align: justify;
+  // overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
-  color: #1a1a1a;
-  font-family: PingFang SC;
-  font-weight: 400;
-  height:.95rem;
-}
-.price{
-  height: 0.32rem;
-  font-size: 0.35rem;
-  font-family: PingFang SC;
-  font-weight: 400;
-  color: #CF2424;
-  line-height: 0.4rem;
+  color: #4d4d4d;
+  font-weight: bold;
 }
 .category-goods-info p:nth-child(2) {
   position: relative;
@@ -175,12 +217,7 @@ const CategoryRightgoodsStyle = styled.div`
 .category-goods-info p:nth-child(4) span {
   margin-right: .2rem;
 }
-.category-goods-img {
-  margin-top:.4rem;
-  margin-left:4.7rem;
-  width: .5rem;
-  height: .5rem;
-}
+
 .category-goods .goods-img img {
   margin-left: 1.2rem;
 }
@@ -219,6 +256,7 @@ const CategoryRightgoodsStyle = styled.div`
   text-align: center;
   color: #f5702a;
 }
+
 `
 
 export default withRouter(CategoryRightgoods)

@@ -160,11 +160,12 @@ export default class PurchaseOrderDetailed extends Component {
       probeType: 1
     }
     let Color = ''
-    if (this.state.purchaseDetail.statusname === "审核成功") {
+    const {purchaseDetail}=this.state
+    if (purchaseDetail.statusname === "审核成功") {
       Color = "#22a31b"
-    } else if (this.state.purchaseDetail.statusname === "待提交") {
+    } else if (purchaseDetail.statusname === "待提交") {
       Color = "#d92929"
-    } else if (this.state.purchaseDetail.statusname === "待审核") {
+    } else if (purchaseDetail.statusname === "待审核") {
       Color = "#ed5f21"
     }
     return (
@@ -186,18 +187,18 @@ export default class PurchaseOrderDetailed extends Component {
               <p>
                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
               </p>
-              <div>{this.state.purchaseDetail.docno}</div>
+              <div>{purchaseDetail.docno}</div>
             </div>
 
             <div className='conten-c' style={{ paddingTop: ".25rem" }}>
-              <p>单据日期：{this.state.purchaseDetail.docdate}</p>
-              <p>创建时间：{this.state.purchaseDetail.createtime}</p>
-              <p>采购仓库：{this.state.purchaseDetail.warehousename}</p>
-              <p>单据状态：<span style={{ color: Color }}>{this.state.purchaseDetail.statusname}</span></p>
+              <p>单据日期：{purchaseDetail.docdate}</p>
+              <p>创建时间：{purchaseDetail.createtime}</p>
+              <p>采购仓库：{purchaseDetail.warehousename}</p>
+              <p>单据状态：<span style={{ color: Color }}>{purchaseDetail.statusname}</span></p>
             </div>
 
             <div className='footer'>
-              采购备注：{this.state.purchaseDetail.remark}
+              采购备注：{purchaseDetail.remark}
             </div>
           </div>
           <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)" }}>
@@ -216,13 +217,13 @@ export default class PurchaseOrderDetailed extends Component {
                   <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                 <div className='yuan'>{this.state.purchaseItem.length}</div>
               </div>
-              <div style={{ background: this.state.purchaseDetail.statusname === "审核成功" ? "#B4B4B4" : '' }}
+              <div style={{ background: purchaseDetail.statusname === "审核成功" ? "#B4B4B4" : '' }}
                 className='right'
                 onClick={() => { this.shengHe() }}
-              >{this.state.purchaseDetail.statusname === "待提交" ? "提交" : "审核"}
+              >{purchaseDetail.statusname === "待提交" ? "提交" : "审核"}
               </div>
               <Button
-                style={{ display: this.state.purchaseDetail.statusname === "待提交" ? "none" : "block", width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
+                style={{ display: purchaseDetail.statusname === "待提交" ? "none" : "block", width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
                 className="btn_modal"
                 onClick={() =>
                   alert('审核', '是否确认审核采购单', [

@@ -163,11 +163,12 @@ export default class InventoryListDetails extends Component {
       probeType: 1
     }
     let Color = ''
-    if (this.state.inventoryData.statusname === "提交成功") {
+    const {inventoryData}=this.state
+    if (inventoryData.statusname === "提交成功") {
       Color = "#22a31b"
-    } else if (this.state.inventoryData.statusname === "待提交") {
+    } else if (inventoryData.statusname === "待提交") {
       Color = "#d92929"
-    } else if (this.state.inventoryData.statusname === "待审核") {
+    } else if (inventoryData.statusname === "待审核") {
       Color = "#ed5f21"
     }
     return (
@@ -191,18 +192,18 @@ export default class InventoryListDetails extends Component {
               <p>
                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
               </p>
-              <div>{this.state.inventoryData.docno}</div>
+              <div>{inventoryData.docno}</div>
             </div>
 
             <div className='conten-c' style={{ paddingTop: ".25rem" }}>
-              <p>单据日期：{this.state.inventoryData.docdate}</p>
-              <p>盘点类型：{this.state.inventoryData.typename}</p>
-              <p>盘点仓库：{this.state.inventoryData.warehousename}</p>
-              <p>单据状态：<span style={{ color: Color }}>{this.state.inventoryData.statusname}</span></p>
+              <p>单据日期：{inventoryData.docdate}</p>
+              <p>盘点类型：{inventoryData.typename}</p>
+              <p>盘点仓库：{inventoryData.warehousename}</p>
+              <p>单据状态：<span style={{ color: Color }}>{inventoryData.statusname}</span></p>
             </div>
 
             <div className='footer'>
-              备注：{this.state.inventoryData.remark}
+              备注：{inventoryData.remark}
             </div>
           </div>
           <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)" }}>
@@ -216,11 +217,16 @@ export default class InventoryListDetails extends Component {
           </BetterScroll>
           <div className='foot'>
             <div className='left'>
-              账面总数：<span>{this.state.inventoryData.gnum}</span>
+              账面总数：<span>{inventoryData.gnum}</span>
               <span style={{ marginLeft: ".75rem" }}></span>
-                            实际总数：<span>{this.state.inventoryData.realnum}</span>
+                  实际总数：<span>{inventoryData.realnum}</span>
             </div>
-            <div style={{ background: this.state.inventoryData.statusname === "提交成功" ? "#B4B4B4" : '' }} className='right' onClick={(e) => { this.shengHe(this.state.inventoryData.statusname) }}>{this.state.inventoryData.statusname === "待提交" ? "提交" : "已提交"}</div>
+            <div 
+            style={{ background: inventoryData.statusname === "提交成功" ? "#B4B4B4" : '' }} 
+            className='right' 
+            onClick={(e) => { this.shengHe(inventoryData.statusname) }}>
+              {inventoryData.statusname === "待提交" ? "提交" : "已提交"}
+            </div>
           </div>
         </div>
       </WarehousingOrderxingStyle>

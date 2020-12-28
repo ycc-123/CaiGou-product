@@ -100,6 +100,7 @@ export default class ApplyOrderx extends Component {
     const scrollConfig = {
       probeType: 1
     }
+    const {quan}=this.state
     return (
       <ApplyOrderxStyle>
         <DocumentTitle title={'调价单明细'} />
@@ -118,16 +119,16 @@ export default class ApplyOrderx extends Component {
               <p>
                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
               </p>
-              <div>{this.state.quan.docno}</div>
+              <div>{quan.docno}</div>
             </div>
             <div className='conten-c' style={{ paddingTop: ".25rem" }}>
-              <p>单据日期：{this.state.quan.docdate}</p>
-              <p>创建时间：{this.state.quan.createtime}</p>
-              <p>调价门店：{this.state.quan.storeName}</p>
-              <p>单据状态：<span style={{ color: "#ed5f21" }}>{this.state.quan.statusName}</span></p>
+              <p>单据日期：{quan.docdate}</p>
+              <p>创建时间：{quan.createtime}</p>
+              <p>调价门店：{quan.storeName}</p>
+              <p>单据状态：<span style={{ color: "#ed5f21" }}>{quan.statusName}</span></p>
             </div>
             <div className='footer'>
-              备注：{this.state.quan.remark}
+              备注：{quan.remark}
             </div>
           </div>
           <BetterScroll config={scrollConfig} ref='scroll'>
@@ -142,8 +143,9 @@ export default class ApplyOrderx extends Component {
                       </li>
                       <li className='wen-zi-c'>
                         <div >商品编码：{v.barcode}</div>
-                        <p style={{ color: "#DD1717" }} style={{ display: v.newmemberprice === "0.00" ? "none" : "block" }}>
-                          <img style={{ width: ".32rem", height: ".32rem", marginBottom: ".05rem" }} src={"https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/memberPrice.png"} alt="" />
+                        <p style={{color: "#DD1717", display: v.newmemberprice === "0.00" ? "none" : "block" }}>
+                          <img style={{ width: ".32rem", height: ".32rem", marginBottom: ".05rem" }} 
+                          src={"https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/memberPrice.png"} alt="" />
                           {v.newmemberprice}元/{v.goods_unitname}
                         </p>
 
@@ -166,10 +168,10 @@ export default class ApplyOrderx extends Component {
                   <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                 <div className='yuan'>{this.state.tiao.length}</div>
               </div>
-              <div style={{ background: this.state.quan.statusName === "提交成功" ? "#B4B4B4" : '' }}
+              <div style={{ background: quan.statusName === "提交成功" ? "#B4B4B4" : '' }}
                 className='right'
-                onClick={() => { this.tijiao(this.state.quan.statusName) }}
-              >{this.state.quan.statusName === "待提交" ? "提交" : "已提交"}
+                onClick={() => { this.tijiao(quan.statusName) }}
+              >{quan.statusName === "待提交" ? "提交" : "已提交"}
               </div>
             </div>
           </div>

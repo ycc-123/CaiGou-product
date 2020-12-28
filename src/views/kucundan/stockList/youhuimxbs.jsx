@@ -34,7 +34,6 @@ export default class youhuimxbs extends Component {
             <p>单据日期：{item.createtime}</p>
             <p>所属门店：{item.storeName}</p>
             <p>优惠总额：{item.all_fee}</p>
-
           </div>
         </div>
       </div>

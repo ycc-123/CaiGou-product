@@ -66,8 +66,21 @@ export default class CashierOrderDetails extends Component {
       start_time: '',
       today_time: "",
       kongbj: true,
-      status: [{ value: "0", label: "待付款" }, { value: "1", label: "已付款" }, { value: "4", label: "全部退款" }, { value: "6", label: "部分退款" }],
-      zhifu: [{ value: "0", label: "现金" }, { value: "1", label: "微信扫码" }, { value: "2", label: "支付宝扫码" }, { value: "3", label: "会员余额" }, { value: "4", label: "银行卡" }, { value: "5", label: "个人微信" }, { value: "6", label: "个人支付宝" }, { value: "7", label: "混合支付" }, { value: "8", label: "购物卡" }],
+      status: [
+        { value: "0", label: "待付款" }, 
+        { value: "1", label: "已付款" }, 
+        { value: "4", label: "全部退款" }, 
+        { value: "6", label: "部分退款" }],
+      zhifu: [
+        { value: "0", label: "现金" },
+        { value: "1", label: "微信扫码" },
+        { value: "2", label: "支付宝扫码" },
+        { value: "3", label: "会员余额" },
+        { value: "4", label: "银行卡" },
+        { value: "5", label: "个人微信" },
+        { value: "6", label: "个人支付宝" },
+        { value: "7", label: "混合支付" },
+        { value: "8", label: "购物卡" }],
       Value_status: "",
       ID_status: "",
       zhifu_Value: "",
@@ -209,8 +222,6 @@ export default class CashierOrderDetails extends Component {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         search: this.state.inputSearch,
-        // limit: this.state.limit,
-        // page: this.state.page
       }
     }).then((res) => {
       if (res.data.status === 4001) {
@@ -300,7 +311,7 @@ export default class CashierOrderDetails extends Component {
                       extra={this.state.today_time}
                       onChange={v => this.setState({
                         start: v,
-                        start_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() 
+                        start_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate()
                       })}
                     >
                       <List.Item className="start" arrow="horizontal"></List.Item>
@@ -511,12 +522,10 @@ const YouhuimxbStyle = styled.div`
 }
 .kongbj{
     margin-top:3rem;
-
     width:100%;
     height: 100%;
     vertical-align: middle;
     text-align: center;
-
 }
 .btn_sh{
     position:absolute;
@@ -525,8 +534,6 @@ const YouhuimxbStyle = styled.div`
     width: 1.33rem;
     height: 0.67rem;
     line-height: 0.67rem;
-    // margin-top:.4rem;
-    // margin-right:.11rem;
     color:#fff;
     text-align:center;
     background: #ED7913;
@@ -547,7 +554,6 @@ const YouhuimxbStyle = styled.div`
     color: #969696;
 }
 .zuantai{
-        // margin-top:.27rem;
         margin-right:.27rem;
         height:.85rem;
         line-height:.85rem;
@@ -557,10 +563,7 @@ const YouhuimxbStyle = styled.div`
     .caigoudanhao{
 
         width: 6.49rem;
-        // height: 0.33rem;
-        // margin-top:.25rem;
         margin-left:.31rem;
-        // width:7.09rem;
         height:.85rem;
         line-height:.85rem;
         font-size:.33rem;
@@ -589,13 +592,9 @@ const YouhuimxbStyle = styled.div`
         margin-bottom:.23rem;
         margin-left: .32rem;
         width: 9.36rem;  
-        // height: 2.89rem;
         background-color: #fff;
         border-radius:.2rem;
         border:1px solid #dddddd;
-    
-    
-    
     }
     .add{
         width: 1.6rem;
@@ -617,7 +616,6 @@ const YouhuimxbStyle = styled.div`
       .img{
         width: .55rem;  
         height: .55rem; 
-        // line-height: .5rem; 
         margin-right:.2rem;
       }
       .img-search{
@@ -632,12 +630,9 @@ const YouhuimxbStyle = styled.div`
         font-size:.37rem;
         border:none;
         width:7.3rem;
-        // margin-top:.21rem;
         margin-left:.17rem;
         height: .75rem;
         line-height: .75rem;
-        // background-color: red;
-      
       }
       .search{
         display:flex;
@@ -650,8 +645,6 @@ const YouhuimxbStyle = styled.div`
         background-color: #fff;
       
       }
-
-
 .foot div span{
     color:#cf2424;
     font-weight:900;
@@ -669,26 +662,6 @@ const YouhuimxbStyle = styled.div`
     bottom:0rem;
     background-color: #fff;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .conten ul li article div img{
     width: auto;  
     height: auto;  
@@ -712,34 +685,18 @@ const YouhuimxbStyle = styled.div`
 }
 .conten ul li{
     padding-left:.2rem;
-    
-    // margin-left:.1rem;
     border-right:2px solid #c8c8c8;
     width:6rem;
-    // background-color: pink;
     height:1.2rem;
-    // line-height:1.2rem;
 }
 .conten ul{
     display:flex;
 }
 .conten{
     width:100%;
-    // background-color: #ed7912;
     height:1.7rem;
 }
-// }
-// .btn{
-//     // position:absolute;
-//     // bottom:.2rem;
-//     color:#fff;
-//     width:100%;
-//     background-color: #ed7912;
-//     height:1rem;
-//     line-height:1rem;
-//     text-align:center;
-//     border-radius:.1rem;
-// }
+
 .foot div span{
     color:#cf2424;
     font-weight:900;
@@ -772,7 +729,6 @@ const YouhuimxbStyle = styled.div`
     position:absolute;
     left:1.8rem;
     top:-.2rem;
-    // padding-top:.3rem;
     color: red;
     width:12rem;
     background-color: transparent;
@@ -781,7 +737,6 @@ const YouhuimxbStyle = styled.div`
     position:absolute;
     left:1.5rem;
     top:.5rem;
-    // padding-top:.3rem;
     color: #a9a9a9;
     width:12rem;
     background-color: transparent;
@@ -790,7 +745,6 @@ const YouhuimxbStyle = styled.div`
     position:absolute;
     left:4.9rem;
     top:.5rem;
-    // padding-top:.3rem;
     color: #a9a9a9;
     width:12rem;
     background-color: transparent;
@@ -799,26 +753,11 @@ const YouhuimxbStyle = styled.div`
     background-image: none;
     opacity:0;
 }
-// .wrapper .CommissionHeader{
-//     height:1.09rem;
-// }
-// .wrapper .CommissionHeader .navbar li{
-//     // height:1.09rem;
-//     padding-top:.15rem;
-// }
-// .wrapper .CommissionHeader .navbar .active{
-//     padding-bottom: .28rem;
-// }
-// .stor_name{
-//     font-size:0.32rem;
-//     height:1.17rem;
-//     line-height:1.17rem;
-// }
+
 .am-list-item .am-list-line{
     width:6rem;
 }
 .am-list-item .am-list-line .am-list-extra{
-    // padding-top:.5rem;
     color:#a9a9a9;
     text-align: left;
     font-size:.35rem;
@@ -827,8 +766,6 @@ const YouhuimxbStyle = styled.div`
 }
 .am-list-item .am-list-line .am-list-arrow{
     margin-left:4.5rem !important;
-    // background-image: none;
-    // opacity:0;
 }
 
 .time{
@@ -859,7 +796,6 @@ const YouhuimxbStyle = styled.div`
     position:absolute;
     left:0rem;
     top:2.6rem;
-    // padding-top:.3rem;
     color: #a9a9a9;
     width:12rem;
     background-color: transparent;
@@ -867,7 +803,6 @@ const YouhuimxbStyle = styled.div`
 .am-list-arrow am-list-arrow-horizontal{
     background-image: none;
     opacity:0;
-    // 
 }
 .fenglei div ul p{
     width:9.3rem;
@@ -876,8 +811,6 @@ const YouhuimxbStyle = styled.div`
     text-align:center;
     margin:.2rem 0rem;
     border-radius:.1rem;
-    // border:1px solid #dcdcdc;
-    // background-color: #f6f6f6;
 }
 .fenglei div ul li{
     overflow: hidden;
@@ -903,12 +836,9 @@ const YouhuimxbStyle = styled.div`
     position:relative;
     width:10rem;
     background-color: #f0f0f0;
-    // height:4rem;
 }
 .btn{
     margin-top:.3rem;
-    // position:absolute;
-    // bottom:.2rem;
     color:#fff;
     width:100%;
     background-color: #ed7912;

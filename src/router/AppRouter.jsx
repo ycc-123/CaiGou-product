@@ -54,6 +54,9 @@ import modifyPriceCategorymx from 'views/modifyPrice/modifyPriceCategory/childCo
 // 收银订单明细表
 import CashierOrder from 'views/CashierOrderDetails/CashierOrder'
 import CashierOrderDetails from 'views/CashierOrderDetails/CashierOrderDetails'
+import QuotePurchaseRequest from 'views/QuotePurchaseRequest/Category'
+import QuoteApplyOrder from 'views/QuotePurchaseRequest/ApplyOrder'
+import QuotePurchasemx from 'views/QuotePurchaseRequest/childCom/CategorySwiper'
 
 
 
@@ -84,6 +87,11 @@ const AppRouter = () => {
         <Route path='/ApplyOrderx/:id' exact component={ApplyOrderx} ></Route>
         <Route path='/ApplyOrder' exact component={ApplyOrder} ></Route>
         <Route path='/addApplyOrder' exact component={addApplyOrder} ></Route>
+        <Route path='/QuotePurchaseRequest/:id/:ck/:gy' exact component={QuotePurchaseRequest} ></Route>
+        <Route path='/QuoteApplyOrder/:ck/:gy' exact component={QuoteApplyOrder} ></Route>
+        <Route path='/QuotePurchasemx/:id' exact component={QuotePurchasemx} ></Route>
+
+
         {/* 报损单 */}
         <Route path='/LossReportList' exact component={LossReportList} ></Route>
         <Route path='/LossReportDetail/:id' exact component={LossReportDetail} ></Route>

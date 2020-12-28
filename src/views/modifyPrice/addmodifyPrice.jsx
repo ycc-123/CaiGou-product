@@ -70,11 +70,10 @@ export default class AddInventoryList extends Component {
     return (
       <AddPurchaseOrderStyle>
         <DocumentTitle title={'新建调价单'} />
-
         <div>
           <ul className='biao'>
             <li><span>*</span>调价门店：
-                                <Picker
+              <Picker
                 data={this.state.data}
                 cols={1}
                 className="forss"

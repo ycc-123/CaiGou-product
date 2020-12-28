@@ -3,23 +3,26 @@ import styled from 'styled-components'
 import { Toast } from 'antd-mobile';
 import { store } from 'store/index'
 import BetterScroll from 'common/betterScroll/BetterScroll'
+import {getPurchaseApplyDetail } from 'network/Api'
+
 
 function Tiao(value) {
   let tiao = value.item
+  console.log(tiao)
   return (
     <div className='tiao'>
-      <img className='t-img-l' src={tiao.img ? tiao.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+      <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
       <ul className='wen-zi'>
         <li className='wen-zi-t'>
-          <div className='name'>{tiao.name}</div>
+          <div className='name'>{tiao.goodsname}</div>
         </li>
         <li className='wen-zi-c'>
           <div >商品编码：{tiao.barcode}</div>
-          <p>{tiao.price}元/{tiao.danwei}</p>
+          <p>{tiao.price}元/{tiao.unit_name}</p>
         </li>
         <li className='wen-zi-f'>
           <div></div>
-          <p>采购数量：<span>{tiao.gnum}</span></p>
+          <p>采购数量：<span>{tiao.goodsnum}</span></p>
         </li>
       </ul>
     </div>
@@ -29,10 +32,29 @@ export default class Liebiao extends Component {
   constructor() {
     super()
     this.state = {
-      goodsList: []
+      goodsList: [],
+      itemGoods:[]
     }
   }
   componentDidMount() {
+    // 采购申请单默认商品
+    getPurchaseApplyDetail({
+      action: 'getPurchaseApplyDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        id: this.props.match.params.id,
+      }
+    }).then(res => {
+      console.log(res)
+      if(res.data.status===4001){
+        console.log(res.data.data.item)
+        this.setState({
+          goodsList:[...res.data.data.item,...store.getState().goodsList]
+        })
+      }else{
+        Toast(res.data.msg,2)
+      }
+    })
     console.log(store.getState().goodsList)
     if (store.getState().goodsList === []) {
       // Toast.info("无采购商品", 1.5)
@@ -69,7 +91,7 @@ export default class Liebiao extends Component {
                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
               </p>
               <div>{this.state.purchaseDetail.docno}</div>
-            </div> 
+            </div>
 
             <div className='conten-c' style={{ paddingTop: ".25rem" }}>
               <p>单据日期：{s2}</p>
@@ -78,11 +100,11 @@ export default class Liebiao extends Component {
               <p>单据仓库：{this.props.match.params.ck}</p>
               <p>单据状态：{"待提交"}</p>
             </div>
-          </div> */}
-          {/* <div className='footer'>
+          </div>
+          <div className='footer'>
             采购备注：{this.props.match.params.bz}
-          </div> */}
-        </div>
+          </div>*/}
+        </div> 
         {
           this.state.goodsList.map((value, key) => {
             // console.log(value)
@@ -316,14 +338,17 @@ const LiebiaoStyle = styled.div`
         font-size:.37rem;
         border:none;
         width:6rem;
+        // margin-top:.21rem;
         margin-left:.17rem;
         height: .75rem;
         line-height: .75rem;
+        // background-color: red;
+      
       }
       .search{
+        margin-bottom: .2rem;
         display:flex;
         margin-top:.21rem;
-        margin-bottom:.21rem;
         margin-left:.32rem;
         width:9.36rem;
         height: .75rem;
