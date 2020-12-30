@@ -21,23 +21,14 @@ export default class Shouyinmxb extends Component {
   componentDidMount() {
     new Swiper('.swiper-container', {
       autoplay:true,
-  //     effect : 'cube',
-  // cubeEffect: {
-  //   slideShadows: true,
-  //   shadow: true,
-  //   shadowOffset: 100,
-  //   shadowScale: 0.6
-  // },
       direction: 'horizontal', // 垂直切换选项
       loop: false, // 循环模式选项
-
       // 如果需要分页器
       pagination: {
         el: '.swiper-pagination',
         clickable: true
       }
     })
-    // console.log()
     getOrderDetail({
       action: 'getOrderDetail', data: {
         uniacid: store.getState().uniacid,
@@ -160,8 +151,6 @@ export default class Shouyinmxb extends Component {
                       <p style={{color:"transparent"}}>退款时间：{this.state.order.refund_time}</p>
                       <p style={{ color:"transparent" }}>退款时间：{this.state.order.refund_time}</p>
                       <p style={{color:"transparent", paddingBottom: ".25rem", marginBottom: "0" }}>退款时间：{this.state.order.refund_time}</p>
-
-
                     </div>
                   </div>
                 </div>

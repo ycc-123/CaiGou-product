@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseDetail, changePurchaseStatus, submitPurchase } from 'network/Api'
+import { getPurchaseDetail, changePurchaseStatus, submitPurchase,editPurchaseDetail } from 'network/Api'
 import { Toast, Modal, Button } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
+import Tiaomx from "./Tiaomx"
 
 const alert = Modal.alert;
 function Tiao(value) {
@@ -25,7 +26,24 @@ function Tiao(value) {
         <li className='wen-zi-f'>
           <div></div>
           <p>采购数量：<span>{tiao.gnum}</span></p>
-
+          <Button
+                style={{ position: "absolute", left: "6.6rem", color: "transparent", background: "transparent", width: "9rem" }}
+                className="btn_modal"
+                onClick={() => prompt(
+                  '填写', '请输入采购数量',
+                  [
+                    {
+                      text: '取消',
+                      onPress: value => console.log(111)
+                    },
+                    {
+                      text: '确定',
+                      onPress: value => {
+                        this.shuliang(value, tiao)
+                      }
+                    },
+                  ], 'default', null, [''])}
+              >111111</Button>
         </li>
       </ul>
     </div>
@@ -123,6 +141,26 @@ export default class PurchaseOrderDetailed extends Component {
       })
     }
   }
+  getChildrenMsg = (result, msg) => {
+  console.log(result, msg)
+  editPurchaseDetail({
+    action: 'editPurchaseDetail', data: {
+      uniacid: store.getState().uniacid,
+      uid: store.getState().uid,
+      id: this.props.match.params.id,
+      itemId: msg.id,
+      price: msg.price,
+      gnum: result,
+    }
+  }).then((res) => {
+    if (res.data.status === 4001) {
+      Toast.info("修改成功", 1)
+    } else {
+      Toast.info(res.data.msg, 2)
+    }
+  })
+
+  }
 
   search() {
     getPurchaseDetail({
@@ -205,7 +243,7 @@ export default class PurchaseOrderDetailed extends Component {
             {
               this.state.purchaseItem.map((value, key) => {
                 return (
-                  <Tiao item={value} key={key}></Tiao>
+                  <Tiaomx item={value} key={key} parent={this}></Tiaomx>
                 )
               })
             }

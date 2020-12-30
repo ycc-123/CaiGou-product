@@ -72,15 +72,19 @@ const AppRouter = () => {
     <Router>
       {/* 缓存路由 */}
       <CacheSwitch>
-      <CacheRoute path='/category/:id/:ck/:bz' when='always' component={category}></CacheRoute>
+      {/* <CacheRoute path='/category/:id/:ck/:bz' component={category}></CacheRoute> */}
       <CacheRoute path='/choiceGoods/:id' when='always' component={choiceGoods}></CacheRoute>
       <CacheRoute path='/pandianCategory/:id/:ck/:fl/:name' when='always' component={pandianCategory}></CacheRoute>
+      <CacheRoute path='/home' when='always' component={Home}></CacheRoute>
+      
+      <CacheRoute path='/CashierOrder' when='always' component={CashierOrder}></CacheRoute>
+
 
       </CacheSwitch>
 
       
       <Switch>
-        <Route path='/home' exact component={Home} ></Route>
+        {/* <Route path='/home' exact component={Home} ></Route> */}
         <Route path='/' exact component={Home} ></Route>
         {/* 采购申请单 */}
         <Route path='/Sqcgcategory/:id/:bz' exact component={Sqcgcategory} ></Route>
@@ -107,6 +111,7 @@ const AppRouter = () => {
         {/* 采购单 */}
         <Route path='/PurchaseOrderDetailed/:id' exact component={PurchaseOrderDetailed} ></Route>
         <Route path='/PurchaseOrder' exact component={PurchaseOrder} ></Route>
+        <Route path='/category/:id/:ck/:bz' exact component={category} ></Route>
         <Route path='/AddPurchaseOrder' exact component={AddPurchaseOrder} ></Route>
         <Route path='/Liebiao/:ck/:bz' exact component={Liebiao} ></Route>
         {/* 优惠明细表 */}
@@ -144,7 +149,7 @@ const AppRouter = () => {
         <Route path='/modifyPriceCategorymx' exact component={modifyPriceCategorymx} ></Route>
         {/* 收银订单明细表 */}
         <Route path='/CashierOrderDetails/:id' exact component={CashierOrderDetails} ></Route>
-        <Route path='/CashierOrder' exact component={CashierOrder} ></Route>
+        {/* <Route path='/CashierOrder' exact component={CashierOrder} ></Route> */}
 
 
 

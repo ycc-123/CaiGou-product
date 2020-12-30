@@ -71,6 +71,7 @@ class Category extends Component {
     })
   }
   render() {
+    localStorage.clear()
     const { title, type } = this.state
     let ida = this.props.match.params.id
     let bz = this.props.match.params.bz
@@ -111,7 +112,7 @@ class Category extends Component {
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
               <div className='left' 
-              onClick={()=>{this.mingxi()}}
+              // onClick={()=>{this.mingxi()}}
               >
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                 <div className='yuan'>{this.state.oldGoods.length ? this.state.oldGoods.length : 0}</div>
@@ -146,6 +147,7 @@ class Category extends Component {
     this.child.myName(e)
   }
   componentDidMount = () => {
+     
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,

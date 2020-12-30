@@ -63,6 +63,7 @@ class BetterScroll extends Component {
      }) */
     // 上拉事件
     this.BScroll.on('pullingUp', () => {
+      console.log(this.props.loadMore ,"==============", this.props.isLoadMore)
       if (this.props.loadMore && this.props.isLoadMore) {
         this.props.loadMore()
       }

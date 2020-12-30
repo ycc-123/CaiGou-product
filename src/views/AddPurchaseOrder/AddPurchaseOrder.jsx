@@ -63,6 +63,7 @@ export default class AddPurchaseOrder extends Component {
     })
   }
   createPurchase() {
+    localStorage.clear()
     let idgy = this.state.IDgy.toString()
     let idkc = this.state.IDck.toString()
 
@@ -156,7 +157,6 @@ export default class AddPurchaseOrder extends Component {
               </Picker>
             </li>
             <li onClick={()=>{this.shengqingmoban()
-              
             }}>
                 <div>引用采购申请：</div>
                 <div style={{color:"#a9a9a9",marginLeft:".3rem"}}>调用采购申请单</div>
@@ -168,6 +168,7 @@ export default class AddPurchaseOrder extends Component {
                 value={this.state.inputAmount} type="text" /></li>
             <li>
               <div>合同编号：</div>
+
               <input name="inputHetong"
                 onChange={this.inputChangeht.bind(this)}
                 value={this.state.inputHetong} type="text" /></li>

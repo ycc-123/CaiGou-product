@@ -65,6 +65,7 @@ export default class CashierOrderDetails extends Component {
       end_time: '',
       start_time: '',
       today_time: "",
+      before_time:"",
       kongbj: true,
       status: [
         { value: "0", label: "待付款" }, 
@@ -95,8 +96,12 @@ export default class CashierOrderDetails extends Component {
     var day2 = new Date();
     day2.setTime(day2.getTime());
     var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+    var s3 = day2.getFullYear()-3 + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+
+    console.log(s3)
     this.setState({
-      today_time: s2
+      today_time: s2,
+      before_time: s3
     })
     get_store({
       action: 'get_store', data: {
@@ -159,6 +164,7 @@ export default class CashierOrderDetails extends Component {
     })
   }
   shaixuan() {
+    this.isLoadMore = true
     if (this.state.zuantai === false) {
       this.setState({
         zuantai: true
@@ -195,15 +201,19 @@ export default class CashierOrderDetails extends Component {
         realname: this.state.inputmembername,
         member_mobile: this.state.inputorder,
         limit: this.state.limit,
-        page: this.state.page
+        page: 1
       }
     }).then((res) => {
+      console.log(this.isLoadMore)
+      
       if (res.data.status === 4001) {
         this.setState({
+          page:1,
           linshou: res.data.data.data,
           total: res.data.data.total,
           kongbj: true
         }, () => {
+          this.refs.scroll.BScroll.finishPullUp()
           this.refs.scroll.BScroll.refresh()
         })
       } else {
@@ -226,11 +236,12 @@ export default class CashierOrderDetails extends Component {
     }).then((res) => {
       if (res.data.status === 4001) {
         this.setState({
+          page:1,
           linshou: res.data.data.data,
           total: res.data.data.total,
-          loading: false
+          // loading: false
         }, () => {
-          // this.refs.scroll.BScroll.refresh()
+          this.refs.scroll.BScroll.refresh()
         })
       } else {
         Toast.info(res.data.msg, 1)
@@ -292,23 +303,23 @@ export default class CashierOrderDetails extends Component {
                   )
                 })
               }
-              {
+              {/* {
 
                 linshou.length > 0 &&
                 <div style={{ display: this.state.loading === false ? "none" : "block" }}>
                   <LoadingMore isLoading={this.isLoadMore} /></div>
-              }
+              } */}
             </div>
 
             <div className='fenglei' style={{ display: this.state.zuantai === false ? "none" : "block" }}>
               <div>日期
-                            <ul>
+                <ul>
                   <p><span style={{ position: "absolute", top: ".85rem", left: "4.7rem" }}>~</span>
                     <article className='articleone'></article>
                     <DatePicker
                       mode="date"
                       value={this.state.start}
-                      extra={this.state.today_time}
+                      extra={this.state.before_time}
                       onChange={v => this.setState({
                         start: v,
                         start_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate()
@@ -334,7 +345,7 @@ export default class CashierOrderDetails extends Component {
               </div>
 
               <div>所属商家
-                            <ul>
+                <ul>
                   <li>
                     <Picker
                       data={this.state.store_id}
@@ -352,7 +363,7 @@ export default class CashierOrderDetails extends Component {
               </div>
 
               <div >收银员
-                            <ul>
+                <ul>
                   <li>
                     <Picker
                       data={this.state.shouyinyuan}
@@ -370,7 +381,7 @@ export default class CashierOrderDetails extends Component {
               </div>
 
               <div >单据状态
-                            <ul>
+                <ul>
                   <li>
                     <Picker
                       data={this.state.status}
@@ -388,7 +399,7 @@ export default class CashierOrderDetails extends Component {
               </div>
 
               <div >支付方式：
-                            <ul>
+                <ul>
                   <li>
                     <Picker
                       data={this.state.zhifu}
@@ -401,12 +412,12 @@ export default class CashierOrderDetails extends Component {
                     >
                       <List.Item className='zhifu' arrow="horizontal"></List.Item>
                     </Picker>
-                  </li>
+                  </li> 
                 </ul>
               </div>
 
               <div >会员名称：
-                            <ul>
+                <ul>
                   <li>
                     <input className="member-name" type="text" placeholder="" name="inputmembername"
                       onChange={this.inputChange.bind(this)}
@@ -415,7 +426,7 @@ export default class CashierOrderDetails extends Component {
                 </ul>
               </div>
               <div >手机号
-                            <ul>
+                <ul>
                   <li>
                     <input className="tell" type="text" placeholder="" name="inputorder"
                       onChange={this.inputChange.bind(this)}
@@ -430,25 +441,25 @@ export default class CashierOrderDetails extends Component {
           <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
             <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
           </div>
-          <div className='foot'>
-            <div style={{ marginRight: ".3rem" }}>总计金额：<span>{this.state.total.all_total_price ? this.state.total.all_total_price : 0}</span></div>
-            <div style={{ marginRight: ".3rem" }}>当前结果：<span>{this.state.total.total_price ? this.state.total.total_price : 0}</span></div>
+          <div style={{display: this.state.zuantai === false ? "block" : "none"}}>
+          <div className='foot' >
+            <div style={{ marginRight: ".3rem" }}>
+              总计金额：<span>{this.state.total.all_total_price ? this.state.total.all_total_price : 0}</span>
+            </div>
+            <div style={{ marginRight: ".3rem" }}>
+              当前结果：<span>{this.state.total.total_price ? this.state.total.total_price : 0}</span>
+            </div>
+          </div>
           </div>
         </div>
       </YouhuimxbStyle>
     )
   }
   loadMore = () => {
-    // 加载数据时转圈
-    let loading = true
-    setTimeout(() => {
-      if (loading) {
-        this.setState({
-          loadingMore: true
-        })
-      }
-    }, 1000)
+  
+    
     if (this.isLoadMore) {
+      
       let zhifu_ID = this.state.zhifu_ID.toString()
       let ID_status = this.state.ID_status.toString()
       let IDsyy = this.state.IDsyy.toString()
@@ -481,7 +492,7 @@ export default class CashierOrderDetails extends Component {
           this.setState({
             page: page += 1
           })
-          loading = false
+          // loading = false
           this.refs.scroll.BScroll.finishPullUp()
           this.refs.scroll.BScroll.refresh()
         })

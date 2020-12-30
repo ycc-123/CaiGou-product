@@ -106,7 +106,16 @@ export default class Youhuimxb extends Component {
     })
   }
   shaixuan() {
-    this.state.zuantai === false ? this.setState({ zuantai: true }) : this.setState({ zuantai: false })
+    this.isLoadMore = true
+    if(this.state.zuantai === false){
+      this.setState({ zuantai: true },()=>{
+        this.refs.scroll.BScroll.refresh()
+      })
+    }else{
+      this.setState({ zuantai: false },()=>{
+        this.refs.scroll.BScroll.refresh()
+      })
+    } 
   }
   queding() {
     // console.log(this.state.IDsj,"=======",this.state.IDsyy,this.state.end_time,this.state.start_time)
@@ -124,16 +133,19 @@ export default class Youhuimxb extends Component {
         createid: IDsyy,
         store_id: IDsj,
         limit: this.state.limit,
-        page: this.state.page
+        page: 1
       }
     }).then((res) => {
+      console.log(this.isLoadMore)
       if (res.data.status === 4001) {
         this.setState({
+          page:1,
           linshou: res.data.data.data,
           total: res.data.data.total,
           kongbj: true
         }, () => {
-          // this.refs.scroll.BScroll.refresh()
+          this.refs.scroll.BScroll.finishPullUp()
+          this.refs.scroll.BScroll.refresh()
         })
       } else {
         Toast.info(res.data.msg, 1)
@@ -229,7 +241,7 @@ export default class Youhuimxb extends Component {
                     // value={this.state.dates}
                     onChange={v => this.setState({
                       start: v,
-                      start_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() + ' ' + v.getHours() + ':' + v.getMinutes() + ':' + v.getSeconds()
+                      start_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() 
                     })}
                   >
                     <List.Item className="start" arrow="horizontal"></List.Item>
@@ -242,7 +254,7 @@ export default class Youhuimxb extends Component {
                     value={this.state.end}
                     onChange={v => this.setState({
                       end: v,
-                      end_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() + ' ' + v.getHours() + ':' + v.getMinutes() + ':' + v.getSeconds()
+                      end_time: v.getFullYear() + '-' + (v.getMonth() + 1) + '-' + v.getDate() 
                     })}
                   >
                     <List.Item className="end" arrow="horizontal"></List.Item>
@@ -301,20 +313,18 @@ export default class Youhuimxb extends Component {
     )
   }
   loadMore = () => {
-    // 加载数据时转圈
-    let loading = true
-    setTimeout(() => {
-      if (loading) {
-        this.setState({
-          loadingMore: true
-        })
-      }
-    }, 1000)
+
+    let IDsyy = this.state.IDsyy.toString()
+    let IDsj = this.state.IDsj.toString()
     if (this.isLoadMore) {
       getRetailList({
         action: 'getRetailList', data: {
           uniacid: store.getState().uniacid,
           uid: store.getState().uid,
+          starttime: this.state.start_time,
+          endtime: this.state.end_time,
+          createid: IDsyy,
+          store_id: IDsj,
           limit: this.state.limit,
           page: this.state.page
         }
@@ -333,9 +343,6 @@ export default class Youhuimxb extends Component {
           this.setState({
             page: page += 1
           })
-
-
-          loading = false
           this.refs.scroll.BScroll.finishPullUp()
           this.refs.scroll.BScroll.refresh()
         })

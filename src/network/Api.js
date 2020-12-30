@@ -551,3 +551,15 @@ export function getOrderDetail(config) {
     data: config.data
   })
 }
+
+
+// 编辑采购单
+
+export function editPurchaseDetail(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

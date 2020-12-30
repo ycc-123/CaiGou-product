@@ -171,7 +171,7 @@ export default class ApplyOrder extends Component {
                             <div >
                               <p>单据日期：{v.docdate}</p>
                               <p>创建时间：{v.createtime}</p>
-                              <p>申请门店：{v.docdate}</p>
+                              <p>申请仓库：{v.warehouseName}</p>
                               <p>申请数量：{v.totalnum}</p>
                             </div>
 
