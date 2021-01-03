@@ -29,6 +29,7 @@ export default class InventoryList extends Component {
     }).then((res) => {
       if (res.data.status === 4001) {
         this.setState({
+          page: 2,
           data: res.data.data.data
         }, () => {
           this.refs.scroll.BScroll.refresh()

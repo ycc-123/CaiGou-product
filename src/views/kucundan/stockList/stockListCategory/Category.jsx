@@ -5,7 +5,7 @@ import CategoryLeftItem from './childCom/CategoryLeftItem'
 import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
-import { getProductCategoryAll, getStockList,getWarehouseList } from 'network/Api'
+import { getProductCategoryAll, getStockList, getWarehouseList } from 'network/Api'
 import { _categoryRight } from 'network/category'
 import KeepAlive from 'react-activation'
 import { Toast, Button, Modal } from 'antd-mobile';
@@ -25,12 +25,12 @@ class Category extends Component {
     super(props)
     this.state = {
       Bj: true,
-      ckkey:"",
-      cankuID:"",
-      flid:'',
-      totalgnum:"",
-      totalcostprice:"",
-      result:[],
+      ckkey: "",
+      cankuID: "",
+      flid: '',
+      totalgnum: "",
+      totalcostprice: "",
+      result: [],
       indexId: '',
       value: [],
       title: [],
@@ -43,8 +43,8 @@ class Category extends Component {
       inputSearch: '',
       mrqunangoods: [],
       Id: "",
-      kongbj:false,
-      xian:false
+      kongbj: false,
+      xian: false
     }
 
   }
@@ -85,17 +85,17 @@ class Category extends Component {
 
     })
   }
-  xianyin(){
-    if(this.state.xian===false){
-        this.setState({
-            xian:true
-        })
-    }else{
-        this.setState({
-            xian:false
-        })
+  xianyin() {
+    if (this.state.xian === false) {
+      this.setState({
+        xian: true
+      })
+    } else {
+      this.setState({
+        xian: false
+      })
     }
-}
+  }
   render() {
     const { title, type } = this.state
     // console.log(this.props.match.params.id)
@@ -103,43 +103,29 @@ class Category extends Component {
     let ckid = this.props.match.params.ck
     return (
       <CategoryStyle>
-    <DocumentTitle title={'库存单'} />
-
+        <DocumentTitle title={'库存单'} />
         <Fragment>
-          {/* <div className='search'>
-            <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"
-              onChange={this.inputChange.bind(this)}
-              value={this.state.inputSearch} />
-            <div className='img' onClick={() => { this.Search() }}>
-              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+          <div style={{ display: "flex" }}>
+            <div className='search'  >
+              <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch"
+                onChange={this.inputChange.bind(this)}
+                value={this.state.inputSearch} />
+              <div className='img' onClick={() => { this.Search() }}>
+                <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+              </div>
             </div>
-          </div> */}
-
-
-                    <div style={{ display: "flex" }}>
-                        <div className='search'  >
-                            <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="inputSearch" 
-                                    onChange={this.inputChange.bind(this)}
-                                    value={this.state.inputSearch}/>
-                            <div className='img' onClick={()=>{this.Search()}}>
-                                <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-                            </div>
-                        </div>
-                        <div className='sximg' >
-                            <img className='sximg-search' onClick={()=>{this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
-                        </div>
-                    </div>
-
-                    
-
+            <div className='sximg' >
+              <img className='sximg-search' onClick={() => { this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
+            </div>
+          </div>
           <div className='category-main'>
-            {type === 'goods' ? <Fragment><div className='categoryLeft'>
+           
+              <div className='categoryLeft'>
               <ul>
                 {title.length !== 0 && <BetterScroll config={scollConfig} style={scrollStyle} ref='scroll'>
                   <li className='category-left-head'></li>
                   {title.map((item, index) => {
                     return (
-                      
                       <CategoryLeftItem key={item.id + index}
                         item={item}
                         index={index}
@@ -150,51 +136,49 @@ class Category extends Component {
                 </BetterScroll>}
               </ul>
             </div>
-              <CategoryRight 
-             index={this.state.Id} 
-            goodsList={this.state.goods} onRef={this.onRef} 
-            aa={this.getChildValue.bind(this)} history={this.props.history} />
-            <div className='Bj' style={{ display: this.state.Bj === false ? "block" : "none" }}>
+              <CategoryRight
+                index={this.state.Id} flid={this.state.flid}
+                goodsList={this.state.goods} onRef={this.onRef}
+                aa={this.getChildValue.bind(this)} history={this.props.history} />
+              <div className='Bj' style={{ display: this.state.Bj === false ? "block" : "none" }}>
                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
               </div>
-            </Fragment> : <Fragment>
-              </Fragment>}
           </div>
 
-          <div className='fenglei' style={{display: this.state.xian===false?"none":"block"}}>
-                        <div>仓库名称
-                            <ul>
-                                {
-                                    this.state.result.map((v,k)=>{
-                                        return(
-                                            <li onClick={(e)=>{this.canku(v,k)}}
-                                            style={{background:this.state.cankuID===v.id?"#fff5ed":'',color:this.state.cankuID===v.id?"#ed7913":'',border:this.state.cankuID===v.id?"1px solid #ed7913":''}}
-                                            >{v.name}</li>
-                                        )
-                                    })
-                                }
-                            </ul>
-                        </div>
-                        <div className='btn' onClick={()=>{this.queding()}}>确定</div>
-                    </div>
+          <div className='fenglei' style={{ display: this.state.xian === false ? "none" : "block" }}>
+            <div>仓库名称
+              <ul>
+                {
+                  this.state.result.map((v, k) => {
+                    return (
+                      <li onClick={(e) => { this.canku(v, k) }}
+                        style={{ background: this.state.cankuID === v.id ? "#fff5ed" : '', color: this.state.cankuID === v.id ? "#ed7913" : '', border: this.state.cankuID === v.id ? "1px solid #ed7913" : '' }}
+                      >{v.name}</li>
+                    )
+                  })
+                }
+              </ul>
+            </div>
+            <div className='btn' onClick={() => { this.queding() }}>确定</div>
+          </div>
 
-                <div className='foot' >
-                    <div>总库存：<span>{this.state.totalgnum?this.state.totalgnum:0}</span></div>
-                    <div style={{ marginRight: ".6rem" }}>总库存金额：<span>{this.state.totalcostprice?this.state.totalcostprice:0}</span></div>
-                </div>
+          <div className='foot' >
+            <div>总库存：<span>{this.state.totalgnum ? this.state.totalgnum : 0}</span></div>
+            <div style={{ marginRight: ".6rem" }}>总库存金额：<span>{this.state.totalcostprice ? this.state.totalcostprice : 0}</span></div>
+          </div>
         </Fragment>
       </CategoryStyle>
     )
   }
-  canku(v,k){
+  canku(v, k) {
     // console.log(v.id)
     this.setState({
-        cankuID:v.id,
+      cankuID: v.id,
     })
-}
-  queding(){
+  }
+  queding() {
     this.setState({
-      xian:false,
+      xian: false,
     })
     console.log(this.state.flid)
     getStockList({
@@ -207,15 +191,15 @@ class Category extends Component {
         page: "1"
       }
     }).then(res => {
-     
+
       if (res.data.status === 4001) {
-       this.setState({
-        Bj: true,
-        totalgnum: res.data.data.totalgnum,
-        totalcostprice: res.data.data.totalcostprice,
-        goods: res.data.data.data === null ? [] : res.data.data.data
-       })
-       
+        this.setState({
+          Bj: true,
+          totalgnum: res.data.data.totalgnum,
+          totalcostprice: res.data.data.totalcostprice,
+          goods: res.data.data.data === null ? [] : res.data.data.data
+        })
+
       } else {
         this.setState({
           Bj: false,
@@ -223,7 +207,7 @@ class Category extends Component {
           totalgnum: 0,
           totalcostprice: 0,
         })
-        Toast.info(res.data.msg,2)
+        Toast.info(res.data.msg, 2)
       }
     })
   }
@@ -258,13 +242,13 @@ class Category extends Component {
             uid: store.getState().uid,
             warehouseid: this.props.match.params.ck,
             categoryid: Id[0].id,
-            limit: "300",
+            limit: "10",
             page: "1"
           }
         }).then(res => {
           // console.log(res)
           if (res.data.status === 4001) {
-           
+
             this.setState({
               Bj: true,
               totalgnum: res.data.data.totalgnum,
@@ -292,24 +276,24 @@ class Category extends Component {
     })
     getWarehouseList({
       action: 'getWarehouseList', data: {
-          uniacid: store.getState().uniacid,
-          uid: store.getState().uid,
-          type:"1",
-          limit:"43",
-          page:"1"
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        type: "1",
+        limit: "43",
+        page: "1"
       }
-  }).then((res) => {
-      if(res.data.status===4001){
-          var bb = res.data.data.data.map(o=>{return{id:o.id,name:o.name}});
-              let aa=[{id:"",name:"全部仓库"}]
-              let result=[...aa,...bb]
-          this.setState({
-              result
-          })
-      }else{
-          Toast.info(res.data.msg,2)
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        var bb = res.data.data.data.map(o => { return { id: o.id, name: o.name } });
+        let aa = [{ id: "", name: "全部仓库" }]
+        let result = [...aa, ...bb]
+        this.setState({
+          result
+        })
+      } else {
+        Toast.info(res.data.msg, 2)
       }
-  })
+    })
   }
 
   onChangeActive = index => {
@@ -319,15 +303,15 @@ class Category extends Component {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         warehouseid: this.state.cankuID,
-        categoryid:this.state.id[index].id,
-        limit: "300",
+        categoryid: this.state.id[index].id,
+        limit: "1000",
         page: "1"
       }
     }).then(res => {
       if (res.data.status === 4001) {
         this.setState({
           Bj: true,
-          flid:this.state.id[index].id,
+          flid: this.state.id[index].id,
           totalgnum: res.data.data.totalgnum,
           totalcostprice: res.data.data.totalcostprice,
           goods: res.data.data.data === null ? [] : res.data.data.data
@@ -335,7 +319,7 @@ class Category extends Component {
       } else {
         this.setState({
           Bj: false,
-          flid:this.state.id[index].id,
+          flid: this.state.id[index].id,
           goods: [],
           totalgnum: 0,
           totalcostprice: 0,
@@ -343,9 +327,9 @@ class Category extends Component {
         Toast.info(res.data.msg, 2)
       }
     })
-      this.setState({
-        defaultIndex: index
-      })
+    this.setState({
+      defaultIndex: index
+    })
   }
 }
 const CategoryStyle = styled.div`

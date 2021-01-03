@@ -91,6 +91,7 @@ export default class Youhuimxb extends Component {
       // console.log(res)
       if (res.data.status === 4001) {
         this.setState({
+          page:2,
           linshou: res.data.data.data,
           total: res.data.data.total
         }, () => {
@@ -139,7 +140,7 @@ export default class Youhuimxb extends Component {
       console.log(this.isLoadMore)
       if (res.data.status === 4001) {
         this.setState({
-          page:1,
+          page:2,
           linshou: res.data.data.data,
           total: res.data.data.total,
           kongbj: true
@@ -222,7 +223,6 @@ export default class Youhuimxb extends Component {
               })
             }
             {
-
               linshou.length > 0 &&
               <LoadingMore isLoading={this.isLoadMore} />
             }

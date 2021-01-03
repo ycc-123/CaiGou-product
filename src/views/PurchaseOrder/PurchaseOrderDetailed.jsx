@@ -159,7 +159,6 @@ export default class PurchaseOrderDetailed extends Component {
       Toast.info(res.data.msg, 2)
     }
   })
-
   }
 
   search() {

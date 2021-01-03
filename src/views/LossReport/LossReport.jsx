@@ -61,6 +61,7 @@ export default class LossReport extends Component {
         let aa = [{ id: "", name: "全部门店" }]
         let result = [...aa, ...bb]
         this.setState({
+          page: "2",
           result
         })
       } else {
@@ -111,6 +112,7 @@ export default class LossReport extends Component {
     }).then((res) => {
       if (res.data.status === 4001) {
         this.setState({
+          page: 2,
           damageList: res.data.data.data,
           zongnp: res.data.data.total,
           kongbj: true
@@ -404,14 +406,7 @@ export default class LossReport extends Component {
     )
   }
   loadMore = () => {
-    let loading = true
-    setTimeout(() => {
-      if (loading) {
-        this.setState({
-          loadingMore: true
-        })
-      }
-    }, 1000)
+
     if (this.isLoadMore) {
       getDamageDetailList({
         action: 'getDamageDetailList', data: {
@@ -434,7 +429,6 @@ export default class LossReport extends Component {
           this.setState({
             page: page += 1
           })
-          loading = false
           this.refs.scroll.BScroll.finishPullUp()
           this.refs.scroll.BScroll.refresh()
         })

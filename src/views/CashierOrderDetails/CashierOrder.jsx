@@ -58,7 +58,7 @@ export default class CashierOrderDetails extends Component {
       shouyinyuan: [],
       linshou: [],
       limit: "10",
-      page: "1",
+      page: 0,
       zuantai: false,
       IDsyy: '',
       IDsj: '',
@@ -208,7 +208,7 @@ export default class CashierOrderDetails extends Component {
       
       if (res.data.status === 4001) {
         this.setState({
-          page:1,
+          page:2,
           linshou: res.data.data.data,
           total: res.data.data.total,
           kongbj: true

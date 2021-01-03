@@ -48,24 +48,27 @@ export default class Liebiao extends Component {
       console.log(res)
       if(res.data.status===4001){
         console.log(res.data.data.item)
+        // let newgoods=[...this.state.goodsList,...store.getState().goodsList]
         this.setState({
-          goodsList:[...res.data.data.item,...store.getState().goodsList]
+          goodsList:[...res.data.data.item,...store.getState().goodsList] 
+        },()=>{
+          console.log(this.state.goodsList,"===========",store.getState().goodsList)
         })
       }else{
         Toast(res.data.msg,2)
       }
     })
     console.log(store.getState().goodsList)
-    if (store.getState().goodsList === []) {
-      // Toast.info("无采购商品", 1.5)
-      this.setState({
-        goodsList: []
-      })
-    } else {
-      this.setState({
-        goodsList: store.getState().goodsList
-      })
-    }
+    // if (store.getState().goodsList === []) {
+    //   // Toast.info("无采购商品", 1.5)
+    //   this.setState({
+    //     goodsList: []
+    //   })
+    // } else {
+    //   this.setState({
+    //     goodsList: store.getState().goodsList
+    //   })
+    // }
   }
   render() {
     const scollConfig = {

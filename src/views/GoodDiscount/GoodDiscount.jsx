@@ -33,7 +33,7 @@ export default class LossReport extends Component {
       time: '',
       today_time: '',
       limit: "10",
-      page: 1,
+      page: 2,
       kongbj: true
     }
     this.isLoadMore = true
@@ -48,7 +48,7 @@ export default class LossReport extends Component {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         limit: this.state.limit,
-        page: this.state.page
+        page: 1
       }
     }).then((res) => {
       // console.log(res.data.data.data)
@@ -113,6 +113,7 @@ export default class LossReport extends Component {
     }).then((res) => {
       if (res.data.status === 4001) {
         this.setState({
+          page: "2",
           GoodsList: res.data.data.data,
           Goodszong: res.data.data.total,
           kongbj: true,
@@ -436,8 +437,8 @@ export default class LossReport extends Component {
           endtime: this.state.end_data,
           status: this.state.status,
           store_id: this.state.cankuID,
-          limit: "30",
-          page: "1"
+          limit: "10",
+          page: this.state.page
         }
       }).then((res) => {
         let good = res.data.data.data.length

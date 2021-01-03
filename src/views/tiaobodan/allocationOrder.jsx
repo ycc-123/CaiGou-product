@@ -29,6 +29,7 @@ export default class InventoryList extends Component {
     }).then((res) => {
       if (res.data.status === 4001) {
         this.setState({
+          page: 2,
           data: res.data.data.data
         }, () => {
           this.refs.scroll.BScroll.refresh()
@@ -132,21 +133,11 @@ export default class InventoryList extends Component {
     )
   }
   loadMore = () => {
-    // 加载数据时转圈
-    let loading = true
-    setTimeout(() => {
-      if (loading) {
-        this.setState({
-          loadingMore: true
-        })
-      }
-    }, 1000)
     if (this.isLoadMore) {
       getWarehouseChangeList({
         action: 'getWarehouseChangeList', data: {
           uniacid: store.getState().uniacid,
           uid: store.getState().uid,
-          type: "1",
           limit: this.state.limit,
           page: this.state.page
         }
@@ -162,7 +153,6 @@ export default class InventoryList extends Component {
           this.setState({
             page: page += 1
           })
-          loading = false
           this.refs.scroll.BScroll.finishPullUp()
           this.refs.scroll.BScroll.refresh()
         })

@@ -1,5 +1,5 @@
 import React from 'react'
-import { HashRouter as Router, Route, Switch } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch,Redirect } from 'react-router-dom'
 import CacheRoute, { CacheSwitch } from 'react-router-cache-route'
 
 import Home from 'views/home/Home'
@@ -78,6 +78,8 @@ const AppRouter = () => {
       <CacheRoute path='/home' when='always' component={Home}></CacheRoute>
       
       <CacheRoute path='/CashierOrder' when='always' component={CashierOrder}></CacheRoute>
+      <CacheRoute path='/Youhuimxb' when='always' component={Youhuimxb}></CacheRoute>
+      <Redirect from='/' exact to='/home'></Redirect>
 
 
       </CacheSwitch>
@@ -85,7 +87,7 @@ const AppRouter = () => {
       
       <Switch>
         {/* <Route path='/home' exact component={Home} ></Route> */}
-        <Route path='/' exact component={Home} ></Route>
+        {/* <Route path='/' exact component={Home} ></Route> */}
         {/* 采购申请单 */}
         <Route path='/Sqcgcategory/:id/:bz' exact component={Sqcgcategory} ></Route>
         <Route path='/ApplyOrderx/:id' exact component={ApplyOrderx} ></Route>
@@ -115,7 +117,7 @@ const AppRouter = () => {
         <Route path='/AddPurchaseOrder' exact component={AddPurchaseOrder} ></Route>
         <Route path='/Liebiao/:ck/:bz' exact component={Liebiao} ></Route>
         {/* 优惠明细表 */}
-        <Route path='/Youhuimxb' exact component={Youhuimxb} ></Route>
+        {/* <Route path='/Youhuimxb' exact component={Youhuimxb} ></Route> */}
         <Route path='/Shouyinmxb/:id/:page' exact component={Shouyinmxb} ></Route>
         {/* 商品优惠汇总 */}
         <Route path='/GoodDiscount' exact component={GoodDiscount} ></Route>

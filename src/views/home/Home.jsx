@@ -77,7 +77,7 @@ export default class Home extends Component {
               </div>
               <div style={{position:"absolute",top:"2.2rem",left:".5rem"}}>版本信息</div>
               <div className="banben">
-                  v1.1.2.1.6
+                  v1.1.2.1.7
               </div>
               <p
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "1rem", left: "0rem", color: "transparent", background: "transparent" }}

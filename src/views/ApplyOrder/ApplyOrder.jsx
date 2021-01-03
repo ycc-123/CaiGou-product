@@ -29,6 +29,7 @@ export default class ApplyOrder extends Component {
     }).then((res) => {
       if (res.data.status === 4001) {
         this.setState({
+          page: 2,
           tiao: res.data.data.data
         }, () => {
           this.refs.scroll.BScroll.refresh()
