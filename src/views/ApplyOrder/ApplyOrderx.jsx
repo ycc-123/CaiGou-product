@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { getPurchaseApplyDetail, submitPurchaseApply } from 'network/Api'
 import BetterScroll from 'common/betterScroll/BetterScroll'
-import { Toast } from 'antd-mobile';
+import { Toast,Button,Modal } from 'antd-mobile';
 import { store } from "store/index";
+import Tiaomx from "./Tiaomx"
 import DocumentTitle from 'react-document-title'
+
 export default class ApplyOrderx extends Component {
   constructor() {
     super()
@@ -13,7 +15,8 @@ export default class ApplyOrderx extends Component {
       tiao: [],
       sum: '',
       remark: '',
-      inputSearch: ""
+      inputSearch: "",
+      newNum: ''
     }
   }
   componentDidMount() {
@@ -131,22 +134,7 @@ export default class ApplyOrderx extends Component {
             {
               this.state.tiao.map((v, k) => {
                 return (
-                  <div className='tiao' key={k}>
-                    <img className='t-img-l' src={v.image ? v.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
-                    <ul className='wen-zi'>
-                      <li className='wen-zi-t'>
-                        <div className='name'>{v.goodsname}</div>
-                      </li>
-                      <li className='wen-zi-c'>
-                        <div >商品编码：{v.barcode}</div>
-                        <p>{v.price}元/{v.unit_name}</p>
-                      </li>
-                      <li className='wen-zi-f'>
-                        <div></div>
-                        <p>申请数量：<span>{v.goodsnum}</span></p>
-                      </li>
-                    </ul>
-                  </div>
+                  <Tiaomx value={v} id={this.props.match.params.id}></Tiaomx>
                 )
               })
             }

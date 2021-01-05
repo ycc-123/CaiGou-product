@@ -58,14 +58,8 @@ import QuotePurchaseRequest from 'views/QuotePurchaseRequest/Category'
 import QuoteApplyOrder from 'views/QuotePurchaseRequest/ApplyOrder'
 import QuotePurchasemx from 'views/QuotePurchaseRequest/childCom/CategorySwiper'
 
-
-
-
 // 测试
 import Text from 'views/ApplyOrder/Text'
-
-
-
 
 const AppRouter = () => {
   return (
@@ -76,14 +70,11 @@ const AppRouter = () => {
       <CacheRoute path='/choiceGoods/:id' when='always' component={choiceGoods}></CacheRoute>
       <CacheRoute path='/pandianCategory/:id/:ck/:fl/:name' when='always' component={pandianCategory}></CacheRoute>
       <CacheRoute path='/home' when='always' component={Home}></CacheRoute>
-      
       <CacheRoute path='/CashierOrder' when='always' component={CashierOrder}></CacheRoute>
       <CacheRoute path='/Youhuimxb' when='always' component={Youhuimxb}></CacheRoute>
       <Redirect from='/' exact to='/home'></Redirect>
 
-
       </CacheSwitch>
-
       
       <Switch>
         {/* <Route path='/home' exact component={Home} ></Route> */}
@@ -96,7 +87,6 @@ const AppRouter = () => {
         <Route path='/QuotePurchaseRequest/:id/:ck/:gy' exact component={QuotePurchaseRequest} ></Route>
         <Route path='/QuoteApplyOrder/:ck/:gy' exact component={QuoteApplyOrder} ></Route>
         <Route path='/QuotePurchasemx/:id' exact component={QuotePurchasemx} ></Route>
-
 
         {/* 报损单 */}
         <Route path='/LossReportList' exact component={LossReportList} ></Route>
@@ -152,10 +142,6 @@ const AppRouter = () => {
         {/* 收银订单明细表 */}
         <Route path='/CashierOrderDetails/:id' exact component={CashierOrderDetails} ></Route>
         {/* <Route path='/CashierOrder' exact component={CashierOrder} ></Route> */}
-
-
-
-
 
         {/* 测试 */}
         <Route path='/Text' exact component={Text} ></Route>

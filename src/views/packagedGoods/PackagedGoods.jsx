@@ -148,6 +148,28 @@ const Into = (props) => {
               </div>
             </div>
           </div>
+          <div className="type flex-column">
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <span>库存单位: </span>
+              </div>
+              <div className="right">
+                <Picker
+                  data={unit}
+                  cols={1}
+                  className="forss"
+                  extra="选择库存单位"
+                  value={stockUnit}
+                  onChange={e => { setStockUnit(e) }}
+                  onOk={v => setStockUnit(v)}
+                >
+                  <List.Item className='kuncun' arrow="horizontal"></List.Item>
+                </Picker>
+              </div>
+            </div>
+          </div>
         </TAddGoodsStyle>
         <AddGoodsStyle>
           <div className="type flex-column">
@@ -282,7 +304,8 @@ const Into = (props) => {
         posprice: retailPrice,
         memberprice: setPrice,
         name: goodName,
-        unit: sellUnit.toString(),
+        changeunit: sellUnit.toString(),
+        unit: stockUnit.toString(),
         is_membership: memberInterests === true ? "2" : "1",
         is_memberprice: memberPrice === true ? "2" : "1",
         is_plu_goods: matchGood === true ? "2" : "1",
@@ -365,6 +388,14 @@ const TAddGoodsStyle = styled.div`
 }
 .am-list-item .am-list-line .am-list-arrow{
     margin-left:2.5rem !important;
+}
+.kuncun{
+  position:absolute;
+  left:3rem;
+  top:4.8rem;
+  color: red;
+  width:12rem;
+  background-color: transparent;
 }
 .kcdwtimes{
     position:absolute;

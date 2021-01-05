@@ -47,15 +47,15 @@ class CategoryRight extends Component {
       <div className='categoryRight'>
         <ul>
           <BetterScroll config={scollConfig} style={scrollStyle} ref='scroll' loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
-            {(Number(this.state.goods_num)>9 ? goods: goodsList).map((item, index) => {
+            {goodsList.map((item, index) => {
               return (
                   <CategoryRightItem key={item.id + index} goods={item} parent={this} />
               )
             })}
-            {
+            {/* {
               goodsList.length > 0 &&
               <LoadingMore isLoading={this.isLoadMore} />
-            }
+            } */}
           </BetterScroll>
         </ul>
       </div>
@@ -174,40 +174,40 @@ class CategoryRight extends Component {
     this.refs.scroll.BScroll.refresh()
 
   }
-  loadMore = () => {
-    if (this.isLoadMore) {
-      getStockList({
-        action: 'getStockList', data: {
-          uniacid: store.getState().uniacid,
-          uid: store.getState().uid,
-          // warehouseid: this.state.cankuID,
-          categoryid: this.props.flid,
-          limit: "10",
-          page: this.state.page
-        }
-      }).then(res => {
-        const { goodsList } = this.props
+  // loadMore = () => {
+  //   if (this.isLoadMore) {
+  //     getStockList({
+  //       action: 'getStockList', data: {
+  //         uniacid: store.getState().uniacid,
+  //         uid: store.getState().uid,
+  //         // warehouseid: this.state.cankuID,
+  //         categoryid: this.props.flid,
+  //         limit: "10",
+  //         page: this.state.page
+  //       }
+  //     }).then(res => {
+  //       const { goodsList } = this.props
 
-        // 如果长度不等于得时候加载 那么是到底了
-        if (res.data.data.data.length < this.state.limit) {
-          this.isLoadMore = false
-        }
-        this.setState({
-          goodsList: [...this.state.goodsList, ...res.data.data.data],
-          goods_num:res.data.data.data.length,
-          loadingMore: false
-        }, () => {
-          console.log(this.state.goodsList)
-          let page = Number(this.state.page)
-          this.setState({
-            page: page += 1
-          })
-          this.refs.scroll.BScroll.finishPullUp()
-          this.refs.scroll.BScroll.refresh()
-        })
-      })
-    } else { }
-  }
+  //       // 如果长度不等于得时候加载 那么是到底了
+  //       if (res.data.data.data.length < this.state.limit) {
+  //         this.isLoadMore = false
+  //       }
+  //       this.setState({
+  //         goodsList: [...this.state.goodsList, ...res.data.data.data],
+  //         goods_num:res.data.data.data.length,
+  //         loadingMore: false
+  //       }, () => {
+  //         console.log(this.state.goodsList)
+  //         let page = Number(this.state.page)
+  //         this.setState({
+  //           page: page += 1
+  //         })
+  //         this.refs.scroll.BScroll.finishPullUp()
+  //         this.refs.scroll.BScroll.refresh()
+  //       })
+  //     })
+  //   } else { }
+  // }
 }
 
 export default CategoryRight;

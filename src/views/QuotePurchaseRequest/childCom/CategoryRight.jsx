@@ -87,10 +87,10 @@ class CategoryRight extends Component {
         return arr.push(aa);
       })
       console.log(arr)
-      // localStorage.setItem('addgoods',JSON.stringify(arr));
       const goodsList = saveGoods(arr)
       store.dispatch(goodsList)
     })
+
   }
   componentDidMount() {
     this.props.onRef(this)

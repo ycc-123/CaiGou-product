@@ -292,6 +292,17 @@ export default class CashierOrderDetails extends Component {
             </div>
           </div>
 
+          <div style={{display: this.state.zuantai === false ? "block" : "none"}}>
+          <div className='foot' >
+            <div style={{ marginRight: ".3rem" }}>
+              总计金额：<span>{this.state.total.all_total_price ? this.state.total.all_total_price : 0}</span>
+            </div>
+            <div style={{ marginRight: ".3rem" }}>
+              当前结果：<span>{this.state.total.total_price ? this.state.total.total_price : 0}</span>
+            </div>
+          </div>
+          </div>
+
           <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "1.5rem" }} loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
             <div style={{ display: this.state.zuantai === false ? "block" : "none" }}>
               {
@@ -441,16 +452,7 @@ export default class CashierOrderDetails extends Component {
           <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
             <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
           </div>
-          <div style={{display: this.state.zuantai === false ? "block" : "none"}}>
-          <div className='foot' >
-            <div style={{ marginRight: ".3rem" }}>
-              总计金额：<span>{this.state.total.all_total_price ? this.state.total.all_total_price : 0}</span>
-            </div>
-            <div style={{ marginRight: ".3rem" }}>
-              当前结果：<span>{this.state.total.total_price ? this.state.total.total_price : 0}</span>
-            </div>
-          </div>
-          </div>
+         
         </div>
       </YouhuimxbStyle>
     )

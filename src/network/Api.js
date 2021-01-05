@@ -563,3 +563,14 @@ export function editPurchaseDetail(config) {
     data: config.data
   })
 }
+
+// 采购申请单详情修改
+
+export function editPurchaseApplyDetail(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

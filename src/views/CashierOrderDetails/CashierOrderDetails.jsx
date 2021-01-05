@@ -4,7 +4,7 @@ import { getOrderDetail } from 'network/Api'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 import { Toast } from 'antd-mobile';
-
+import BetterScroll from 'common/betterScroll/BetterScroll'
 import Swiper from 'swiper'
 import "swiper/swiper.less"
 
@@ -42,7 +42,7 @@ export default class Shouyinmxb extends Component {
           data: res.data.data.data,
           order: res.data.data.order
         }, () => {
-          // this.refs.scroll.BScroll.refresh()
+          this.refs.scroll.BScroll.refresh()
         })
       } else {
         Toast.info(res.data.msg, 2)
@@ -50,7 +50,6 @@ export default class Shouyinmxb extends Component {
     })
   }
   goodsChange(e) {
-    // console.log(e.target.value)
     this.setState({
       [e.target.name]: e.target.value
     })
@@ -69,7 +68,7 @@ export default class Shouyinmxb extends Component {
           data: res.data.data.data,
           order: res.data.data.order
         }, () => {
-          // this.refs.scroll.BScroll.refresh()
+          this.refs.scroll.BScroll.refresh()
         })
       } else {
         Toast.info(res.data.msg, 2)
@@ -78,6 +77,9 @@ export default class Shouyinmxb extends Component {
 
   }
   render() {
+    const scrollConfig = {
+			probeType: 1
+		}
     let Color = ''
     if (this.state.order.statusName === "已付款") {
       Color = "#00B500"
@@ -167,6 +169,7 @@ export default class Shouyinmxb extends Component {
                 <li className='xji'>小计</li>
               </ul>
             </div>
+            <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"9rem",bottom:"0"}}>
             {
               this.state.data.map((v, k) => {
                 return (
@@ -183,6 +186,7 @@ export default class Shouyinmxb extends Component {
                 )
               })
             }
+            </BetterScroll>
           </div>
         })
 

@@ -242,7 +242,7 @@ class Category extends Component {
             uid: store.getState().uid,
             warehouseid: this.props.match.params.ck,
             categoryid: Id[0].id,
-            limit: "10",
+            limit: "1000",
             page: "1"
           }
         }).then(res => {

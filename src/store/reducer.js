@@ -1,6 +1,6 @@
 import {
     SAVE_UID, SAVE_UNIACID, SAVE_GOODS, SAVE_CANKU, SAVE_TIAOBOGOODS, SAVE_YOUHUIMINGXB,
-    SAVE_PACKAGEDGOODS
+    SAVE_PACKAGEDGOODS,SAVE_SQGOODS
 } from './actionTypes'
 
 
@@ -11,14 +11,15 @@ const defaultState = {
     tiaoboxqck: [],
     tiaobogoods: [],
     youhuimxbiao: [],
-    packagedGoods: []
-
+    packagedGoods: [],
+    sqgoods:[]
 
 }
 
 
 // export default (state = defaultState, action) => {
 //     let newState = JSON.parse(JSON.stringify(state))
+
 //     switch (action.type) {
 //         // 保存商品
 //         case SAVE_GOODS:
@@ -57,6 +58,8 @@ const defaultState = {
 function reducer(state = defaultState, action) {
     //  reducer 是一个纯函数
     switch (action.type) {
+      case SAVE_SQGOODS:
+        return { ...state, sqgoods: action.data }
       case SAVE_GOODS:
         return { ...state, goodsList: action.data }
       case SAVE_UID:
@@ -74,7 +77,7 @@ function reducer(state = defaultState, action) {
       default:
         return state;
     }
-  
+    
   }
   
   export default reducer;

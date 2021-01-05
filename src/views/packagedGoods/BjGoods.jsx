@@ -15,6 +15,7 @@ const Into = (props) => {
   const [goodName, setgoodName] = useState('');
   const [goodCategory, setGoodCategory] = useState('');
   const [goodCode, setGoodCode] = useState('');
+  const [stockUnit, setStockUnit] = useState('');
   const [sellUnit, setSellUnit] = useState('');
   const [retailPrice, setRetailPrice] = useState('');
   const [setPrice, setSetPrice] = useState('');
@@ -169,6 +170,28 @@ const Into = (props) => {
               </div>
             </div>
           </div>
+          <div className="type flex-column">
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <span>库存单位: </span>
+              </div>
+              <div className="right">
+                <Picker
+                  data={unit}
+                  cols={1}
+                  className="forss"
+                  extra={morengoods.changeunit_name}
+                  value={stockUnit}
+                  onChange={e => { setStockUnit(e) }}
+                  onOk={v => setStockUnit(v)}
+                >
+                  <List.Item className='kuncun' arrow="horizontal"></List.Item>
+                </Picker>
+              </div>
+            </div>
+          </div>
         </TAddGoodsStyle>
         <AddGoodsStyle>
           <div className="type flex-column">
@@ -304,9 +327,15 @@ const Into = (props) => {
         if (v.label === morengoods.unit_name) {
           aa = v
         }
-        return ""
       })
       let cc = aa.value
+      let bb = {}
+      unit.map((v, k) => {
+        if (v.label === morengoods.changeunit_name) {
+          bb = v
+        }
+      })
+      let kc = bb.value
       editProduct({
         action: 'editProduct', data: {
           uniacid: store.getState().uniacid,
@@ -317,7 +346,8 @@ const Into = (props) => {
           posprice: retailPrice ? retailPrice : morengoods.posprice,
           memberprice: setPrice ? setPrice : morengoods.memberprice,
           name: goodName ? goodName : morengoods.name,
-          unit: sellUnit.toString() ? sellUnit.toString() : cc,
+          unit: stockUnit.toString() ? stockUnit.toString() : kc,
+          changeunit: sellUnit.toString() ? sellUnit.toString() : cc,
           is_membership: memberInterests === true ? "2" : "1" ? memberInterests === true ? "2" : "1" : morengoods.is_membership,
           is_memberprice: memberPrice === true ? "2" : "1" ? memberPrice === true ? "2" : "1" : morengoods.is_memberprice,
           is_plu_goods: matchGood === true ? "2" : "1" ? matchGood === true ? "2" : "1" : morengoods.is_plu_goods,
@@ -459,6 +489,14 @@ const TAddGoodsStyle = styled.div`
     color: red;
     width:12rem;
     background-color: transparent;
+}
+.kuncun{
+  position:absolute;
+  left:3rem;
+  top:4.8rem;
+  color: red;
+  width:12rem;
+  background-color: transparent;
 }
 .time{
     position:absolute;
