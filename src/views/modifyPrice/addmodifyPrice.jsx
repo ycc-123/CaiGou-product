@@ -53,7 +53,7 @@ export default class AddInventoryList extends Component {
     }).then(res => {
       // console.log(res)
       if (res.data.status === 4001) {
-        this.props.history.push(`/modifyPriceCategory/${res.data.data}`)
+        this.props.history.push(`/modifyPriceCategory/${res.data.data}/${this.state.sValue.toString()}`)
         Toast.success(res.data.msg, 2)
       } else {
         Toast.info(res.data.msg, 2)

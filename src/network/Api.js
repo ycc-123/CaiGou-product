@@ -574,3 +574,15 @@ export function editPurchaseApplyDetail(config) {
     data: config.data
   })
 }
+
+
+// 商品调价单明细添加
+
+export function addPriceModifyDetail(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

@@ -84,10 +84,10 @@ class CategoryRight extends Component {
           price: price[k],
           goodsname: this.state.goods[k].name,
         }
-        return arr.push(aa);
+        return aa;
       })
       console.log(arr)
-      const goodsList = saveGoods(arr)
+      const goodsList = saveGoods(aa)
       store.dispatch(goodsList)
     })
 
@@ -126,7 +126,7 @@ class CategoryRight extends Component {
 
 
     console.log(e, result)
-    if (this.state.login[0] === undefined) {
+    if (false) {
       Toast.info('请采购商品后提交', 1.5)
     } else {
       let num = this.state.login
@@ -168,6 +168,8 @@ class CategoryRight extends Component {
       }).then(res => {
         if (res.data.status === 4001) {
           Toast.success(res.data.msg, 2)
+          const goodsList = saveGoods([])
+          store.dispatch(goodsList)
           this.home()
         } else {
           Toast.info(res.data.msg, 2)

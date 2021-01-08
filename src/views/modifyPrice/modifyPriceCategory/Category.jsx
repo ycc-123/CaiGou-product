@@ -103,7 +103,7 @@ class Category extends Component {
                   <li className='category-left-head'></li>
                   {title.map((item, index) => {
                     return (
-                      <CategoryLeftItem key={item.id + index}
+                      <CategoryLeftItem key={item.id + '' + index}
                         item={item}
                         index={index}
                         active={this.state.defaultIndex === index ? true : false}
@@ -122,7 +122,9 @@ class Category extends Component {
 
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-              <div className='left' >
+              <div className='left' 
+              // onClick={()=>{this.mingxi()}}
+              >
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                 <div className='yuan'>{this.state.yuan_length ? this.state.yuan_length : 0}</div>
               </div>
@@ -167,7 +169,7 @@ class Category extends Component {
           action: 'searchProduct', data: {
             uniacid: store.getState().uniacid,
             uid: store.getState().uid,
-            // is_packge:"1",
+            store_id:this.props.match.params.storeid,
             limit: "1000",
             page: 1,
             categoryid: Id[0].id,
@@ -204,7 +206,7 @@ class Category extends Component {
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        // is_packge:"1",
+        store_id:this.props.match.params.storeid,
         limit: "1000",
         page: 1,
         categoryid: this.state.id[index].id,

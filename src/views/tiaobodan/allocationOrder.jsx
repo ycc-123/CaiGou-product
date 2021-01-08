@@ -77,12 +77,16 @@ export default class InventoryList extends Component {
         <DocumentTitle title={'调拨单'} />
         <div style={{ display: "flex" }}>
           <div className='search'>
-            <input type="search" className='input' placeholder="请输入调拨单单号" name="inputSearch"
-              onChange={this.inputChange.bind(this)}
-              value={this.state.inputSearch} />
-            <div className='img' onClick={() => { this.Search() }}>
-              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-            </div>
+            <input 
+            type="search" 
+            className='input' 
+            placeholder="请输入调拨单单号" 
+            name="inputSearch"
+            onChange={this.inputChange.bind(this)}
+            value={this.state.inputSearch} />
+          <div className='img' onClick={() => { this.Search() }}>
+            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+          </div>
           </div>
           <div
             onClick={() => { this.state.kongbj === false ? Toast.info("新增不可用", 2) : this.props.history.push('/addallocationList') }}

@@ -8,6 +8,7 @@ export default class Tiao extends Component {
       value: ''
     }
   }
+  // 把用户输入的数量和商品详情传给父组件
   shuliang = (value, tiao) => {
     this.props.parent.getChildrenMsg(value, tiao)
     this.setState({

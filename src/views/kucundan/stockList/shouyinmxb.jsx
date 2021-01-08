@@ -4,6 +4,8 @@ import { getRetailDetail } from 'network/Api'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 import { Toast } from 'antd-mobile';
+import BetterScroll from 'common/betterScroll/BetterScroll'
+
 export default class Shouyinmxb extends Component {
   constructor() {
     super()
@@ -29,7 +31,7 @@ export default class Shouyinmxb extends Component {
           data: res.data.data.data,
           order: res.data.data.order
         }, () => {
-          // this.refs.scroll.BScroll.refresh()
+          this.refs.scroll.BScroll.refresh()
         })
       } else {
         Toast.info(res.data.msg, 2)
@@ -57,7 +59,7 @@ export default class Shouyinmxb extends Component {
           data: res.data.data.data,
           order: res.data.data.order
         }, () => {
-          // this.refs.scroll.BScroll.refresh()
+          this.refs.scroll.BScroll.refresh()
         })
       } else {
         Toast.info(res.data.msg, 2)
@@ -67,6 +69,9 @@ export default class Shouyinmxb extends Component {
   }
   render() {
     // console.log(this.state)
+    const scrollConfig = {
+			probeType: 1
+		}
     const {order}=this.state
     return (
       <ShouyinmxbStyle>
@@ -108,6 +113,7 @@ export default class Shouyinmxb extends Component {
                 <li className='xji'>小计</li>
               </ul>
             </div>
+            <BetterScroll config={scrollConfig} ref='scroll' style={{ top:"9.85rem",bottom:"0"}}>
             {
               this.state.data.map((v, k) => {
                 return (
@@ -124,6 +130,7 @@ export default class Shouyinmxb extends Component {
                 )
               })
             }
+            </BetterScroll>
           </div>
         })
 

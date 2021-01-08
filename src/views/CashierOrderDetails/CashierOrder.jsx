@@ -93,6 +93,7 @@ export default class CashierOrderDetails extends Component {
     this.isLoadMore = true
   }
   componentDidMount() {
+    
     var day2 = new Date();
     day2.setTime(day2.getTime());
     var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
@@ -169,13 +170,13 @@ export default class CashierOrderDetails extends Component {
       this.setState({
         zuantai: true
       }, () => {
-        this.refs.scroll.BScroll.refresh()
+          this.refs.scroll.BScroll.scrollTo(0, 0)
       })
     } else {
       this.setState({
         zuantai: false
       }, () => {
-        this.refs.scroll.BScroll.refresh()
+        this.refs.scroll.BScroll.scrollTo(0, 0)
       })
     }
   }
@@ -301,7 +302,7 @@ export default class CashierOrderDetails extends Component {
               当前结果：<span>{this.state.total.total_price ? this.state.total.total_price : 0}</span>
             </div>
           </div>
-          </div>
+        </div>
 
           <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.17rem", bottom: "1.5rem" }} loadMore={this.loadMore} isLoadMore={this.isLoadMore}>
             <div style={{ display: this.state.zuantai === false ? "block" : "none" }}>
@@ -314,15 +315,17 @@ export default class CashierOrderDetails extends Component {
                   )
                 })
               }
-              {/* {
+              {
 
                 linshou.length > 0 &&
                 <div style={{ display: this.state.loading === false ? "none" : "block" }}>
                   <LoadingMore isLoading={this.isLoadMore} /></div>
-              } */}
+              }
             </div>
 
-            <div className='fenglei' style={{ display: this.state.zuantai === false ? "none" : "block" }}>
+            
+          </BetterScroll>
+          <div className='fenglei' style={{ display: this.state.zuantai === false ? "none" : "block" }}>
               <div>日期
                 <ul>
                   <p><span style={{ position: "absolute", top: ".85rem", left: "4.7rem" }}>~</span>
@@ -448,7 +451,6 @@ export default class CashierOrderDetails extends Component {
 
               <div className='btn' onClick={() => { this.queding() }}>确定</div>
             </div>
-          </BetterScroll>
           <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
             <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
           </div>

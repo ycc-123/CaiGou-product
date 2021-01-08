@@ -51,6 +51,8 @@ import modifyPriceDetailed from 'views/modifyPrice/modifyPriceDetailed'
 import addmodifyPrice from 'views/modifyPrice/addmodifyPrice'
 import modifyPriceCategory from 'views/modifyPrice/modifyPriceCategory/Category'
 import modifyPriceCategorymx from 'views/modifyPrice/modifyPriceCategory/childCom/CategorySwiper'
+import modifyPriceBjGoods from 'views/modifyPrice/modifyPriceCategory/childCom/BjGoods'
+
 // 收银订单明细表
 import CashierOrder from 'views/CashierOrderDetails/CashierOrder'
 import CashierOrderDetails from 'views/CashierOrderDetails/CashierOrderDetails'
@@ -72,6 +74,8 @@ const AppRouter = () => {
       <CacheRoute path='/home' when='always' component={Home}></CacheRoute>
       <CacheRoute path='/CashierOrder' when='always' component={CashierOrder}></CacheRoute>
       <CacheRoute path='/Youhuimxb' when='always' component={Youhuimxb}></CacheRoute>
+      <CacheRoute path='/PurchaseOrder' when='always' component={PurchaseOrder}></CacheRoute>
+
       <Redirect from='/' exact to='/home'></Redirect>
 
       </CacheSwitch>
@@ -102,7 +106,7 @@ const AppRouter = () => {
         <Route path='/WarehousingOrder' exact component={WarehousingOrder} ></Route>
         {/* 采购单 */}
         <Route path='/PurchaseOrderDetailed/:id' exact component={PurchaseOrderDetailed} ></Route>
-        <Route path='/PurchaseOrder' exact component={PurchaseOrder} ></Route>
+        {/* <Route path='/PurchaseOrder' exact component={PurchaseOrder} ></Route> */}
         <Route path='/category/:id/:ck/:bz' exact component={category} ></Route>
         <Route path='/AddPurchaseOrder' exact component={AddPurchaseOrder} ></Route>
         <Route path='/Liebiao/:ck/:bz' exact component={Liebiao} ></Route>
@@ -137,8 +141,11 @@ const AppRouter = () => {
         <Route path='/modifyPrice' exact component={modifyPrice} ></Route>
         <Route path='/addmodifyPrice' exact component={addmodifyPrice} ></Route>
         <Route path='/modifyPriceDetailed/:id' exact component={modifyPriceDetailed} ></Route>
-        <Route path='/modifyPriceCategory/:id' exact component={modifyPriceCategory} ></Route>
+        <Route path='/modifyPriceCategory/:id/:storeid' exact component={modifyPriceCategory} ></Route>
         <Route path='/modifyPriceCategorymx' exact component={modifyPriceCategorymx} ></Route>
+        <Route path='/modifyPriceBjGoods/:id/:tiaojiid' exact component={modifyPriceBjGoods} ></Route>
+
+
         {/* 收银订单明细表 */}
         <Route path='/CashierOrderDetails/:id' exact component={CashierOrderDetails} ></Route>
         {/* <Route path='/CashierOrder' exact component={CashierOrder} ></Route> */}

@@ -6,6 +6,7 @@ export const SAVE_TIAOBOGOODS = 'save_tiaobogoods'
 export const SAVE_YOUHUIMINGXB = 'save_youhuimxbiao'
 export const SAVE_PACKAGEDGOODS = 'save_packagedGoods'
 export const SAVE_SQGOODS = 'save_sqgoods'
+export const DELET_SQGOODS = 'delete_sqgoods'
 
 
 

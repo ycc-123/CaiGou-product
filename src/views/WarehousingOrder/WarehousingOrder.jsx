@@ -21,6 +21,7 @@ export default class WarehousingOrder extends Component {
 		this.isLoadMore = true
 	}
 	componentDidMount() {
+		// 请求入库单列表
 		getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
 			uniacid: store.getState().uniacid,
 			uid:store.getState().uid,
@@ -109,15 +110,7 @@ export default class WarehousingOrder extends Component {
 		)
 	}
 	loadMore = () => {
-		// 加载数据时转圈
-		let loading = true
-		setTimeout(() => {
-			if (loading) {
-				this.setState({
-					loadingMore: true
-				})
-			}
-		}, 1000)
+
 		if (this.isLoadMore) {
 			getPurchaseDeliveryList({ action: 'getPurchaseDeliveryList', data: {
 				uniacid: store.getState().uniacid,
@@ -137,7 +130,6 @@ export default class WarehousingOrder extends Component {
 					this.setState({
 						page: page += 1
 					})
-					loading = false
 					this.refs.scroll.BScroll.finishPullUp()
 					this.refs.scroll.BScroll.refresh()
 				})

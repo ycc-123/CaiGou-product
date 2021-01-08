@@ -231,7 +231,7 @@ export default class Youhuimxb extends Component {
 
           <div className='fenglei' style={{ display: this.state.zuantai === false ? "none" : "block" }}>
             <div>日期
-                            <ul>
+              <ul>
                 <p><span style={{ position: "absolute", top: ".85rem", left: "4.7rem" }}>~</span>
                   <article className='articleone'></article>
                   <DatePicker
@@ -264,7 +264,7 @@ export default class Youhuimxb extends Component {
             </div>
 
             <div>所属商家
-                            <ul>
+              <ul>
                 <li>
                   <Picker
                     data={this.state.store_id}
@@ -282,7 +282,7 @@ export default class Youhuimxb extends Component {
             </div>
 
             <div >收银员
-                            <ul>
+              <ul>
                 <li>
                   <Picker
                     data={this.state.shouyinyuan}

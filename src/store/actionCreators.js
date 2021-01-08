@@ -1,5 +1,5 @@
 import {
-  SAVE_UID, SAVE_UNIACID,SAVE_GOODS,SAVE_CANKU,SAVE_TIAOBOGOODS,SAVE_YOUHUIMINGXB,SAVE_PACKAGEDGOODS,SAVE_SQGOODS
+  SAVE_UID, SAVE_UNIACID,SAVE_GOODS,SAVE_CANKU,SAVE_TIAOBOGOODS,SAVE_YOUHUIMINGXB,SAVE_PACKAGEDGOODS,SAVE_SQGOODS,DELET_SQGOODS
 } from './actionTypes'
 
 
@@ -11,6 +11,10 @@ import {
 */
 
 // 保存uniacid和uid
+export const deleteSqgoods = data => ({
+  type: DELET_SQGOODS,
+  data
+})
 
 export const saveSqgoods = data => ({
   type: SAVE_SQGOODS,

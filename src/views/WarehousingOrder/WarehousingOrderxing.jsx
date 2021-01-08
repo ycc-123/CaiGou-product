@@ -51,10 +51,11 @@ export default class WarehousingOrderxing extends Component {
       }
     })
   }
+  // 采购入库审核
   shengHe(e) {
     if (e === "审核通过") { } else {
       if (this.state.input.length === 0) {
-        // 默认
+        // 默认采购数量就是入库数量
         let aa = {}
         let arr = []
         this.state.purchaseItem.map((v, k) => {
@@ -100,6 +101,7 @@ export default class WarehousingOrderxing extends Component {
           }
         })
       } else {
+        // 走用户输入的数量审核
         let aa = {}
         let arr = []
         this.state.goods.map((v, k) => {
@@ -138,6 +140,7 @@ export default class WarehousingOrderxing extends Component {
       }
     }
   }
+  // 子组件传过来的数量和商品详情
   getChildrenMsg = (result, msg) => {
     let input = []
     input.push(result)
@@ -243,9 +246,9 @@ export default class WarehousingOrderxing extends Component {
             </div>
             <div className="foot_c">
               差异数量：
-                            <span style={{ color: "#cf2424" }}>
+            <span style={{ color: "#cf2424" }}>
                 {Number(purchaseDetail.snum) - Number(purchaseDetail.in_out_num)}
-              </span>
+            </span>
             </div>
             <div className="btn"
               style={{ background: purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }}

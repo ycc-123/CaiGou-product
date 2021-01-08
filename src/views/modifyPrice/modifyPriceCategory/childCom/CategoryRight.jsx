@@ -39,7 +39,7 @@ class CategoryRight extends Component {
                     isLoadMore={this.isLoadMore}>
             {goodsList.map((item, index) => {
               return (
-                <CategoryRightItem key={item.id + index} goods={item} parent={ this }/>
+                <CategoryRightItem key={item.id + index} goods={item} parent={ this } id={this.props.id}/>
               )
             })}
           </BetterScroll>
@@ -79,9 +79,9 @@ class CategoryRight extends Component {
   }
 
   myName = (e) =>{
-    if(this.state.login[0]===undefined){
-     Toast.info('请调价商品后提交',1.5)
-    }else{
+    // if(this.state.login[0]===undefined){
+    //  Toast.info('请调价商品后提交',1.5)
+    // }else{
     let num =this.state.login
     let price =this.state.password
     let aa = {}
@@ -102,16 +102,16 @@ class CategoryRight extends Component {
       uid:store.getState().uid,
       status:e,
       id:this.props.id,
-      itemData:itemData,
+      // itemData:itemData,
     } }).then(res=>{
       if(res.data.status===4001){
         Toast.success(res.data.msg, 2)
-        this.home()
+        // this.home()
       }else{
         Toast.info(res.data.msg, 2)
       }
     })
-    }
+    // }
   } 
   home(){
     this.props.history.push('/home')

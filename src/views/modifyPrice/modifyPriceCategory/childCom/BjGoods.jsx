@@ -4,13 +4,13 @@ import { Picker, Toast, List, Switch } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { getProductCategoryAll, getUnitList, getProductDetail, editProduct, getPackgeProductDetail } from 'network/Api'
+import { getUnitList, getProductCategoryAll, getProductDetail, editProduct,addPriceModifyDetail } from 'network/Api'
 import { store } from "store/index";
 import { useHistory, useParams } from 'react-router-dom';
 
 const Into = (props) => {
   const history = useHistory()
-  const params = useParams().id
+  const params = useParams()
   const bt_ref = useRef()
   const [goodName, setgoodName] = useState('');
   const [goodCategory, setGoodCategory] = useState('');
@@ -25,10 +25,10 @@ const Into = (props) => {
   const [matchGood, setMatchGood] = useState();
   const [matchCode, setMatchCode] = useState('')
   const [goodSort, setGoodSort] = useState('');
-  const [goodlength, setGoodlength] = useState('');
   const [unit, setUnit] = useState([]);
   const [classification, setClassification] = useState([]);
   const [morengoods, setMorengoods] = useState({});
+  const [erji, seterji] = useState([]);
 
   const scrollConfig = {
     probeType: 1
@@ -39,7 +39,7 @@ const Into = (props) => {
       action: 'getProductDetail', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        id: params,
+        id: params.id
       }
     }).then((res) => {
       if (res.data.status === 4001) {
@@ -51,23 +51,14 @@ const Into = (props) => {
         Toast.fail(res.data.msg, 2)
       }
     })
-    getPackgeProductDetail({
-      action: 'getPackgeProductDetail', data: {
-        uniacid: store.getState().uniacid,
-        uid: store.getState().uid,
-        id: params,
-      }
-    }).then((res) => {
-      if (res.data.status === 4001) {
-        setGoodlength(res.data.data);
-      } else { }
-    })
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
-        // uid: store.getState().uid,
       }
     }).then((res) => {
+      var result = res.data.data.map(o => {
+        return { value: o.id, label: o.name }
+      });
       setClassification(res.data.data)
     })
     getUnitList({
@@ -90,7 +81,8 @@ const Into = (props) => {
     <>
       <BetterScroll config={scrollConfig} style={{ height: 'calc(100vh - 1.6rem)' }} ref={bt_ref}>
         <TAddGoodsStyle>
-          <DocumentTitle title={'编辑商品'} />
+          <DocumentTitle title={'调价商品'} />
+
           <div className="type flex-column" style={{ background: "#F8F8F8" }}>
             <div className="item flex-row" style={{
               justifyContent: 'space-between'
@@ -109,29 +101,7 @@ const Into = (props) => {
               </div>
             </div>
           </div>
-          <div className="type flex-column">
-            <div className="item flex-row" style={{
-              justifyContent: 'space-between'
-            }}>
-              <div className="left">
-                <span>商品分类: </span>
-              </div>
-              <div className="right">
-                <Picker
-                  data={classification}
-                  cols={4}
-                  // className="forss"
-                  extra={morengoods.category_name}
-                  value={goodCategory}
-                  onChange={e => { setGoodCategory(e) }}
-                  onOk={v => setGoodCategory(v)}
-                >
-                  <List.Item className='time' arrow="horizontal"></List.Item>
-                </Picker>
-              </div>
-            </div>
-          </div>
-          <div className="type flex-column" >
+          <div className="type flex-column" style={{ background: "#F8F8F8" }}>
             <div className="item flex-row" style={{
               justifyContent: 'space-between'
             }}>
@@ -139,7 +109,8 @@ const Into = (props) => {
                 <span>商品名称:</span>
               </div>
               <div className="right">
-                <input
+                <input style={{ background: "#F8F8F8" }}
+                readonly="readonly"
                   value={goodName}
                   type="text"
                   placeholder={morengoods.name}
@@ -148,70 +119,44 @@ const Into = (props) => {
               </div>
             </div>
           </div>
-          <div className="type flex-column">
-            <div className="item flex-row" style={{
+          <div className="type flex-column" style={{ background: "#F8F8F8" }}>
+      <div className="item flex-row" style={{
               justifyContent: 'space-between'
             }}>
               <div className="left">
-                <span>售出单位: </span>
+                <span>商品分类: </span>
               </div>
               <div className="right">
-                <Picker
-                  data={unit}
-                  cols={1}
-                  className="forss"
-                  extra={morengoods.unit_name}
-                  value={sellUnit}
-                  onChange={e => { setSellUnit(e) }}
-                  onOk={v => setSellUnit(v)}
-                >
-                  <List.Item className='scdwtimes' arrow="horizontal"></List.Item>
-                </Picker>
+              <input style={{ background: "#F8F8F8" }}
+                readonly="readonly"
+                  value={goodName}
+                  type="text"
+                  placeholder={morengoods.category_name}
+                  onChange={e => { setgoodName(e.target.value) }}
+                />
               </div>
             </div>
           </div>
-          <div className="type flex-column">
+          <div className="type flex-column" style={{ background: "#F8F8F8" }}>
             <div className="item flex-row" style={{
               justifyContent: 'space-between'
             }}>
               <div className="left">
-                <span>库存单位: </span>
+                <span>单位: </span>
               </div>
-              <div className="right">
-                <Picker
-                  data={unit}
-                  cols={1}
-                  className="forss"
-                  extra={morengoods.changeunit_name}
-                  value={stockUnit}
-                  onChange={e => { setStockUnit(e) }}
-                  onOk={v => setStockUnit(v)}
-                >
-                  <List.Item className='kuncun' arrow="horizontal"></List.Item>
-                </Picker>
+              <div className="right" >
+              <input style={{ background: "#F8F8F8" }}
+                readonly="readonly"
+                  value={goodName}
+                  type="text"
+                  placeholder={morengoods.unit_name}
+                  onChange={e => { setgoodName(e.target.value) }}
+                />
               </div>
             </div>
           </div>
         </TAddGoodsStyle>
         <AddGoodsStyle>
-          <div className="type flex-column">
-            <div className="item flex-row" style={{
-              justifyContent: 'space-between'
-            }}>
-              <div className="left">
-                <p style={{ fontSize: ".35rem" }}>商品排序: </p>
-
-              </div>
-              <div className="right">
-                <input
-                  value={goodSort}
-                  type="text"
-                  placeholder={morengoods.sequence}
-                  onChange={e => { setGoodSort(e.target.value) }}
-                />
-              </div>
-            </div>
-          </div>
           <div className="type flex-column">
             <div className="item flex-row" style={{
               justifyContent: 'space-between'
@@ -229,38 +174,26 @@ const Into = (props) => {
               </div>
             </div>
           </div>
-          <List
-            renderHeader={() => ''}
-          >
-            <List.Item
-              extra={<Switch
-                checked={isProduct}
-                onChange={() => { setisProduct(!isProduct) }}
-              />}
-            >更多信息</List.Item>
-            <div className='xian'></div>
-
-            <div style={{ display: isProduct ? "block" : "none" }}>
-              <List.Item
+          <List.Item
                 extra={<Switch
                   checked={memberInterests}
                   onChange={() => { setMemberInterests(!memberInterests) }}
                 />}
               >启用会员权益
-                    <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1rem" }}>是否启用会员权益</span>
+              <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1rem" }}>是否启用会员权益</span>
               </List.Item>
               <div className='xian'></div>
+                  <div style={{ display: memberInterests ? "none" : "block" }}>
               <List.Item
                 extra={<Switch
                   checked={memberPrice}
                   onChange={() => { setMemberPrice(!memberPrice) }}
                 />}
               >启用会员价
-                    <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>是否启用会员价</span>
+              <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>是否启用会员价</span>
               </List.Item>
               <div className='xian'></div>
-
-              <div className="type flex-column" style={{ display: memberPrice === true ? "block" : "none" }}>
+              <div className="type flex-column" style={(memberInterests) ? { display: "none" } : { display: memberPrice ? "block" : "none" }}>
                 <div className="item flex-row" style={{
                   justifyContent: 'space-between'
                 }}>
@@ -277,50 +210,23 @@ const Into = (props) => {
                   </div>
                 </div>
               </div>
-              <List.Item
-                extra={<Switch style={{ border: "none" }}
-                  checked={matchGood}
-                  onChange={() => { setMatchGood(!matchGood) }}
-                />}
-              >分体称商品
-                            <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>设置为分体称商品</span>
-              </List.Item>
-              <div className='xian'></div>
-              <div className="type flex-column" style={{ display: matchGood ? "block" : "none" }}>
-                <div className="item flex-row" style={{
-                  justifyContent: 'space-between'
-                }}>
-                  <div className="left">
-                    <p style={{ fontSize: ".35rem" }}>分体称PLU编号</p>
-                  </div>
-                  <div className="right">
-                    <input
-                      value={matchCode}
-                      type="text"
-                      placeholder={morengoods.plu_goods_keyboard_id}
-                      onChange={e => { setMatchCode(e.target.value) }}
-                    />
-                  </div>
-                </div>
               </div>
-            </div>
-          </List>
         </AddGoodsStyle>
       </BetterScroll>
       <FAddGoodsStyle>
         <div className='foot'>
-          <div className='left' onClick={() => { history.push(`/PackagedBjGoodsmx/${params}`) }}>
-            <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-            <div className='yuan'>{goodlength.packgeListCount ? goodlength.packgeListCount : 0}</div>
-          </div>
-          <div className='raa' onClick={e => { check() }}>提交</div>
+          <div className='lbb'></div>
+          <div className='raa' onClick={e => { check() }}>保存</div>
         </div>
       </FAddGoodsStyle>
     </>
   )
   function check() {
+    // history.push('/modifyPriceCategory/37')
+    // console.log(modifyPriceCategory/37)
     if (memberInterests && memberPrice) {
       Toast.info("会员价和会员权益不能同时开启", 2)
+
     } else {
       let aa = {}
       unit.map((v, k) => {
@@ -336,28 +242,30 @@ const Into = (props) => {
         }
       })
       let kc = bb.value
-      editProduct({
-        action: 'editProduct', data: {
+      console.log(morengoods,params)
+      addPriceModifyDetail({
+        action: 'addPriceModifyDetail', data: {
           uniacid: store.getState().uniacid,
           uid: store.getState().uid,
-          id: params,
-          categoryid: goodCategory[goodCategory.length - 1] ? goodCategory[goodCategory.length - 1] : morengoods.categoryid,
-          code: goodCode ? goodCode : morengoods.code,
-          posprice: retailPrice ? retailPrice : morengoods.posprice,
-          memberprice: setPrice ? setPrice : morengoods.memberprice,
-          name: goodName ? goodName : morengoods.name,
-          unit: stockUnit.toString() ? stockUnit.toString() : kc,
-          changeunit: sellUnit.toString() ? sellUnit.toString() : cc,
+          id: params.tiaojiid,
+          barcodeid:morengoods.barcodeid,
+          // categoryid: goodCategory[goodCategory.length - 1] ? goodCategory[goodCategory.length - 1] : morengoods.categoryid,
+          // code: goodCode ? goodCode : morengoods.code,
+          newposprice: retailPrice ? retailPrice : morengoods.posprice,
+          newmemberprice: setPrice ? setPrice : morengoods.memberprice,
+          // name: goodName ? goodName : morengoods.name,
+          // unit: stockUnit.toString() ? stockUnit.toString() : kc,
+          // changeunit: sellUnit.toString() ? sellUnit.toString() : cc,
           is_membership: memberInterests === true ? "2" : "1" ? memberInterests === true ? "2" : "1" : morengoods.is_membership,
           is_memberprice: memberPrice === true ? "2" : "1" ? memberPrice === true ? "2" : "1" : morengoods.is_memberprice,
-          is_plu_goods: matchGood === true ? "2" : "1" ? matchGood === true ? "2" : "1" : morengoods.is_plu_goods,
-          plu_goods_keyboard_id: matchCode ? matchCode : morengoods.plu_goods_keyboard_id,
-          sequence: goodSort ? goodSort : morengoods.sequence,
-          packge_ids: "1"
+          // is_plu_goods: matchGood === true ? "2" : "1" ? matchGood === true ? "2" : "1" : morengoods.is_plu_goods,
+          // plu_goods_keyboard_id: matchCode ? matchCode : morengoods.plu_goods_keyboard_id,
+          // sequence: goodSort ? goodSort : morengoods.sequence,
         }
       }).then((res) => {
         if (res.data.status === 4001) {
-          history.push('/PackagedGoods')
+          // history.push('/bjsygoods')
+          history.goBack(-1)
           Toast.success(res.data.msg, 2)
         } else {
           Toast.info(res.data.msg, 2)
@@ -367,47 +275,6 @@ const Into = (props) => {
   }
 }
 const FAddGoodsStyle = styled.div`
-.yuan{
-    // padding-top:.1rem;
-    text-align:center;
-    // margin:auto;
-    position:absolute;
-    top: .2rem;
-    left:1.3rem;
-    color:#fff;
-    width:.51rem;
-    height:.51rem;
-    line-height:.51rem;
-    border-radius:.5rem;
-    background-color: #E01616;
-    font-size:.24rem;
-  }
-  .foot_conton span{
-    color:#cf2424;
-  }
-  .foot_conton{
-    width: 12rem;
-    // height: 100%rem;
-    line-height:1.6rem;
-    text-align:center;
-    font-size:.4rem;
-  }
-  .left img{
-    width: auto;  
-    height: auto;  
-    max-width: 100%;  
-    max-height: 100%;
-  }
-  .left{
-    padding-left:.48rem;
-    padding-top:.45rem;
-    width:7rem;
-    
-  }
-
-
-
-
 .lbb{
     width: 2rem;
     height: 1.6rem;
@@ -501,7 +368,7 @@ const TAddGoodsStyle = styled.div`
 .time{
     position:absolute;
     left:2.9rem;
-    top:1.2rem;
+    top:2.4rem;
     text-align: left !important;
     color: #b4b4b4;
     font-size:.35rem;
@@ -584,13 +451,10 @@ const AddGoodsStyle = styled.div`
   background: #F5F5F5;
   color: #787878;
 
-
-
   .wrapper .CommissionHeader{
     height:1.09rem;
 }
 .wrapper .CommissionHeader .navbar li{
-    // height:1.09rem;
     padding-top:.15rem;
 }
 .wrapper .CommissionHeader .navbar .active{
@@ -619,14 +483,11 @@ const AddGoodsStyle = styled.div`
 }
 .am-list-item .am-list-line .am-list-arrow{
     margin-left:2.5rem !important;
-    // background-image: none;
-    // opacity:0;
 }
 .kcdwtimes{
     position:absolute;
     left:1.8rem;
     top:2.9rem;
-    // padding-top:.3rem;
     color: red;
     width:12rem;
     background-color: transparent;
@@ -635,7 +496,6 @@ const AddGoodsStyle = styled.div`
     position:absolute;
     left:2.2rem;
     top:3.6rem;
-    // padding-top:.3rem;
     color: red;
     width:12rem;
     background-color: transparent;
@@ -645,7 +505,6 @@ const AddGoodsStyle = styled.div`
     left:2.2rem;
     top:1.2rem;
     text-align: left !important;
-    // padding-top:.3rem;
     color: #b4b4b4;
     font-size:.35rem;
     width:12rem;
@@ -655,7 +514,6 @@ const AddGoodsStyle = styled.div`
 .am-list-arrow am-list-arrow-horizontal{
     background-image: none;
     opacity:0;
-    // 
 }
 
   .xian{
@@ -664,24 +522,15 @@ const AddGoodsStyle = styled.div`
       background: #ddd;
 
   }
-
-
-
-
-
-
  .am-list-line::after {
     background-color: transparent !important;
 }
   .am-list-item .am-list-line .am-list-content{
       font-size:.35rem;
       color: #787878;
-
-      
   }
 
   .type {
-
     background-color: white;
   }
   .type .item {

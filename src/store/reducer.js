@@ -1,18 +1,18 @@
 import {
-    SAVE_UID, SAVE_UNIACID, SAVE_GOODS, SAVE_CANKU, SAVE_TIAOBOGOODS, SAVE_YOUHUIMINGXB,
-    SAVE_PACKAGEDGOODS,SAVE_SQGOODS
+  SAVE_UID, SAVE_UNIACID, SAVE_GOODS, SAVE_CANKU, SAVE_TIAOBOGOODS, SAVE_YOUHUIMINGXB,
+  SAVE_PACKAGEDGOODS, SAVE_SQGOODS
 } from './actionTypes'
 
 
 const defaultState = {
-    uid: '',
-    uniacid: '',
-    goodsList: [],
-    tiaoboxqck: [],
-    tiaobogoods: [],
-    youhuimxbiao: [],
-    packagedGoods: [],
-    sqgoods:[]
+  uid: '',
+  uniacid: '',
+  goodsList: [],
+  tiaoboxqck: [],
+  tiaobogoods: [],
+  youhuimxbiao: [],
+  packagedGoods: [],
+  sqgoods: []
 
 }
 
@@ -56,28 +56,33 @@ const defaultState = {
 // }
 
 function reducer(state = defaultState, action) {
-    //  reducer 是一个纯函数
-    switch (action.type) {
-      case SAVE_SQGOODS:
-        return { ...state, sqgoods: action.data }
-      case SAVE_GOODS:
-        return { ...state, goodsList: action.data }
-      case SAVE_UID:
-        return { ...state, uid: action.data }
-      case SAVE_UNIACID:
-        return { ...state, uniacid: action.data }
-      case SAVE_CANKU:
-        return { ...state, tiaoboxqck: action.data }
-      case SAVE_TIAOBOGOODS:
-        return { ...state, tiaobogoods: action.data }
-      case SAVE_YOUHUIMINGXB:
-        return { ...state, youhuimxbiao: action.status }
-      case SAVE_PACKAGEDGOODS:
-        return { ...state, packagedGoods: action.data }
-      default:
-        return state;
-    }
-    
+  //  reducer 是一个纯函数
+  switch (action.type) {
+    case SAVE_SQGOODS:
+      return { ...state, sqgoods: action.data }
+      
+    case SAVE_GOODS:
+
+      console.log(state.goodsList)
+      console.log(action.data)
+      // console.log( ...action.data )
+      return { ...state, goodsList: [...state.goodsList, action.data] }
+    case SAVE_UID:
+      return { ...state, uid: action.data }
+    case SAVE_UNIACID:
+      return { ...state, uniacid: action.data }
+    case SAVE_CANKU:
+      return { ...state, tiaoboxqck: action.data }
+    case SAVE_TIAOBOGOODS:
+      return { ...state, tiaobogoods: action.data }
+    case SAVE_YOUHUIMINGXB:
+      return { ...state, youhuimxbiao: action.status }
+    case SAVE_PACKAGEDGOODS:
+      return { ...state, packagedGoods: action.data }
+    default:
+      return state;
   }
-  
-  export default reducer;
+
+}
+
+export default reducer;

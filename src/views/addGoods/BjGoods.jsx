@@ -416,7 +416,7 @@ const TAddGoodsStyle = styled.div`
 }
 .am-list-item .am-list-line .am-list-extra{
     flex-basis:auto;
-    color:#b4b4b4;
+    color:#000;
     text-align: left;
     font-size:.35rem;
     padding-left:.1rem;
@@ -513,7 +513,7 @@ const TAddGoodsStyle = styled.div`
     font-weight: 500;
   }
   .type .item .right input::-webkit-input-placeholder {
-    color: #B4B4B4;
+    color: #000;
     font-size: .35rem;
   }
   .flex-row{
@@ -649,7 +649,7 @@ const AddGoodsStyle = styled.div`
     font-weight: 500;
   }
   .type .item .right input::-webkit-input-placeholder {
-    color: #B4B4B4;
+    color: #000;
     font-size: .35rem;
   }
   .flex-row{

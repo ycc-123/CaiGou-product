@@ -28,14 +28,19 @@ class CategoryRightgoods extends Component {
       this.props.parent.getChildrenMsg(this, login, password, goods)
     }
   }
+bianji(goods){
+  console.log(this.props.id)
+  this.props.history.push(`/modifyPriceBjGoods/${goods.id}/${this.props.id}`)
 
+}
   render() {
     const { goods } = this.props
+    
     return (
       <CategoryRightgoodsStyle>
         <div className="rrr"></div>
         <li className='category-goods clearfix'
-        // onClick={()=>{this.props.history.push(`/PackagedBjGoods/${goods.id}`)}}
+        onClick={()=>{this.bianji(goods)}}
         >
           <img className='category-img' src={goods.albumpath?goods.albumpath:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
           <div className='category-goods-info'>
@@ -44,7 +49,7 @@ class CategoryRightgoods extends Component {
             <div className='member-price' style={{ color: '#1a1a1a', padding: ".2rem 0" }}>
               <article >编码：{goods.code}</article>
               <div style={{color:"#C61E1E",display:goods.memberprice!=="0.00"?"block":"none"}}>
-                <img style={{width:".32rem",height:".32rem",marginBottom:".05rem"}} src={"https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/memberPrice.png"} alt="" />
+                <img style={{width:".32rem",height:".32rem"}} src={"https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/memberPrice.png"} alt="" />
                 {this.state.password?this.state.password:goods.memberprice}元/{goods.unitname}
                 </div>
             </div>
@@ -52,7 +57,7 @@ class CategoryRightgoods extends Component {
               <article ></article>
               <div style={{fontSize:".35rem"}}>{this.state.login?this.state.login:goods.posprice}元/{goods.unitname}</div>
             </div>
-            <Button
+            {/* <Button
               style={{ position: "absolute", top: ".3rem", left: "4.6rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
               onClick={() => prompt(
@@ -81,7 +86,8 @@ class CategoryRightgoods extends Component {
                 },
               ]
               )}
-            >111111</Button></div>
+            >111111</Button>
+            </div> */}
           </div>
         </li>
       </CategoryRightgoodsStyle>
