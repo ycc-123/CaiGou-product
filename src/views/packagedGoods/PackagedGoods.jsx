@@ -8,6 +8,7 @@ import DocumentTitle from 'react-document-title'
 import { createProduct, getUnitList, getProductCategoryAll, getProductCode, getProductDetail } from 'network/Api'
 import { store } from "store/index";
 import { useHistory } from 'react-router-dom';
+import { clearCache } from 'react-router-cache-route'
 
 const Into = (props) => {
   const history = useHistory()
@@ -31,6 +32,8 @@ const Into = (props) => {
     probeType: 1
   }
   useEffect(() => {
+    clearCache()
+
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
@@ -57,6 +60,8 @@ const Into = (props) => {
     }
   }, [])
   useEffect(() => {
+    clearCache()
+
     getProductCode({
       action: 'getProductCode', data: {
         uniacid: store.getState().uniacid,

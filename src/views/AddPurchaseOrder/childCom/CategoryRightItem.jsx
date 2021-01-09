@@ -67,7 +67,7 @@ class CategoryRightgoods extends Component {
                 null,
                 ['请填写采购数量', '请填写采购单价'],
               )}
-              visible={false}
+              // visible={false}
             >111111</Button>
           </div>
         </li>

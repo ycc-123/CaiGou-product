@@ -4,9 +4,10 @@ import { Picker, Toast, List, Switch } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { getUnitList, getProductCategoryAll, getProductDetail, editProduct,addPriceModifyDetail } from 'network/Api'
+import { getUnitList, getProductCategoryAll, getProductDetail, addPriceModifyDetail } from 'network/Api'
 import { store } from "store/index";
 import { useHistory, useParams } from 'react-router-dom';
+import { saveModifyPrice } from 'store/actionCreators'
 
 const Into = (props) => {
   const history = useHistory()
@@ -222,11 +223,8 @@ const Into = (props) => {
     </>
   )
   function check() {
-    // history.push('/modifyPriceCategory/37')
-    // console.log(modifyPriceCategory/37)
     if (memberInterests && memberPrice) {
       Toast.info("会员价和会员权益不能同时开启", 2)
-
     } else {
       let aa = {}
       unit.map((v, k) => {
@@ -249,22 +247,29 @@ const Into = (props) => {
           uid: store.getState().uid,
           id: params.tiaojiid,
           barcodeid:morengoods.barcodeid,
-          // categoryid: goodCategory[goodCategory.length - 1] ? goodCategory[goodCategory.length - 1] : morengoods.categoryid,
-          // code: goodCode ? goodCode : morengoods.code,
           newposprice: retailPrice ? retailPrice : morengoods.posprice,
           newmemberprice: setPrice ? setPrice : morengoods.memberprice,
-          // name: goodName ? goodName : morengoods.name,
-          // unit: stockUnit.toString() ? stockUnit.toString() : kc,
-          // changeunit: sellUnit.toString() ? sellUnit.toString() : cc,
           is_membership: memberInterests === true ? "2" : "1" ? memberInterests === true ? "2" : "1" : morengoods.is_membership,
           is_memberprice: memberPrice === true ? "2" : "1" ? memberPrice === true ? "2" : "1" : morengoods.is_memberprice,
-          // is_plu_goods: matchGood === true ? "2" : "1" ? matchGood === true ? "2" : "1" : morengoods.is_plu_goods,
-          // plu_goods_keyboard_id: matchCode ? matchCode : morengoods.plu_goods_keyboard_id,
-          // sequence: goodSort ? goodSort : morengoods.sequence,
         }
       }).then((res) => {
         if (res.data.status === 4001) {
-          // history.push('/bjsygoods')
+          console.log(retailPrice)
+          let aa={
+            newposprice: retailPrice ? retailPrice : morengoods.posprice,
+            newmemberprice: setPrice ? setPrice : morengoods.memberprice,
+            code: morengoods.code,
+            name: morengoods.name,
+            unit_name: morengoods.unit_name,
+            image: morengoods.albumpath
+          }
+          console.log(aa)
+
+
+          const modifyPrice = saveModifyPrice(aa)
+          store.dispatch(modifyPrice)
+
+
           history.goBack(-1)
           Toast.success(res.data.msg, 2)
         } else {

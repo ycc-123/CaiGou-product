@@ -123,10 +123,10 @@ class Category extends Component {
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
               <div className='left' 
-              // onClick={()=>{this.mingxi()}}
+              onClick={()=>{this.mingxi()}}
               >
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                <div className='yuan'>{this.state.yuan_length ? this.state.yuan_length : 0}</div>
+                <div className='yuan'>{store.getState().modifyPrice.length ? store.getState().modifyPrice.length : 0}</div>
               </div>
               <div style={{ display: "flex", marginTop: ".2rem" }}>
                 <div className='baocun' onClick={() => { this.click(1) }}>保存</div>
@@ -212,6 +212,20 @@ class Category extends Component {
         categoryid: this.state.id[index].id,
       }
     }).then(res => {
+      let cartList = store.getState().modifyPrice
+      let now = res.data.data.data?res.data.data.data:[]
+      console.log(cartList,"===========输入后传人的值")
+      console.log('之前', now)
+      for (let i = 0; i < cartList.length; i++) {
+        for (let j = 0; j < now.length; j++) {
+          if (now[j].name == cartList[i].name) {
+            now[j].newposprice = cartList[i].newposprice
+            now[j].newmemberprice = cartList[i].newmemberprice
+
+          }
+        }
+      }
+      console.log('之后', now)
       if (res.data.status === 4001) {
         this.setState({
           goods: res.data.data.data,

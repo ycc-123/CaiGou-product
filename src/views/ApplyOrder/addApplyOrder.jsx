@@ -5,6 +5,7 @@ import { getWarehouseList } from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
+import { clearCache } from 'react-router-cache-route'
 
 export default class AddInventoryList extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ export default class AddInventoryList extends Component {
     }
   }
   componentDidMount() {
+    clearCache()
     getWarehouseList({
       action: 'getWarehouseList', data: {
         uniacid: store.getState().uniacid,

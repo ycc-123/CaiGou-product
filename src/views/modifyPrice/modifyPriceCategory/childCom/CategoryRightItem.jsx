@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
+import { store} from 'store/index'
 import { Modal, Button, Toast } from 'antd-mobile';
 const prompt = Modal.prompt;
 
@@ -35,7 +36,15 @@ bianji(goods){
 }
   render() {
     const { goods } = this.props
-    
+    let memberprice=''
+    let posprice=''
+    if(store.getState().modifyPrice.length===0){
+      posprice=goods.posprice
+      memberprice=goods.memberprice
+    }else{
+      posprice=goods.newposprice
+      memberprice=goods.newmemberprice
+    }
     return (
       <CategoryRightgoodsStyle>
         <div className="rrr"></div>

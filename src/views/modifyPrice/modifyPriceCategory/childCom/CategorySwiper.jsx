@@ -14,11 +14,17 @@ export default class ApplyOrderx extends Component {
       tiao: [],
       sum: '',
       remark: '',
-      inputSearch: ""
+      inputSearch: "",
+      modifyPrice:[]
     }
   }
   componentDidMount() {
-
+    console.log(store.getState().modifyPrice) 
+    this.setState({
+      modifyPrice: store.getState().modifyPrice
+    },()=>{
+      this.refs.scroll.BScroll.refresh()
+    })
   }
 
   seach() {
@@ -61,7 +67,7 @@ export default class ApplyOrderx extends Component {
               <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
           </div>
-
+        {/* 
           <div className='conten'>
             <div className='conten-top'>
               <p>
@@ -78,28 +84,29 @@ export default class ApplyOrderx extends Component {
             <div className='footer'>
               备注：{this.state.quan.remark}
             </div>
-          </div>
-          <BetterScroll config={scrollConfig} ref='scroll'>
+          </div>*/}
+          <BetterScroll config={scrollConfig} ref='scroll' style={{top:"1.2rem"}}>
             {
-              this.state.tiao.map((v, k) => {
+              this.state.modifyPrice.map((v, k) => {
+                console.log(v)
                 return (
                   <div className='tiao' key={k}>
                     <img className='t-img-l' src={v.image ? v.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
                     <ul className='wen-zi'>
                       <li className='wen-zi-t'>
-                        <div className='name'>{v.goods_name}</div>
+                        <div className='name'>{v.name}</div>
                       </li>
                       <li className='wen-zi-c'>
-                        <div >商品编码：{v.barcode}</div>
+                        <div >商品编码：{v.code}</div>
                         <p style={{ color: "#DD1717" }} style={{ display: v.newmemberprice === "0.00" ? "none" : "block" }}>
                           <img style={{ width: ".32rem", height: ".32rem", marginBottom: ".05rem" }} src={"https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/memberPrice.png"} alt="" />
-                          {v.newmemberprice}元/{v.goods_unitname}
+                          {v.newmemberprice}元/{v.unit_name}
                         </p>
 
                       </li>
                       <li className='wen-zi-f'>
                         <div></div>
-                        <p>最新零售价：<span style={{ color: "#DD1717", fontSize: ".35rem" }}>{v.newposprice}</span>元/{v.goods_unitname}</p>
+                        <p>最新零售价：<span style={{ color: "#DD1717", fontSize: ".35rem" }}>{v.newposprice}</span>元/{v.unit_name}</p>
                       </li>
                     </ul>
                   </div>
@@ -107,7 +114,7 @@ export default class ApplyOrderx extends Component {
               })
             }
 
-          </BetterScroll>
+          </BetterScroll> 
           {/* <div className='foot'>
                         <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
                             <div className='left'>

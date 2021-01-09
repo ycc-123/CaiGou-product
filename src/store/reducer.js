@@ -1,6 +1,8 @@
 import {
-  SAVE_UID, SAVE_UNIACID, SAVE_GOODS, SAVE_CANKU, SAVE_TIAOBOGOODS, SAVE_YOUHUIMINGXB,
-  SAVE_PACKAGEDGOODS, SAVE_SQGOODS
+  DELET_SQGOODS,SAVE_UID, SAVE_UNIACID, SAVE_GOODS,DELET_MODIFYPRICE,SAVE_MODIFYPRICE,
+
+  SAVE_CANKU, SAVE_TIAOBOGOODS, SAVE_YOUHUIMINGXB,
+  SAVE_PACKAGEDGOODS, SAVE_SQGOODS, 
 } from './actionTypes'
 
 
@@ -8,69 +10,50 @@ const defaultState = {
   uid: '',
   uniacid: '',
   goodsList: [],
+
   tiaoboxqck: [],
   tiaobogoods: [],
   youhuimxbiao: [],
   packagedGoods: [],
-  sqgoods: []
+  sqgoods: [],
+
+  modifyPrice: []
 
 }
-
-
-// export default (state = defaultState, action) => {
-//     let newState = JSON.parse(JSON.stringify(state))
-
-//     switch (action.type) {
-//         // 保存商品
-//         case SAVE_GOODS:
-//             // newState.goodsList = action.data
-//             return [newState, ...action.data]
-
-//         case SAVE_UID:
-//             newState.uid = action.data
-//             return newState
-
-//         case SAVE_UNIACID:
-//             newState.uniacid = action.data
-//             return newState
-
-//         case SAVE_CANKU:
-//             newState.tiaoboxqck = action.data
-//             return newState
-
-//         case SAVE_TIAOBOGOODS:
-//             newState.tiaobogoods = action.data
-//             return newState
-
-//         case SAVE_YOUHUIMINGXB:
-//             newState.youhuimxbiao = action.data
-//             return newState
-
-//         case SAVE_PACKAGEDGOODS:
-//             newState.packagedGoods = action.data
-//             return newState
-//         default:
-//             break
-//     }
-//     return state
-// }
 
 function reducer(state = defaultState, action) {
   //  reducer 是一个纯函数
   switch (action.type) {
-    case SAVE_SQGOODS:
-      return { ...state, sqgoods: action.data }
-      
+    // 清楚采购数据
+    case DELET_SQGOODS:
+      return { ...state, goodsList: [] }
+    // 把采购数据添加进来
     case SAVE_GOODS:
-
-      console.log(state.goodsList)
-      console.log(action.data)
-      // console.log( ...action.data )
       return { ...state, goodsList: [...state.goodsList, action.data] }
+
+    // 清楚调价商品数据
+    case DELET_MODIFYPRICE:
+      return { ...state, modifyPrice: [] }
+
+    // 把调价商品数据添加进来
+    case SAVE_MODIFYPRICE:
+      return { ...state, modifyPrice: [...state.modifyPrice, action.data] }
+
+
+
+
+
+
+
     case SAVE_UID:
       return { ...state, uid: action.data }
     case SAVE_UNIACID:
       return { ...state, uniacid: action.data }
+
+
+
+    case SAVE_SQGOODS:
+      return { ...state, sqgoods: action.data }
     case SAVE_CANKU:
       return { ...state, tiaoboxqck: action.data }
     case SAVE_TIAOBOGOODS:
@@ -82,7 +65,6 @@ function reducer(state = defaultState, action) {
     default:
       return state;
   }
-
 }
 
 export default reducer;

@@ -117,7 +117,7 @@ class Category extends Component {
               onClick={()=>{this.mingxi()}}
               >
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                <div className='yuan'>{this.state.oldGoods.length+this.state.itemGoods.length ? this.state.oldGoods.length+this.state.itemGoods.length : 0}</div>
+                <div className='yuan'>{store.getState().goodsList.length+this.state.itemGoods.length ? store.getState().goodsList.length+this.state.itemGoods.length : 0}</div>
               </div>
               <div style={{ display: "flex", marginTop: ".2rem" }}>
                 <div className='baocun' onClick={() => { this.click(1) }}>保存</div>
@@ -228,14 +228,14 @@ class Category extends Component {
          return arr.push(aa);
       })
       console.log(arr)
-      let cartList = [...arr,...this.state.itemGoods]
+      let cartList = arr
       let now = res.data.data.data?res.data.data.data:[]
       console.log(cartList,"===========输入后传人的值")
       console.log('之前', now)
       for (let i = 0; i < cartList.length; i++) {
         for (let j = 0; j < now.length; j++) {
           if (now[j].name == cartList[i].name) {
-            now[j].realnum = cartList[i].goodsnum
+            now[j].realnum = cartList[i].num
           }
         }
       }

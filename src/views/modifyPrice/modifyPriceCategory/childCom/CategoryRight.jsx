@@ -5,6 +5,7 @@ import BetterScroll from 'common/betterScroll/BetterScroll'
 import {submitPriceModify } from 'network/Api'
 import {  Toast } from 'antd-mobile';
 import { store} from 'store/index'
+import { deleteModifyPrice } from 'store/actionCreators'
 
 class CategoryRight extends Component {
   constructor(){
@@ -106,7 +107,7 @@ class CategoryRight extends Component {
     } }).then(res=>{
       if(res.data.status===4001){
         Toast.success(res.data.msg, 2)
-        // this.home()
+        this.home()
       }else{
         Toast.info(res.data.msg, 2)
       }
@@ -114,6 +115,9 @@ class CategoryRight extends Component {
     // }
   } 
   home(){
+    let aa=[]
+    const modifyPrice = deleteModifyPrice(aa)
+      store.dispatch(modifyPrice)
     this.props.history.push('/home')
   }
   shouldComponentUpdate = (nextProps, nextState) => {

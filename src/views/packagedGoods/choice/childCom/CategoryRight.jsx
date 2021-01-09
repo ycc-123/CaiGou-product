@@ -6,8 +6,8 @@ import { editPackgeProduct} from 'network/Api'
 import {  Toast } from 'antd-mobile';
 import { store } from "store/index";
 import { 
-  savepackagedGoods, 
-  saveUserUniacid} from 'store/actionCreators'
+  saveModifyPrice, 
+  deleteModifyPrice} from 'store/actionCreators'
 
 class CategoryRight extends Component {
   constructor(){
@@ -72,10 +72,10 @@ class CategoryRight extends Component {
             unitname: this.state.goods[k].unitname,
             num: this.state.login[k],
           }
-         return arr.push(aa);
+         return aa;
       })
-      localStorage.setItem('packagedGoods',JSON.stringify(arr))
-      const actionuid = savepackagedGoods(arr)
+      // localStorage.setItem('packagedGoods',JSON.stringify(arr))
+      const actionuid = saveModifyPrice(aa)
       store.dispatch(actionuid)
     })
 }
@@ -112,6 +112,9 @@ class CategoryRight extends Component {
     })
   } 
   home(){
+    let aa=[]
+    const modifyPrice = deleteModifyPrice(aa)
+      store.dispatch(modifyPrice)
     this.props.history.push('/PackagedGoods')
   }
 

@@ -108,19 +108,6 @@ export default class ApplyOrder extends Component {
   submit(v) {
     console.log(v)
     this.props.history.push(`/QuotePurchaseRequest/${v.id}/${this.props.match.params.ck}/${this.props.match.params.gy}`)
-    // createPurchase({
-    //   action: 'createPurchase', data: {
-    //     uniacid: store.getState().uniacid,
-    //     uid: store.getState().uid,
-    //     applyid:v.id,
-    //     warehouseid:this.props.match.params.ck,
-    //     supplierid:this.props.match.params.gy
-    //   }
-    // }).then((res) => {
-    //   console.log(res.data.data.data)
-    
-        
-    // })
     
   }
   render() {

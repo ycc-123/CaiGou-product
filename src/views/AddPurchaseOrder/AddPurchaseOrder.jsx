@@ -4,7 +4,7 @@ import { getWarehouseList, getSupplierList, createPurchase } from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
-
+import { clearCache } from 'react-router-cache-route'
 export default class AddPurchaseOrder extends Component {
   constructor(props) {
     super(props)
@@ -23,6 +23,7 @@ export default class AddPurchaseOrder extends Component {
   }
 
   componentDidMount() {
+    clearCache()
     getWarehouseList({
       action: 'getWarehouseList', data: {
         uniacid: store.getState().uniacid,
@@ -94,6 +95,8 @@ export default class AddPurchaseOrder extends Component {
       if (res.data.status === 4001) {
         this.props.history.push(`/category/${res.data.data.id}/${parame}/${this.state.inputbeiz === '' ? 0 : this.state.inputbeiz}`)
         Toast.success('新建采购单成功', 2)
+       
+
       } else {
         Toast.info(res.data.msg, 2)
       }

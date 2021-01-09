@@ -16,8 +16,9 @@ export default class ApplyOrderx extends Component {
     }
   }
   componentDidMount() {
+      console.log(store.getState().modifyPrice)
     this.setState({
-      goods: store.getState().packagedGoods
+      goods: store.getState().modifyPrice
     })
   }
   inputChange(e) {
@@ -39,7 +40,7 @@ export default class ApplyOrderx extends Component {
             </div>
           </div>
           {
-            JSON.parse(localStorage.getItem("packagedGoods")).map((v, k) => {
+            this.state.goods.map((v, k) => {
               return (
                 <div className='tiao' key={k}>
                   <img className='t-img-l' src={v.img ? v.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />

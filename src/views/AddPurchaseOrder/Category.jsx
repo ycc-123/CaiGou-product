@@ -5,6 +5,8 @@ import CategoryLeftItem from './childCom/CategoryLeftItem'
 import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
+import { dropByCacheKey } from 'react-router-cache-route'
+
 import { getProductCategoryAll, searchProduct } from 'network/Api'
 import { Toast, Modal } from 'antd-mobile';
 const alert = Modal.alert;
@@ -21,6 +23,8 @@ const scrollStyle = {
 class Category extends Component {
   constructor(props) {
     super(props)
+    props.cacheLifecycles.didCache(this.componentDidCache)
+    props.cacheLifecycles.didRecover(this.componentDidRecover)
     this.state = {
       indexId: '',
       value: [],
@@ -36,11 +40,14 @@ class Category extends Component {
       oldGoods:[]
     }
   }
+  componentDidRecover =() => {
+
+    dropByCacheKey('MyComponent')
+  }
   mingxi() {
     this.props.history.push(`/Liebiao/${this.props.match.params.ck}/${this.props.match.params.bz}`)
   }
   getChildValue(num,price,goods) {
-    console.log(num,goods)
     this.setState({
       num: num,
       oldGoods:goods,
@@ -71,11 +78,9 @@ class Category extends Component {
     })
   }
   render() {
-    localStorage.clear()
     const { title, type } = this.state
     let ida = this.props.match.params.id
     let bz = this.props.match.params.bz
-    console.log(bz)
     return (
       <CategoryStyle>
         <DocumentTitle title={'新建采购单'} />
@@ -95,7 +100,7 @@ class Category extends Component {
                   <li className='category-left-head'></li>
                   {title.map((item, index) => {
                     return (
-                      <CategoryLeftItem key={item.id + index}
+                      <CategoryLeftItem key={item.id +''+ index}
                         item={item}
                         index={index}
                         active={this.state.defaultIndex === index ? true : false}
@@ -112,10 +117,10 @@ class Category extends Component {
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
               <div className='left' 
-              // onClick={()=>{this.mingxi()}}
+              onClick={()=>{this.mingxi()}}
               >
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                <div className='yuan'>{this.state.oldGoods.length ? this.state.oldGoods.length : 0}</div>
+                <div className='yuan'>{store.getState().goodsList.length ? store.getState().goodsList.length : 0}</div>
               </div>
               <div style={{ display: "flex", marginTop: ".2rem" }}>
                 <div className='baocun' onClick={() => { this.click(1) }}>保存</div>

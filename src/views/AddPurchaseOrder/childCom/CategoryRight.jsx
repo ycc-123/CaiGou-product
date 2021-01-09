@@ -5,7 +5,9 @@ import BetterScroll from 'common/betterScroll/BetterScroll'
 import { submitPurchase } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import { store } from 'store/index'
-import { saveGoods } from 'store/actionCreators'
+import { saveGoods ,deleteSqgoods} from 'store/actionCreators'
+import { dropByCacheKey } from 'react-router-cache-route'
+
 
 class CategoryRight extends Component {
   constructor() {
@@ -48,6 +50,10 @@ class CategoryRight extends Component {
       </div>
     );
   }
+  componentDidMount() {
+    this.props.onRef(this)
+  }
+
   getChildrenMsg = (result, login, password, ww) => {
     let num = Number(this.state.num) + Number(login)
     let price = Number(this.state.price) + Number(login) * Number(password)
@@ -56,7 +62,6 @@ class CategoryRight extends Component {
 
     let nums = []
     nums.push(login);
-    console.log(nums)
     let prices = []
     prices.push(password);
     this.setState({
@@ -84,42 +89,32 @@ class CategoryRight extends Component {
           price: price[k],
           name: this.state.goods[k].name,
         }
-        return arr.push(aa);
+        return aa;
       })
-      console.log(arr)
-      const goodsList = saveGoods(arr)
+      const goodsList = saveGoods(aa)
       store.dispatch(goodsList)
     })
-
-  }
-  componentDidMount() {
-    this.props.onRef(this)
   }
 
   myName = (e) => {
-    if (this.state.login[0] === undefined) {
+    if (store.getState().goodsList.length===0) {
       Toast.info('请采购商品后提交', 1.5)
     } else {
       let num = this.state.login
       let price = this.state.password
-
       let aa = {}
       let arr = []
-
-
-      num.map((v, k) => {
+      store.getState().goodsList.map((v, k) => {
         aa = {
-          amount: num[k] * price[k],
-          barcodeid: this.state.goods[k].barcodeid,
-          barcode: this.state.goods[k].code,
-          gnum: num[k],
-          num: num[k],
-          price: price[k]
+          amount: v.amount,
+          barcodeid: v.barcodeid,
+          barcode: v.barcode,
+          gnum: v.num,
+          num: v.num,
+          price: v.price
         }
         return arr.push(aa);
       })
-      const goodsList = saveGoods(arr)
-      store.dispatch(goodsList)
       let itemData = arr
       let purchaseData = {
         subtotal: this.state.price,
@@ -146,6 +141,10 @@ class CategoryRight extends Component {
     }
   }
   home() {
+    let aa=[]
+    const goodsList = deleteSqgoods(aa)
+      store.dispatch(goodsList)
+      dropByCacheKey('MyComponent')
     this.props.history.push('/home')
   }
 

@@ -5,7 +5,8 @@ import BetterScroll from 'common/betterScroll/BetterScroll'
 import { submitPurchase } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import { store } from 'store/index'
-import { saveGoods } from 'store/actionCreators'
+import { saveGoods ,deleteSqgoods} from 'store/actionCreators'
+
 
 class CategoryRight extends Component {
   constructor() {
@@ -86,7 +87,6 @@ class CategoryRight extends Component {
         }
         return aa;
       })
-      console.log(arr)
       const goodsList = saveGoods(aa)
       store.dispatch(goodsList)
     })
@@ -126,7 +126,7 @@ class CategoryRight extends Component {
 
 
     console.log(e, result)
-    if (false) {
+    if (store.getState().goodsList.length===0) {
       Toast.info('请采购商品后提交', 1.5)
     } else {
       let num = this.state.login
@@ -136,19 +136,17 @@ class CategoryRight extends Component {
       let arr = []
 
 
-      num.map((v, k) => {
+      store.getState().goodsList.map((v, k) => {
         aa = {
-          amount: num[k] * price[k],
-          barcodeid: this.state.goods[k].barcodeid,
-          barcode: this.state.goods[k].code,
-          gnum: num[k],
-          num: num[k],
-          price: price[k]
+          amount: v.amount,
+          barcodeid: v.barcodeid,
+          barcode: v.barcode,
+          gnum: v.num,
+          num: v.num,
+          price: v.price
         }
         return arr.push(aa);
       })
-      const goodsList = saveGoods(arr)
-      store.dispatch(goodsList)
       let itemData = [...arr,...result]
       let purchaseData = {
         subtotal: this.state.price+sums,
@@ -168,8 +166,6 @@ class CategoryRight extends Component {
       }).then(res => {
         if (res.data.status === 4001) {
           Toast.success(res.data.msg, 2)
-          const goodsList = saveGoods([])
-          store.dispatch(goodsList)
           this.home()
         } else {
           Toast.info(res.data.msg, 2)
@@ -178,6 +174,9 @@ class CategoryRight extends Component {
     }
   }
   home() {
+    let aa=[]
+    const goodsList = deleteSqgoods(aa)
+      store.dispatch(goodsList)
     this.props.history.push('/home')
   }
 
