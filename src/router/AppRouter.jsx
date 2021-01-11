@@ -68,16 +68,15 @@ const AppRouter = () => {
     <Router>
       {/* 缓存路由 */}
       <CacheSwitch>
-      <CacheRoute path='/Sqcgcategory/:id/:bz' when='forward' component={Sqcgcategory} cacheKey="Sqcgcategory"></CacheRoute>
+      <CacheRoute path='/tiaoboCategory/:id/:ck' when='forward' component={tiaoboCategory} cacheKey="tiaoboCategory"></CacheRoute>
 
+      <CacheRoute path='/Sqcgcategory/:id/:bz' when='forward' component={Sqcgcategory} cacheKey="Sqcgcategory"></CacheRoute>
       <CacheRoute path='/category/:id/:ck/:bz' when='forward' component={category} cacheKey="MyComponent"></CacheRoute>
       <CacheRoute path='/QuotePurchaseRequest/:id/:ck/:gy' when='forward' component={QuotePurchaseRequest} cacheKey="QuotePurchaseRequest"></CacheRoute>
       <CacheRoute path='/choiceGoods/:id' when='forward'  component={choiceGoods} cacheKey="choiceGoods"></CacheRoute>
-      <CacheRoute path='/pandianCategory/:id/:ck/:fl/:name' when='forward' component={pandianCategory} cacheKey="pandianCategory"></CacheRoute>
       <CacheRoute path='/home' when='always' component={Home}></CacheRoute>
       <CacheRoute path='/CashierOrder' when='always' component={CashierOrder}></CacheRoute>
       <CacheRoute path='/Youhuimxb' when='always' component={Youhuimxb}></CacheRoute>
-      {/* <CacheRoute path='/PurchaseOrder' when='always' component={PurchaseOrder}></CacheRoute> */}
 
       <Redirect from='/' exact to='/home'></Redirect>
 
@@ -119,7 +118,7 @@ const AppRouter = () => {
         {/* 商品优惠汇总 */}
         <Route path='/GoodDiscount' exact component={GoodDiscount} ></Route>
         {/* 盘点单 */}
-        {/* <Route path='/pandianCategory/:id/:ck/:fl/:name' exact component={pandianCategory} ></Route> */}
+        <Route path='/pandianCategory/:id/:ck/:fl/:name' exact component={pandianCategory} ></Route>
         <Route path='/addPandian' exact component={Pandian} ></Route>
         <Route path='/Pandian' exact component={InventoryList} ></Route>
         <Route path='/quanpanCategory/:id/:ck' exact component={quanpanCategory} ></Route>
@@ -128,7 +127,7 @@ const AppRouter = () => {
         <Route path='/addallocationList' exact component={addallocationList} ></Route>
         <Route path='/allocationListDetails/:id' exact component={allocationListDetails} ></Route>
         <Route path='/allocationOrder' exact component={allocationOrder} ></Route>
-        <Route path='/tiaoboCategory/:id/:ck' exact component={tiaoboCategory} ></Route>
+        {/* <Route path='/tiaoboCategory/:id/:ck' exact component={tiaoboCategory} ></Route> */}
         <Route path='/tiaoboxq' exact component={tiaoboxq} ></Route>
         {/* 新增商品 */}
         <Route path='/AddGoods' exact component={AddGoods} ></Route>
@@ -146,7 +145,7 @@ const AppRouter = () => {
         <Route path='/modifyPriceDetailed/:id' exact component={modifyPriceDetailed} ></Route>
         <Route path='/modifyPriceCategory/:id/:storeid' exact component={modifyPriceCategory} ></Route>
         <Route path='/modifyPriceCategorymx' exact component={modifyPriceCategorymx} ></Route>
-        <Route path='/modifyPriceBjGoods/:id/:tiaojiid' exact component={modifyPriceBjGoods} ></Route>
+        <Route path='/modifyPriceBjGoods/:id/:tiaojiid/:storeid' exact component={modifyPriceBjGoods} ></Route>
 
 
         {/* 收银订单明细表 */}

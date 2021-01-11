@@ -31,7 +31,7 @@ class CategoryRightgoods extends Component {
   }
 bianji(goods){
   console.log(this.props.id)
-  this.props.history.push(`/modifyPriceBjGoods/${goods.id}/${this.props.id}`)
+  this.props.history.push(`/modifyPriceBjGoods/${goods.id}/${this.props.id}/${this.props.match.params.storeid}`)
 
 }
   render() {
@@ -42,8 +42,8 @@ bianji(goods){
       posprice=goods.posprice
       memberprice=goods.memberprice
     }else{
-      posprice=goods.newposprice
-      memberprice=goods.newmemberprice
+      posprice=goods.newposprice?goods.newposprice:goods.posprice
+      memberprice=goods.newmemberprice?goods.newmemberprice:goods.memberprice
     }
     return (
       <CategoryRightgoodsStyle>
@@ -57,14 +57,14 @@ bianji(goods){
             <div style={{ fontSize: ".35rem", color: '#1a1a1a' }}>{goods.name}</div>
             <div className='member-price' style={{ color: '#1a1a1a', padding: ".2rem 0" }}>
               <article >编码：{goods.code}</article>
-              <div style={{color:"#C61E1E",display:goods.memberprice!=="0.00"?"block":"none"}}>
+              <div style={{color:"#C61E1E",display:memberprice!=="0.00"?"block":"none"}}>
                 <img style={{width:".32rem",height:".32rem"}} src={"https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/memberPrice.png"} alt="" />
-                {this.state.password?this.state.password:goods.memberprice}元/{goods.unitname}
+                {memberprice}元/{goods.unitname}
                 </div>
             </div>
             <div className='shuliang' style={{ color: '#4c4c4c' }}>
               <article ></article>
-              <div style={{fontSize:".35rem"}}>{this.state.login?this.state.login:goods.posprice}元/{goods.unitname}</div>
+              <div style={{fontSize:".35rem"}}>{posprice}元/{goods.unitname}</div>
             </div>
             {/* <Button
               style={{ position: "absolute", top: ".3rem", left: "4.6rem", color: "transparent", background: "transparent" }}

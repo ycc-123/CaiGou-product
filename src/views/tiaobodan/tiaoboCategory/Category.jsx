@@ -7,6 +7,8 @@ import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
 import { getProductCategoryAll, getStockList } from 'network/Api'
 import { Toast, Modal } from 'antd-mobile';
+import { deletTiaobogoods } from 'store/actionCreators'
+
 const alert = Modal.alert;
 const scollConfig = {
   probeType: 1
@@ -110,11 +112,11 @@ class Category extends Component {
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
               <div className='left' onClick={() => { this.mingxi() }}>
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
+                <div className='yuan'>{store.getState().tiaobogoods.length ? store.getState().tiaobogoods.length : 0}</div>
               </div>
               <div style={{ display: "flex", marginTop: ".2rem" }}>
                 <div className='baocun' onClick={() => { this.click(1) }}>保存</div>
-                <div className='tijiao' >提交</div>
+                <div className='tijiao' onClick={() => { this.click(2) }}>提交</div>
               </div>
             </div>
 
@@ -143,6 +145,9 @@ class Category extends Component {
     this.child.myName(e)
   }
   componentDidMount = () => {
+    // let aa=[]
+    // const tiaobogoods = deletTiaobogoods(aa)
+    //   store.dispatch(tiaobogoods)
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,

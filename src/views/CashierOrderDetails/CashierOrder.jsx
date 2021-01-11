@@ -181,7 +181,7 @@ export default class CashierOrderDetails extends Component {
     }
   }
   queding() {
-    console.log(this.state.zhifu_ID)
+    // console.log(this.state.zhifu_ID)
     this.setState({
       zuantai: false,
     })
@@ -205,7 +205,7 @@ export default class CashierOrderDetails extends Component {
         page: 1
       }
     }).then((res) => {
-      console.log(this.isLoadMore)
+      // console.log(this.isLoadMore)
       
       if (res.data.status === 4001) {
         this.setState({
@@ -214,7 +214,7 @@ export default class CashierOrderDetails extends Component {
           total: res.data.data.total,
           kongbj: true
         }, () => {
-          this.refs.scroll.BScroll.finishPullUp()
+          // this.refs.scroll.BScroll.finishPullUp()
           this.refs.scroll.BScroll.refresh()
         })
       } else {

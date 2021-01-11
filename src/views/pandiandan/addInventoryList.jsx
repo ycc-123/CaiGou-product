@@ -83,9 +83,9 @@ export default class AddInventoryList extends Component {
         } else {
           this.props.history.push(`/quanpanCategory/${res.data.data}/${idkc}`)
         }
-        Toast.success('新建盘点单成功', 2)
+        Toast.success('新建盘点单成功', 1.5)
       } else {
-        Toast.info(res.data.msg, 2)
+        Toast.info(res.data.msg, 1.5)
       }
     })
   }

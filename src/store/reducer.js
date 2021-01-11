@@ -1,7 +1,7 @@
 import {
-  DELET_SQGOODS,SAVE_UID, SAVE_UNIACID, SAVE_GOODS,DELET_MODIFYPRICE,SAVE_MODIFYPRICE,
+  DELET_SQGOODS,SAVE_UID, SAVE_UNIACID, SAVE_GOODS,DELET_MODIFYPRICE,SAVE_MODIFYPRICE,SAVE_TIAOBOGOODS,DELET_TIAOBOGOODS,
 
-  SAVE_CANKU, SAVE_TIAOBOGOODS, SAVE_YOUHUIMINGXB,
+  SAVE_CANKU, SAVE_YOUHUIMINGXB,
   SAVE_PACKAGEDGOODS, SAVE_SQGOODS, 
 } from './actionTypes'
 
@@ -39,7 +39,13 @@ function reducer(state = defaultState, action) {
     case SAVE_MODIFYPRICE:
       return { ...state, modifyPrice: [...state.modifyPrice, action.data] }
 
+    // 清楚调拨商品数据
+    case DELET_TIAOBOGOODS:
+      return { ...state, tiaobogoods: [] }
 
+    // 把调拨商品数据添加进来
+    case SAVE_TIAOBOGOODS:
+      return { ...state, tiaobogoods: [...state.tiaobogoods, action.data] }
 
 
 

@@ -159,23 +159,23 @@ class Category extends Component {
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
               <div className='left' >
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
-                <div className='yuan'>{this.state.num ? this.state.num : 0}</div>
+                <div className='yuan'>{this.state.sum.length ? this.state.sum.length : 0}</div>
               </div>
               <div style={{ display: "flex", marginTop: ".2rem" }}>
                 <div className='baocun' onClick={() => { this.click(1) }}>保存</div>
-                <div className='tijiao' >提交</div>
+                <div className='tijiao' onClick={() => { this.click(2) }}>提交</div>
               </div>
             </div>
 
             <div
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "7.78rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
-              onClick={() => { this.click(1) }
+              onClick={() => { this.click(2) }
 
               }
             >
               confirm
-                        </div></div>
+            </div></div>
         </Fragment>
       </CategoryStyle>
     )
@@ -191,7 +191,7 @@ class Category extends Component {
     this.setState({
       Id: "1111"
     }, () => {
-      alert(Number(this.state.dataName.toString()) === 0 ? this.state.wulin : this.state.weilin, Number(this.state.dataName.toString()) === 0 ? "" : this.state.dataName.join(","), [
+      alert(Number(this.state.dataName.toString()) === 0 ? (e===1?"是否确认保存盘点单":this.state.wulin) : (e===1?"存在下列实际数量为0的商品是否保存":this.state.weilin), Number(this.state.dataName.toString()) === 0 ? "" : this.state.dataName.join(","), [
         { text: '取消', onPress: () => console.log('cancel') },
         { text: '确定', onPress: () => this.child.myName(e) },
       ])

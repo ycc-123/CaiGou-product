@@ -40,7 +40,8 @@ const Into = (props) => {
       action: 'getProductDetail', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        id: params.id
+        id: params.id,
+        store_id: params.storeid,
       }
     }).then((res) => {
       if (res.data.status === 4001) {

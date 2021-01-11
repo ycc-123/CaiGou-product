@@ -122,8 +122,8 @@ class Category extends Component {
 
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-              <div className='left' 
-              onClick={()=>{this.mingxi()}}
+              <div className='left'
+                onClick={() => { this.mingxi() }}
               >
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                 <div className='yuan'>{store.getState().modifyPrice.length ? store.getState().modifyPrice.length : 0}</div>
@@ -169,15 +169,29 @@ class Category extends Component {
           action: 'searchProduct', data: {
             uniacid: store.getState().uniacid,
             uid: store.getState().uid,
-            store_id:this.props.match.params.storeid,
+            store_id: this.props.match.params.storeid,
             limit: "1000",
             page: 1,
             categoryid: Id[0].id,
           }
         }).then(res => {
           if (res.data.status === 4001) {
+            let cartList = store.getState().modifyPrice
+            let now = res.data.data.data ? res.data.data.data : []
+            console.log(cartList, "===========输入后传人的值")
+            console.log('之前', now)
+            for (let i = 0; i < cartList.length; i++) {
+              for (let j = 0; j < now.length; j++) {
+                if (now[j].name == cartList[i].name) {
+                  now[j].newposprice = cartList[i].newposprice
+                  now[j].newmemberprice = cartList[i].newmemberprice
+
+                }
+              }
+            }
+            console.log('之后', now)
             this.setState({
-              goods: res.data.msg === "成功" ? res.data.data.data : [{}]
+              goods: res.data.msg === "成功" ? now : [{}]
             })
           } else {
             Toast.info(res.data.msg, 2)
@@ -206,7 +220,7 @@ class Category extends Component {
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        store_id:this.props.match.params.storeid,
+        store_id: this.props.match.params.storeid,
         limit: "1000",
         page: 1,
         categoryid: this.state.id[index].id,
@@ -228,7 +242,7 @@ class Category extends Component {
       console.log('之后', now)
       if (res.data.status === 4001) {
         this.setState({
-          goods: res.data.data.data,
+          goods: now,
           Bj: true
         })
       } else {

@@ -5,10 +5,10 @@ export default class InventoryListDetails extends Component {
   constructor() {
     super()
     this.state = {
-      zcck: store.getState().tiaoboxqck[0].label ? store.getState().tiaoboxqck[0].label : "",
-      zrvk: store.getState().tiaoboxqck[2].label ? store.getState().tiaoboxqck[2].label : "",
-      danhao: store.getState().tiaoboxqck[3] ? store.getState().tiaoboxqck[3] : "",
-      beiz: store.getState().tiaoboxqck[1] ? store.getState().tiaoboxqck[1] : ""
+      // zcck: store.getState().tiaoboxqck[0].label ? store.getState().tiaoboxqck[0].label : "",
+      // zrvk: store.getState().tiaoboxqck[2].label ? store.getState().tiaoboxqck[2].label : "",
+      // danhao: store.getState().tiaoboxqck[3] ? store.getState().tiaoboxqck[3] : "",
+      // beiz: store.getState().tiaoboxqck[1] ? store.getState().tiaoboxqck[1] : ""
       // zcck:1111,
       // zrvk:222,
       // danhao:333,
@@ -36,7 +36,7 @@ export default class InventoryListDetails extends Component {
               <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
           </div>
-          <div className='conten'>
+          {/* <div className='conten'>
             <div className='conten-top'>
               <p>
                 <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
@@ -54,7 +54,7 @@ export default class InventoryListDetails extends Component {
             <div className='footer'>
               备注：{this.state.danhao}
             </div>
-          </div>
+          </div> */}
           {
             store.getState().tiaobogoods.map((value, key) => {
               let tiao = value
@@ -308,6 +308,8 @@ const WarehousingOrderxingStyle = styled.div`
       }
       .search{
         display:flex;
+        margin-bottom:.21rem;
+
         margin-top:.21rem;
         margin-left:.32rem;
         width:9.36rem;

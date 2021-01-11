@@ -5,7 +5,8 @@ import { getWarehouseList, createWarehouseChange } from 'network/Api'
 import { Picker, List, Toast } from 'antd-mobile';
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
-import { saveCanku } from 'store/actionCreators'
+import { saveCanku ,deletTiaobogoods} from 'store/actionCreators'
+import { clearCache } from 'react-router-cache-route'
 
 export default class AddInventoryList extends Component {
   constructor(props) {
@@ -51,6 +52,10 @@ export default class AddInventoryList extends Component {
       }
     }).then(res => {
       if (res.data.status === 4001) {
+        clearCache()
+        let cc = []
+        const tiaobogoods = deletTiaobogoods(cc)
+        store.dispatch(tiaobogoods)
         this.props.history.push(`/tiaoboCategory/${res.data.data.id}/${idgy}`)
         Toast.success(res.data.msg, 2)
         let arr = []

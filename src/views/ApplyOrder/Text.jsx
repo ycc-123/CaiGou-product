@@ -1,68 +1,99 @@
-import Swiper from "swiper"
-import "swiper/css/swiper.css"
-// import "swiper/swiper.less"
-
-
 import React, { Component } from 'react'
+import styled from 'styled-components'
 
-export default class Text extends Component {
-  constructor(){
-    super()
-    this.state={
+export default class Texts extends Component {
+    constructor(){
+        super()
+        this.state={
+            flag:false
+        }
+    }
+    componentDidMount(){
+        
+    }
+    addcart(){
+        // 点击加人购物车
+        this.setState({
+            flag:!this.state.flag
+        })
+        let el = document.getElementById('akk');
+        // el.offsetWidth;
+        el.style.transform="translate(5rem,5rem)";
+        el.style.transition="all 1s ease";
 
     }
-  }
-  componentDidMount(){
-    new Swiper ('.swiper-container', {
-      autoplay:true,
-      effect : 'cube',
-  cubeEffect: {
-    slideShadows: true,
-    shadow: true,
-    shadowOffset: 100,
-    shadowScale: 0.6
-  },
-  // effect : 'coverflow',
-  // slidesPerView: 3,
-  // centeredSlides: true,
-  // coverflowEffect: {
-  //   rotate: 30,
-  //   stretch: 10,
-  //   depth: 60,
-  //   modifier: 2,
-  //   slideShadows : true
-  // },
-  direction: 'horizontal', // 垂直切换选项
-  loop: true, // 循环模式选项
+    render() {
+        return (
+            <BallStyle>
+            <div>
+                <transition >
+                <button className="btn" onClick={()=>{this.addcart()}}>
+                    加入购物
+                </button></transition>
+                <div id="akk" className="ball" style={{display:this.state.flag?"block":"none"}}></div>
+            </div>
+            </BallStyle>
+        )
+    }
+}
+const BallStyle = styled.div`
+.btn{
+    width:2rem;
+    height:2rem;
+    background-color: #ED7913;
+    text-align:center;
 
-  // 如果需要分页器
-  pagination: {
-    el: '.swiper-pagination',
-    clickable: true
-  },
-})
 }
-  render() {
-    return (
-      <div className="swiper-container">
-      <div className="swiper-wrapper">
-          <div className="swiper-slide">
-            <img  src="https://www.swiper.com.cn/demo/images/nature-1.jpg" alt=""/>
-          </div>
-          <div className="swiper-slide" style={{width:"2rem",height:"8rem",background:"yellow"}}>
-            <img src="https://www.swiper.com.cn/demo/images/nature-2.jpg" alt="11"/>
-          </div>
-          <div className="swiper-slide" style={{width:"2rem",height:"8rem",background:"pink"}}>Slide 3</div>
-      </div>   
-       {/* <!-- 如果需要分页器 -->    */}
-       <div className="swiper-pagination"></div>    
-    {/* <!-- 如果需要导航按钮 --> */}
-    {/* <div className="swiper-button-prev"></div> */}
-     {/* <div className="swiper-button-next"></div> */}
-     
-     {/* <!-- 如果需要滚动条 --> */}
-     {/* <div className="swiper-scrollbar"></div> */}
- </div>
-    )
-  }
+.ball{
+    width:1rem;
+    height:1rem;
+    border-radius:50%;
+    background-color: #ED7913;
+    position:absolute;
+    top:2rem;
+    left:2rem;
+    // transform:translate(2erm,2rem);
 }
+
+
+
+
+
+`
+
+
+
+
+
+// 长按事件
+// import React, { Component } from 'react'
+
+// export default class App extends Component {
+//     constructor() {
+//       super()
+//       this.handleButtonPress = this.handleButtonPress.bind(this)
+//       this.handleButtonRelease = this.handleButtonRelease.bind(this)
+//     }
+//     handleButtonPress () {
+//       this.buttonPressTimer = setTimeout(() => alert('long press activated'), 1000);
+//     }
+    
+//     handleButtonRelease () {
+//       clearTimeout(this.buttonPressTimer);
+//     }
+  
+//     render() {
+//       return (
+//         <div  style={{width:"10rem",height:"10rem",background:"red"}}
+//         // onClick={()=>{this.handleButtonPress()}}
+//             onTouchStart={this.handleButtonPress} 
+//             // onTouchEnd={this.handleButtonRelease} 
+//             // onMouseDown={this.handleButtonPress} 
+//             // onMouseUp={this.handleButtonRelease} 
+//             // onMouseLeave={this.handleButtonRelease}
+//             >
+         
+//         </div>
+//       );
+//     }
+//   }

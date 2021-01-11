@@ -5,7 +5,7 @@ import BetterScroll from 'common/betterScroll/BetterScroll'
 import { submitWarehouseChange } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import { store } from 'store/index'
-import { savetiaoboGoods } from 'store/actionCreators'
+import { saveTiaobogoods ,deletTiaobogoods} from 'store/actionCreators'
 
 class CategoryRight extends Component {
   constructor() {
@@ -84,9 +84,9 @@ class CategoryRight extends Component {
           name: this.state.goods[k].name,
           unit_name: this.state.goods[k].unit_name,
         }
-        return arr.push(aa);
+        return aa;
       })
-      const tiaobogoods = savetiaoboGoods(arr)
+      const tiaobogoods = saveTiaobogoods(aa)
       store.dispatch(tiaobogoods)
     })
   }
@@ -126,6 +126,9 @@ class CategoryRight extends Component {
           Toast.info(res.data.msg, 2)
           if(res.data.msg==="库存不足，无法移库"){
             setTimeout(() => {
+              let cc = []
+              const tiaobogoods = deletTiaobogoods(cc)
+              store.dispatch(tiaobogoods)
               window.location.reload();
             }, 2000);
           }
