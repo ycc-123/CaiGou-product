@@ -299,6 +299,7 @@ const Into = (props) => {
       </FAddGoodsStyle>
     </>
   )
+  
   function check() {
     createProduct({
       action: 'createProduct', data: {
@@ -309,8 +310,8 @@ const Into = (props) => {
         posprice: retailPrice,
         memberprice: setPrice,
         name: goodName,
-        changeunit: sellUnit.toString(),
-        unit: stockUnit.toString(),
+        unit: sellUnit.toString(),
+        changeunit: stockUnit.toString(),
         is_membership: memberInterests === true ? "2" : "1",
         is_memberprice: memberPrice === true ? "2" : "1",
         is_plu_goods: matchGood === true ? "2" : "1",

@@ -330,6 +330,7 @@ const Into = (props) => {
         }
       })
       let kc = bb.value
+      console.log(kc,cc)
       editProduct({
         action: 'editProduct', data: {
           uniacid: store.getState().uniacid,
@@ -340,8 +341,8 @@ const Into = (props) => {
           posprice: retailPrice ? retailPrice : morengoods.posprice,
           memberprice: setPrice ? setPrice : morengoods.memberprice,
           name: goodName ? goodName : morengoods.name,
-          unit: stockUnit.toString() ? stockUnit.toString() : kc,
-          changeunit: sellUnit.toString() ? sellUnit.toString() : cc,
+          changeunit: stockUnit.toString() ? stockUnit.toString() : kc,
+          unit: sellUnit.toString() ? sellUnit.toString() : cc,
           is_membership: memberInterests === true ? "2" : "1" ? memberInterests === true ? "2" : "1" : morengoods.is_membership,
           is_memberprice: memberPrice === true ? "2" : "1" ? memberPrice === true ? "2" : "1" : morengoods.is_memberprice,
           is_plu_goods: matchGood === true ? "2" : "1" ? matchGood === true ? "2" : "1" : morengoods.is_plu_goods,
@@ -350,7 +351,7 @@ const Into = (props) => {
         }
       }).then((res) => {
         if (res.data.status === 4001) {
-          history.push('/bjsygoods')
+          history.push('/home')
           Toast.success(res.data.msg, 2)
         } else {
           Toast.info(res.data.msg, 2)

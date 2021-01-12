@@ -11,10 +11,10 @@ export function requestPost(config) {
 
   const instance = axios.create({
     timeout: 10000,
-    // baseURL: BASE_URL,
+    baseURL: BASE_URL,
     // baseURL:'https://dev.huodiesoft.com/pos_erp_api.php',
     // 切换正式站
-    baseURL:'https://www.lexiangpingou.cn/pos_erp_api.php',
+    // baseURL:'https://www.lexiangpingou.cn/pos_erp_api.php',
     method: 'post',
     headers: {
       'Content-Type': 'text/plain'

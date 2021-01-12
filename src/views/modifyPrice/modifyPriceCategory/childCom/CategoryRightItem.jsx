@@ -57,7 +57,7 @@ bianji(goods){
             <div style={{ fontSize: ".35rem", color: '#1a1a1a' }}>{goods.name}</div>
             <div className='member-price' style={{ color: '#1a1a1a', padding: ".2rem 0" }}>
               <article >编码：{goods.code}</article>
-              <div style={{color:"#C61E1E",display:memberprice!=="0.00"?"block":"none"}}>
+              <div style={{color:"#C61E1E",display: goods.is_memberprice==="2"?"block":"none"}}>
                 <img style={{width:".32rem",height:".32rem"}} src={"https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/memberPrice.png"} alt="" />
                 {memberprice}元/{goods.unitname}
                 </div>

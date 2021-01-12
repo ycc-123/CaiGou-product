@@ -185,6 +185,7 @@ class Category extends Component {
                 if (now[j].name == cartList[i].name) {
                   now[j].newposprice = cartList[i].newposprice
                   now[j].newmemberprice = cartList[i].newmemberprice
+                  now[j].is_memberprice = cartList[i].memberPrice
 
                 }
               }
@@ -235,6 +236,7 @@ class Category extends Component {
           if (now[j].name == cartList[i].name) {
             now[j].newposprice = cartList[i].newposprice
             now[j].newmemberprice = cartList[i].newmemberprice
+            now[j].is_memberprice = cartList[i].memberPrice
 
           }
         }

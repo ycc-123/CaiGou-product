@@ -176,16 +176,8 @@ const Into = (props) => {
               </div>
             </div>
           </div>
-          <List.Item
-                extra={<Switch
-                  checked={memberInterests}
-                  onChange={() => { setMemberInterests(!memberInterests) }}
-                />}
-              >启用会员权益
-              <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1rem" }}>是否启用会员权益</span>
-              </List.Item>
-              <div className='xian'></div>
-                  <div style={{ display: memberInterests ? "none" : "block" }}>
+          
+                  
               <List.Item
                 extra={<Switch
                   checked={memberPrice}
@@ -195,7 +187,7 @@ const Into = (props) => {
               <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>是否启用会员价</span>
               </List.Item>
               <div className='xian'></div>
-              <div className="type flex-column" style={(memberInterests) ? { display: "none" } : { display: memberPrice ? "block" : "none" }}>
+              <div className="type flex-column" style={{ display: memberPrice ? "block" : "none" }}>
                 <div className="item flex-row" style={{
                   justifyContent: 'space-between'
                 }}>
@@ -212,7 +204,17 @@ const Into = (props) => {
                   </div>
                 </div>
               </div>
-              </div>
+
+              <List.Item
+                extra={<Switch
+                  checked={memberInterests}
+                  onChange={() => { setMemberInterests(!memberInterests) }}
+                />}
+              >启用会员权益
+              <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1rem" }}>是否启用会员权益</span>
+              </List.Item>
+              <div className='xian'></div>
+            
         </AddGoodsStyle>
       </BetterScroll>
       <FAddGoodsStyle>
@@ -224,9 +226,7 @@ const Into = (props) => {
     </>
   )
   function check() {
-    if (memberInterests && memberPrice) {
-      Toast.info("会员价和会员权益不能同时开启", 2)
-    } else {
+
       let aa = {}
       unit.map((v, k) => {
         if (v.label === morengoods.unit_name) {
@@ -262,7 +262,9 @@ const Into = (props) => {
             code: morengoods.code,
             name: morengoods.name,
             unit_name: morengoods.unit_name,
-            image: morengoods.albumpath
+            image: morengoods.albumpath,
+            memberPrice: memberPrice === true ? "2" : "1",
+            memberInterests: memberInterests === true ? "2" : "1"
           }
           console.log(aa)
 
@@ -279,7 +281,7 @@ const Into = (props) => {
       })
     }
   }
-}
+
 const FAddGoodsStyle = styled.div`
 .lbb{
     width: 2rem;
@@ -420,8 +422,8 @@ const TAddGoodsStyle = styled.div`
     font-size: .35rem;
   }
   .type .item .left span::before {
-    content: '*';
-    color: #DE0000;
+    // content: '*';
+    // color: #DE0000;
   }
   .type .item .right {
     margin-right: .3rem;
@@ -434,7 +436,7 @@ const TAddGoodsStyle = styled.div`
     font-weight: 500;
   }
   .type .item .right input::-webkit-input-placeholder {
-    color: #000;
+    color: #b4b4b4;
     font-size: .35rem;
   }
   .flex-row{

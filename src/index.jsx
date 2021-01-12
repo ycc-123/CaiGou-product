@@ -19,12 +19,12 @@ import 'assets/css/basic.css'
 // let uid = getParamsString('uid')
 
 // // 正式站
-let uid = "5372"
-let uniacid = "826"
+// let uid = "5372"
+// let uniacid = "826"
 
 // 测试站
-// let uid ="2271"
-// let uniacid = "53"
+let uid ="2271"
+let uniacid = "53"
 
 // 无开通收银服务用户
 // let  uid= "5664"
