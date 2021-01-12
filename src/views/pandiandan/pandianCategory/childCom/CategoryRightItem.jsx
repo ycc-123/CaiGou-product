@@ -43,7 +43,7 @@ class CategoryRightgoods extends Component {
               <div>实际数量：{this.state.login ? this.state.login : 0}</div>
             </div>
             <Button
-              style={{ position: "absolute", width: "3rem", top: ".3rem", left: "3.2rem", color: "transparent", background: "transparent", border: "none" }}
+              style={{width:"7.2rem",height:"2rem", position: "absolute", top: "-.1rem", left: "-1.8rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
               onClick={() => prompt('填写', '请输入商品实际账面数量',
                 [

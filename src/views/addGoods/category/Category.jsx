@@ -7,6 +7,9 @@ import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
 import { getProductCategoryAll, searchProduct } from 'network/Api'
 import { Toast } from 'antd-mobile';
+import  Search  from 'common/search'
+// import { LoadingMore } from 'common/loading'
+
 
 const scollConfig = {
   probeType: 1
@@ -46,19 +49,15 @@ class Category extends Component {
       price: val
     })
   }
-  inputChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
-  Search() {
+  search=(e)=> {
+    
     searchProduct({
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         limit: "1000",
         page: 1,
-        search: this.state.inputSearch
+        search: e
       }
     }).then(res => {
       if (res.data.status === 4001) {
@@ -70,6 +69,7 @@ class Category extends Component {
       }
     })
   }
+
   render() {
     const { title, type } = this.state
     let ida = this.props.match.params.id
@@ -78,14 +78,20 @@ class Category extends Component {
         <DocumentTitle title={'商品档案'} />
         <Fragment>
           <div style={{ display: "flex" }}>
-            <div className='search'>
-              <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"
+            {/* <div className='search' >
+            <form action="" target="frameFile" onSubmit={(e) => { this.search(e) }}>
+              <input type="search" ref='input' className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"
                 onChange={this.inputChange.bind(this)}
                 value={this.state.inputSearch} />
-              <div className='img' onClick={() => { this.Search() }}>
+          <iframe name="frameFile" style={{ display: 'none' }} title=''></iframe>
+
+            <div onClick={() => { this.focus() }} style={{width:"2rem",height:"2rem",position:"absolute",top:"4rem",left:"2rem",background:"red"}}></div>
+            </form>
+              <div className='img' onClick={() => { this.search() }}>
                 <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
               </div>
-            </div>
+            </div> */}
+            <Search search={this.search}/>
             <div
               onClick={() => { this.state.jj === false ? console.log() : this.props.history.push('/addgoods') }}
               className='add'>新增<span style={{ fontSize: ".4rem" }}>+</span></div>
@@ -97,7 +103,7 @@ class Category extends Component {
                   <li className='category-left-head'></li>
                   {title.map((item, index) => {
                     return (
-                      <CategoryLeftItem key={item.id + index}
+                      <CategoryLeftItem key={item.id +""+ index}
                         item={item}
                         index={index}
                         active={this.state.defaultIndex === index ? true : false}

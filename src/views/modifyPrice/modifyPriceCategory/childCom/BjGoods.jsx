@@ -94,7 +94,7 @@ const Into = (props) => {
               </div>
               <div className="right">
                 <input style={{ background: "#F8F8F8" }}
-                  readonly="readonly"
+                  readOnly="readonly"
                   value={goodCode}
                   type="text"
                   placeholder={morengoods.code}
@@ -112,7 +112,7 @@ const Into = (props) => {
               </div>
               <div className="right">
                 <input style={{ background: "#F8F8F8" }}
-                readonly="readonly"
+                readOnly="readonly"
                   value={goodName}
                   type="text"
                   placeholder={morengoods.name}
@@ -130,7 +130,7 @@ const Into = (props) => {
               </div>
               <div className="right">
               <input style={{ background: "#F8F8F8" }}
-                readonly="readonly"
+                readOnly="readonly"
                   value={goodName}
                   type="text"
                   placeholder={morengoods.category_name}
@@ -148,7 +148,7 @@ const Into = (props) => {
               </div>
               <div className="right" >
               <input style={{ background: "#F8F8F8" }}
-                readonly="readonly"
+                readOnly="readonly"
                   value={goodName}
                   type="text"
                   placeholder={morengoods.unit_name}

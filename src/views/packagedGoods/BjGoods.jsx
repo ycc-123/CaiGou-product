@@ -100,7 +100,7 @@ const Into = (props) => {
               </div>
               <div className="right">
                 <input style={{ background: "#F8F8F8" }}
-                  readonly="readonly"
+                  readOnly="readonly"
                   value={goodCode}
                   type="text"
                   placeholder={morengoods.code}

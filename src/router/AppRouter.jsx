@@ -74,12 +74,10 @@ const AppRouter = () => {
       <CacheRoute path='/category/:id/:ck/:bz' when='forward' component={category} cacheKey="MyComponent"></CacheRoute>
       <CacheRoute path='/QuotePurchaseRequest/:id/:ck/:gy' when='forward' component={QuotePurchaseRequest} cacheKey="QuotePurchaseRequest"></CacheRoute>
       <CacheRoute path='/choiceGoods/:id' when='forward'  component={choiceGoods} cacheKey="choiceGoods"></CacheRoute>
-      <CacheRoute path='/home' when='always' component={Home}></CacheRoute>
+      <CacheRoute path='/home' exact when='always' component={Home} cache="true"></CacheRoute>
       <CacheRoute path='/CashierOrder' when='always' component={CashierOrder}></CacheRoute>
-      <CacheRoute path='/Youhuimxb' when='always' component={Youhuimxb}></CacheRoute>
-
-      <Redirect from='/' exact to='/home'></Redirect>
-
+      <CacheRoute path='/Youhuimxb' when='always' component={Youhuimxb} ></CacheRoute>
+      <Redirect from='/' exact to='/home' cache="true" cacheKey="home"></Redirect>
       </CacheSwitch>
       
       <Switch>

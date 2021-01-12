@@ -6,8 +6,8 @@ import { store } from "store/index";
 import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import Swiper from 'swiper'
-import "swiper/swiper.less"
-
+// import "swiper/swiper.less"
+import "swiper/css/swiper.css"
 export default class Shouyinmxb extends Component {
   constructor() {
     super()

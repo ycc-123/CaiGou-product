@@ -1,4 +1,4 @@
-import React, { Component,createRef } from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import { store } from "store/index";
 import DocumentTitle from 'react-document-title'
@@ -8,12 +8,32 @@ import { Toast, Button, Modal } from 'antd-mobile';
 const alert = Modal.alert;
 
 export default class Home extends Component {
+  constructor(props){
+    super()
+    props.cacheLifecycles.didCache(this.componentDidCache)
+    props.cacheLifecycles.didRecover(this.componentDidRecover)
+    this.state={
+
+    }
+  }
   componentDidMount() {
     this.refs.scroll.BScroll.refresh()
     console.log(localStorage.getItem('user'))
     console.log("uid=====", store.getState().uid)
     console.log("uniacid=====", store.getState().uniacid)
     // localStorage.clear()
+  }
+  componentDidCache = () => {
+    console.log('List cached')
+    this.saveY = this.refs.scroll.BScroll.y
+
+  }
+ 
+  componentDidRecover = () => {
+    console.log('List recovered')
+    this.refs.scroll.BScroll.refresh()
+    this.refs.scroll.BScroll.scrollTo(0, this.saveY)
+
   }
   aa(){
     localStorage.clear()

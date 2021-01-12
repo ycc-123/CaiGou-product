@@ -126,7 +126,7 @@ class Category extends Component {
                   <li className='category-left-head'></li>
                   {title.map((item, index) => {
                     return (
-                      <CategoryLeftItem key={item.id + index}
+                      <CategoryLeftItem key={item.id+"" + index}
                         item={item}
                         index={index}
                         active={this.state.defaultIndex === index ? true : false}
@@ -151,7 +151,7 @@ class Category extends Component {
                 {
                   this.state.result.map((v, k) => {
                     return (
-                      <li onClick={(e) => { this.canku(v, k) }}
+                      <li  onClick={(e) => { this.canku(v, k) }}
                         style={{ background: this.state.cankuID === v.id ? "#fff5ed" : '', color: this.state.cankuID === v.id ? "#ed7913" : '', border: this.state.cankuID === v.id ? "1px solid #ed7913" : '' }}
                       >{v.name}</li>
                     )

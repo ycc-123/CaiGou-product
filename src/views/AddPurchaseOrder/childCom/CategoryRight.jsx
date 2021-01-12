@@ -132,7 +132,7 @@ class CategoryRight extends Component {
         }
       }).then(res => {
         if (res.data.status === 4001) {
-          Toast.success(res.data.msg, 2)
+          Toast.success(res.data.msg, 1.5)
           this.home()
         } else {
           Toast.info(res.data.msg, 2)
@@ -144,7 +144,7 @@ class CategoryRight extends Component {
     let aa=[]
     const goodsList = deleteSqgoods(aa)
       store.dispatch(goodsList)
-      dropByCacheKey('MyComponent')
+      // dropByCacheKey('MyComponent')
     this.props.history.push('/home')
   }
 

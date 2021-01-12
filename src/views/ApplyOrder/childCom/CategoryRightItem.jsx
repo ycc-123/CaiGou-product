@@ -51,7 +51,7 @@ class CategoryRightgoods extends Component {
             }
             </div>
             <Button
-              style={{position:"absolute",top:".3rem",left:"4.6rem",color:"transparent",background:"transparent"}} 
+              style={{width:"7.2rem",height:"2rem", position: "absolute", top: "-.1rem", left: "-1.8rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
               onClick={() => prompt('填写', '请输入采购申请数量',
               [

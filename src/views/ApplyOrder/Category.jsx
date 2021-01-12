@@ -92,7 +92,7 @@ class Category extends Component {
                   <li className='category-left-head'></li>
                   {title.map((item, index) => {
                     return (
-                      <CategoryLeftItem key={item.id + index}
+                      <CategoryLeftItem key={item.id+"" + index}
                         item={item}
                         index={index}
                         active={this.state.defaultIndex === index ? true : false}
