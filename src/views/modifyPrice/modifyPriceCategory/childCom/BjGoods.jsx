@@ -431,6 +431,8 @@ const TAddGoodsStyle = styled.div`
   }
   .type .item .right input {
     width: 5.82rem;
+    height:1rem;
+    background-color: red;
     border: none;
     font-size: .35rem;
     font-weight: 500;
@@ -567,6 +569,8 @@ const AddGoodsStyle = styled.div`
   }
   .type .item .right input {
     width: 5.82rem;
+    height:1rem;
+    // background-color: red;
     border: none;
     font-size: .35rem;
     font-weight: 500;

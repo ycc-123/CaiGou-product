@@ -6,8 +6,9 @@ import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
 import { getProductCategoryAll, searchProduct } from 'network/Api'
-// import { Toast } from 'antd-mobile';
+import Search from 'common/changSearch'
 import { Toast, Modal } from 'antd-mobile';
+
 const alert = Modal.alert;
 const scollConfig = {
   probeType: 1
@@ -50,21 +51,17 @@ class Category extends Component {
       yuan_length: goods.length
     })
   }
-  inputChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
-  Search() {
+
+  search=(e)=> {
     searchProduct({
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         categoryid: this.state.indexId,
-        // is_packge:"1",
+        store_id: this.props.match.params.storeid,
         limit: "1000",
         page: 1,
-        search: this.state.inputSearch
+        search: e
       }
     }).then(res => {
       if (res.data.status === 4001) {
@@ -84,18 +81,17 @@ class Category extends Component {
         <DocumentTitle title={'新建调价单'} />
         <Fragment>
           <div style={{ display: "flex" }}>
-            <div className='search'>
+            {/* <div className='search'>
               <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"
                 onChange={this.inputChange.bind(this)}
                 value={this.state.inputSearch} />
               <div className='img' onClick={() => { this.Search() }}>
                 <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
               </div>
-            </div>
-            {/* <div
-          onClick={()=>{this.state.jj===false?console.log(): this.props.history.push('/editPackagedGoods')}}
-           className='add'>新增<span style={{fontSize:".4rem"}}>+</span></div> */}
-          </div>
+            </div>*/}
+            <Search placeholder={"请输入商品名称/商品编号"} search={this.search} />
+
+          </div> 
           <div className='category-main'>
             {type === 'goods' ? <Fragment><div className='categoryLeft'>
               <ul>
@@ -298,56 +294,6 @@ const CategoryStyle = styled.div`
   margin-left:.32rem;
   font-size:.37rem;
 }
-
-input::-webkit-input-placeholder {
-  color: #c9c9c9;
-  font-size:.35rem;
-}
-.img{
-  width: .55rem;  
-  height: .55rem; 
-  // line-height: .5rem; 
-  margin-left:.45rem; 
-  margin-right:.2rem;
-}
-.img-search{
-  margin-top:.12rem;
-  width: auto;  
-  height: auto;  
-  max-width: 100%;  
-  max-height: 100%;
-}
-  
-.input{
-  width:6rem;
-  font-size:.37rem;
-  border:none;
-  // width:8.3rem;
-  // margin-top:.21rem;
-  margin-left:.17rem;
-  height: .75rem;
-  line-height: .75rem;
-  // background-color: red;
-
-}
-.search{
-  display:flex;
-  justify-content: space-between;
-  margin-top:.21rem;
-  margin-left:.32rem;
-  width:9.36rem;
-  height: .75rem;
-  border-radius:.15rem;
-  background-color: #fff;
-
-}
-
-
-
-
-
-
-
 
 
 .yuan{
