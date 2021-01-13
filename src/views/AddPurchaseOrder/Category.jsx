@@ -90,7 +90,7 @@ class Category extends Component {
               onChange={this.inputChange.bind(this)}
               value={this.state.inputSearch} />
             <div className='img' onClick={() => { this.Search() }}>
-              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
           </div>
           <div className='category-main'>
@@ -119,7 +119,7 @@ class Category extends Component {
               <div className='left' 
               onClick={()=>{this.mingxi()}}
               >
-                <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                 <div className='yuan'>{store.getState().goodsList.length ? store.getState().goodsList.length : 0}</div>
               </div>
               <div style={{ display: "flex", marginTop: ".2rem" }}>

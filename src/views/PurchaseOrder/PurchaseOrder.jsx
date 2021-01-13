@@ -87,7 +87,7 @@ export default class PurchaseOrder extends Component {
               onChange={this.inputChange.bind(this)}
               value={this.state.inputSearch} />
             <div className='img' onClick={() => { this.Search() }}>
-              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
           </div>
           <div
@@ -111,7 +111,7 @@ export default class PurchaseOrder extends Component {
           }
         </BetterScroll>
         <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
-          <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
+          <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/kong.png" alt="" />
         </div>
       </PurchaseOrderStyle>
     )

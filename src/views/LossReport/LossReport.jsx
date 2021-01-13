@@ -158,7 +158,7 @@ export default class LossReport extends Component {
     if (v === "今天") {
       axios({
         timeout: 10000,
-        baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
+        baseURL: 'https://dev.lexiangpingou.cn/posdataapi.php?action=get_time',
         method: 'post',
         headers: {
           'Content-Type': 'text/plain'
@@ -177,7 +177,7 @@ export default class LossReport extends Component {
     } else if (v === "昨天") {
       axios({
         timeout: 10000,
-        baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
+        baseURL: 'https://dev.lexiangpingou.cn/posdataapi.php?action=get_time',
         method: 'post',
         headers: {
           'Content-Type': 'text/plain'
@@ -196,7 +196,7 @@ export default class LossReport extends Component {
     } else if (v === "7天") {
       axios({
         timeout: 10000,
-        baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
+        baseURL: 'https://dev.lexiangpingou.cn/posdataapi.php?action=get_time',
         method: 'post',
         headers: {
           'Content-Type': 'text/plain'
@@ -215,7 +215,7 @@ export default class LossReport extends Component {
     } else if (v === "本月") {
       axios({
         timeout: 10000,
-        baseURL: 'https://dev.huodiesoft.com/posdataapi.php?action=get_time',
+        baseURL: 'https://dev.lexiangpingou.cn/posdataapi.php?action=get_time',
         method: 'post',
         headers: {
           'Content-Type': 'text/plain'
@@ -297,11 +297,11 @@ export default class LossReport extends Component {
               onChange={this.inputChange.bind(this)}
               value={this.state.inputSearch} />
             <div className='img' onClick={() => { this.search() }}>
-              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
           </div>
           <div className='sximg' >
-            <img className='sximg-search' onClick={() => { this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
+            <img className='sximg-search' onClick={() => { this.xianyin() }} src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
           </div>
         </div>
         <BetterScroll config={scrollConfig} ref='scroll' style={{ top: "1.2rem", bottom: "1.5rem" }} loadMore={this.loadMore}
@@ -400,7 +400,7 @@ export default class LossReport extends Component {
           <div style={{ marginRight: ".6rem" }}>总报损金额：<span>{this.state.zongnp.total ? this.state.zongnp.total : 0}</span></div>
         </div>
         <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
-          <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
+          <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/kong.png" alt="" />
         </div>
       </LossReportStyle>
     )
@@ -567,7 +567,7 @@ const LossReportStyle = styled.div`
 .wen-zi-f p{
     font-size:.38rem;
     color:#cd1d1d;
-    font-weight:900;
+    // font-weight:900;
 }
 .name{
     font-size:.35rem;

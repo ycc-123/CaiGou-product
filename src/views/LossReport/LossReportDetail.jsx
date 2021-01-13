@@ -118,14 +118,14 @@ export default class ApplyOrderx extends Component {
               onChange={this.inputChange.bind(this)}
               value={this.state.inputSearch} />
             <div className='img' onClick={() => { this.seach() }}>
-              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
           </div>
 
           <div className='conten'>
             <div className='conten-top'>
               <p>
-                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+                <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/dingdan.png" alt="" />
               </p>
               <div>{quan.ydocno}</div>
             </div>
@@ -143,7 +143,7 @@ export default class ApplyOrderx extends Component {
             this.state.tiao.map((v, k) => {
               return (
                 <div className='tiao' key={k}>
-                  <img className='t-img-l' src={v.image ? v.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+                  <img className='t-img-l' src={v.image ? v.image : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
                   <ul className='wen-zi'>
                     <li className='wen-zi-t'>
                       <div className='name'>{v.goods_name}</div>

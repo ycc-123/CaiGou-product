@@ -84,7 +84,7 @@ class Category extends Component {
                 onChange={this.inputChange.bind(this)}
                 value={this.state.inputSearch} />
               <div className='img' onClick={() => { this.Search() }}>
-                <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+                <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
               </div>
             </div>
             <div
@@ -111,7 +111,7 @@ class Category extends Component {
               {<CategoryRight index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef}
                 id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />}
               <div className='Bj' style={{ display: this.state.Bj === false ? "block" : "none" }}>
-                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
+                <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/kong.png" alt="" />
               </div></Fragment> : <Fragment></Fragment>}
           </div>
         </Fragment>

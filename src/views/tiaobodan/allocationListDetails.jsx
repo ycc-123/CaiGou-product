@@ -126,14 +126,14 @@ export default class InventoryListDetails extends Component {
               onChange={this.inputChange.bind(this)}
               value={this.state.inputSearch} />
             <div className='img' onClick={() => { this.seach() }}>
-              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
           </div>
 
           <div className='conten'>
             <div className='conten-top'>
               <p>
-                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+                <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/dingdan.png" alt="" />
               </p>
               <div>{inventoryData.docno}</div>
             </div>
@@ -156,7 +156,7 @@ export default class InventoryListDetails extends Component {
                 return (
                   <div className='tiao' key={key}>
                     <img className='t-img-l'
-                      src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+                      src={tiao.image ? tiao.image : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
                     <ul className='wen-zi'>
                       <li className='wen-zi-c'>
                         <div >{tiao.barcode}</div>

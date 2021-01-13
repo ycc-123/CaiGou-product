@@ -34,7 +34,7 @@ class CategoryRightgoods extends Component {
         <div className="rrr"></div>
         <li className='category-goods clearfix'
         >
-          <img className='category-img' src={goods.image ? goods.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+          <img className='category-img' src={goods.image ? goods.image : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
           <div className='category-goods-info'>
             <div style={{ fontSize: ".35rem", color: '#1a1a1a', width: "4rem" }}>{goods.name}</div>
             <div className='shuliang' style={{ color: '#1a1a1a', paddingTop: ".1rem" }}>
@@ -45,7 +45,7 @@ class CategoryRightgoods extends Component {
               {
                 input ? <div style={{ width: "100%", textAlign: "right", paddingTop: ".2rem", color: "#CD2323", fontSize: ".35rem" }}>{input}</div> :
                   <img className='category-goods-img'
-                    src='https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/jia.png'
+                    src='https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/jia.png'
                     alt="" />
               }
             </div>

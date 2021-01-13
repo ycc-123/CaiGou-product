@@ -12,7 +12,7 @@ function Tiao(value) {
   let tiao = value.item
   return (
     <div className='tiao'>
-      <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+      <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
       <ul className='wen-zi'>
         <li className='wen-zi-t'>
@@ -215,14 +215,14 @@ export default class PurchaseOrderDetailed extends Component {
               onChange={this.goodsChange.bind(this)}
               value={this.state.goodsSearch} />
             <div className='img' onClick={() => { this.search() }}>
-              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
           </div>
 
           <div className='conten'>
             <div className='conten-top'>
               <p>
-                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+                <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/dingdan.png" alt="" />
               </p>
               <div>{purchaseDetail.docno}</div>
             </div>
@@ -251,7 +251,7 @@ export default class PurchaseOrderDetailed extends Component {
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
               <div className='left'>
                 <div style={{ width: "1.28rem", height: ".68rem" }}>
-                  <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                  <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                 <div className='yuan'>{this.state.purchaseItem.length}</div>
               </div>
               <div style={{ background: purchaseDetail.statusname === "审核成功" ? "#B4B4B4" : '' }}

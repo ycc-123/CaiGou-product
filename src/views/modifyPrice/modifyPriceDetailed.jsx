@@ -12,6 +12,7 @@ export default class ApplyOrderx extends Component {
     this.state = {
       quan: [],
       tiao: [],
+
       sum: '',
       remark: '',
       inputSearch: ""
@@ -30,6 +31,8 @@ export default class ApplyOrderx extends Component {
         this.setState({
           quan: res.data.data.priceModify,
           tiao: res.data.data.data,
+        },()=>{
+          this.refs.scroll.BScroll.refresh()
         })
       } else {
         Toast.info(res.data.msg, 2)
@@ -81,7 +84,6 @@ export default class ApplyOrderx extends Component {
       }
     }).then((res) => {
       if (res.data.status === 4001) {
-        // console.log(res)
         this.setState({
           quan: res.data.data.priceModify,
           tiao: res.data.data.data,
@@ -110,14 +112,14 @@ export default class ApplyOrderx extends Component {
               onChange={this.inputChange.bind(this)}
               value={this.state.inputSearch} />
             <div className='img' onClick={() => { this.seach() }}>
-              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
           </div>
 
           <div className='conten'>
             <div className='conten-top'>
               <p>
-                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+                <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/dingdan.png" alt="" />
               </p>
               <div>{quan.docno}</div>
             </div>
@@ -131,12 +133,12 @@ export default class ApplyOrderx extends Component {
               备注：{quan.remark}
             </div>
           </div>
-          <BetterScroll config={scrollConfig} ref='scroll'>
+          <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8rem)" }}>
             {
               this.state.tiao.map((v, k) => {
                 return (
                   <div className='tiao' key={k}>
-                    <img className='t-img-l' src={v.image ? v.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+                    <img className='t-img-l' src={v.image ? v.image : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
                     <ul className='wen-zi'>
                       <li className='wen-zi-t'>
                         <div className='name'>{v.goods_name}</div>
@@ -165,7 +167,7 @@ export default class ApplyOrderx extends Component {
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
               <div className='left'>
                 <div style={{ width: "1.28rem", height: ".68rem" }}>
-                  <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                  <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                 <div className='yuan'>{this.state.tiao.length}</div>
               </div>
               <div style={{ background: quan.statusName === "提交成功" ? "#B4B4B4" : '' }}

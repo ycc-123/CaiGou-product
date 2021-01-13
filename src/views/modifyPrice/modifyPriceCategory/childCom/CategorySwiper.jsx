@@ -64,14 +64,14 @@ export default class ApplyOrderx extends Component {
               onChange={this.inputChange.bind(this)}
               value={this.state.inputSearch} />
             <div className='img' onClick={() => { this.seach() }}>
-              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
           </div>
         {/* 
           <div className='conten'>
             <div className='conten-top'>
               <p>
-                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+                <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/dingdan.png" alt="" />
               </p>
               <div>{this.state.quan.docno}</div>
             </div>
@@ -91,14 +91,14 @@ export default class ApplyOrderx extends Component {
                 console.log(v)
                 return (
                   <div className='tiao' key={k}>
-                    <img className='t-img-l' src={v.image ? v.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+                    <img className='t-img-l' src={v.image ? v.image : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
                     <ul className='wen-zi'>
                       <li className='wen-zi-t'>
                         <div className='name'>{v.name}</div>
                       </li>
                       <li className='wen-zi-c'>
                         <div >商品编码：{v.code}</div>
-                        <p style={{ color: "#DD1717" }} style={{ display: v.newmemberprice === "0.00" ? "none" : "block" }}>
+                        <p style={{ color: "#DD1717" }} style={{ display: v.memberPrice === "1" ? "none" : "block" }}>
                           <img style={{ width: ".32rem", height: ".32rem", marginBottom: ".05rem" }} src={"https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/memberPrice.png"} alt="" />
                           {v.newmemberprice}元/{v.unit_name}
                         </p>
@@ -119,7 +119,7 @@ export default class ApplyOrderx extends Component {
                         <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
                             <div className='left'>
                                 <div style={{ width: "1.28rem", height: ".68rem" }}>
-                                    <img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                                    <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                                 <div className='yuan'>{this.state.tiao.length}</div>
                             </div>
                             <div style={{ background: this.state.quan.statusName === "提交成功" ? "#B4B4B4" : '' }}

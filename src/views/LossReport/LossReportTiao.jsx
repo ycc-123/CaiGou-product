@@ -10,7 +10,7 @@ export default class StockListTiao extends Component {
           <li className='store_name'>{good.warehouseName}</li>
         </ul>
         <div className='conten'>
-          <img className='t-img-l' src={good.image ? good.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+          <img className='t-img-l' src={good.image ? good.image : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
           <ul className='wen-zi'>
             <li className='wen-zi-t'>
@@ -19,7 +19,7 @@ export default class StockListTiao extends Component {
             </li>
             <li className='wen-zi-f'>
               <div>￥：{good.costprice}元/{good.unitname}</div>
-              <p><span style={{ fontWeight: "100" }}>总价格: </span>{good.subtotal}</p>
+              <p><span >总价格: </span>{good.subtotal}</p>
             </li>
           </ul>
         </div>

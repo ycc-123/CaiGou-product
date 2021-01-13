@@ -6,6 +6,7 @@ import BetterScroll from 'common/betterScroll/BetterScroll'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 import { LoadingMore } from 'common/loading'
+import Search from 'common/search'
 
 export default class ModifyPrice extends Component {
   constructor() {
@@ -47,19 +48,21 @@ export default class ModifyPrice extends Component {
       [e.target.name]: e.target.value
     })
   }
-  Search() {
+  search = (e) => {
     getPriceModifyList({
       action: 'getPriceModifyList', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        search: this.state.inputSearch,
+        search: e,
         limit: this.state.limit,
         page: this.state.page
       }
     }).then((res) => {
       if (res.data.status === 4001) {
         this.setState({
-          data: res.data.data.data
+          inputSearch: e,
+          data: res.data.data.data,
+          page:2
         }, () => {
           this.refs.scroll.BScroll.refresh()
         })
@@ -79,14 +82,7 @@ export default class ModifyPrice extends Component {
       <ModifyPriceStyle>
         <DocumentTitle title={'调价单'} />
         <div style={{ display: "flex" }}>
-          <div className='search'>
-            <input type="search" className='input' placeholder="请输入调价单单号或门店名称" name="inputSearch"
-              onChange={this.inputChange.bind(this)}
-              value={this.state.inputSearch} />
-            <div className='img' onClick={() => { this.Search() }}>
-              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-            </div>
-          </div>
+          <Search placeholder={"请输入调价单单号或门店名称"} search={this.search} />
           <div
             onClick={() => { this.props.history.push(`/addmodifyPrice`) }}
             className='add'>新增<span style={{ fontSize: ".4rem" }}>+</span></div>
@@ -101,7 +97,7 @@ export default class ModifyPrice extends Component {
                   <div className='dan' onClick={(e) => { this.props.history.push(`/modifyPriceDetailed/${item.id}`) }}>
                     <div className='dan-top' >
                       <p>
-                        <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
+                        <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/danhao.png" alt="" />
                       </p>
                       <div className='t-right'>
                         <div className='caigoudanhao'>调价单号：{item.docno}</div>
@@ -120,31 +116,23 @@ export default class ModifyPrice extends Component {
           }
           {
             this.state.data.length > 0 &&
-            <LoadingMore isLoading={this.isLoadMore} />
+            <LoadingMore isLoading={this.state.data.length !== 10 ? false : true} />
           }
         </BetterScroll>
         <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
-          <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
+          <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/kong.png" alt="" />
         </div>
       </ModifyPriceStyle>
     )
   }
   loadMore = () => {
-    // 加载数据时转圈
-    let loading = true
-    setTimeout(() => {
-      if (loading) {
-        this.setState({
 
-          loadingMore: true
-        })
-      }
-    }, 1000)
     if (this.isLoadMore) {
       getPriceModifyList({
         action: 'getPriceModifyList', data: {
           uniacid: store.getState().uniacid,
           uid: store.getState().uid,
+          search: this.state.inputSearch,
           limit: this.state.limit,
           page: this.state.page
         }
@@ -154,13 +142,12 @@ export default class ModifyPrice extends Component {
         }
         this.setState({
           data: [...this.state.data, ...res.data.data.data],
-          loadingMore: false
+          loadingMore: false,
         }, () => {
           let page = this.state.page
           this.setState({
             page: page += 1
           })
-          loading = false
           this.refs.scroll.BScroll.finishPullUp()
           this.refs.scroll.BScroll.refresh()
         })
@@ -282,46 +269,6 @@ const ModifyPriceStyle = styled.div`
         margin-top:.21rem;
         margin-left:.32rem;
         font-size:.37rem;
-      }
-      
-      input::-webkit-input-placeholder {
-        color: #c9c9c9;
-        font-size:.35rem;
-      }
-      .img{
-        width: .55rem;  
-        height: .55rem; 
-        // line-height: .5rem; 
-        // margin-left:2.45rem;
-      }
-      .img-search{
-        margin-top:.12rem;
-        width: auto;  
-        height: auto;  
-        max-width: 100%;  
-        max-height: 100%;
-      }
-        
-      .input{
-        font-size:.37rem;
-        border:none;
-        width:6.5rem;
-        // margin-top:.21rem;
-        margin-left:.17rem;
-        height: .75rem;
-        line-height: .75rem;
-        // background-color: red;
-      
-      }
-      .search{
-        display:flex;
-        margin-top:.21rem;
-        margin-left:.32rem;
-        width:7.44rem;
-        height: .75rem;
-        border-radius:.15rem;
-        background-color: #fff;
-      
       }
 
 

@@ -63,7 +63,7 @@ class Tiao extends Component {
         <div className='dan'>
           <div className='dan-top' onClick={(e) => { this.aa(item) }}>
             <p>
-              <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
+              <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/danhao.png" alt="" />
             </p>
             <div className='t-right'>
               <div className='caigoudanhao'>采购单号：{item.docno}</div>

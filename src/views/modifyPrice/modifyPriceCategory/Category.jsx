@@ -89,7 +89,7 @@ class Category extends Component {
                 onChange={this.inputChange.bind(this)}
                 value={this.state.inputSearch} />
               <div className='img' onClick={() => { this.Search() }}>
-                <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+                <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
               </div>
             </div>
             {/* <div
@@ -116,7 +116,7 @@ class Category extends Component {
               {<CategoryRight index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef}
                 id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />}
               <div className='Bj' style={{ display: this.state.Bj === false ? "block" : "none" }}>
-                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
+                <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/kong.png" alt="" />
               </div></Fragment> : <Fragment></Fragment>}
           </div>
 
@@ -125,7 +125,7 @@ class Category extends Component {
               <div className='left'
                 onClick={() => { this.mingxi() }}
               >
-                <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
                 <div className='yuan'>{store.getState().modifyPrice.length ? store.getState().modifyPrice.length : 0}</div>
               </div>
               <div style={{ display: "flex", marginTop: ".2rem" }}>
@@ -176,23 +176,24 @@ class Category extends Component {
           }
         }).then(res => {
           if (res.data.status === 4001) {
-            let cartList = store.getState().modifyPrice
-            let now = res.data.data.data ? res.data.data.data : []
-            console.log(cartList, "===========输入后传人的值")
-            console.log('之前', now)
-            for (let i = 0; i < cartList.length; i++) {
-              for (let j = 0; j < now.length; j++) {
-                if (now[j].name == cartList[i].name) {
-                  now[j].newposprice = cartList[i].newposprice
-                  now[j].newmemberprice = cartList[i].newmemberprice
-                  now[j].is_memberprice = cartList[i].memberPrice
+            // let cartList = store.getState().modifyPrice
+            // let now = res.data.data.data ? res.data.data.data : []
+            // console.log(cartList, "===========输入后传人的值")
+            // console.log('之前', now)
+            // for (let i = 0; i < cartList.length; i++) {
+            //   for (let j = 0; j < now.length; j++) {
+            //     if (now[j].name == cartList[i].name) {
+            //       now[j].newposprice = cartList[i].newposprice
+            //       now[j].newmemberprice = cartList[i].newmemberprice
+            //       now[j].is_memberprice = cartList[i].memberPrice
 
-                }
-              }
-            }
-            console.log('之后', now)
+            //     }
+            //   }
+            // }
+            // console.log('之后', now)
+
             this.setState({
-              goods: res.data.msg === "成功" ? now : [{}]
+              goods: res.data.msg === "成功" ? res.data.data.data : [{}]
             })
           } else {
             Toast.info(res.data.msg, 2)

@@ -8,8 +8,6 @@ import { store } from 'store/index'
 import { getProductCategoryAll, searchProduct } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import  Search  from 'common/search'
-// import { LoadingMore } from 'common/loading'
-
 
 const scollConfig = {
   probeType: 1
@@ -78,20 +76,7 @@ class Category extends Component {
         <DocumentTitle title={'商品档案'} />
         <Fragment>
           <div style={{ display: "flex" }}>
-            {/* <div className='search' >
-            <form action="" target="frameFile" onSubmit={(e) => { this.search(e) }}>
-              <input type="search" ref='input' className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"
-                onChange={this.inputChange.bind(this)}
-                value={this.state.inputSearch} />
-          <iframe name="frameFile" style={{ display: 'none' }} title=''></iframe>
-
-            <div onClick={() => { this.focus() }} style={{width:"2rem",height:"2rem",position:"absolute",top:"4rem",left:"2rem",background:"red"}}></div>
-            </form>
-              <div className='img' onClick={() => { this.search() }}>
-                <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
-              </div>
-            </div> */}
-            <Search search={this.search}/>
+            <Search placeholder={"请输入商品名称/商品编号"} search={this.search}/>
             <div
               onClick={() => { this.state.jj === false ? console.log() : this.props.history.push('/addgoods') }}
               className='add'>新增<span style={{ fontSize: ".4rem" }}>+</span></div>
@@ -116,7 +101,7 @@ class Category extends Component {
               {<CategoryRight index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef}
                 id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />}
               <div className='Bj' style={{ display: this.state.Bj === false ? "block" : "none" }}>
-                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
+                <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/kong.png" alt="" />
               </div>
             </Fragment> : <Fragment>
               </Fragment>}
@@ -233,42 +218,7 @@ const CategoryStyle = styled.div`
   font-size:.37rem;
 }
 
-input::-webkit-input-placeholder {
-  color: #c9c9c9;
-  font-size:.35rem;
-}
-.img{
-  width: .55rem;  
-  height: .55rem; 
-  margin-left:.45rem;
-}
-.img-search{
-  margin-top:.12rem;
-  width: auto;  
-  height: auto;  
-  max-width: 100%;  
-  max-height: 100%;
-}
-  
-.input{
-  width:6rem;
-  font-size:.37rem;
-  border:none;
-  margin-left:.17rem;
-  height: .75rem;
-  line-height: .75rem;
 
-}
-.search{
-  display:flex;
-  margin-top:.21rem;
-  margin-left:.32rem;
-  width:7.44rem;
-  height: .75rem;
-  border-radius:.15rem;
-  background-color: #fff;
-
-}
 
 
 

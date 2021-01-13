@@ -220,7 +220,7 @@ const Into = (props) => {
       <FAddGoodsStyle>
         <div className='foot'>
           <div className='lbb'></div>
-          <div className='raa' onClick={e => { check() }}>保存</div>
+          <div className='raa' onClick={e => { check() }}>添加</div>
         </div>
       </FAddGoodsStyle>
     </>

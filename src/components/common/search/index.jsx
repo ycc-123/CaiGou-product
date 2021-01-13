@@ -29,12 +29,13 @@ export default class Search extends Component {
 
   }
   render() {
+    console.log(this.props.placeholder)
     return (
       <SearchStyle>
         <div>
           <div className='search' >
             <form action="" target="frameFile" onSubmit={(e) => { this.search(e) }}>
-              <input type="search" ref='input' className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"
+              <input type="search" ref='input' className='input' placeholder={this.props.placeholder} name="inputSearch"
                 onChange={this.inputChange.bind(this)}
                 value={this.state.inputSearch} />
               <iframe name="frameFile" style={{ display: 'none' }} title=''></iframe>
@@ -43,7 +44,7 @@ export default class Search extends Component {
             </form>
 
             <div className='img' onClick={() => { this.search() }}>
-              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
           </div>
         </div>

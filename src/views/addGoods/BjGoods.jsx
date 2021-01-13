@@ -70,10 +70,10 @@ const Into = (props) => {
       var result = res.data.data.map(o => { return { value: o.id, label: o.name } });
       setUnit(result)
     })
-    try {
-      bt_ref.current.BScroll.refresh()
-    } catch (error) {
-    }
+    // try {
+    //   bt_ref.current.BScroll.refresh()
+    // } catch (error) {
+    // }
     return () => {
     }
   }, [])
@@ -230,6 +230,7 @@ const Into = (props) => {
               extra={<Switch
                 checked={isProduct}
                 onChange={() => { setisProduct(!isProduct) }}
+                onClick={(checked) => {shuaxin(checked) }}
               />}
             >更多信息</List.Item>
             <div className='xian'></div>
@@ -275,6 +276,7 @@ const Into = (props) => {
                 extra={<Switch style={{ border: "none" }}
                   checked={matchGood}
                   onChange={() => { setMatchGood(!matchGood) }}
+                  onClick={(checked) => {shuaxin(checked) }}
                 />}
               >分体称商品
                             <span style={{ color: "#b4b4b4", fontSize: ".35rem", marginLeft: "1.3rem" }}>设置为分体称商品</span>
@@ -311,6 +313,14 @@ const Into = (props) => {
       </FAddGoodsStyle>
     </>
   )
+  function shuaxin(e){
+    console.log(e)
+    if(e===false){
+      bt_ref.current.BScroll.refresh()
+    }else{
+      bt_ref.current.BScroll.refresh()
+    }
+  }
   function check() {
     if (memberInterests && memberPrice) {
       Toast.info("会员价和会员权益不能同时开启", 2)

@@ -42,7 +42,7 @@ export default class Search extends Component {
                         </form>
 
                         <div className='img' onClick={() => { this.search() }}>
-                            <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+                            <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
                         </div>
                     </div>
                 </div>

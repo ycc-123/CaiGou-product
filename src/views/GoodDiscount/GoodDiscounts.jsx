@@ -10,7 +10,7 @@ export default class GoodDiscounts extends Component {
           <li className='store_name'>{item.storeName}</li>
         </ul>
         <div className='conten'>
-          <img className='t-img-l' src={item.image ? item.image : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+          <img className='t-img-l' src={item.image ? item.image : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
           <ul className='wen-zi'>
             <li className='wen-zi-t'>
@@ -19,11 +19,11 @@ export default class GoodDiscounts extends Component {
             </li>
             <li className='wen-zi-f'>
               <div>原价：{item.posprice}元/{item.unitname}</div>
-              <p><span style={{ fontWeight: "100" }}>小计优惠: </span>{item.subtotal_fee}</p>
+              <p><span >小计优惠: </span>{item.subtotal_fee}</p>
             </li>
             <li className='wen-zi-f'>
               <div>售价：{item.modifyprice}元/{item.unitname}</div>
-              <p><span style={{ fontWeight: "100" }}>订单优惠分摊: </span>{item.subtotal}</p>
+              <p><span >订单优惠分摊: </span>{item.subtotal}</p>
             </li>
           </ul>
         </div>

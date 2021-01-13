@@ -38,20 +38,20 @@ bianji(goods){
     const { goods } = this.props
     let memberprice=''
     let posprice=''
-    if(store.getState().modifyPrice.length===0){
+    // if(store.getState().modifyPrice.length===0){
       posprice=goods.posprice
       memberprice=goods.memberprice
-    }else{
-      posprice=goods.newposprice?goods.newposprice:goods.posprice
-      memberprice=goods.newmemberprice?goods.newmemberprice:goods.memberprice
-    }
+    // }else{
+    //   posprice=goods.newposprice?goods.newposprice:goods.posprice
+    //   memberprice=goods.newmemberprice?goods.newmemberprice:goods.memberprice
+    // }
     return (
       <CategoryRightgoodsStyle>
         <div className="rrr"></div>
         <li className='category-goods clearfix'
         onClick={()=>{this.bianji(goods)}}
         >
-          <img className='category-img' src={goods.albumpath?goods.albumpath:"https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+          <img className='category-img' src={goods.albumpath?goods.albumpath:"https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
           <div className='category-goods-info'>
 
             <div style={{ fontSize: ".35rem", color: '#1a1a1a' }}>{goods.name}</div>

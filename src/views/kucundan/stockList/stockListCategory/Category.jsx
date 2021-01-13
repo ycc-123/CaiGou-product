@@ -111,11 +111,11 @@ class Category extends Component {
                 onChange={this.inputChange.bind(this)}
                 value={this.state.inputSearch} />
               <div className='img' onClick={() => { this.Search() }}>
-                <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+                <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
               </div>
             </div>
             <div className='sximg' >
-              <img className='sximg-search' onClick={() => { this.xianyin() }} src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
+              <img className='sximg-search' onClick={() => { this.xianyin() }} src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
             </div>
           </div>
           <div className='category-main'>
@@ -141,7 +141,7 @@ class Category extends Component {
                 goodsList={this.state.goods} onRef={this.onRef}
                 aa={this.getChildValue.bind(this)} history={this.props.history} />
               <div className='Bj' style={{ display: this.state.Bj === false ? "block" : "none" }}>
-                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
+                <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/kong.png" alt="" />
               </div>
           </div>
 

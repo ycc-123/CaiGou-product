@@ -136,7 +136,7 @@ export default class ApplyOrder extends Component {
                 onChange={this.inputChange.bind(this)}
                 value={this.state.inputSearch} />
               <div className='img' onClick={() => { this.search() }}>
-                <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+                <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
               </div>
             </div>
             <div
@@ -160,7 +160,7 @@ export default class ApplyOrder extends Component {
                       <div onClick={() => { this.props.history.push(`/ApplyOrderx/${v.id}`) }}>
                         <div className='dan-top'>
                           <p>
-                            <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
+                            <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/danhao.png" alt="" />
                           </p>
                           <div className='t-right'>
                             <div className='caigoudanhao'>采购单号：{v.docno}</div>
@@ -191,7 +191,7 @@ export default class ApplyOrder extends Component {
           </div>
         </div>
         <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
-          <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/kong.png" alt="" />
+          <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/kong.png" alt="" />
         </div>
       </ApplyOrderStyle>
     )

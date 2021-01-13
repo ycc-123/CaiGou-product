@@ -33,13 +33,13 @@ export default class InventoryListDetails extends Component {
           <div className='search'>
             <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
             <div className='img' onClick={() => { }}>
-              <img className='img-search' src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
             </div>
           </div>
           {/* <div className='conten'>
             <div className='conten-top'>
               <p>
-                <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+                <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/dingdan.png" alt="" />
               </p>
               <div>{this.state.beiz}</div>
             </div>
@@ -60,7 +60,7 @@ export default class InventoryListDetails extends Component {
               let tiao = value
               return (
                 <div className='tiao' key={key}>
-                  <img className='t-img-l' src={tiao.img ? tiao.img : "https://dev.huodiesoft.com/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+                  <img className='t-img-l' src={tiao.img ? tiao.img : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
 
                   <ul className='wen-zi'>
                     <li className='wen-zi-c'>

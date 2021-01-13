@@ -24,7 +24,7 @@ export default class youhuimxbs extends Component {
         <div className='dan'>
           <div className='dan-top'>
             <p>
-              <img src="https://dev.huodiesoft.com/addons/lexiangpingou/data/share/danhao.png" alt="" />
+              <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/danhao.png" alt="" />
             </p>
             <div className='t-right'>
               <div className='caigoudanhao'>零售单号：{item.orderno}</div>
