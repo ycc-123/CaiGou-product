@@ -242,7 +242,7 @@ export default class PurchaseOrderDetailed extends Component {
             {
               this.state.purchaseItem.map((value, key) => {
                 return (
-                  <Tiaomx item={value} key={key} parent={this}></Tiaomx>
+                  <Tiaomx statusname={purchaseDetail.statusname} item={value} key={key} parent={this}></Tiaomx>
                 )
               })
             }

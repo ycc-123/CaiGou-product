@@ -32,15 +32,16 @@ export default class Tiao extends Component {
               <div className='name'>{tiao.goods_name}</div>
               <p></p>
             </li>
+            
             <li className='wen-zi-f'>
-              <div>商品编码：{tiao.gnum}</div>
+              <div>商品编码：{tiao.barcode}</div>
               <p>{tiao.price}元/{tiao.unitname}</p>
             </li>
             <li className='wen-zi-f'>
               <div>采购数量：{tiao.gnum}</div>
               <p>入库数量：<span>{this.state.value !== '' ? this.state.value : rk}</span></p>
               <Button
-                style={{ position: "absolute", left: "6.6rem", color: "transparent", background: "transparent", width: "9rem" }}
+                style={{display:this.props.statusname==="待提交"?"block":"none", position: "absolute", left: "6.6rem", color: "transparent", background: "transparent", width: "9rem" }}
                 className="btn_modal"
                 onClick={() => prompt(
                   '填写', '请输入入库数量',

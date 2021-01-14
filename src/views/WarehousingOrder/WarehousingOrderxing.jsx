@@ -21,7 +21,7 @@ export default class WarehousingOrderxing extends Component {
       count: '',
       input: [],
       inputSearch: '',
-      supplier: []
+      supplier: 0
     }
   }
   componentDidMount() {
@@ -37,8 +37,20 @@ export default class WarehousingOrderxing extends Component {
       }
     }).then((res) => {
       if (res.data.status === 4001) {
-        var supplier = res.data.data.purchaseDeliveryItem.map(o => { return { gnum: o.gnum } });
+        var sum = res.data.data.purchaseDeliveryItem.map(o => { return { gnum: o.gnum } });
+        console.log(sum)
+        let supplier = 0;
+        sum.forEach(item => {
+          supplier = Number(supplier) + parseInt(item.gnum)
+        })
+        let rukunum = ''
+        if (res.data.data.purchaseDeliveryDetail.statusname === "待提交") {
+          rukunum = supplier
+        } else {
+          rukunum = ''
+        }
         this.setState({
+          rukunum,
           supplier,
           count: res.data.data.count,
           purchaseDetail: res.data.data.purchaseDeliveryDetail,
@@ -62,7 +74,7 @@ export default class WarehousingOrderxing extends Component {
           aa = {
             id: this.state.purchaseItem[k].id,
             barcodeid: this.state.purchaseItem[k].barcodeid,
-            diffnum: this.state.purchaseItem[k].price - this.state.purchaseItem[k].price,
+            diffnum: this.state.purchaseItem[k].gnum - this.state.purchaseItem[k].gnum,
             innum: this.state.purchaseItem[k].gnum,
             goodsid: this.state.purchaseItem[k].goodsid
           }
@@ -102,23 +114,50 @@ export default class WarehousingOrderxing extends Component {
         })
       } else {
         // 走用户输入的数量审核
+        let cartList = this.state.goods
+        let now = this.state.purchaseItem
+        console.log(cartList,"===========输入后传人的值")
+        console.log('之前', now)
+        for (let i = 0; i < cartList.length; i++) {
+          for (let j = 0; j < now.length; j++) {
+            if (now[j].goods_name == cartList[i].goods_name) {
+              now[j].gnum = cartList[i].ooooooooo
+            }
+          }
+        }
+        console.log('之后', now)
+
         let aa = {}
         let arr = []
-        this.state.goods.map((v, k) => {
+        now.map((v, k) => {
           aa = {
-            id: this.state.goods[k].id,
-            barcodeid: this.state.goods[k].barcodeid,
-            diffnum: this.state.goods[k].price - this.state.input[k],
+            id: now[k].id,
+            barcodeid: now[k].barcodeid,
+            diffnum: now[k].gnum - this.state.input[k],
             innum: this.state.input[k],
-            goodsid: this.state.goods[k].goodsid
+            goodsid: now[k].goodsid
           }
           return arr.push(aa);
         })
+        console.log(arr)
+
+        let in_out_num = []
+        now.map((v, k) => {
+          let innum = now[k].gnum
+          return in_out_num.push(innum);
+        })
+        let sum = 0;
+        in_out_num.forEach(item => {
+          sum = Number(sum) + parseInt(item)
+        })
+
+
+
         let itemData = arr
         let deliveryData = {
           id: this.props.match.params.id,
           snum: this.state.count,
-          in_out_num: this.state.num
+          in_out_num: sum
         }
         submitPurchaseDelivery({
           action: 'submitPurchaseDelivery', data: {
@@ -142,10 +181,15 @@ export default class WarehousingOrderxing extends Component {
   }
   // 子组件传过来的数量和商品详情
   getChildrenMsg = (result, msg) => {
+    let obj=msg
+    let key = "ooooooooo";
+    let value = result
+    obj[key] = value;
+
     let input = []
     input.push(result)
     let ww = []
-    ww.push(msg)
+    ww.push(obj)
     let arr = Number(result) + Number(this.state.arr)
     this.setState({
       result,
@@ -153,6 +197,8 @@ export default class WarehousingOrderxing extends Component {
       goods: [...this.state.goods, ...ww],
       num: arr,
       input: [...this.state.input, ...input]
+    },()=>{
+      console.log(this.state.goods)
     })
   }
   seach() {
@@ -187,7 +233,7 @@ export default class WarehousingOrderxing extends Component {
     const scrollConfig = {
       probeType: 1
     }
-    const { purchaseDetail }=this.state
+    const { purchaseDetail } = this.state
     let Color = ''
     if (purchaseDetail.statusname === "审核通过") {
       Color = "#22a31b"
@@ -229,7 +275,7 @@ export default class WarehousingOrderxing extends Component {
             {
               this.state.purchaseItem.map((value, key) => {
                 return (
-                  <Tiao item={value} key={key} parent={this}></Tiao>
+                  <Tiao statusname={purchaseDetail.statusname} item={value} key={key} parent={this}></Tiao>
                 )
               })
             }
@@ -238,17 +284,17 @@ export default class WarehousingOrderxing extends Component {
           <div className='foot'>
             <div className="foot_t">
               <p>
-                采购总量：{purchaseDetail.snum}
+                采购总量：{this.state.supplier}
               </p>
               <p>
-                入库总量：{purchaseDetail.in_out_num}
+                入库总量：{this.state.rukunum !== '' ? this.state.rukunum : purchaseDetail.in_out_num}
               </p>
             </div>
             <div className="foot_c">
               差异数量：
             <span style={{ color: "#cf2424" }}>
-                {Number(purchaseDetail.snum) - Number(purchaseDetail.in_out_num)}
-            </span>
+                {purchaseDetail.statusname === "待提交" ? 0 : (Number(purchaseDetail.snum) - Number(purchaseDetail.in_out_num)).toString()}
+              </span>
             </div>
             <div className="btn"
               style={{ background: purchaseDetail.statusname === "审核通过" ? "#B4B4B4" : '' }}
@@ -263,8 +309,12 @@ export default class WarehousingOrderxing extends Component {
 }
 const WarehousingOrderxingStyle = styled.div`
 .foot_c{
+    text-align:center;
+    width:3rem;
     height:1.6rem;
     line-height:1.6rem;
+    // background-color: #ED7913;
+
 }
 .btn{
     margin-top:.2rem;
@@ -282,7 +332,12 @@ const WarehousingOrderxingStyle = styled.div`
     margin-top:.25rem;
 }
 .foot_t{
-    margin-left:.5rem;
+    text-align:center;
+    // height: 1.2rem;
+    width:3.5rem;
+    // margin-left:.5rem;
+    // background-color: #ED7913;
+
 }
 .am-button::before {
     border: none !important;
