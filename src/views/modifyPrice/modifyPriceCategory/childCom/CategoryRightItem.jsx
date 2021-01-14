@@ -51,14 +51,14 @@ bianji(goods){
         <li className='category-goods clearfix'
         onClick={()=>{this.bianji(goods)}}
         >
-          <img className='category-img' src={goods.albumpath?goods.albumpath:"https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+          <img className='category-img' src={goods.albumpath?goods.albumpath:"https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
           <div className='category-goods-info'>
 
             <div style={{ fontSize: ".35rem", color: '#1a1a1a' }}>{goods.name}</div>
             <div className='member-price' style={{ color: '#1a1a1a', padding: ".2rem 0" }}>
               <article >编码：{goods.code}</article>
               <div style={{color:"#C61E1E",display: goods.is_memberprice==="2"?"block":"none"}}>
-                <img style={{width:".32rem",height:".32rem"}} src={"https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/memberPrice.png"} alt="" />
+                <img style={{width:".32rem",height:".32rem"}} src={"https://res.lexiangpingou.cn/images/applet/99969memberPrice.png"} alt="" />
                 {memberprice}元/{goods.unitname}
                 </div>
             </div>

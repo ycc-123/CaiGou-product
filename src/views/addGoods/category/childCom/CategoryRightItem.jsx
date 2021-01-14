@@ -36,7 +36,7 @@ class CategoryRightgoods extends Component {
         <li className='category-goods clearfix'
           onClick={() => { this.props.history.push(`/BjGoods/${goods.id}`) }}
         >
-          <img className='category-img' src={goods.albumpath ? goods.albumpath : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+          <img className='category-img' src={goods.albumpath ? goods.albumpath : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
           <div className='category-goods-info'>
             <p>{goods.name}</p>
             <div className='price'>¥：{goods.posprice}元/{goods.unitname}</div>

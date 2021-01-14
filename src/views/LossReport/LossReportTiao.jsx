@@ -10,7 +10,7 @@ export default class StockListTiao extends Component {
           <li className='store_name'>{good.warehouseName}</li>
         </ul>
         <div className='conten'>
-          <img className='t-img-l' src={good.image ? good.image : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+          <img className='t-img-l' src={good.image ? good.image : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
 
           <ul className='wen-zi'>
             <li className='wen-zi-t'>

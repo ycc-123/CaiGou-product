@@ -33,7 +33,7 @@ export default class Tiaomx extends Component {
     let v=this.props.value
     return (
       <div className='tiao'>
-        <img className='t-img-l' src={v.image ? v.image : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+        <img className='t-img-l' src={v.image ? v.image : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
         <ul className='wen-zi'>
           <li className='wen-zi-t'>
             <div className='name'>{v.goodsname}</div>

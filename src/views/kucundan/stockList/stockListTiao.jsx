@@ -5,7 +5,7 @@ export default class StockListTiao extends Component {
     let good = this.props.v
     return (
       <div className='tiao'>
-        <img className='t-img-l' src={good.image ? good.image : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+        <img className='t-img-l' src={good.image ? good.image : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
 
         <ul className='wen-zi'>
           <li className='wen-zi-t'>

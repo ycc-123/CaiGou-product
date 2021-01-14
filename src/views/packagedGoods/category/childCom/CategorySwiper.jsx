@@ -67,14 +67,14 @@ export default class ApplyOrderx extends Component {
               onChange={this.inputChange.bind(this)}
               value={this.state.inputSearch} />
             <div className='img' onClick={() => { this.seach() }}>
-              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://res.lexiangpingou.cn/images/applet/99968search.png" alt="search" />
             </div>
           </div>
           {
             this.state.goods.map((v, k) => {
               return (
                 <div className='tiao' key={k}>
-                  <img className='t-img-l' src={v.albumpath ? v.albumpath : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+                  <img className='t-img-l' src={v.albumpath ? v.albumpath : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
                   <ul className='wen-zi'>
                     <li className='wen-zi-t'>
                       <div className='name'>{v.name}</div>

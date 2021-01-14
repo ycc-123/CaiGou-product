@@ -105,7 +105,7 @@ class Category extends Component {
               {<CategoryRight index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef}
                 id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />}
               <div className='Bj' style={{ display: this.state.Bj === false ? "block" : "none" }}>
-                <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/kong.png" alt="" />
+                <img src="https://res.lexiangpingou.cn/images/applet/99970kong.png" alt="" />
               </div></Fragment> : <Fragment></Fragment>}
           </div>
         </Fragment>

@@ -20,7 +20,7 @@ export default class Tiao extends Component {
     let tiao = this.props.item
     return (
       <div className='tiao'>
-        <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+        <img className='t-img-l' src={tiao.image ? tiao.image : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
         <ul className='wen-zi'>
           <li className='wen-zi-t'>
             <div className='name'>{tiao.goods_name}</div>

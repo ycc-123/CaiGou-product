@@ -81,7 +81,7 @@ export default class InventoryList extends Component {
               onChange={this.inputChange.bind(this)}
               value={this.state.inputSearch} />
             <div className='img' onClick={() => { this.Search() }}>
-              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://res.lexiangpingou.cn/images/applet/99968search.png" alt="search" />
             </div>
           </div>
           <div
@@ -105,7 +105,7 @@ export default class InventoryList extends Component {
                   <div className='dan' onClick={() => { this.props.history.push(`/InventoryListDetails/${data.id}`) }}>
                     <div className='dan-top'>
                       <p>
-                        <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/danhao.png" alt="" />
+                        <img src="https://res.lexiangpingou.cn/images/applet/99963danhao.png" alt="" />
                       </p>
                       <div className='t-right'>
                         <div className='caigoudanhao'>盘点单号：{data.docno}</div>
@@ -127,7 +127,7 @@ export default class InventoryList extends Component {
           }
         </BetterScroll>
         <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
-          <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/kong.png" alt="" />
+          <img src="https://res.lexiangpingou.cn/images/applet/99970kong.png" alt="" />
         </div>
       </WarehousingOrderStyle>
     )

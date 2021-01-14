@@ -310,7 +310,7 @@ const Into = (props) => {
       <FAddGoodsStyle>
         <div className='foot'>
           <div className='left' onClick={() => { history.push(`/PackagedBjGoodsmx/${params}`) }}>
-            <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+            <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://res.lexiangpingou.cn/images/applet/99954wu.png" alt="" /></div>
             <div className='yuan'>{goodlength.packgeListCount ? goodlength.packgeListCount : 0}</div>
           </div>
           <div className='raa' onClick={e => { check() }}>提交</div>

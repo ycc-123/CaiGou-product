@@ -7,6 +7,8 @@ import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
 import { getProductCategoryAll, getStockList,searchProduct } from 'network/Api'
 import { Toast, Modal } from 'antd-mobile';
+import Search from 'common/changSearch'
+
 const alert = Modal.alert;
 
 const scollConfig = {
@@ -53,14 +55,14 @@ class Category extends Component {
       [e.target.name]: e.target.value
     })
   }
-  Search() {
+  search=(e)=> {
     // console.log(this.state.inputSearch)
     searchProduct({
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         categoryid: this.state.indexId,
-        search: this.state.inputSearch
+        search: e
       }
     }).then(res => {
       if (res.data.status === 4001) {
@@ -84,14 +86,16 @@ class Category extends Component {
     <DocumentTitle title={'新建打包商品'} />
 
         <Fragment>
-          <div className='search'>
+          {/* <div className='search'>
             <input type="search" className='input' placeholder="请输入商品名称或商品编号" name="inputSearch"
               onChange={this.inputChange.bind(this)}
               value={this.state.inputSearch} />
             <div className='img' onClick={() => { this.Search() }}>
-              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://res.lexiangpingou.cn/images/applet/99968search.png" alt="search" />
             </div>
-          </div>
+          </div> */}
+            <Search placeholder={"请输入商品名称或商品编号"} search={this.search} />
+
           <div className='category-main'>
             {type === 'goods' ? <Fragment><div className='categoryLeft'>
               <ul>
@@ -118,7 +122,7 @@ class Category extends Component {
           <div className='foot'>
           <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
                   <div className='left' onClick={()=>{this.mingxi()}}>
-                      <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                      <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://res.lexiangpingou.cn/images/applet/99954wu.png" alt="" /></div>
                       <div className='yuan'>{this.state.num.length ? this.state.num.length : 0}</div>
                   </div>
                   <div style={{display:"flex",marginTop:".2rem"}}>

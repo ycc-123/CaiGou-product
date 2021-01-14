@@ -49,18 +49,17 @@ export default class Home extends Component {
         <div className='top'>
         <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>基础资料</div>
         <ul>
-          {/* <li onClick={()=>{this.props.history.push('/PackagedGoods')}}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/add.png" alt=""/></li> */}
-          <li onClick={()=>{this.props.history.push('/bjsygoods')}}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/bianji.png" alt=""/></li>
-          <li onClick={()=>{this.props.history.push('/modifyPrice')}}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/tiaojia.png" alt=""/></li>
-          <li onClick={()=>{this.props.history.push('/PackagedGoods')}}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/dabao.png" alt=""/></li>
+          <li onClick={()=>{this.props.history.push('/bjsygoods')}}><img src="https://res.lexiangpingou.cn/images/applet/99992bianji.png" alt=""/></li>
+          <li onClick={()=>{this.props.history.push('/modifyPrice')}}><img src="https://res.lexiangpingou.cn/images/applet/99982tiaojia.png" alt=""/></li>
+          <li onClick={()=>{this.props.history.push('/PackagedGoods')}}><img src="https://res.lexiangpingou.cn/images/applet/99993dabao.png" alt=""/></li>
         </ul>
       </div>
         <DocumentTitle title={'进销存'} />
         <div className='conten'>
           <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>采购管理</div>
           <ul>
-            <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/ApplyOrder') }}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/shengqing.png" alt="" /></li>
-            <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/PurchaseOrder')} }><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/caigoudan.png" alt="" /></li>
+            <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/ApplyOrder') }}><img src="https://res.lexiangpingou.cn/images/applet/99979shengqing.png" alt="" /></li>
+            <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/PurchaseOrder')} }><img src="https://res.lexiangpingou.cn/images/applet/99985caigoudan.png" alt="" /></li>
           </ul>
 
 
@@ -68,11 +67,11 @@ export default class Home extends Component {
         <div className='footer'>
           <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>仓储管理</div>
           <ul>
-            <li style={{ marginLeft: ".6rem" }} onClick={() => { this.props.history.push('/stockCategory') }}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/kucundan.png" alt="" /></li>
-            <li style={{ height: "1.6rem", width: "1.95rem", marginLeft: ".2rem" }} onClick={() => { this.props.history.push('/WarehousingOrder') }}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/rkdan.png" alt="" /></li>
-            <li onClick={()=>{this.props.history.push('/Pandian')}} style={{marginLeft:".2rem"}}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/pandiandan.png" alt=""/></li>
-            <li onClick={()=>{this.props.history.push('/LossReportList')}} style={{marginLeft:".1rem"}}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/baosdan.png" alt=""/></li>
-            <li onClick={()=>{this.props.history.push('/allocationOrder')}} style={{marginLeft:".5rem",marginTop:".6rem"}}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/tiaobodan.png" alt=""/></li>
+            <li style={{ marginLeft: ".6rem" }} onClick={() => { this.props.history.push('/stockCategory') }}><img src="https://res.lexiangpingou.cn/images/applet/99988kucundan.png" alt="" /></li>
+            <li style={{ height: "1.6rem", width: "1.95rem", marginLeft: ".2rem" }} onClick={() => { this.props.history.push('/WarehousingOrder') }}><img src="https://res.lexiangpingou.cn/images/applet/99981rkdan.png" alt="" /></li>
+            <li onClick={()=>{this.props.history.push('/Pandian')}} style={{marginLeft:".2rem"}}><img src="https://res.lexiangpingou.cn/images/applet/99990pandiandan.png" alt=""/></li>
+            <li onClick={()=>{this.props.history.push('/LossReportList')}} style={{marginLeft:".1rem"}}><img src="https://res.lexiangpingou.cn/images/applet/99995baosdan.png" alt=""/></li>
+            <li onClick={()=>{this.props.history.push('/allocationOrder')}} style={{marginLeft:".5rem",marginTop:".6rem"}}><img src="https://res.lexiangpingou.cn/images/applet/99987tiaobodan.png" alt=""/></li>
           </ul>
         </div>
 
@@ -80,10 +79,10 @@ export default class Home extends Component {
           <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>数据报表</div>
           <ul>
             <li style={{ marginLeft: ".3rem" }} >
-              <img onClick={()=>{this.props.history.push('/youhuimxb')}} src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/yhmxb.png" alt=""/>
-              <img style={{marginLeft:"0rem"}} onClick={()=>{this.props.history.push('/GoodDiscount')}} src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/spyhhz.png" alt=""/>
-              <img onClick={() => { this.props.history.push('/LossReport') }} src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/bshz.png" alt="" />
-              <img onClick={() => { this.props.history.push('/CashierOrder') }} src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/Cashier.png" alt="" />
+              <img onClick={()=>{this.props.history.push('/youhuimxb')}} src="https://res.lexiangpingou.cn/images/applet/99989yhmxb.png" alt=""/>
+              <img style={{marginLeft:"0rem"}} onClick={()=>{this.props.history.push('/GoodDiscount')}} src="https://res.lexiangpingou.cn/images/applet/99978spyhhz.png" alt=""/>
+              <img onClick={() => { this.props.history.push('/LossReport') }} src="https://res.lexiangpingou.cn/images/applet/99991bshz.png" alt="" />
+              <img onClick={() => { this.props.history.push('/CashierOrder') }} src="https://res.lexiangpingou.cn/images/applet/99984cashier.png" alt="" />
             </li>
           </ul>
         </div>
@@ -93,11 +92,11 @@ export default class Home extends Component {
           <ul>
             <li style={{ marginLeft: ".3rem" }} >
               <div style={{position:"absolute",top:"1rem",left:"0rem"}}>
-              <img  src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/bb.jpg" alt=""/>
+              <img  src="https://res.lexiangpingou.cn/images/applet/99983bb.jpg" alt=""/>
               </div>
               <div style={{position:"absolute",top:"2.2rem",left:".5rem"}}>版本信息</div>
               <div className="banben">
-                  v1.1.2.2.4
+                  v1.1.2.2.5
               </div>
               <p
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "1rem", left: "0rem", color: "transparent", background: "transparent" }}

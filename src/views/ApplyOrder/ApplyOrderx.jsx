@@ -107,14 +107,14 @@ export default class ApplyOrderx extends Component {
               onChange={this.inputChange.bind(this)}
               value={this.state.inputSearch} />
             <div className='img' onClick={() => { this.seach() }}>
-              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://res.lexiangpingou.cn/images/applet/99968search.png" alt="search" />
             </div>
           </div>
 
           <div className='conten'>
             <div className='conten-top'>
               <p>
-                <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+                <img src="https://res.lexiangpingou.cn/images/applet/99962dingdan.png" alt="" />
               </p>
               <div>{this.state.quan.docno}</div>
             </div>
@@ -142,7 +142,7 @@ export default class ApplyOrderx extends Component {
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
               <div className='left'>
-                <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://res.lexiangpingou.cn/images/applet/99954wu.png" alt="" /></div>
                 <div className='yuan'>{this.state.tiao.length}</div>
               </div>
               <div style={{ display: "flex", marginTop: ".2rem" }}>

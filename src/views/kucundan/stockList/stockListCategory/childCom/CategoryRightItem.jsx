@@ -38,7 +38,7 @@ class CategoryRightgoods extends Component {
         >
 
 
-          <img className='category-img' src={goods.image?goods.image:"https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+          <img className='category-img' src={goods.image?goods.image:"https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
 
           <div className='category-goods-info'>
           <div style={{fontSize:".35rem",color:'#1a1a1a'}}>{goods.name}</div>

@@ -81,16 +81,7 @@ class Category extends Component {
         <DocumentTitle title={'新建调价单'} />
         <Fragment>
           <div style={{ display: "flex" }}>
-            {/* <div className='search'>
-              <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"
-                onChange={this.inputChange.bind(this)}
-                value={this.state.inputSearch} />
-              <div className='img' onClick={() => { this.Search() }}>
-                <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
-              </div>
-            </div>*/}
             <Search placeholder={"请输入商品名称/商品编号"} search={this.search} />
-
           </div> 
           <div className='category-main'>
             {type === 'goods' ? <Fragment><div className='categoryLeft'>
@@ -112,8 +103,9 @@ class Category extends Component {
               {<CategoryRight index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef}
                 id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />}
               <div className='Bj' style={{ display: this.state.Bj === false ? "block" : "none" }}>
-                <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/kong.png" alt="" />
-              </div></Fragment> : <Fragment></Fragment>}
+                <img src="https://res.lexiangpingou.cn/images/applet/99970kong.png" alt="" />
+                </div>
+              </Fragment> : <Fragment></Fragment>}
           </div>
 
           <div className='foot'>
@@ -121,7 +113,7 @@ class Category extends Component {
               <div className='left'
                 onClick={() => { this.mingxi() }}
               >
-                <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/wu.png" alt="" /></div>
+                <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://res.lexiangpingou.cn/images/applet/99954wu.png" alt="" /></div>
                 <div className='yuan'>{store.getState().modifyPrice.length ? store.getState().modifyPrice.length : 0}</div>
               </div>
               <div style={{ display: "flex", marginTop: ".2rem" }}>
@@ -192,6 +184,10 @@ class Category extends Component {
               goods: res.data.msg === "成功" ? res.data.data.data : [{}]
             })
           } else {
+            this.setState({
+              goods: [],
+              Bj: false
+            })
             Toast.info(res.data.msg, 2)
           }
         })
@@ -258,6 +254,19 @@ class Category extends Component {
   }
 }
 const CategoryStyle = styled.div`
+.Bj img{
+  width: 5rem;
+  height: 5rem;
+}
+.Bj{
+  position:absolute;
+  top:4.5rem;
+  left:3.6rem;
+  vertical-align: middle;
+  text-align: center;
+}
+
+
 .baocun{
   margin-right:.2rem;
   border-radius:.2rem;

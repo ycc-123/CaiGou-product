@@ -35,7 +35,7 @@ class CategoryRightgoods extends Component {
         <li className='category-goods clearfix'
         onClick={()=>{this.props.history.push(`/PackagedBjGoods/${goods.id}`)}}
         >
-          <img className='category-img' src={"https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/dabaogoods.png"} alt="" />
+          <img className='category-img' src={"https://res.lexiangpingou.cn/images/applet/99977dabaogoods.png"} alt="" />
           <div className='category-goods-info'>
 
             <div style={{ fontSize: ".35rem", color: '#1a1a1a' }}>{goods.name}</div>

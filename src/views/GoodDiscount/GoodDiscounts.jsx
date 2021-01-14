@@ -10,7 +10,7 @@ export default class GoodDiscounts extends Component {
           <li className='store_name'>{item.storeName}</li>
         </ul>
         <div className='conten'>
-          <img className='t-img-l' src={item.image ? item.image : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+          <img className='t-img-l' src={item.image ? item.image : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
 
           <ul className='wen-zi'>
             <li className='wen-zi-t'>

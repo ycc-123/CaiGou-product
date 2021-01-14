@@ -29,7 +29,7 @@ export default class Liebiao extends Component {
           <div className='search' >
             <input type="search" className='input' placeholder="请输入采购单号/仓库名称" />
             <div className='img'>
-              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://res.lexiangpingou.cn/images/applet/99968search.png" alt="search" />
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@ export default class Liebiao extends Component {
           this.state.goodsList.map((v, k) => {
             return (
               <div className='tiao' key={k}>
-                <img className='t-img-l' src={v.img ? v.img : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="网络卡" />
+                <img className='t-img-l' src={v.img ? v.img : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="网络卡" />
                 <ul className='wen-zi'>
                   <li className='wen-zi-t'>
                     <div className='name'>{v.name}</div>

@@ -11,7 +11,7 @@ function Tiao(value) {
   console.log(tiao)
   return (
     <div className='tiao'>
-      <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+      <img className='t-img-l' src={tiao.image ? tiao.image : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
       <ul className='wen-zi'>
         <li className='wen-zi-t'>
           <div className='name'>{tiao.goodsname}</div>
@@ -84,14 +84,14 @@ export default class Liebiao extends Component {
           <div className='search'>
             <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
             <div className='img' onClick={() => { this.search() }}>
-              <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
+              <img className='img-search' src="https://res.lexiangpingou.cn/images/applet/99968search.png" alt="search" />
             </div>
           </div>
 
           {/* <div className='conten'>
             <div className='conten-top'>
               <p>
-                <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+                <img src="https://res.lexiangpingou.cn/images/applet/99962dingdan.png" alt="" />
               </p>
               <div>{this.state.purchaseDetail.docno}</div>
             </div>

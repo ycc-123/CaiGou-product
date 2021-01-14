@@ -25,7 +25,7 @@ export default class Tiao extends Component {
     }
     return (
       <div className='tiao' style={{ position: "relative" }}>
-        <img className='t-img-l' src={tiao.image ? tiao.image : "https://dev.lexiangpingou.cn/addons/lexiangpingou/app/resource/images/icon/tupian.png"} alt="" />
+        <img className='t-img-l' src={tiao.image ? tiao.image : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
         <ul className='wen-zi'>
           <div className='aaa'>
             <li className='wen-zi-t'>

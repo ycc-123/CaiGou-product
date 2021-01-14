@@ -81,7 +81,7 @@ export default class Shouyinmxb extends Component {
             onChange={this.goodsChange.bind(this)}
             value={this.state.goodsSearch} />
           <div className='img' onClick={() => { this.search() }}>
-            <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
+            <img className='img-search' src="https://res.lexiangpingou.cn/images/applet/99968search.png" alt="search" />
           </div>
         </div>
         {
@@ -89,7 +89,7 @@ export default class Shouyinmxb extends Component {
             <div className='dan'>
               <div className='dan-top'>
                 <p>
-                  <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/dingdan.png" alt="" />
+                  <img src="https://res.lexiangpingou.cn/images/applet/99962dingdan.png" alt="" />
                 </p>
                 <div className='caigoudanhao'>{order.orderno}</div>
               </div>

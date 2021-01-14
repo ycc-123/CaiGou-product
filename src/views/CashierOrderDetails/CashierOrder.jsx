@@ -26,7 +26,7 @@ function Youhuimxbs(v) {
       <div className='dan'>
         <div className='dan-top'>
           <p>
-            <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/danhao.png" alt="" />
+            <img src="https://res.lexiangpingou.cn/images/applet/99963danhao.png" alt="" />
           </p>
           <div className='t-right'>
             <div className='caigoudanhao'>零售单号：{item.orderno}</div>
@@ -285,11 +285,11 @@ export default class CashierOrderDetails extends Component {
                 onChange={this.inputChange.bind(this)}
                 value={this.state.inputSearch} />
               <div className='img' onClick={() => { this.search() }}>
-                <img className='img-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/search.png" alt="search" />
+                <img className='img-search' src="https://res.lexiangpingou.cn/images/applet/99968search.png" alt="search" />
               </div>
             </div>
             <div className='sximg' onClick={() => { this.shaixuan() }}>
-              <img className='sximg-search' src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/aqwe.png" alt="aaa" />
+              <img className='sximg-search' src="https://res.lexiangpingou.cn/images/applet/99965aqwe.png" alt="aaa" />
             </div>
           </div>
 
@@ -452,7 +452,7 @@ export default class CashierOrderDetails extends Component {
               <div className='btn' onClick={() => { this.queding() }}>确定</div>
             </div>
           <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>
-            <img src="https://dev.lexiangpingou.cn/addons/lexiangpingou/data/share/kong.png" alt="" />
+            <img src="https://res.lexiangpingou.cn/images/applet/99970kong.png" alt="" />
           </div>
          
         </div>
