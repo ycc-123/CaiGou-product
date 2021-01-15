@@ -4,6 +4,10 @@ import { store} from 'store/index'
 import { Provider } from 'react-redux'
 import AppRouter from './router/AppRouter'
 import { getParamsString } from 'commons/index'
+import * as Sentry from "@sentry/react";
+import { Integrations } from "@sentry/tracing";
+
+
 import { 
   saveUserUid, 
   saveUserUniacid} from 'store/actionCreators'
@@ -41,6 +45,20 @@ store.dispatch(actionuniacid)
 let environment = window.__wxjs_environment === 'miniprogram'
 console.log(environment)
 localStorage.setItem('user',environment);
+
+Sentry.init({
+  dsn: "https://68ca9a6e14ad45a3b037ba24fd844e31@o501293.ingest.sentry.io/5593433",
+  release: 'v1.0.3', 
+  autoSessionTracking: true,
+  integrations: [
+    new Integrations.BrowserTracing()
+  ],
+
+  // We recommend adjusting this value in production, or using tracesSampler
+  // for finer control
+  tracesSampleRate: 1.0,
+});
+
 
 ReactDOM.render(
   <Provider store={store}> 

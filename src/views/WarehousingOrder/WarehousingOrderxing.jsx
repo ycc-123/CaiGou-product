@@ -38,17 +38,14 @@ export default class WarehousingOrderxing extends Component {
     }).then((res) => {
       if (res.data.status === 4001) {
         var sum = res.data.data.purchaseDeliveryItem.map(o => { return { gnum: o.gnum } });
-        console.log(sum)
         let supplier = 0;
         sum.forEach(item => {
           supplier = Number(supplier) + parseInt(item.gnum)
         })
+        console.log(supplier)
+
         let rukunum = ''
-        if (res.data.data.purchaseDeliveryDetail.statusname === "待提交") {
           rukunum = supplier
-        } else {
-          rukunum = ''
-        }
         this.setState({
           rukunum,
           supplier,
@@ -122,11 +119,12 @@ export default class WarehousingOrderxing extends Component {
           for (let j = 0; j < now.length; j++) {
             if (now[j].goods_name == cartList[i].goods_name) {
               now[j].gnum = cartList[i].ooooooooo
+            }else{
+              now[j].gnum = now[j].gnum
             }
           }
         }
-        console.log('之后', now)
-
+        console.log("====",now)
         let aa = {}
         let arr = []
         now.map((v, k) => {
@@ -134,7 +132,7 @@ export default class WarehousingOrderxing extends Component {
             id: now[k].id,
             barcodeid: now[k].barcodeid,
             diffnum: now[k].gnum - this.state.input[k],
-            innum: this.state.input[k],
+            innum: Boolean(this.state.input[k])? this.state.input[k] : now[k].gnum,
             goodsid: now[k].goodsid
           }
           return arr.push(aa);
@@ -180,7 +178,7 @@ export default class WarehousingOrderxing extends Component {
     }
   }
   // 子组件传过来的数量和商品详情
-  getChildrenMsg = (result, msg) => {
+  getChildrenMsg = (result, msg,jian) => {
     let obj=msg
     let key = "ooooooooo";
     let value = result
@@ -190,16 +188,18 @@ export default class WarehousingOrderxing extends Component {
     input.push(result)
     let ww = []
     ww.push(obj)
-    let arr = Number(result) + Number(this.state.arr)
+    let abb = Number(result) + Number(this.state.arr)
     this.setState({
+      supplier:Number(this.state.supplier) -Number(jian) ,
       result,
-      arr,
+      abb,
       goods: [...this.state.goods, ...ww],
-      num: arr,
+      num: abb,
       input: [...this.state.input, ...input]
     },()=>{
       console.log(this.state.goods)
     })
+
   }
   seach() {
     getPurchaseDeliveryDetail({
@@ -284,16 +284,16 @@ export default class WarehousingOrderxing extends Component {
           <div className='foot'>
             <div className="foot_t">
               <p>
-                采购总量：{this.state.supplier}
+                采购总量：{this.state.rukunum}
               </p>
               <p>
-                入库总量：{this.state.rukunum !== '' ? this.state.rukunum : purchaseDetail.in_out_num}
+                入库总量：{purchaseDetail.statusname === "待提交" ? this.state.supplier : purchaseDetail.in_out_num}
               </p>
             </div>
             <div className="foot_c">
               差异数量：
             <span style={{ color: "#cf2424" }}>
-                {purchaseDetail.statusname === "待提交" ? 0 : (Number(purchaseDetail.snum) - Number(purchaseDetail.in_out_num)).toString()}
+                {purchaseDetail.statusname === "待提交" ? (this.state.rukunum-this.state.supplier) : (Number(this.state.rukunum) - Number(purchaseDetail.in_out_num)).toString()}
               </span>
             </div>
             <div className="btn"
@@ -332,7 +332,7 @@ const WarehousingOrderxingStyle = styled.div`
     margin-top:.25rem;
 }
 .foot_t{
-    text-align:center;
+    // text-align:center;
     // height: 1.2rem;
     width:3.5rem;
     // margin-left:.5rem;

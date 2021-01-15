@@ -23,6 +23,7 @@ class Category extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      Bj: true,
       indexId: '',
       value: [],
       title: [],
@@ -107,6 +108,9 @@ class Category extends Component {
               <CategoryRight itemData={this.state.mrqunangoods} ckid={ckid} pdid={pdid} index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} aa={this.getChildValue.bind(this)} history={this.props.history} />
             </Fragment> : <Fragment>
               </Fragment>}
+              <div className='Bj' style={{ display: this.state.Bj === false ? "block" : "none" }}>
+                <img src="https://res.lexiangpingou.cn/images/applet/99970kong.png" alt="" />
+              </div>
           </div>
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
@@ -255,11 +259,13 @@ class Category extends Component {
         }
         this.setState({
           mrqunangoods,
-          goods: res.data.data.data === null ? [] : res.data.data.data
+          goods: res.data.data.data === null ? [] : res.data.data.data,
+          Bj: true
         })
       } else {
         this.setState({
-          goods: []
+          goods: [],
+          Bj: false
         })
         Toast.info(res.data.msg, 2)
       }
@@ -270,6 +276,19 @@ class Category extends Component {
   }
 }
 const CategoryStyle = styled.div`
+.Bj img{
+  width: 5rem;
+  height: 5rem;
+}
+.Bj{
+  position:absolute;
+  top:4.5rem;
+  left:3.6rem;
+  vertical-align: middle;
+  text-align: center;
+}
+
+
 .baocun{
   margin-right:.2rem;
   border-radius:.2rem;

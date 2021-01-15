@@ -1,0 +1,7 @@
+[auth]
+token=936f23994ae7431992a427a3b8627ccbdbff8213abe448a1838e213e3f300333
+
+[defaults]
+url=https://sentry.io/
+project=purchase-sale-stock
+org=71127e1f31af

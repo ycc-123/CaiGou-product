@@ -26,6 +26,7 @@ class Category extends Component {
     props.cacheLifecycles.didCache(this.componentDidCache)
     props.cacheLifecycles.didRecover(this.componentDidRecover)
     this.state = {
+      Bj: true,
       indexId: '',
       value: [],
       title: [],
@@ -113,6 +114,9 @@ class Category extends Component {
               <CategoryRight index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />
             </Fragment> : <Fragment>
               </Fragment>}
+              <div className='Bj' style={{ display: this.state.Bj === false ? "block" : "none" }}>
+                <img src="https://res.lexiangpingou.cn/images/applet/99970kong.png" alt="" />
+              </div>
           </div>
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
@@ -229,11 +233,13 @@ class Category extends Component {
       console.log('之后', now)
       if (res.data.status === 4001) {
         this.setState({
-          goods: res.data.data.data
+          goods: res.data.data.data,
+          Bj: true
         })
       } else {
         this.setState({
-          goods: []
+          goods: [],
+          Bj: false  
         })
         Toast.info(res.data.msg, 2)
       }
@@ -244,6 +250,19 @@ class Category extends Component {
   }
 }
 const CategoryStyle = styled.div`
+.Bj img{
+  width: 5rem;
+  height: 5rem;
+}
+.Bj{
+  position:absolute;
+  top:4.5rem;
+  left:3.6rem;
+  vertical-align: middle;
+  text-align: center;
+}
+
+
 .baocun{
   margin-right:.2rem;
   border-radius:.2rem;

@@ -35,7 +35,8 @@ class Category extends Component {
       price: '',
       inputSearch: '',
       mrqunangoods: [],
-      Id: ""
+      Id: "",
+      Bj: true,
     }
   }
   mingxi() {
@@ -113,9 +114,13 @@ class Category extends Component {
                 </BetterScroll>}
               </ul>
             </div>
-              <CategoryRight itemData={this.state.mrqunangoods} bsid={bsid} ckid={ckid} pdid={pdid} index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} aa={this.getChildValue.bind(this)} history={this.props.history} />
+              <CategoryRight itemData={this.state.mrqunangoods} bsid={bsid} ckid={ckid} pdid={pdid} index={this.state.Id} 
+              goodsList={this.state.goods} onRef={this.onRef} aa={this.getChildValue.bind(this)} history={this.props.history} />
             </Fragment> : <Fragment>
               </Fragment>}
+              <div className='Bj' style={{ display: this.state.Bj === false ? "block" : "none" }}>
+                <img src="https://res.lexiangpingou.cn/images/applet/99970kong.png" alt="" />
+              </div>
           </div>
 
           
@@ -252,6 +257,18 @@ class Category extends Component {
   }
 }
 const CategoryStyle = styled.div`
+.Bj img{
+  width: 5rem;
+  height: 5rem;
+}
+.Bj{
+  position:absolute;
+  top:4.5rem;
+  left:3.6rem;
+  vertical-align: middle;
+  text-align: center;
+}
+
 .baocun{
   margin-right:.2rem;
   border-radius:.2rem;

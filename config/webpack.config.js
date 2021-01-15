@@ -26,12 +26,13 @@ const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpack
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const px2rem = require('postcss-px2rem')
 const postcssNormalize = require('postcss-normalize');
+const SentryWebpackPlugin = require('@sentry/webpack-plugin')
 
 const appPackageJson = require(paths.appPackageJson);
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 // const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
-const shouldUseSourceMap = false;
+const shouldUseSourceMap = true;
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
@@ -108,6 +109,7 @@ module.exports = function(webpackEnv) {
             // so that it honors browserslist config in package.json
             // which in turn let's users customize the target behavior as per their needs.
             postcssNormalize(),
+
           ],
           sourceMap: isEnvProduction && shouldUseSourceMap,
         },
@@ -662,6 +664,17 @@ module.exports = function(webpackEnv) {
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
+
+        new SentryWebpackPlugin({
+          release: 'v1.0.3',
+          authToken: process.env.SENTRY_AUTH_TOKEN,
+          org: "71127e1f31af",
+          project: "purchase-sale-stock",
+          include:".",
+          ignore: ["node_modules", "webpack.config.js"],
+          deleteAfterCompile: true, // 上传后删除 sourcemap 文件
+        })
+
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell webpack to provide empty mocks for them so importing them works.
