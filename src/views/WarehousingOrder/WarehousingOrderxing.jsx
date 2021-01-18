@@ -40,7 +40,7 @@ export default class WarehousingOrderxing extends Component {
         var sum = res.data.data.purchaseDeliveryItem.map(o => { return { gnum: o.gnum } });
         let supplier = 0;
         sum.forEach(item => {
-          supplier = Number(supplier) + parseInt(item.gnum)
+          supplier = Number(supplier) + parseFloat(item.gnum)
         })
         console.log(supplier)
 
@@ -85,13 +85,15 @@ export default class WarehousingOrderxing extends Component {
         })
         let sum = 0;
         in_out_num.forEach(item => {
-          sum = Number(sum) + parseInt(item)
+          sum = Number(sum) + parseFloat(item)
         })
         let deliveryData = {
           id: this.props.match.params.id,
           snum: this.state.count,
           in_out_num: sum
         }
+        console.log(itemData,deliveryData)
+
         submitPurchaseDelivery({
           action: 'submitPurchaseDelivery', data: {
             uniacid: store.getState().uniacid,
@@ -115,24 +117,15 @@ export default class WarehousingOrderxing extends Component {
         let now = this.state.purchaseItem
         console.log(cartList,"===========输入后传人的值")
         console.log('之前', now)
-        for (let i = 0; i < cartList.length; i++) {
-          for (let j = 0; j < now.length; j++) {
-            if (now[j].goods_name == cartList[i].goods_name) {
-              now[j].gnum = cartList[i].ooooooooo
-            }else{
-              now[j].gnum = now[j].gnum
-            }
-          }
-        }
-        console.log("====",now)
+
         let aa = {}
         let arr = []
         now.map((v, k) => {
           aa = {
             id: now[k].id,
             barcodeid: now[k].barcodeid,
-            diffnum: now[k].gnum - this.state.input[k],
-            innum: Boolean(this.state.input[k])? this.state.input[k] : now[k].gnum,
+            diffnum: (now[k].gnum - (now[k].ooooooooo? now[k].ooooooooo : now[k].gnum)).toFixed(3),
+            innum: Boolean(now[k].ooooooooo)? now[k].ooooooooo : now[k].gnum,
             goodsid: now[k].goodsid
           }
           return arr.push(aa);
@@ -141,22 +134,24 @@ export default class WarehousingOrderxing extends Component {
 
         let in_out_num = []
         now.map((v, k) => {
-          let innum = now[k].gnum
+          let innum = Boolean(now[k].ooooooooo)? now[k].ooooooooo : now[k].gnum
           return in_out_num.push(innum);
         })
         let sum = 0;
         in_out_num.forEach(item => {
-          sum = Number(sum) + parseInt(item)
+          sum = Number(sum) + parseFloat(item)
         })
-
+        let aaa=sum.toFixed(3)
 
 
         let itemData = arr
         let deliveryData = {
           id: this.props.match.params.id,
           snum: this.state.count,
-          in_out_num: sum
+          in_out_num: aaa
         }
+        console.log(itemData,deliveryData)
+        
         submitPurchaseDelivery({
           action: 'submitPurchaseDelivery', data: {
             uniacid: store.getState().uniacid,
@@ -179,6 +174,7 @@ export default class WarehousingOrderxing extends Component {
   }
   // 子组件传过来的数量和商品详情
   getChildrenMsg = (result, msg,jian) => {
+    console.log("=====",Number(result))
     let obj=msg
     let key = "ooooooooo";
     let value = result
@@ -190,7 +186,7 @@ export default class WarehousingOrderxing extends Component {
     ww.push(obj)
     let abb = Number(result) + Number(this.state.arr)
     this.setState({
-      supplier:Number(this.state.supplier) -Number(jian) ,
+      supplier:(Number(this.state.supplier) -Number(jian)).toFixed(3),
       result,
       abb,
       goods: [...this.state.goods, ...ww],
@@ -284,16 +280,16 @@ export default class WarehousingOrderxing extends Component {
           <div className='foot'>
             <div className="foot_t">
               <p>
-                采购总量：{this.state.rukunum}
+                采购总量：{Number(this.state.rukunum).toFixed(3)}
               </p>
               <p>
-                入库总量：{purchaseDetail.statusname === "待提交" ? this.state.supplier : purchaseDetail.in_out_num}
+                入库总量：{purchaseDetail.statusname === "待提交" ? Number(this.state.supplier).toFixed(3) : Number(purchaseDetail.in_out_num).toFixed(3)}
               </p>
             </div>
             <div className="foot_c">
               差异数量：
             <span style={{ color: "#cf2424" }}>
-                {purchaseDetail.statusname === "待提交" ? (this.state.rukunum-this.state.supplier) : (Number(this.state.rukunum) - Number(purchaseDetail.in_out_num)).toString()}
+                {purchaseDetail.statusname === "待提交" ? (this.state.rukunum-this.state.supplier).toFixed(3) : (Number(this.state.rukunum).toFixed(3) - Number(purchaseDetail.in_out_num)).toFixed(3)}
               </span>
             </div>
             <div className="btn"

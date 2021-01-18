@@ -48,7 +48,7 @@ localStorage.setItem('user',environment);
 
 Sentry.init({
   dsn: "https://68ca9a6e14ad45a3b037ba24fd844e31@o501293.ingest.sentry.io/5593433",
-  release: 'v1.0.3', 
+  release: 'v1.0.4', 
   autoSessionTracking: true,
   integrations: [
     new Integrations.BrowserTracing()

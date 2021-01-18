@@ -9,6 +9,7 @@ import { dropByCacheKey } from 'react-router-cache-route'
 
 import { getProductCategoryAll, searchProduct } from 'network/Api'
 import { Toast, Modal } from 'antd-mobile';
+
 const alert = Modal.alert;
 
 const scollConfig = {

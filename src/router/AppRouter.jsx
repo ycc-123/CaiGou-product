@@ -61,7 +61,7 @@ import QuoteApplyOrder from 'views/QuotePurchaseRequest/ApplyOrder'
 import QuotePurchasemx from 'views/QuotePurchaseRequest/childCom/CategorySwiper'
 
 // 测试
-import Text from 'views/ApplyOrder/Text'
+import Text from 'views/ApplyOrder/Texts'
 
 const AppRouter = () => {
   return (

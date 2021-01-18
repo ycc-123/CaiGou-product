@@ -55,15 +55,23 @@ export default class ModifyPrice extends Component {
         uid: store.getState().uid,
         search: e,
         limit: this.state.limit,
-        page: this.state.page
+        page: 1
       }
     }).then((res) => {
       if (res.data.status === 4001) {
+        console.log("=======",res.data.data.data.length)
+        if(res.data.data.data.length===10){
+          this.isLoadMore = true
+        }else{
+          this.isLoadMore = false
+        }
         this.setState({
           inputSearch: e,
           data: res.data.data.data,
           page:2
         }, () => {
+          console.log(this.isLoadMore)
+          this.refs.scroll.BScroll.finishPullUp()
           this.refs.scroll.BScroll.refresh()
         })
       } else {
@@ -114,9 +122,9 @@ export default class ModifyPrice extends Component {
               )
             })
           }
-          {
+        {
             this.state.data.length > 0 &&
-            <LoadingMore isLoading={this.state.data.length !== 10 ? false : true} />
+            <LoadingMore isLoading={this.isLoadMore} />
           }
         </BetterScroll>
         <div className='kongbj' style={{ display: this.state.kongbj === false ? "block" : "none" }}>

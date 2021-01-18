@@ -205,7 +205,12 @@ export default class CashierOrderDetails extends Component {
         page: 1
       }
     }).then((res) => {
-      // console.log(this.isLoadMore)
+      let suju=res.data.data.data?res.data.data.data:[]
+      if(suju.length===10){
+        this.isLoadMore = true
+      }else{
+        this.isLoadMore = false
+      }
       
       if (res.data.status === 4001) {
         this.setState({
@@ -236,11 +241,11 @@ export default class CashierOrderDetails extends Component {
       }
     }).then((res) => {
       if (res.data.status === 4001) {
+        this.isLoadMore = false
         this.setState({
           page:1,
           linshou: res.data.data.data,
           total: res.data.data.total,
-          // loading: false
         }, () => {
           this.refs.scroll.BScroll.refresh()
         })

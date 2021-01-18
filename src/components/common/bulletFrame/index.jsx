@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-export default class text extends Component {
+export default class BulletFrame extends Component {
     constructor() {
         super()
         this.state = {

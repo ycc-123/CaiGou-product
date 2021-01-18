@@ -666,7 +666,7 @@ module.exports = function(webpackEnv) {
         }),
 
         new SentryWebpackPlugin({
-          release: 'v1.0.3',
+          release: 'v1.0.4',
           authToken: process.env.SENTRY_AUTH_TOKEN,
           org: "71127e1f31af",
           project: "purchase-sale-stock",

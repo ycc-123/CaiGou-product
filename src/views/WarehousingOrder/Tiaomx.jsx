@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, Button } from 'antd-mobile';
+import { Modal, Button,Toast } from 'antd-mobile';
 const prompt = Modal.prompt;
 export default class Tiao extends Component {
   constructor() {
@@ -10,14 +10,20 @@ export default class Tiao extends Component {
   }
   // 把用户输入的数量和商品详情传给父组件
   shuliang = (value, tiao) => {
-    let jian=tiao.gnum-value
-    console.log(jian)
-
-
-    this.props.parent.getChildrenMsg(value, tiao,jian)
-    this.setState({
-      value
-    })
+    console.log("value",value)
+    if(value===''){
+      Toast.info("入库数量不能为空",1)
+    }else{
+      let jian=tiao.gnum-value
+      console.log(jian)
+  
+  
+      this.props.parent.getChildrenMsg(value, tiao,jian)
+      this.setState({
+        value
+      })
+    }
+    
   }
   render() {
     let tiao = this.props.item
