@@ -17,8 +17,8 @@ class Tiao extends Component {
         purchaseId: e.id,
         type: "1",
         status: "2",
-        itemData: [],
-        purchaseData: purchaseData
+        // itemData: [],
+        // purchaseData: purchaseData
       }
     }).then((res) => {
       if (res.data.status === 4001) {
@@ -32,12 +32,12 @@ class Tiao extends Component {
   shenghe(e) {
     let arr = []
     arr.push(e.id)
-    changePurchaseStatus({
-      action: 'changePurchaseStatus', data: {
+    submitPurchase({
+      action: 'submitPurchase', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         type: "1",
-        purchaseId_list: arr,
+        purchaseId: e.id,
         status: 4
       }
     }).then((res) => {
@@ -80,7 +80,7 @@ class Tiao extends Component {
           >提交</div>
 
           <div className='btn_sh' onClick={() => { this.shenghe(item) }}
-            style={{ display: item.statusname === "待审核" ? "block" : 'none' }}
+            style={{ display: item.statusname === "提交成功" ? "block" : 'none' }}
           >审核</div>
         </div>
       </div>

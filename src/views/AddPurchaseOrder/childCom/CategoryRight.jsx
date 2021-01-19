@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import CategoryRightItem from './CategoryRightItem'
 import BetterScroll from 'common/betterScroll/BetterScroll'
-import { submitPurchase } from 'network/Api'
+import { submitPurchase,addPurchaseDetail } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import { store } from 'store/index'
 import { saveGoods ,deleteSqgoods} from 'store/actionCreators'
@@ -55,6 +55,18 @@ class CategoryRight extends Component {
   }
 
   getChildrenMsg = (result, login, password, ww) => {
+    addPurchaseDetail({
+      action: 'addPurchaseDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        id: this.props.id,
+        barcodeid: ww.barcodeid,
+        price: password,
+        gnum: login,
+      }
+    }).then(res => {
+
+    })
     let num = Number(this.state.num) + Number(login)
     let price = Number(this.state.price) + Number(login) * Number(password)
     let arr = []

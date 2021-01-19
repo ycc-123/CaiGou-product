@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseDeliveryList } from 'network/Api'
+import { getPurchaseDeliveryList ,editPurchaseDeliveryDetail} from 'network/Api'
 import { Toast } from 'antd-mobile';
 import Tiao from './Tiao'
 import BetterScroll from 'common/betterScroll/BetterScroll'

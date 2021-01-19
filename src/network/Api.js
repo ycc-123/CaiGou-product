@@ -586,3 +586,25 @@ export function addPriceModifyDetail(config) {
     data: config.data
   })
 }
+
+// 采购单详情添加
+
+export function addPurchaseDetail(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+// 采购单详情添加
+
+export function editPurchaseDeliveryDetail(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

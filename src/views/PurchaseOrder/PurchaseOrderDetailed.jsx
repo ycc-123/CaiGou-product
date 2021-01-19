@@ -110,8 +110,8 @@ export default class PurchaseOrderDetailed extends Component {
           purchaseId: this.props.match.params.id,
           type: "1",
           status: "2",
-          itemData: [],
-          purchaseData: purchaseData
+          // itemData: [],
+          // purchaseData: purchaseData
         }
       }).then((res) => {
         if (res.data.status === 4001) {
@@ -123,11 +123,11 @@ export default class PurchaseOrderDetailed extends Component {
       })
     } else {
       let id = this.props.match.params.id.split()
-      changePurchaseStatus({
-        action: 'changePurchaseStatus', data: {
+      submitPurchase({
+        action: 'submitPurchase', data: {
           uniacid: store.getState().uniacid,
           uid: store.getState().uid,
-          purchaseId_list: id,
+          purchaseId: this.props.match.params.id,
           type: "1",
           status: "4"
         }
@@ -257,7 +257,7 @@ export default class PurchaseOrderDetailed extends Component {
               <div style={{ background: purchaseDetail.statusname === "审核成功" ? "#B4B4B4" : '' }}
                 className='right'
                 onClick={() => { this.shengHe() }}
-              >{purchaseDetail.statusname === "待提交" ? "提交" : "审核"}
+              >{purchaseDetail.statusname === "待提交" ? (purchaseDetail.statusname=== "待提交" ? "提交" : "已提交") : (purchaseDetail.statusname=== "审核成功" ? "已审核" : "审核" )}
               </div>
               <Button
                 style={{ display: purchaseDetail.statusname === "待提交" ? "none" : "block", width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}

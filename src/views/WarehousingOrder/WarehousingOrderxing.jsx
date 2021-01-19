@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getPurchaseDeliveryDetail, submitPurchaseDelivery } from 'network/Api'
+import { getPurchaseDeliveryDetail, submitPurchaseDelivery,editPurchaseDeliveryDetail } from 'network/Api'
 import { Toast } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiaomx'
@@ -21,7 +21,8 @@ export default class WarehousingOrderxing extends Component {
       count: '',
       input: [],
       inputSearch: '',
-      supplier: 0
+      supplier: 0,
+      zongInnum:0
     }
   }
   componentDidMount() {
@@ -38,6 +39,11 @@ export default class WarehousingOrderxing extends Component {
     }).then((res) => {
       if (res.data.status === 4001) {
         var sum = res.data.data.purchaseDeliveryItem.map(o => { return { gnum: o.gnum } });
+        var innum = res.data.data.purchaseDeliveryItem.map(o => { return { innum: o.innum } });
+        let zongInnum = 0;
+        innum.forEach(item => {
+          zongInnum = Number(zongInnum) + parseFloat(item.innum)
+        })
         let supplier = 0;
         sum.forEach(item => {
           supplier = Number(supplier) + parseFloat(item.gnum)
@@ -47,6 +53,7 @@ export default class WarehousingOrderxing extends Component {
         let rukunum = ''
           rukunum = supplier
         this.setState({
+          zongInnum,
           rukunum,
           supplier,
           count: res.data.data.count,
@@ -62,46 +69,64 @@ export default class WarehousingOrderxing extends Component {
   }
   // 采购入库审核
   shengHe(e) {
-    if (e === "审核通过") { } else {
+    if (e === "提交成功") {
+      submitPurchaseDelivery({
+        action: 'submitPurchaseDelivery', data: {
+          uniacid: store.getState().uniacid,
+          uid: store.getState().uid,
+          // itemData: itemData,
+          // deliveryData: deliveryData,
+          id: this.props.match.params.id,
+          status: "4"
+        }
+      }).then((res) => {
+        if (res.data.status === 4001) {
+          window.location.reload();
+          Toast.success(res.data.msg, 2)
+        } else {
+          Toast.info(res.data.msg, 2)
+        }
+      })
+     } else {
       if (this.state.input.length === 0) {
         // 默认采购数量就是入库数量
-        let aa = {}
-        let arr = []
-        this.state.purchaseItem.map((v, k) => {
-          aa = {
-            id: this.state.purchaseItem[k].id,
-            barcodeid: this.state.purchaseItem[k].barcodeid,
-            diffnum: this.state.purchaseItem[k].gnum - this.state.purchaseItem[k].gnum,
-            innum: this.state.purchaseItem[k].gnum,
-            goodsid: this.state.purchaseItem[k].goodsid
-          }
-          return arr.push(aa);
-        })
-        let itemData = arr
-        let in_out_num = []
-        this.state.purchaseItem.map((v, k) => {
-          let innum = this.state.purchaseItem[k].gnum
-          return in_out_num.push(innum);
-        })
-        let sum = 0;
-        in_out_num.forEach(item => {
-          sum = Number(sum) + parseFloat(item)
-        })
-        let deliveryData = {
-          id: this.props.match.params.id,
-          snum: this.state.count,
-          in_out_num: sum
-        }
-        console.log(itemData,deliveryData)
+        // let aa = {}
+        // let arr = []
+        // this.state.purchaseItem.map((v, k) => {
+        //   aa = {
+        //     id: this.state.purchaseItem[k].id,
+        //     barcodeid: this.state.purchaseItem[k].barcodeid,
+        //     diffnum: this.state.purchaseItem[k].gnum - this.state.purchaseItem[k].gnum,
+        //     innum: this.state.purchaseItem[k].gnum,
+        //     goodsid: this.state.purchaseItem[k].goodsid
+        //   }
+        //   return arr.push(aa);
+        // })
+        // let itemData = arr
+        // let in_out_num = []
+        // this.state.purchaseItem.map((v, k) => {
+        //   let innum = this.state.purchaseItem[k].gnum
+        //   return in_out_num.push(innum);
+        // })
+        // let sum = 0;
+        // in_out_num.forEach(item => {
+        //   sum = Number(sum) + parseFloat(item)
+        // })
+        // let deliveryData = {
+        //   id: this.props.match.params.id,
+        //   snum: this.state.count,
+        //   in_out_num: sum
+        // }
+        // console.log(itemData,deliveryData)
 
         submitPurchaseDelivery({
           action: 'submitPurchaseDelivery', data: {
             uniacid: store.getState().uniacid,
             uid: store.getState().uid,
-            itemData: itemData,
-            deliveryData: deliveryData,
-            type: "1",
-            status: "4"
+            // itemData: itemData,
+            // deliveryData: deliveryData,
+            id: this.props.match.params.id,
+            status: "2"
           }
         }).then((res) => {
           if (res.data.status === 4001) {
@@ -113,67 +138,69 @@ export default class WarehousingOrderxing extends Component {
         })
       } else {
         // 走用户输入的数量审核
-        let cartList = this.state.goods
-        let now = this.state.purchaseItem
-        console.log(cartList,"===========输入后传人的值")
-        console.log('之前', now)
+      //   let cartList = this.state.goods
+      //   let now = this.state.purchaseItem
+      //   console.log(cartList,"===========输入后传人的值")
+      //   console.log('之前', now)
 
-        let aa = {}
-        let arr = []
-        now.map((v, k) => {
-          aa = {
-            id: now[k].id,
-            barcodeid: now[k].barcodeid,
-            diffnum: (now[k].gnum - (now[k].ooooooooo? now[k].ooooooooo : now[k].gnum)).toFixed(3),
-            innum: Boolean(now[k].ooooooooo)? now[k].ooooooooo : now[k].gnum,
-            goodsid: now[k].goodsid
-          }
-          return arr.push(aa);
-        })
-        console.log(arr)
+      //   let aa = {}
+      //   let arr = []
+      //   now.map((v, k) => {
+      //     aa = {
+      //       id: now[k].id,
+      //       barcodeid: now[k].barcodeid,
+      //       diffnum: (now[k].gnum - (now[k].ooooooooo? now[k].ooooooooo : now[k].gnum)).toFixed(3),
+      //       innum: Boolean(now[k].ooooooooo)? now[k].ooooooooo : now[k].gnum,
+      //       goodsid: now[k].goodsid
+      //     }
+      //     return arr.push(aa);
+      //   })
+      //   console.log(arr)
 
-        let in_out_num = []
-        now.map((v, k) => {
-          let innum = Boolean(now[k].ooooooooo)? now[k].ooooooooo : now[k].gnum
-          return in_out_num.push(innum);
-        })
-        let sum = 0;
-        in_out_num.forEach(item => {
-          sum = Number(sum) + parseFloat(item)
-        })
-        let aaa=sum.toFixed(3)
+      //   let in_out_num = []
+      //   now.map((v, k) => {
+      //     let innum = Boolean(now[k].ooooooooo)? now[k].ooooooooo : now[k].gnum
+      //     return in_out_num.push(innum);
+      //   })
+      //   let sum = 0;
+      //   in_out_num.forEach(item => {
+      //     sum = Number(sum) + parseFloat(item)
+      //   })
+      //   let aaa=sum.toFixed(3)
 
 
-        let itemData = arr
-        let deliveryData = {
-          id: this.props.match.params.id,
-          snum: this.state.count,
-          in_out_num: aaa
-        }
-        console.log(itemData,deliveryData)
+      //   let itemData = arr
+      //   let deliveryData = {
+      //     id: this.props.match.params.id,
+      //     snum: this.state.count,
+      //     in_out_num: aaa
+      //   }
+      //   console.log(itemData,deliveryData)
         
-        submitPurchaseDelivery({
-          action: 'submitPurchaseDelivery', data: {
-            uniacid: store.getState().uniacid,
-            uid: store.getState().uid,
-            itemData: itemData,
-            deliveryData: deliveryData,
-            type: "1",
-            status: "4"
-          }
-        }).then((res) => {
-          if (res.data.status === 4001) {
-            window.location.reload();
-            Toast.success(res.data.msg, 2)
-          } else {
-            Toast.info(res.data.msg, 2)
-          }
-        })
+        
       }
     }
   }
   // 子组件传过来的数量和商品详情
   getChildrenMsg = (result, msg,jian) => {
+
+    editPurchaseDeliveryDetail({
+      action: 'editPurchaseDeliveryDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        id: this.props.match.params.id,
+        itemId:msg.id,
+        gnum:result,
+        price:msg.price
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        window.location.reload();
+        Toast.success(res.data.msg)
+      } else {
+        Toast.info(res.data.msg)
+      }
+    })
     console.log("=====",Number(result))
     let obj=msg
     let key = "ooooooooo";
@@ -283,13 +310,13 @@ export default class WarehousingOrderxing extends Component {
                 采购总量：{Number(this.state.rukunum).toFixed(3)}
               </p>
               <p>
-                入库总量：{purchaseDetail.statusname === "待提交" ? Number(this.state.supplier).toFixed(3) : Number(purchaseDetail.in_out_num).toFixed(3)}
+                入库总量：{purchaseDetail.statusname === "待提交" ? Number(this.state.zongInnum).toFixed(3) : Number(purchaseDetail.in_out_num).toFixed(3)}
               </p>
             </div>
             <div className="foot_c">
               差异数量：
             <span style={{ color: "#cf2424" }}>
-                {purchaseDetail.statusname === "待提交" ? (this.state.rukunum-this.state.supplier).toFixed(3) : (Number(this.state.rukunum).toFixed(3) - Number(purchaseDetail.in_out_num)).toFixed(3)}
+                {purchaseDetail.statusname === "待提交" ? (this.state.rukunum-this.state.zongInnum).toFixed(3) : (Number(this.state.rukunum).toFixed(3) - Number(purchaseDetail.in_out_num)).toFixed(3)}
               </span>
             </div>
             <div className="btn"

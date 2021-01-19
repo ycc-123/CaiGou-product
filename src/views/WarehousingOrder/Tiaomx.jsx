@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Modal, Button,Toast } from 'antd-mobile';
+import { editPurchaseDeliveryDetail} from 'network/Api'
+
 const prompt = Modal.prompt;
 export default class Tiao extends Component {
   constructor() {
@@ -10,6 +12,8 @@ export default class Tiao extends Component {
   }
   // 把用户输入的数量和商品详情传给父组件
   shuliang = (value, tiao) => {
+   
+
     console.log("value",value)
     if(value===''){
       Toast.info("入库数量不能为空",1)
