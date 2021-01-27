@@ -16,7 +16,7 @@ const scollConfig = {
 }
 const scrollStyle = {
   width: '2.46rem',
-  height: 'calc(100vh - 1.48rem)',
+  height: 'calc(100vh - 3rem)',
   top: '0'
 }
 
@@ -24,6 +24,7 @@ class Category extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      page:1,
       Bj: true,
       ckkey: "",
       cankuID: "",
@@ -242,7 +243,7 @@ class Category extends Component {
             uid: store.getState().uid,
             warehouseid: this.props.match.params.ck,
             categoryid: Id[0].id,
-            limit: "1000",
+            limit: "50",
             page: "1"
           }
         }).then(res => {
@@ -279,7 +280,7 @@ class Category extends Component {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         type: "1",
-        limit: "43",
+        limit: "50",
         page: "1"
       }
     }).then((res) => {
@@ -304,7 +305,7 @@ class Category extends Component {
         uid: store.getState().uid,
         warehouseid: this.state.cankuID,
         categoryid: this.state.id[index].id,
-        limit: "1000",
+        limit: "50",
         page: "1"
       }
     }).then(res => {

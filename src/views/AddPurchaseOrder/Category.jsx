@@ -6,6 +6,7 @@ import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
 import { dropByCacheKey } from 'react-router-cache-route'
+import { saveGoods ,deleteSqgoods} from 'store/actionCreators'
 
 import { getProductCategoryAll, searchProduct } from 'network/Api'
 import { Toast, Modal } from 'antd-mobile';
@@ -17,7 +18,7 @@ const scollConfig = {
 }
 const scrollStyle = {
   width: '2.46rem',
-  height: 'calc(100vh - 1.48rem)',
+  height: 'calc(100vh - 3rem)',
   top: '0'
 }
 
@@ -39,7 +40,8 @@ class Category extends Component {
       price: '',
       inputSearch: '',
       Id: "",
-      oldGoods:[]
+      oldGoods:[],
+      zong_moneys:0
     }
   }
   componentDidRecover =() => {
@@ -49,8 +51,10 @@ class Category extends Component {
   mingxi() {
     this.props.history.push(`/Liebiao/${this.props.match.params.ck}/${this.props.match.params.bz}`)
   }
-  getChildValue(num,price,goods) {
+  getChildValue(num,price,goods,zong_moneys) {
+    console.log(price)
     this.setState({
+      zong_moneys,
       num: num,
       oldGoods:goods,
       price:price
@@ -125,10 +129,12 @@ class Category extends Component {
               onClick={()=>{this.mingxi()}}
               >
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://res.lexiangpingou.cn/images/applet/99954wu.png" alt="" /></div>
-                <div className='yuan'>{store.getState().goodsList.length ? store.getState().goodsList.length : 0}</div>
+                <div className='yuan'>{this.state.oldGoods.length ? this.state.oldGoods.length : 0}</div>
               </div>
+              <div className="zong_mony">采购总额：<span style={{color:"#E50B0B"}}>{(this.state.price?this.state.price:0).toFixed(3)}</span></div>
+  
               <div style={{ display: "flex", marginTop: ".2rem" }}>
-                <div className='baocun' onClick={() => { this.click(1) }}>保存</div>
+                <div className='baocun' onClick={() => { this.baocun()}}>保存</div>
                 <div className='tijiao' >提交</div>
               </div>
             </div>
@@ -148,6 +154,13 @@ class Category extends Component {
         </Fragment>
       </CategoryStyle>
     )
+  }
+  baocun(){
+    let aa=[]
+    const goodsList = deleteSqgoods(aa)
+    store.dispatch(goodsList)
+    this.props.history.push('/home')
+    Toast.success("保存成功",1.5)
   }
   onRef = (ref) => {
     this.child = ref
@@ -251,6 +264,13 @@ class Category extends Component {
   }
 }
 const CategoryStyle = styled.div`
+.zong_mony{
+  text-align:center;
+  width: 3.2rem;
+  height: 1.6rem;
+  line-height: 1.6rem;
+  font-size:.35rem;
+}
 .Bj img{
   width: 5rem;
   height: 5rem;
@@ -355,7 +375,7 @@ input::-webkit-input-placeholder {
 .left{
   padding-left:.48rem;
   padding-top:.45rem;
-  width:3rem;
+  width:1.3rem;
   
 }
 

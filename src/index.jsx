@@ -38,6 +38,7 @@ let uniacid = "53"
 const actionuid = saveUserUid(uid)
 store.dispatch(actionuid)
 
+
 const actionuniacid = saveUserUniacid(uniacid)
 store.dispatch(actionuniacid)
 
@@ -46,18 +47,18 @@ let environment = window.__wxjs_environment === 'miniprogram'
 console.log(environment)
 localStorage.setItem('user',environment);
 
-Sentry.init({
-  dsn: "https://68ca9a6e14ad45a3b037ba24fd844e31@o501293.ingest.sentry.io/5593433",
-  release: 'v1.0.4', 
-  autoSessionTracking: true,
-  integrations: [
-    new Integrations.BrowserTracing()
-  ],
+// Sentry.init({
+//   dsn: "https://68ca9a6e14ad45a3b037ba24fd844e31@o501293.ingest.sentry.io/5593433",
+//   release: 'v1.0.4', 
+//   autoSessionTracking: true,
+//   integrations: [
+//     new Integrations.BrowserTracing()
+//   ],
 
-  // We recommend adjusting this value in production, or using tracesSampler
-  // for finer control
-  tracesSampleRate: 1.0,
-});
+//   // We recommend adjusting this value in production, or using tracesSampler
+//   // for finer control
+//   tracesSampleRate: 1.0,
+// });
 
 
 ReactDOM.render(

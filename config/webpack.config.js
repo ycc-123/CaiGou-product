@@ -665,15 +665,15 @@ module.exports = function(webpackEnv) {
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
 
-        new SentryWebpackPlugin({
-          release: 'v1.0.4',
-          authToken: process.env.SENTRY_AUTH_TOKEN,
-          org: "71127e1f31af",
-          project: "purchase-sale-stock",
-          include:".",
-          ignore: ["node_modules", "webpack.config.js"],
-          deleteAfterCompile: true, // 上传后删除 sourcemap 文件
-        })
+        // new SentryWebpackPlugin({
+        //   release: 'v1.0.4',
+        //   authToken: process.env.SENTRY_AUTH_TOKEN,
+        //   org: "71127e1f31af",
+        //   project: "purchase-sale-stock",
+        //   include:".",
+        //   ignore: ["node_modules", "webpack.config.js"],
+        //   deleteAfterCompile: true, // 上传后删除 sourcemap 文件
+        // })
 
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.

@@ -6,7 +6,7 @@ import BetterScroll from 'common/betterScroll/BetterScroll'
 import DocumentTitle from 'react-document-title'
 import { store } from "store/index";
 import Tiaomx from "./Tiaomx"
-
+import { clearCache } from 'react-router-cache-route'
 const alert = Modal.alert;
 function Tiao(value) {
   let tiao = value.item
@@ -24,8 +24,12 @@ function Tiao(value) {
         </li>
 
         <li className='wen-zi-f'>
-          <div></div>
+          <div style={{display:"flex"}}>
           <p>采购数量：<span>{tiao.gnum}</span></p>
+          <p>采购数量：<span>{tiao.gnum}</span></p>
+
+
+          </div>
           <Button
                 style={{ position: "absolute", left: "6.6rem", color: "transparent", background: "transparent", width: "9rem" }}
                 className="btn_modal"
@@ -57,10 +61,12 @@ export default class PurchaseOrderDetailed extends Component {
       id: this.props.match.params.id,
       data: [],
       purchaseItem: [],
-      goodsSearch: ''
+      goodsSearch: '',
+      supplier:0
     }
   }
   componentDidMount() {
+    clearCache()
     getPurchaseDetail({
       action: 'getPurchaseDetail', data: {
         uniacid: store.getState().uniacid,
@@ -73,7 +79,19 @@ export default class PurchaseOrderDetailed extends Component {
     }).then((res) => {
       if (res.data.status === 4001) {
         let count = res.data.data.count
+        let sum=[]
+        res.data.data.purchaseItem.map((v,k)=>{
+          console.log(v.subtotal)
+          sum.push(v.subtotal)
+        })
+        console.log(sum)
+        let supplier = 0;
+        sum.forEach(item => {
+          supplier = Number(supplier) + parseFloat(item)
+        })
+        console.log(supplier)
         this.setState({
+          supplier,
           purchaseDetail: res.data.data.purchaseDetail,
           purchaseItem: res.data.data.purchaseItem,
           count,
@@ -192,6 +210,11 @@ export default class PurchaseOrderDetailed extends Component {
       [e.target.name]: e.target.value
     })
   }
+  bianji(){
+    if(this.state.purchaseDetail.statusname === "待提交"){
+      this.props.history.push(`/addCaigouGoods/${this.props.match.params.id}`)
+    }
+  }
   render() {
     const scrollConfig = {
       probeType: 1
@@ -249,11 +272,18 @@ export default class PurchaseOrderDetailed extends Component {
           </BetterScroll>
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-              <div className='left'>
+              <div className='left' >
                 <div style={{ width: "1.28rem", height: ".68rem" }}>
                   <img src="https://res.lexiangpingou.cn/images/applet/99954wu.png" alt="" /></div>
                 <div className='yuan'>{this.state.purchaseItem.length}</div>
               </div>
+              
+              <div className="zong_mony">采购总额：<span style={{color:"#E50B0B"}}>{(this.state.supplier).toFixed(2)}</span></div>
+              <div style={{ background: purchaseDetail.statusname === "待提交" ? "" : '#B4B4B4' }}
+                className='bianji'
+                onClick={() => { this.bianji() }}
+              >编辑</div>
+              
               <div style={{ background: purchaseDetail.statusname === "审核成功" ? "#B4B4B4" : '' }}
                 className='right'
                 onClick={() => { this.shengHe() }}
@@ -279,6 +309,12 @@ export default class PurchaseOrderDetailed extends Component {
   }
 }
 const PurchaseOrderDetailedStyle = styled.div`
+.zong_mony{
+  width: 3.2rem;
+  height: 1.6rem;
+  line-height: 1.6rem;
+  font-size:.35rem;
+}
 .am-button::before {
     border: none !important;
 }
@@ -316,8 +352,20 @@ const PurchaseOrderDetailedStyle = styled.div`
   .left{
     padding-left:.48rem;
     padding-top:.45rem;
-    width:3rem;
+    width:2rem;
     
+  }
+  .bianji{
+    margin-top:.2rem;
+    // margin-right:.2rem;
+    border-radius:.2rem;
+    font-size:.4rem;
+    color:#fff;
+    text-align:center;
+    width: 2.04rem;
+    height: 1.17rem;
+    line-height: 1.17rem;
+    background-color: #ED7913;
   }
   .right{
     margin-top:.2rem;
@@ -367,7 +415,7 @@ const PurchaseOrderDetailedStyle = styled.div`
     }
     .wen-zi-f{
         margin-bottom:0rem;
-
+        width:7.5rem;
         display:flex;
         justify-content: space-between;
     }

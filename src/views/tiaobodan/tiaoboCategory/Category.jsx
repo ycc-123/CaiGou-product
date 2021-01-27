@@ -15,7 +15,7 @@ const scollConfig = {
 }
 const scrollStyle = {
   width: '2.46rem',
-  height: 'calc(100vh - 1.48rem)',
+  height: 'calc(100vh - 3rem)',
   top: '0'
 }
 

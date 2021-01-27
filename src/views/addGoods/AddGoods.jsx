@@ -323,13 +323,14 @@ const Into = (props) => {
         is_plu_goods: matchGood === true ? "2" : "1",
         plu_goods_keyboard_id: matchCode,
         sequence: goodSort,
+        is_pos: "1"
       }
     }).then((res) => {
       if (res.data.status === 4001) {
-        history.push('/bjsygoods')
-        Toast.success(res.data.msg, 2)
+        history.push('/home')
+        Toast.success(res.data.msg, 1.5)
       } else {
-        Toast.info(res.data.msg, 2)
+        Toast.info(res.data.msg, 1.5)
       }
     })
   }
@@ -512,6 +513,7 @@ const TAddGoodsStyle = styled.div`
   }
   .type .item .right input {
     width: 5.82rem;
+    height: 1rem;
     border: none;
     font-size: .35rem;
     font-weight: 500;
@@ -694,6 +696,7 @@ const AddGoodsStyle = styled.div`
   }
   .type .item .right input {
     width: 5.82rem;
+    height: 1rem;
     border: none;
     font-size: .35rem;
     font-weight: 500;

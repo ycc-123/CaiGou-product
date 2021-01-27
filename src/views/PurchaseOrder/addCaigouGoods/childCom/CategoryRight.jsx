@@ -22,8 +22,6 @@ class CategoryRight extends Component {
       index: 0,
       limit: "10",
       page: 1,
-      zong_money:[],
-      zong_moneys:[],
     }
     this.isLoadMore = true
   }
@@ -87,7 +85,7 @@ class CategoryRight extends Component {
     }, () => {
       let num = this.state.login
       let price = this.state.password
-      this.props.aa(this.state.login,this.state.price,this.state.goods)
+      this.props.aa(this.state.login,price,this.state.goods)
       let aa = {}
       let arr = []
 
@@ -105,8 +103,8 @@ class CategoryRight extends Component {
         }
         return aa;
       })
-      const goodsList = saveGoods(aa)
-      store.dispatch(goodsList)
+      // const goodsList = saveGoods(aa)
+      // store.dispatch(goodsList)
     })
   }
 
@@ -140,7 +138,9 @@ class CategoryRight extends Component {
           uid: store.getState().uid,
           type: "1",
           purchaseId: this.props.id,
-          status: 2,
+          status: e,
+          itemData: itemData,
+          purchaseData: purchaseData
         }
       }).then(res => {
         if (res.data.status === 4001) {

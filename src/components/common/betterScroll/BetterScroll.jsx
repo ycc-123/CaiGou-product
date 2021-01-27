@@ -58,9 +58,9 @@ class BetterScroll extends Component {
       // useTransition: false
     })
     // 监听滚动事件
-    /*  this.BScroll.on('scroll', position => {
-       console.log(position.y)
-     }) */
+    //   this.BScroll.on('scroll', position => {
+    //    console.log(position.y)
+    //  }) 
     // 上拉事件
     this.BScroll.on('pullingUp', () => {
       console.log(this.props.loadMore ,"==============", this.props.isLoadMore)

@@ -608,3 +608,15 @@ export function editPurchaseDeliveryDetail(config) {
     data: config.data
   })
 }
+
+
+// 作废商品
+
+export function deleteProduct(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

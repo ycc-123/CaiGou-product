@@ -27,27 +27,162 @@ class CategoryRightgoods extends Component {
       this.props.parent.getChildrenMsg(this, login, password, goods)
     }
   }
+  componentDidMount = () => {
+    let startX, newX, changeX, deleteW
+    if (document.querySelector('.del')) {
+      deleteW = document.querySelector('.del').offsetWidth
+    }
+    let goods = document.querySelectorAll('.category-goods')
+    /* let del = document.querySelectorAll('.del') */
+    // 将goods伪数组转换为数组以便使用forEach
+    goods.forEach((item, index, array) => {
+      item.addEventListener('touchstart', (e) => {
+        // e.preventDefault()
+        // 每次手指放到屏幕上时判断是否此时所有滑动事件的left是否为0,不为0先重置为0
+        array.forEach(item => {
+          if (item.style.left !== 0) {
+            item.style.left = 0
+          }
+        }, false)
+        // 阻止默认事件
+        /* e.preventDefault() */
+        // 获取手指移入屏幕时的x轴位置
+        startX = e.touches[0].pageX
+        this.fnMove = (e) => {
+          // 实时手指位置X轴的位置 - 手指刚移入屏幕时X轴的位置
+          newX = e.touches[0].pageX - startX
+          console.log(newX)
+          if (newX > -deleteW && newX < 0) {
+            item.style.left = newX + 'px'
+            if (newX === -deleteW) {
+              item.removeEventListener('touchmove', this.fnMove, true)
+              item.removeEventListener('touchend', this.fnEnd, true)
+            }
+          }
+        }
+        this.fnEnd = (e) => {
+          // 手指离开屏幕先移出事件
+          item.removeEventListener('touchmove', this.fnMove, true)
+          item.removeEventListener('touchend', this.fnEnd, true)
+          changeX = e.changedTouches[0].pageX
+          if (startX - changeX > deleteW / 2) {
+            item.style.left = -deleteW + 'px'
+            item.style.transition = '.5s all ease'
+          } else {
+            item.style.left = 0 + 'px'
+            item.style.transition = '.5s all ease'
+          }
+        }
+        // touchmove 当手指在屏幕上滑动的时候连续地触发
+        item.addEventListener('touchmove', this.fnMove, true)
+        // touchend 当手指离开屏幕时触发
+        item.addEventListener('touchend', this.fnEnd, true)
+      }, false)
+    })
+  }
+  componentDidUpdate = () => {
+
+    let startX, newX, changeX, deleteW
+    if (document.querySelector('.del')) {
+      deleteW = document.querySelector('.del').offsetWidth
+    }
+    let goods = document.querySelectorAll('.category-goods')
+    /* let del = document.querySelectorAll('.del') */
+    // 将goods伪数组转换为数组以便使用forEach
+    goods.forEach((item, index, array) => {
+      item.addEventListener('touchstart', (e) => {
+        // e.preventDefault()
+        console.log(item)
+        // 每次手指放到屏幕上时判断是否此时所有滑动事件的left是否为0,不为0先重置为0
+        array.forEach(item => {
+          if (item.style.left !== 0) {
+            item.style.left = 0
+          }
+        }, false)
+        // 阻止默认事件
+        /* e.preventDefault() */
+        // 获取手指移入屏幕时的x轴位置
+        startX = e.touches[0].pageX
+        this.fnMove = (e) => {
+          // 实时手指位置X轴的位置 - 手指刚移入屏幕时X轴的位置
+          newX = e.touches[0].pageX - startX
+          if (newX > -deleteW && newX < 0) {
+            item.style.left = newX + 'px'
+            if (newX === -deleteW) {
+              item.removeEventListener('touchmove', this.fnMove, true)
+              item.removeEventListener('touchend', this.fnEnd, true)
+            }
+          }
+        }
+        this.fnEnd = (e) => {
+          // 手指离开屏幕先移出事件
+          item.removeEventListener('touchmove', this.fnMove, true)
+          item.removeEventListener('touchend', this.fnEnd, true)
+          changeX = e.changedTouches[0].pageX
+          if (startX - changeX > deleteW / 2) {
+            item.style.left = -deleteW + 'px'
+            item.style.transition = '.5s all ease'
+          } else {
+            item.style.left = 0 + 'px'
+            item.style.transition = '.5s all ease'
+          }
+        }
+        // touchmove 当手指在屏幕上滑动的时候连续地触发
+        item.addEventListener('touchmove', this.fnMove, true)
+        // touchend 当手指离开屏幕时触发
+        item.addEventListener('touchend', this.fnEnd, true)
+      }, true)
+    })
+
+
+  }
 
   render() {
     const { goods } = this.props
     return (
       <CategoryRightgoodsStyle>
         <div className="rrr"></div>
-        <li className='category-goods clearfix'
-          onClick={() => { this.props.history.push(`/BjGoods/${goods.id}`) }}
-        >
+        <div style={{position:'relative'}}>
+        <li className='category-goods clearfix' style={{zIndex:"99"}}
+          onClick={() => { this.props.history.push(`/BjGoods/${goods.id}`) }}>
           <img className='category-img' src={goods.albumpath ? goods.albumpath : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
           <div className='category-goods-info'>
             <p>{goods.name}</p>
             <div className='price'>¥：{goods.posprice}元/{goods.unitname}</div>
           </div>
         </li>
+          {/* <div className='del' onClick={() => { this.deleteGoods() }}>
+            <img src='https://res.lexiangpingou.cn/images/vip/delete.png' alt="''" />
+          </div> */}
+        </div>
       </CategoryRightgoodsStyle>
     );
+  }
+  deleteGoods(){
+    alert("删除成功")
   }
 }
 
 const CategoryRightgoodsStyle = styled.div`
+
+.del {
+  position: absolute;
+  z-index: 1;
+  width: 2rem;
+  height: 100%;
+  right: 0;
+  top:0;
+  text-align: center;
+  line-height: 2.1rem;
+  font-size: .8rem;
+  background: #ED7A14;
+}
+.del img{
+  width: .7rem;
+  height: auto;
+}
+
+
 .am-button::before{
   border:none !important;
 }

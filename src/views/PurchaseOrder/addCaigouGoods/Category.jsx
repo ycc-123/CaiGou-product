@@ -5,9 +5,13 @@ import CategoryLeftItem from './childCom/CategoryLeftItem'
 import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
-import { searchProduct, getStockList, checkSubmitInventory } from 'network/Api'
+import { dropByCacheKey } from 'react-router-cache-route'
+
+import { getProductCategoryAll, searchProduct } from 'network/Api'
 import { Toast, Modal } from 'antd-mobile';
+
 const alert = Modal.alert;
+
 const scollConfig = {
   probeType: 1
 }
@@ -20,74 +24,36 @@ const scrollStyle = {
 class Category extends Component {
   constructor(props) {
     super(props)
+
     this.state = {
+      Bj: true,
       indexId: '',
       value: [],
-      title: [{ name: this.props.match.params.name }],
+      title: [],
       goods: [],
       defaultIndex: 0,
       type: 'goods',
       id: [],
-      num: '',
+      num: [],
       price: '',
       inputSearch: '',
-      mrqunangoods: [],
       Id: "",
-      sum: [],
-      dataName: [],
-      weilin: '存在下列实际数量为0的商品是否提交',
-      wulin: '是否确认提交盘点单'
+      oldGoods:[]
     }
+  }
+  componentDidRecover =() => {
+
+    dropByCacheKey('MyComponent')
   }
   mingxi() {
-    this.props.history.push('/Liebiao')
+    this.props.history.push(`/Liebiao/${this.props.match.params.ck}/${this.props.match.params.bz}`)
   }
-  getChildValue(nums, goods) {
-    let aa = {}
-    let arr = []
-    aa = {
-      stockid: goods.id,
-      realnum: nums,
-    }
-    arr.push(aa);
+  getChildValue(num,price,goods) {
     this.setState({
-      sum: [...this.state.sum, ...arr]
-    }, () => {
-      let itemData = this.state.sum
-      checkSubmitInventory({
-        action: 'checkSubmitInventory', data: {
-          uniacid: store.getState().uniacid,
-          uid: store.getState().uid,
-          inventoryId: this.props.match.params.id,
-          itemData: itemData,
-        }
-      }).then(res => {
-        // console.log(res)
-        if (res.data.status === 4001) {
-          this.setState({
-            dataName: ["0"]
-          })
-        } else {
-          this.setState({
-            dataName: res.data.data
-          })
-        }
-      })
+      num: num,
+      oldGoods:goods,
+      price:price
     })
-
-
-
-
-
-
-
-
-
-    // console.log(aa, val)
-    // this.setState({
-    //   num: aa,
-    //   price: val
-    // })
   }
   inputChange(e) {
     this.setState({
@@ -110,19 +76,15 @@ class Category extends Component {
       } else {
         Toast.info(res.data.msg, 2)
       }
-
     })
   }
   render() {
     const { title, type } = this.state
-    let pdid = this.props.match.params.id
-    let ckid = this.props.match.params.ck
-    console.log(this.props.match.params.fl)
-    let flid = this.props.match.params.fl
+    let ida = this.props.match.params.id
+    let bz = this.props.match.params.bz
     return (
       <CategoryStyle>
-        <DocumentTitle title={'新建盘点单'} />
-
+        <DocumentTitle title={'新建采购单'} />
         <Fragment>
           <div className='search'>
             <input type="search" className='input' placeholder="请输入商品名称/商品编号" name="inputSearch"
@@ -139,7 +101,7 @@ class Category extends Component {
                   <li className='category-left-head'></li>
                   {title.map((item, index) => {
                     return (
-                      <CategoryLeftItem key={item.id + index}
+                      <CategoryLeftItem key={item.id +''+ index}
                         item={item}
                         index={index}
                         active={this.state.defaultIndex === index ? true : false}
@@ -149,33 +111,40 @@ class Category extends Component {
                 </BetterScroll>}
               </ul>
             </div>
-              <CategoryRight itemData={this.state.mrqunangoods}
-                index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} ckid={ckid} pdid={pdid}
-                aa={this.getChildValue.bind(this)} history={this.props.history} />
+              <CategoryRight index={this.state.Id} goodsList={this.state.goods} onRef={this.onRef} id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />
             </Fragment> : <Fragment>
               </Fragment>}
+              <div className='Bj' style={{ display: this.state.Bj === false ? "block" : "none" }}>
+                <img src="https://res.lexiangpingou.cn/images/applet/99970kong.png" alt="" />
+              </div>
           </div>
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-              <div className='left' >
+              <div className='left' 
+              onClick={()=>{Toast.info("返回查看详情")}}
+              >
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://res.lexiangpingou.cn/images/applet/99954wu.png" alt="" /></div>
-                <div className='yuan'>{this.state.sum.length ? this.state.sum.length : 0}</div>
+                <div className='yuan'>{this.state.oldGoods.length ? this.state.oldGoods.length : 0}</div>
               </div>
               <div style={{ display: "flex", marginTop: ".2rem" }}>
-                <div className='baocun' onClick={() => { this.click(1) }}>保存</div>
-                <div className='tijiao' onClick={() => { this.click(2) }}>提交</div>
+                <div className='baocun' onClick={() => { this.props.history.goBack(-1) }}>添加</div>
+                {/* <div className='tijiao' >提交</div> */}
               </div>
             </div>
-
-            <div
+            {/* <div
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "7.78rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
-              onClick={() => { this.click(2) }
-
+              onClick={() =>
+                alert('提交', '是否确认提交采购单', [
+                  { text: '取消', onPress: () => console.log('cancel') },
+                  { text: '确定', onPress: () => this.click(2) },
+                ])
               }
             >
               confirm
-            </div></div>
+                        </div> */}
+                        </div>
+
         </Fragment>
       </CategoryStyle>
     )
@@ -185,67 +154,116 @@ class Category extends Component {
   }
 
   click = (e) => {
-    // console.log(this.state.dataName.toString())
-    // this.child.myName(e)
-
-    this.setState({
-      Id: "1111"
-    }, () => {
-      alert(Number(this.state.dataName.toString()) === 0 ? (e===1?"是否确认保存盘点单":this.state.wulin) : (e===1?"存在下列实际数量为0的商品是否保存":this.state.weilin), Number(this.state.dataName.toString()) === 0 ? "" : this.state.dataName.join(","), [
-        { text: '取消', onPress: () => console.log('cancel') },
-        { text: '确定', onPress: () => this.child.myName(e) },
-      ])
-    })
+    this.child.myName(e)
   }
   componentDidMount = () => {
-    getStockList({
-      action: 'getStockList', data: {
+     
+    getProductCategoryAll({
+      action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,
-        uid: store.getState().uid,
-        warehouseid: this.props.match.params.ck,
-        categoryid: this.props.match.params.fl,
-        limit: "100",
-        page: "1",
       }
     }).then(res => {
-      let mrqunangoods = []
-      if (Boolean(res.data.data.data) === false) {
-        Toast.info("无商品", 1)
-        mrqunangoods = []
-      } else {
-        mrqunangoods = res.data.data.data.map(o => { return { stockid: o.id, realnum: o.gnum } });
-        this.setState({
-          mrqunangoods,
-          goods: res.data.data.data
+      if (res.data.status === 4001) {
+        var result = res.data.data.map(o => { return { name: o.label } });
+        var Id = res.data.data.map(o => { return { id: o.value } });
+        var value = res.data.data.map(o => { return { code: o.code } });
+        searchProduct({
+          action: 'searchProduct', data: {
+            uniacid: store.getState().uniacid,
+            uid: store.getState().uid,
+            limit: "1000",
+            page: 1,
+            categoryid: Id[0].id,
+          }
+        }).then(res => {
+          if (res.data.status === 4001) {
+            this.setState({
+              goods: res.data.msg === "成功" ? res.data.data.data : [{}]
+            })
+          } else {
+            Toast.info(res.data.msg, 2)
+          }
         })
+        this.setState({
+          title: result,
+          id: Id,
+          value
+        })
+      } else {
+        Toast.info('网络错误', 2)
       }
     })
+  }
 
-
-    checkSubmitInventory({
-      action: 'checkSubmitInventory', data: {
+  onChangeActive = index => {
+    this.setState({
+      indexId: this.state.id[index].id,
+      index
+    })
+    searchProduct({
+      action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        inventoryId: this.props.match.params.id,
-        itemData: [],
+        limit: "1000",
+        page: 1,
+        categoryid: this.state.id[index].id,
       }
     }).then(res => {
-      // console.log(res)
+      console.log(res.data.data.data)
+      let aa = {}
+      let arr =[]
+      this.state.num.map((v,k)=>{
+         aa={
+            name: this.state.oldGoods[k].name,
+            num: this.state.num[k],
+          }
+         return arr.push(aa);
+      })
+      console.log(arr)
+      let cartList = arr
+      let now = res.data.data.data?res.data.data.data:[]
+      console.log(cartList,"===========输入后传人的值")
+      console.log('之前', now)
+      for (let i = 0; i < cartList.length; i++) {
+        for (let j = 0; j < now.length; j++) {
+          if (now[j].name == cartList[i].name) {
+            now[j].realnum = cartList[i].num
+          }
+        }
+      }
+      console.log('之后', now)
       if (res.data.status === 4001) {
         this.setState({
-          dataName: ["0"]
+          goods: res.data.data.data,
+          Bj: true
         })
       } else {
         this.setState({
-          dataName: res.data.data
+          goods: [],
+          Bj: false  
         })
+        Toast.info(res.data.msg, 2)
       }
     })
-
-
+    this.setState({
+      defaultIndex: index
+    })
   }
 }
 const CategoryStyle = styled.div`
+.Bj img{
+  width: 5rem;
+  height: 5rem;
+}
+.Bj{
+  position:absolute;
+  top:4.5rem;
+  left:3.6rem;
+  vertical-align: middle;
+  text-align: center;
+}
+
+
 .baocun{
   margin-right:.2rem;
   border-radius:.2rem;
@@ -268,8 +286,6 @@ const CategoryStyle = styled.div`
   line-height: 1.17rem;
   background-color: #ED7913;
 }
-
-
 input::-webkit-input-placeholder {
   color: #c9c9c9;
   font-size:.35rem;
@@ -277,7 +293,6 @@ input::-webkit-input-placeholder {
 .img{
   width: .55rem;  
   height: .55rem; 
-  // line-height: .5rem; 
   margin-left:2.45rem;
 }
 .img-search{
@@ -292,12 +307,9 @@ input::-webkit-input-placeholder {
   font-size:.37rem;
   border:none;
   width:6rem;
-  // margin-top:.21rem;
   margin-left:.17rem;
   height: .75rem;
   line-height: .75rem;
-  // background-color: red;
-
 }
 .search{
   display:flex;
@@ -312,17 +324,8 @@ input::-webkit-input-placeholder {
 
 }
 
-
-
-
-
-
-
-
 .yuan{
-  // padding-top:.1rem;
   text-align:center;
-  // margin:auto;
   position:absolute;
   top: .2rem;
   left:1.3rem;
@@ -339,7 +342,6 @@ input::-webkit-input-placeholder {
 }
 .foot_conton{
   width: 12rem;
-  // height: 100%rem;
   line-height:1.6rem;
   text-align:center;
   font-size:.4rem;
@@ -363,7 +365,6 @@ input::-webkit-input-placeholder {
   height: 1.6rem;
   background-color: #fff;
   position:absolute;
-  // bottom:0;
 }
 
 
@@ -426,7 +427,6 @@ input::-webkit-input-placeholder {
 .categoryRight {
   position: relative;
   display: inline-block;
-  // left: .16rem;
   width: 7.5rem;
   height: calc(100vh - 2.7rem);
   overflow: hidden;
@@ -434,11 +434,7 @@ input::-webkit-input-placeholder {
 
 .category-title {
   text-align:center;
-  // display: flex;
-  // align-items: center;
-  // justify-content: flex-start;
   font-weight: 500;
-  // padding-left: .1rem;
   flex-wrap: wrap;
   line-height: 1.17rem;
   width: 100%;
@@ -449,14 +445,12 @@ input::-webkit-input-placeholder {
 }
 
 .category-title-active {
-  // border-left: .13rem solid #ff833a;
   background-color: #ff833a;
   color: #fff;
 }
 
 .category-left-head {
   width: 100%;
-  // height: .8rem;
   background: #f5f5f5;
 }
 
@@ -741,7 +735,6 @@ input::-webkit-input-placeholder {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
-
 `
 
 export default Category

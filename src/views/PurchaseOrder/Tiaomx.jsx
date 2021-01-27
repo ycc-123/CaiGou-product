@@ -31,8 +31,12 @@ export default class Tiaomx extends Component {
           </li>
 
           <li className='wen-zi-f'>
-            <div></div>
+            <div style={{display:"flex",justifyContent:"space-between",width:"7.5rem"}}>
             <p>采购数量：<span>{this.state.value?this.state.value:tiao.gnum}</span></p>
+            <p>采购金额：<span>{(tiao.price*(this.state.value?this.state.value:tiao.gnum)).toFixed(2)}</span></p>
+
+
+            </div>
             <Button
               style={{display:this.props.statusname==="待提交"?"block":"none", position: "absolute", left: "6.6rem", color: "transparent", background: "transparent", width: "9rem" }}
               className="btn_modal"

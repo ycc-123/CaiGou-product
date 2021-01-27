@@ -205,12 +205,13 @@ export default class CashierOrderDetails extends Component {
         page: 1
       }
     }).then((res) => {
+      this.isLoadMore = true
       let suju=res.data.data.data?res.data.data.data:[]
-      if(suju.length===10){
-        this.isLoadMore = true
-      }else{
-        this.isLoadMore = false
-      }
+      // if(suju.length===10){
+      //   this.isLoadMore = true
+      // }else{
+      //   this.isLoadMore = false
+      // }
       
       if (res.data.status === 4001) {
         this.setState({
@@ -219,7 +220,7 @@ export default class CashierOrderDetails extends Component {
           total: res.data.data.total,
           kongbj: true
         }, () => {
-          // this.refs.scroll.BScroll.finishPullUp()
+          this.refs.scroll.BScroll.finishPullUp()
           this.refs.scroll.BScroll.refresh()
         })
       } else {

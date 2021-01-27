@@ -6,6 +6,7 @@ import Home from 'views/home/Home'
 
 import AddPurchaseOrder from 'views/AddPurchaseOrder/AddPurchaseOrder'
 import PurchaseOrder from 'views/PurchaseOrder/PurchaseOrder'
+import addCaigouGoods from 'views/PurchaseOrder/addCaigouGoods/Category'
 import PurchaseOrderDetailed from 'views/PurchaseOrder/PurchaseOrderDetailed'
 import WarehousingOrder from 'views/WarehousingOrder/WarehousingOrder'
 import WarehousingOrderxing from 'views/WarehousingOrder/WarehousingOrderxing'
@@ -107,6 +108,8 @@ const AppRouter = () => {
         {/* 采购单 */}
         <Route path='/PurchaseOrderDetailed/:id' exact component={PurchaseOrderDetailed} ></Route>
         <Route path='/PurchaseOrder' exact component={PurchaseOrder} ></Route>
+        <Route path='/addCaigouGoods/:id' exact component={addCaigouGoods} ></Route>
+
         {/* <Route path='/category/:id/:ck/:bz' exact component={category} ></Route> */}
         <Route path='/AddPurchaseOrder' exact component={AddPurchaseOrder} ></Route>
         <Route path='/Liebiao/:ck/:bz' exact component={Liebiao} ></Route>

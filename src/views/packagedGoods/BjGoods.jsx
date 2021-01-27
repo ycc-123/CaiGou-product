@@ -4,9 +4,11 @@ import { Picker, Toast, List, Switch } from 'antd-mobile';
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import { useRef } from 'react';
 import DocumentTitle from 'react-document-title'
-import { getProductCategoryAll, getUnitList, getProductDetail, editProduct, getPackgeProductDetail } from 'network/Api'
+import { getProductCategoryAll, getUnitList, getProductDetail, editProduct, getPackgeProductDetail ,deleteProduct} from 'network/Api'
 import { store } from "store/index";
 import { useHistory, useParams } from 'react-router-dom';
+import {  Modal } from 'antd-mobile';
+const alert = Modal.alert;
 
 const Into = (props) => {
   const history = useHistory()
@@ -29,6 +31,7 @@ const Into = (props) => {
   const [unit, setUnit] = useState([]);
   const [classification, setClassification] = useState([]);
   const [morengoods, setMorengoods] = useState({});
+  const [zuoFei, setzuoFei] = useState();
 
   const scrollConfig = {
     probeType: 1
@@ -305,6 +308,15 @@ const Into = (props) => {
               </div>
             </div>
           </List>
+
+          <List>
+          <List.Item style={{marginTop:".5rem"}}
+              extra={<Switch
+                checked={false}
+                onChange={() => { setzuoFei(false) }}
+                onClick={(checked) => { zuofei() }}
+              />}
+            >作废商品：</List.Item></List>
         </AddGoodsStyle>
       </BetterScroll>
       <FAddGoodsStyle>
@@ -318,6 +330,30 @@ const Into = (props) => {
       </FAddGoodsStyle>
     </>
   )
+  function deleteGoods(){
+    
+    deleteProduct({
+      action: 'deleteProduct', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        id: params,
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        history.push("/PackagedGoods")
+        Toast.success(res.data.msg, 1.5)
+      } else {
+        Toast.info(res.data.msg, 1.5)
+      }
+    })
+  }
+  function zuofei(){
+   
+   alert('商品作废', '是否确认作废该商品',[
+    { text: '取消', onPress: () => setzuoFei(!zuoFei) },
+    { text: '确定', onPress: () => deleteGoods() },
+   ])
+  }
   function check() {
     if (memberInterests && memberPrice) {
       Toast.info("会员价和会员权益不能同时开启", 2)
@@ -357,10 +393,10 @@ const Into = (props) => {
         }
       }).then((res) => {
         if (res.data.status === 4001) {
-          history.push('/PackagedGoods')
-          Toast.success(res.data.msg, 2)
+          history.goBack(-1)
+          Toast.success("修改成功", 1.5)
         } else {
-          Toast.info(res.data.msg, 2)
+          Toast.info(res.data.msg, 1.5)
         }
       })
     }
@@ -556,6 +592,7 @@ const TAddGoodsStyle = styled.div`
   }
   .type .item .right input {
     width: 5.82rem;
+    height: 1rem;
     border: none;
     font-size: .35rem;
     font-weight: 500;
@@ -710,6 +747,7 @@ const AddGoodsStyle = styled.div`
   }
   .type .item .right input {
     width: 5.82rem;
+    height: 1rem;
     border: none;
     font-size: .35rem;
     font-weight: 500;

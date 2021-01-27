@@ -317,7 +317,8 @@ const Into = (props) => {
         is_plu_goods: matchGood === true ? "2" : "1",
         plu_goods_keyboard_id: matchCode,
         sequence: goodSort,
-        is_packge: "1"
+        is_packge: "1",
+        // is_pos: "1"
       }
     }).then((res) => {
       if (res.data.status === 4001) {
@@ -502,6 +503,7 @@ const TAddGoodsStyle = styled.div`
   }
   .type .item .right input {
     width: 5.82rem;
+    height: 1rem;
     border: none;
     font-size: .35rem;
     font-weight: 500;
@@ -676,6 +678,7 @@ const AddGoodsStyle = styled.div`
   }
   .type .item .right input {
     width: 5.82rem;
+    height: 1rem;
     border: none;
     font-size: .35rem;
     font-weight: 500;
