@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Toast,Modal } from 'antd-mobile';
-
+import { editPurchaseDetail } from 'network/Api'
+import { store } from 'store/index'
 const prompt = Modal.prompt;
 
 export default class Tiao extends Component {
@@ -11,26 +12,42 @@ export default class Tiao extends Component {
             price:""
         }
     }
-    zjian(num ,price){
+    zjian(num ,price,tiao){
         console.log(num ,price)
         this.setState({
             num,
             price
         })
+        editPurchaseDetail({
+            action: 'editPurchaseDetail', data: {
+              uniacid: store.getState().uniacid,
+              uid: store.getState().uid,
+              id: this.props.danid,
+              itemId: tiao.id,
+              price: price,
+              gnum: num,
+            }
+          }).then((res) => {
+            if (res.data.status === 4001) {
+              Toast.info("修改成功", 1)
+            } else {
+              Toast.info(res.data.msg, 2)
+            }
+          })
     }
     render() {
         console.log(this.props)
         let tiao = this.props.item
         return (
             <div className='tiao' style={{position:"relative"}}>
-                <img className='t-img-l' src={tiao.img ? tiao.img : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
+                <img className='t-img-l' src={tiao.image ? tiao.image : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
                 <ul className='wen-zi'>
                     <li className='wen-zi-t'>
-                        <div className='name'>{tiao.name}</div>
+                        <div className='name'>{tiao.goods_name}</div>
                     </li>
                     <li className='wen-zi-c'>
                         <div >商品编码：{tiao.barcode}</div>
-                        <p>{this.state.price?this.state.price : tiao.price}元/{tiao.danwei}</p>
+                        <p>{this.state.price?this.state.price : tiao.price}元/{tiao.unitname}</p>
                     </li>
                     <li className='wen-zi-f' style={{width:"7.5rem"}}>
                         <div style={{display:"flex",justifyContent:"space-between",width:"7.5rem"}}>
@@ -44,7 +61,7 @@ export default class Tiao extends Component {
                             onClick={() => prompt(
                                 '添加',
                                 '请填写采购数量与单价',
-                                (login, text) => this.zjian(login, text ),
+                                (login, text) => this.zjian(login, text,tiao ),
                                 'login-password',
                                 null,
                                 ['请填写采购数量', '请填写采购单价'],

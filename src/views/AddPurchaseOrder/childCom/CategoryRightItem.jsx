@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
+import ReactDOM from "react-dom";
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import { Modal, Button, Toast } from 'antd-mobile';
-import { getProductCategoryAll, searchProduct,addPurchaseDetail } from 'network/Api'
-
+import { getProductCategoryAll, searchProduct, addPurchaseDetail } from 'network/Api'
+import Model from './Model'
 const prompt = Modal.prompt;
+
+
 
 class CategoryRightgoods extends Component {
   constructor(props) {
@@ -12,12 +15,13 @@ class CategoryRightgoods extends Component {
     this.state = {
       num: this.props.goods.num,
       login: '',
-      password: ''
+      password: '',
+      visible: false
     }
     this.click = true
+
   }
   zjian = (login, password, goods) => {
-   
     if (login === '' ) {
       Toast.info('请填写采购数量')
     } else if(password === ''){
@@ -31,47 +35,59 @@ class CategoryRightgoods extends Component {
     }
   }
 
+
+  closeModal() {
+    console.log('我是onClose回调')
+    this.setState({visible: false})
+  }
+
+  confirms=(num,price)=> {
+    console.log(num,price)
+    this.props.parent.getChildrenMsg(this,num,price, this.props.goods)
+    console.log('我是confirm回调')
+this.setState({
+  visible: false,
+  login: num
+
+})
+  }
+
+  
+
   render() {
     const { goods } = this.props
-    let input=''
-    if(this.state.login!==''){
-      input=this.state.login
-    }else{
-      input=goods.realnum
+    let input = ''
+    if (this.state.login !== '') {
+      input = this.state.login
+    } else {
+      input = goods.realnum
     }
+   
     return (
       <CategoryRightgoodsStyle>
+        <Modal/>
         <div className="rrr"></div>
-        <li className='category-goods clearfix'>
-          <img className='category-img' src={goods.albumpath?goods.albumpath:"https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
+        <li className='category-goods clearfix' onClick={()=>{this.setState({visible: true})}}>
+          <img className='category-img' src={goods.albumpath ? goods.albumpath : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
           <div className='category-goods-info'>
-            <div style={{fontSize:".35rem",color:'#1a1a1a',width:"4rem"}}>{goods.name}</div>
-              <div className='shuliang' style={{color:'#1a1a1a',paddingTop:".1rem"}}>
-                   <article>编码：{goods.code}</article>
-                   <div>{goods.posprice}元/{goods.unitname}</div>
-              </div>
-            <div style={{display:"flex",justifyContent:"space-between"}}>
-            {
-              input ? <div  style={{width:"100%",textAlign: "right",paddingTop:".2rem", color: "#CD2323", fontSize: ".35rem" }}>
-                {input}</div> :
-                <img className='category-goods-img'
-                  src='https://res.lexiangpingou.cn/images/applet/99956jia.png'
-                  alt="" />
-            }
+            <div style={{ fontSize: ".35rem", color: '#1a1a1a', width: "4rem" }}>{goods.name}</div>
+            <div className='shuliang' style={{ color: '#1a1a1a', paddingTop: ".1rem" }} onClick={() => { console.log(2222) }}>
+              <article>编码：{goods.code}</article>
+              <div>{goods.posprice}元/{goods.unitname}</div>
             </div>
-            <Button
-              style={{width:"7.2rem",height:"2rem", position: "absolute", top: "-.1rem", left: "-1.8rem", color: "transparent", background: "transparent" }}
-              className="btn_modal"
-              onClick={() => prompt(
-                '添加',
-                '请填写采购数量与单价',
-                (login, text) => this.zjian(login, text, goods),
-                'login-password',
-                null,
-                ['请填写采购数量', '请填写采购单价'],
-              )}
-              // visible={false}
-            >111111</Button>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              {
+                input ? <div style={{ width: "100%", textAlign: "right", paddingTop: ".2rem", color: "#CD2323", fontSize: ".35rem" }}>
+                  {input}</div> :
+                  <img className='category-goods-img'
+                    src='https://res.lexiangpingou.cn/images/applet/99956jia.png'
+                    alt="" />
+              }
+            </div>
+         
+            <Model goods={goods} visible={this.state.visible} unitname={goods.unitname} confirms={this.confirms} models={this}
+        onClose={this.closeModal}/>
+             
           </div>
         </li>
       </CategoryRightgoodsStyle>
@@ -80,6 +96,99 @@ class CategoryRightgoods extends Component {
 }
 
 const CategoryRightgoodsStyle = styled.div`
+.showbtn {
+  margin: 0 0.64rem;
+  background-color: #2E5BFF;
+  color: white;
+}
+.modalmask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.5;
+  overflow: hidden;
+  z-index: 9000;
+  color: #fff;
+}
+
+.modaldialog {
+  width: 6.4rem;
+  overflow: hidden;
+  position: fixed;
+  top: 40%;
+  left: 0;
+  z-index: 9999;
+  background: #fff;
+  margin: -4rem 2rem;
+  border-radius: .2rem;
+}
+.centenmt{
+  padding-top: .3rem;
+  font-size: 0.4rem;
+  color: #888;
+  text-align: center;
+}
+.modaltitle {
+  padding-top: .3rem;
+  font-size: 0.5rem;
+  color: #000;
+  text-align: center;
+}
+.modalcontent {
+  padding: .3rem .4rem;
+}
+.modalinput {
+  border-radius: .1rem;
+  font-size: .4rem;
+}
+input::-webkit-input-placeholder {
+  color: #ccc;
+  font-size:.35rem;
+}
+.input {
+  font-family: sans-serif;
+  border:1px solid #eee;
+  width: 3rem;
+  height: .8rem;
+  font-size: .4rem;
+  line-height: .8rem;
+  box-sizing: border-box;
+  color: #000;
+}
+inputholder {
+  color: #666;
+  font-size: 60px;
+}
+.modalfooter {
+  display: flex;
+  flex-direction: row;
+  height: 1.1rem;
+  border-top: 1px solid #eee;
+  font-size: .48rem;
+  line-height: 1.1rem;
+}
+.btncancel {
+  width: 50%;
+  color: #000;
+  text-align: center;
+  border-right: 1px solid #eee;
+}
+
+.btnconfirm {
+  width: 50%;
+  color: #108ee9;
+  text-align: center;
+}
+
+
+
+
+
+
+
 .category-goods-img {
   margin-top:.2rem;
   margin-left:4.65rem;

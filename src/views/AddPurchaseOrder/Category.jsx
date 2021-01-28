@@ -49,7 +49,7 @@ class Category extends Component {
     dropByCacheKey('MyComponent')
   }
   mingxi() {
-    this.props.history.push(`/Liebiao/${this.props.match.params.ck}/${this.props.match.params.bz}`)
+    this.props.history.push(`/Liebiao/${this.props.match.params.ck}/${this.props.match.params.id}`)
   }
   getChildValue(num,price,goods,zong_moneys) {
     console.log(price)
@@ -70,7 +70,6 @@ class Category extends Component {
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        categoryid: this.state.indexId,
         search: this.state.inputSearch
       }
     }).then(res => {

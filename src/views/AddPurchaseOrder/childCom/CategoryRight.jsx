@@ -96,12 +96,12 @@ class CategoryRight extends Component {
           amount: num[k] * price[k],
           barcodeid: this.state.goods[k].barcodeid,
           barcode: this.state.goods[k].code,
-          img: this.state.goods[k].albumpath,
-          danwei: this.state.goods[k].unitname,
+          image: this.state.goods[k].albumpath,
+          unitname: this.state.goods[k].unitname,
           gnum: num[k],
           num: num[k],
           price: price[k],
-          name: this.state.goods[k].name,
+          goods_name: this.state.goods[k].name,
         }
         return aa;
       })

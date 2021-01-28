@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { getPurchaseDetail } from 'network/Api'
+
 import { Toast } from 'antd-mobile';
 import { store } from 'store/index'
 import BetterScroll from 'common/betterScroll/BetterScroll'
@@ -29,10 +31,37 @@ export default class Liebiao extends Component {
   constructor() {
     super()
     this.state = {
-      goodsList: []
+      goodsList: [],
+      goodsSearch:"",
+      id:""
     }
   }
   componentDidMount() {
+    getPurchaseDetail({
+      action: 'getPurchaseDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        purchaseId: this.props.match.params.bz,
+        type: "1",
+        limit: "30",
+        page: "1"
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        let count = res.data.data.count
+        console.log(res.data.data.purchaseDetail)
+        this.setState({
+          id: res.data.data.purchaseDetail.id,
+          goodsList: res.data.data.purchaseItem,
+        }, () => {
+          this.refs.scroll.BScroll.refresh()
+        })
+      } else {
+        Toast.info('网络错误', 2)
+      }
+    })
+    console.log(this.props.match.params.bz)
+   
     console.log(store.getState().goodsList)
     if (store.getState().goodsList === []) {
       // Toast.info("无采购商品", 1.5)
@@ -42,22 +71,54 @@ export default class Liebiao extends Component {
     } else {
       this.setState({
         goodsList: store.getState().goodsList
+      },()=>{
+        this.refs.scroll.BScroll.refresh()
+
       })
     }
+  }
+  search(){
+    getPurchaseDetail({
+      action: 'getPurchaseDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        purchaseId: this.props.match.params.bz,
+        search: this.state.goodsSearch,
+        type: "1",
+        limit: "30",
+        page: "1"
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        let count = res.data.data.count
+        this.setState({
+          id: res.data.data.purchaseDetail.id,
+          goodsList: res.data.data.purchaseItem,
+        }, () => {
+          this.refs.scroll.BScroll.refresh()
+        })
+      } else {
+        Toast.info('网络错误', 2)
+      }
+    })
+  }
+  goodsChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
   render() {
     const scollConfig = {
       probeType: 1
     }
-    var day2 = new Date();
-    day2.setTime(day2.getTime());
-    var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
-    var time = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate() + " " + day2.getHours() + ":" + day2.getMinutes() + ":" + day2.getSeconds();
+
     return (
       <LiebiaoStyle>
         <div>
           <div className='search'>
-            <input type="search" className='input' placeholder="请输入商品名称或商品编码" />
+            <input type="search" className='input' placeholder="请输入商品名称或商品编码" name="goodsSearch"
+              onChange={this.goodsChange.bind(this)}
+              value={this.state.goodsSearch} />
             <div className='img' onClick={() => { this.search() }}>
               <img className='img-search' src="https://res.lexiangpingou.cn/images/applet/99968search.png" alt="search" />
             </div>
@@ -83,14 +144,15 @@ export default class Liebiao extends Component {
             采购备注：{this.props.match.params.bz}
           </div> */}
         </div>
+        <BetterScroll config={scollConfig} ref='scroll' style={{ height: "calc(100vh - 1.2rem)" }}>
         {
           this.state.goodsList.map((value, key) => {
-            // console.log(value)
             return (
-              <Tiao item={value} key={key}></Tiao>
+              <Tiao id={this.state.id} danid={this.props.match.params.bz} item={value} key={key}></Tiao>
             )
           })
         }
+        </BetterScroll>
       </LiebiaoStyle>
     )
   }

@@ -58,6 +58,7 @@ class Category extends Component {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         categoryid: this.state.indexId,
+        is_packge: 2,
         store_id: this.props.match.params.storeid,
         limit: "1000",
         page: 1,
@@ -157,6 +158,7 @@ class Category extends Component {
           action: 'searchProduct', data: {
             uniacid: store.getState().uniacid,
             uid: store.getState().uid,
+            is_packge: 2,
             store_id: this.props.match.params.storeid,
             limit: "1000",
             page: 1,
@@ -215,6 +217,7 @@ class Category extends Component {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         store_id: this.props.match.params.storeid,
+        is_packge: 2,
         limit: "1000",
         page: 1,
         categoryid: this.state.id[index].id,

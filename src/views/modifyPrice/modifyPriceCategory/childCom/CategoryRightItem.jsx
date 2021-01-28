@@ -45,13 +45,17 @@ bianji(goods){
     //   posprice=goods.newposprice?goods.newposprice:goods.posprice
     //   memberprice=goods.newmemberprice?goods.newmemberprice:goods.memberprice
     // }
+    if(goods){
+
+    }
     return (
       <CategoryRightgoodsStyle>
         <div className="rrr"></div>
         <li className='category-goods clearfix'
         onClick={()=>{this.bianji(goods)}}
         >
-          <img className='category-img' src={goods.albumpath?goods.albumpath:"https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
+          <img className='category-img' src={goods.is_packge==="1"?"https://res.lexiangpingou.cn/images/applet/99977dabaogoods.png":
+          (goods.albumpath?goods.albumpath:"https://res.lexiangpingou.cn/images/applet/99955tupian.png")} alt="" />
           <div className='category-goods-info'>
 
             <div style={{ fontSize: ".35rem", color: '#1a1a1a' }}>{goods.name}</div>
