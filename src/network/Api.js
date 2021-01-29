@@ -620,3 +620,61 @@ export function deleteProduct(config) {
     data: config.data
   })
 }
+
+// 删除采购单商品
+
+export function delPurchaseDetail(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+
+
+// 删除采购申请单商品
+
+export function delPurchaseApplyDetail(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+
+// 添加采购申请单商品
+
+export function addPurchaseApplyDetail(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+// 删除打包商品
+
+export function delPackgeProduct(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}
+
+// 添加打包商品
+
+export function addPackgeProduct(config) {
+  return requestPost({
+    params: {
+      action: config.action
+    },
+    data: config.data
+  })
+}

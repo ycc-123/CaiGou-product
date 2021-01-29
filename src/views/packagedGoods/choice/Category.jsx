@@ -5,7 +5,7 @@ import CategoryLeftItem from './childCom/CategoryLeftItem'
 import CategoryRight from './childCom/CategoryRight'
 import DocumentTitle from 'react-document-title'
 import { store } from 'store/index'
-import { getProductCategoryAll, getStockList,searchProduct } from 'network/Api'
+import { getProductCategoryAll, getStockList,searchProduct,getPackgeProductDetail } from 'network/Api'
 import { Toast, Modal } from 'antd-mobile';
 import Search from 'common/changSearch'
 
@@ -37,11 +37,11 @@ class Category extends Component {
       mrqunangoods: [],
       Id: "",
       Bj: true,
+      goods_num:[]
     }
   }
   mingxi() {
-    this.state.price===''?alert("请添加打包商品"):
-    this.props.history.push('/choiceGoodsmx')
+    this.props.history.push(`/choiceGoodsmx/${this.props.match.params.id}`)
   }
   getChildValue(aa, val) {
     console.log(aa,val);
@@ -62,7 +62,7 @@ class Category extends Component {
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        categoryid: this.state.indexId,
+        // categoryid: this.state.indexId,
         search: e
       }
     }).then(res => {
@@ -76,9 +76,13 @@ class Category extends Component {
 
     })
   }
+  bianji(){
+    this.props.history.goBack(-1)
+    Toast.success("添加打包商品成功",1.5)
+  }
   render() {
     const { title, type } = this.state
-    // console.log(this.props.match.params.id)
+    console.log(this.props.match.params.id)
     let pdid = this.props.match.params.ds
     let ckid = this.props.match.params.bz
     let bsid = this.props.match.params.id
@@ -128,13 +132,14 @@ class Category extends Component {
           <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
                   <div className='left' onClick={()=>{this.mingxi()}}>
                       <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://res.lexiangpingou.cn/images/applet/99954wu.png" alt="" /></div>
-                      <div className='yuan'>{this.state.num.length ? this.state.num.length : 0}</div>
+                      <div className='yuan'>{this.state.goods_num.length + this.state.num.length}</div>
                   </div>
                   <div style={{display:"flex",marginTop:".2rem"}}>
-                      <div className='tijiao' onClick={()=>{this.props.history.push('/choiceGoodsmx')}}>提交</div>
+                      <div className='tijiao' style={{display:Number(this.props.match.params.id)===9999?"none":"block"}} onClick={()=>{this.props.history.push('/choiceGoodsmx')}}>提交</div>
+                      {/* <div className='tijiao' onClick={()=>{this.bianji()}}>添加</div> */}
                   </div>
               </div>
-           
+           <div style={{display:Number(this.props.match.params.id)===9999?"none":"block"}}>
             <div
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
@@ -145,7 +150,7 @@ class Category extends Component {
                 ])
               }>
               confirm
-                        </div></div>
+                        </div></div></div>
         </Fragment>
       </CategoryStyle>
     )
@@ -158,6 +163,23 @@ class Category extends Component {
     this.child.myName()
   }
   componentDidMount = () => {
+    getPackgeProductDetail({
+      action: 'getPackgeProductDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        id: this.props.match.params.id,
+        limit: "1000",
+        page: "1"
+      }
+    }).then((res) => {
+      if (res.data.status === 4001) {
+        this.setState({
+          goods_num: res.data.data.packgeList
+        })
+      } else {
+        Toast.info(res.data.msg, 2)
+      }
+    })
     // localStorage.clear()
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
@@ -174,7 +196,7 @@ class Category extends Component {
             uid: store.getState().uid,
             limit:"1000",
             page:1,
-            categoryid: Id[0].id,
+            // categoryid: Id[0].id,
           }
         }).then(res => {
           if (res.data.status === 4001) {

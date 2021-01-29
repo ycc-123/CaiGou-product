@@ -265,7 +265,7 @@ export default class PurchaseOrderDetailed extends Component {
             {
               this.state.purchaseItem.map((value, key) => {
                 return (
-                  <Tiaomx statusname={purchaseDetail.statusname} item={value} key={key} parent={this}></Tiaomx>
+                  <Tiaomx danid={this.props.match.params.id} statusname={purchaseDetail.statusname} item={value} key={key} parent={this}></Tiaomx>
                 )
               })
             }
@@ -289,6 +289,7 @@ export default class PurchaseOrderDetailed extends Component {
                 onClick={() => { this.shengHe() }}
               >{purchaseDetail.statusname === "待提交" ? (purchaseDetail.statusname=== "待提交" ? "提交" : "已提交") : (purchaseDetail.statusname=== "审核成功" ? "已审核" : "审核" )}
               </div>
+              
               <Button
                 style={{ display: purchaseDetail.statusname === "待提交" ? "none" : "block", width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
                 className="btn_modal"
@@ -309,6 +310,24 @@ export default class PurchaseOrderDetailed extends Component {
   }
 }
 const PurchaseOrderDetailedStyle = styled.div`
+.del {
+  position: absolute;
+  z-index: 1;
+  width: 2rem;
+  height: 100%;
+  right: 0;
+  top:0;
+  text-align: center;
+  line-height: 2.1rem;
+  font-size: .8rem;
+  background: #ED7A14;
+}
+.del img{
+  width: .7rem;
+  height: auto;
+}
+
+
 .zong_mony{
   width: 3.2rem;
   height: 1.6rem;
@@ -459,6 +478,8 @@ const PurchaseOrderDetailedStyle = styled.div`
         background-color: red;
     }
     .tiao{
+      position: relative;
+      overflow: hidden;
         display:flex;
         width: 100%;
         // height: 2rem;

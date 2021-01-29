@@ -65,7 +65,6 @@ class Category extends Component {
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        categoryid: this.state.indexId,
         search: this.state.inputSearch
       }
     }).then(res => {
@@ -121,7 +120,7 @@ class Category extends Component {
           <div className='foot'>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
               <div className='left' 
-              onClick={()=>{Toast.info("返回查看详情")}}
+              onClick={()=>{Toast.info("返回查看详情",1.5)}}
               >
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://res.lexiangpingou.cn/images/applet/99954wu.png" alt="" /></div>
                 <div className='yuan'>{this.state.oldGoods.length ? this.state.oldGoods.length : 0}</div>

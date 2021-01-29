@@ -56,7 +56,7 @@ class Category extends Component {
       action: 'searchProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        categoryid: this.state.indexId,
+        // categoryid: this.state.indexId,
         search:this.state.inputSearch
       }
     }).then(res => {
@@ -68,6 +68,9 @@ class Category extends Component {
         Toast.info(res.data.msg,2)
       }
     })
+  }
+  tianjia(){
+    this.props.history.goBack(-1)
   }
   render() {
     const { title, type } = this.state
@@ -103,7 +106,7 @@ class Category extends Component {
                 </BetterScroll>}
               </ul>
             </div>
-              <CategoryRight goodsList={this.state.goods} onRef={this.onRef} bz={bz} id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />
+              <CategoryRight goodsList={this.state.goods} onRef={this.onRef} bz={this.props.match.params.bz} id={ida} aa={this.getChildValue.bind(this)} history={this.props.history} />
             </Fragment> : <Fragment>
               </Fragment>}
               <div className='Bj' style={{ display: this.state.Bj === false ? "block" : "none" }}>
@@ -114,15 +117,18 @@ class Category extends Component {
               <div style={{width:"100%",display:"flex",justifyContent:"space-between"}}>
                   <div className='left' >
                       <div style={{width: "1.28rem",height: ".68rem"}}><img src="https://res.lexiangpingou.cn/images/applet/99954wu.png" alt="" /></div>
-                      <div className='yuan'>{this.state.num.length ? this.state.num.length : 0}</div>
+                      <div className='yuan'>{this.state.num.length ? this.state.num.length : this.state.oldGoods.length}</div>
                   </div>
-                  <div style={{display:"flex",marginTop:".2rem"}}>
+                  <div className='tijiao' style={{marginTop:".2rem",display:this.props.match.params.bz==="9999"?"block":"none"}} onClick={()=>{this.tianjia()}}>添加</div>
+                  <div style={{display:this.props.match.params.bz==="9999"?"none":"block",marginTop:".2rem"}}>
+                    <div style={{display:"flex"}}>
                       <div className='baocun' onClick={()=>{this.click(1)}} >保存</div>
                       <div className='tijiao' >提交</div>
+                    </div>
                   </div>
               </div>
-           
-            <div
+           <div style={{display: Number(this.props.match.params.bz)===9999?"none":"block"}}>
+            <div 
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
               onClick={() =>
@@ -132,8 +138,9 @@ class Category extends Component {
                 ])
               }
             >
-              confirm
-                        </div></div>
+              confirm</div></div>
+                        
+                        </div>
 
         </Fragment>
       </CategoryStyle>

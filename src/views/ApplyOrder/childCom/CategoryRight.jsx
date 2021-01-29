@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import CategoryRightItem from './CategoryRightItem'
 import BetterScroll from 'common/betterScroll/BetterScroll'
-import { createPurchaseApply } from 'network/Api'
+import { createPurchaseApply,addPurchaseApplyDetail } from 'network/Api'
 import {  Toast } from 'antd-mobile';
 import { store } from "store/index";
 class CategoryRight extends Component {
@@ -42,19 +42,51 @@ class CategoryRight extends Component {
     );
   }
   getChildrenMsg = (result,login,ww) => {
-    let num=Number(this.state.num)+Number(login)
-   
-    let arr  = []
-    arr.push(ww);
-    let nums  = []
-    nums.push(login);
-    this.setState({
-      num,
-      login:[...this.state.login, ...nums],
-      goods:[...this.state.goods, ...arr]
-    },()=>{
-      this.props.aa(this.state.login,this.state.goods)
-    })
+    if(Number(this.props.bz)===9999){
+      addPurchaseApplyDetail({ action: 'addPurchaseApplyDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid:store.getState().uid,
+        id: this.props.id,
+        barcode:ww.barcode,
+        goodsname:ww.name,
+        goodsnum:login
+      } }).then(res=>{
+        if(res.data.status===4001){
+          Toast.success(res.data.msg, 1.5)
+        }else{
+          Toast.info(res.data.msg, 1.5)
+        }
+      })
+ 
+        let num=Number(this.state.num)+Number(login)
+      
+        let arr  = []
+        arr.push(ww);
+        let nums  = []
+        nums.push(login);
+        this.setState({
+          num,
+          login:[...this.state.login, ...nums],
+          goods:[...this.state.goods, ...arr]
+        },()=>{
+          this.props.aa(this.state.login,this.state.goods)
+        })  
+      }else{
+          let num=Number(this.state.num)+Number(login)
+      
+          let arr  = []
+          arr.push(ww);
+          let nums  = []
+          nums.push(login);
+          this.setState({
+            num,
+            login:[...this.state.login, ...nums],
+            goods:[...this.state.goods, ...arr]
+          },()=>{
+            this.props.aa(this.state.login,this.state.goods)
+          })
+    
+    }
 }
   componentDidMount(){
     this.props.onRef(this)
@@ -83,13 +115,14 @@ class CategoryRight extends Component {
       itemData:itemData,
     } }).then(res=>{
       if(res.data.status===4001){
-        Toast.success(res.data.msg, 2)
+        Toast.success(res.data.msg, 1.5)
         this.home()
       }else{
-        Toast.info(res.data.msg, 2)
+        Toast.info(res.data.msg, 1.5)
       }
     })
-  } 
+  }
+  
   home(){
     this.props.history.push('/home')
   }

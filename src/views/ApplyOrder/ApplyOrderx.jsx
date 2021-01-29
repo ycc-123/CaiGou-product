@@ -94,6 +94,11 @@ export default class ApplyOrderx extends Component {
       [e.target.name]: e.target.value
     })
   }
+  bianji(e){
+    if (e === "待提交") {
+      this.props.history.push(`/Sqcgcategory/${this.props.match.params.id}/${9999}`)
+    } else {}
+  }
   render() {
     const scrollConfig = {
       probeType: 1
@@ -134,7 +139,7 @@ export default class ApplyOrderx extends Component {
             {
               this.state.tiao.map((v, k) => {
                 return (
-                  <Tiaomx value={v} id={this.props.match.params.id}></Tiaomx>
+                  <Tiaomx statusname={this.state.quan.statusname} value={v} id={this.props.match.params.id}></Tiaomx>
                 )
               })
             }
@@ -146,6 +151,8 @@ export default class ApplyOrderx extends Component {
                 <div className='yuan'>{this.state.tiao.length}</div>
               </div>
               <div style={{ display: "flex", marginTop: ".2rem" }}>
+              <div className='tijiao' style={{ background: this.state.quan.statusname === "待提交" ?  '': "#B4B4B4" }}
+                  onClick={(e) => { this.bianji(this.state.quan.statusname) }}>编辑</div>
                 <div className='tijiao' style={{ background: this.state.quan.statusname === "提交成功" ? "#B4B4B4" : '' }}
                   onClick={(e) => { this.tijiao(this.state.quan.statusname) }}>提交</div>
               </div>
@@ -157,6 +164,26 @@ export default class ApplyOrderx extends Component {
   }
 }
 const ApplyOrderxStyle = styled.div`
+.del {
+  position: absolute;
+  z-index: 1;
+  width: 2rem;
+  height: 100%;
+  right: 0;
+  top:0;
+  text-align: center;
+  line-height: 2.1rem;
+  font-size: .8rem;
+  background: #ED7A14;
+}
+.del img{
+  width: .7rem;
+  height: auto;
+}
+
+
+
+
 .baocun{
     margin-right:.2rem;
     border-radius:.2rem;

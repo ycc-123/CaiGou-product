@@ -325,11 +325,17 @@ const Into = (props) => {
             <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://res.lexiangpingou.cn/images/applet/99954wu.png" alt="" /></div>
             <div className='yuan'>{goodlength.packgeListCount ? goodlength.packgeListCount : 0}</div>
           </div>
+          <div className='raa' style={{marginRight:"0"}} onClick={e => { bianji() }}>编辑</div>
           <div className='raa' onClick={e => { check() }}>提交</div>
+
         </div>
       </FAddGoodsStyle>
     </>
   )
+  function bianji(){
+    console.log(1111)
+    history.push(`/addchoiceGoods/${params}`)
+  }
   function deleteGoods(){
     
     deleteProduct({
@@ -437,7 +443,7 @@ const FAddGoodsStyle = styled.div`
   .left{
     padding-left:.48rem;
     padding-top:.45rem;
-    width:7rem;
+    width:5.4rem;
     
   }
 

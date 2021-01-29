@@ -301,11 +301,15 @@ const Into = (props) => {
   )
   
   function check() {
+    var CategoryId = goodCategory.toString();
+
+    let id = CategoryId.substring(CategoryId.length-3) 
+       console.log(id)
     createProduct({
       action: 'createProduct', data: {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
-        categoryid: goodCategory.toString(),
+        categoryid: id,
         code: goodCode,
         posprice: retailPrice,
         memberprice: setPrice,

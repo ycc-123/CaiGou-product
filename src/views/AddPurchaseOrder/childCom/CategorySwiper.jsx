@@ -6,27 +6,7 @@ import { Toast } from 'antd-mobile';
 import { store } from 'store/index'
 import BetterScroll from 'common/betterScroll/BetterScroll'
 import Tiao from './Tiao'
-// function Tiao(value) {
-//   let tiao = value.item
-//   return (
-//     <div className='tiao'>
-//       <img className='t-img-l' src={tiao.img ? tiao.img : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
-//       <ul className='wen-zi'>
-//         <li className='wen-zi-t'>
-//           <div className='name'>{tiao.name}</div>
-//         </li>
-//         <li className='wen-zi-c'>
-//           <div >商品编码：{tiao.barcode}</div>
-//           <p>{tiao.price}元/{tiao.danwei}</p>
-//         </li>
-//         <li className='wen-zi-f'>
-//           <div></div>
-//           <p>采购数量：<span>{tiao.gnum}</span></p>
-//         </li>
-//       </ul>
-//     </div>
-//   )
-// }
+
 export default class Liebiao extends Component {
   constructor() {
     super()
@@ -124,25 +104,7 @@ export default class Liebiao extends Component {
             </div>
           </div>
 
-          {/* <div className='conten'>
-            <div className='conten-top'>
-              <p>
-                <img src="https://res.lexiangpingou.cn/images/applet/99962dingdan.png" alt="" />
-              </p>
-              <div>{this.state.purchaseDetail.docno}</div>
-            </div> 
 
-            <div className='conten-c' style={{ paddingTop: ".25rem" }}>
-              <p>单据日期：{s2}</p>
-              <p>创建时间：{time}</p>
-
-              <p>单据仓库：{this.props.match.params.ck}</p>
-              <p>单据状态：{"待提交"}</p>
-            </div>
-          </div> */}
-          {/* <div className='footer'>
-            采购备注：{this.props.match.params.bz}
-          </div> */}
         </div>
         <BetterScroll config={scollConfig} ref='scroll' style={{ height: "calc(100vh - 1.2rem)" }}>
         {
@@ -159,6 +121,28 @@ export default class Liebiao extends Component {
 }
 
 const LiebiaoStyle = styled.div`
+
+
+.del {
+  position: absolute;
+  z-index: 1;
+  width: 2rem;
+  height: 100%;
+  right: 0;
+  top:0;
+  text-align: center;
+  line-height: 2.1rem;
+  font-size: .8rem;
+  background: #ED7A14;
+}
+.del img{
+  width: .7rem;
+  height: auto;
+}
+
+
+
+
 .am-button::before {
     border: none !important;
 }

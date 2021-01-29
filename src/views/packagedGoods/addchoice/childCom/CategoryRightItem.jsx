@@ -1,45 +1,24 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import { Modal, Button, Toast } from 'antd-mobile';
-import { getProductCategoryAll, searchProduct,addPurchaseDetail } from 'network/Api'
-import  Model  from 'common/bulletFrame'
-
+import { Modal, Button } from 'antd-mobile';
 const prompt = Modal.prompt;
 
 class CategoryRightgoods extends Component {
-  
   constructor(props) {
     super(props)
     this.state = {
       num: this.props.goods.num,
       login: '',
-      password: '',
-      visible: false
+      password: ''
     }
     this.click = true
   }
-
-
-  closeModal() {
-    console.log('我是onClose回调')
-    this.setState({visible: false})
-  }
-
-  confirms=(num,price)=> {
-    if (num === '' ) {
-      Toast.info('请填写采购数量')
-    } else if(price === ''){
-      Toast.info('请填写采购单价')
-    }else{
-      this.setState({
-        login:num,
-        visible: false,
-      })
-      this.props.parent.getChildrenMsg(this,num,price, this.props.goods)
-    }
-    console.log('我是confirm回调')
-
+  zjian = (login, goods) => {
+    this.setState({
+      login,
+    })
+    this.props.parent.getChildrenMsg(this, login, goods)
   }
 
   render() {
@@ -53,38 +32,40 @@ class CategoryRightgoods extends Component {
     return (
       <CategoryRightgoodsStyle>
         <div className="rrr"></div>
-        <li className='category-goods clearfix' onClick={()=>{this.setState({visible: true})}}>
-          <img className='category-img' src={goods.albumpath?goods.albumpath:"https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
+        <li className='category-goods clearfix'
+        >
+          <img className='category-img' src={goods.albumpath ? goods.albumpath : "https://res.lexiangpingou.cn/images/applet/99955tupian.png"} alt="" />
           <div className='category-goods-info'>
-            <div style={{fontSize:".35rem",color:'#1a1a1a',width:"4rem"}}>{goods.name}</div>
-              <div className='shuliang' style={{color:'#1a1a1a',paddingTop:".1rem"}}>
-                   <article>编码：{goods.code}</article>
-                   <div>{goods.posprice}元/{goods.unitname}</div>
-              </div>
-            <div style={{display:"flex",justifyContent:"space-between"}}>
-            {
-              input ? <div  style={{width:"100%",textAlign: "right",paddingTop:".2rem", color: "#CD2323", fontSize: ".35rem" }}>
-                {input}</div> :
-                <img className='category-goods-img'
-                  src='https://res.lexiangpingou.cn/images/applet/99956jia.png'
-                  alt="" />
-            }
+            <div style={{ fontSize: ".35rem", color: '#1a1a1a', width: "4rem" }}>{goods.name}</div>
+            <div className='shuliang' style={{ color: '#1a1a1a', paddingTop: ".1rem" }}>
+              <article >编码:{goods.code}</article>
+              <div>{goods.posprice}元/{goods.unitname}</div>
             </div>
-            <Model goods={goods} visible={this.state.visible} unitname={goods.unitname} confirms={this.confirms} models={this}
-        onClose={this.closeModal}/>
-            {/* <Button
+            {/* <div style={{ display: "flex", justifyContent: "space-between" }}>{goods.realnum}</div> */}
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              {
+                input ? <div style={{ width: "100%", textAlign: "right", paddingTop: ".2rem", color: "#CD2323", fontSize: ".35rem" }}>{input}</div> :
+                  <img className='category-goods-img'
+                    src='https://res.lexiangpingou.cn/images/applet/99956jia.png'
+                    alt="" />
+              }
+            </div>
+            <Button
               style={{width:"7.2rem",height:"2rem", position: "absolute", top: "-.1rem", left: "-1.8rem", color: "transparent", background: "transparent" }}
               className="btn_modal"
-              onClick={() => prompt(
-                '添加',
-                '请填写采购数量与单价',
-                (login, text) => this.zjian(login, text, goods),
-                'login-password',
-                null,
-                ['请填写采购数量', '请填写采购单价'],
+              onClick={() => prompt('填写', '请输入商品打包数量',
+                [
+                  {
+                    text: '取消',
+                    onPress: value => console.log(`value:${value}`)
+                  },
+                  {
+                    text: '确定',
+                    onPress: value => this.zjian(value, goods)
+                  },
+                ]
               )}
-              // visible={false}
-            >111111</Button> */}
+            >111111</Button>
           </div>
         </li>
       </CategoryRightgoodsStyle>

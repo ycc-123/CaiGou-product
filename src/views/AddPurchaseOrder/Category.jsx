@@ -8,7 +8,7 @@ import { store } from 'store/index'
 import { dropByCacheKey } from 'react-router-cache-route'
 import { saveGoods ,deleteSqgoods} from 'store/actionCreators'
 
-import { getProductCategoryAll, searchProduct } from 'network/Api'
+import { getProductCategoryAll, searchProduct,getPurchaseDetail } from 'network/Api'
 import { Toast, Modal } from 'antd-mobile';
 
 const alert = Modal.alert;
@@ -28,6 +28,7 @@ class Category extends Component {
     props.cacheLifecycles.didCache(this.componentDidCache)
     props.cacheLifecycles.didRecover(this.componentDidRecover)
     this.state = {
+      supplier:0,
       Bj: true,
       indexId: '',
       value: [],
@@ -41,7 +42,8 @@ class Category extends Component {
       inputSearch: '',
       Id: "",
       oldGoods:[],
-      zong_moneys:0
+      zong_moneys:0,
+      goods_num:""
     }
   }
   componentDidRecover =() => {
@@ -128,9 +130,9 @@ class Category extends Component {
               onClick={()=>{this.mingxi()}}
               >
                 <div style={{ width: "1.28rem", height: ".68rem" }}><img src="https://res.lexiangpingou.cn/images/applet/99954wu.png" alt="" /></div>
-                <div className='yuan'>{this.state.oldGoods.length ? this.state.oldGoods.length : 0}</div>
+                <div className='yuan'>{this.state.oldGoods.length + this.state.goods_num}</div>
               </div>
-              <div className="zong_mony">采购总额：<span style={{color:"#E50B0B"}}>{(this.state.price?this.state.price:0).toFixed(3)}</span></div>
+              <div className="zong_mony">采购总额：<span style={{color:"#E50B0B"}}>{(Number(this.state.price) + Number(this.state.supplier)).toFixed(3)}</span></div>
   
               <div style={{ display: "flex", marginTop: ".2rem" }}>
                 <div className='baocun' onClick={() => { this.baocun()}}>保存</div>
@@ -169,7 +171,32 @@ class Category extends Component {
     this.child.myName(e)
   }
   componentDidMount = () => {
-     
+    getPurchaseDetail({
+      action: 'getPurchaseDetail', data: {
+        uniacid: store.getState().uniacid,
+        uid: store.getState().uid,
+        purchaseId: this.props.match.params.id,
+        type: "1",
+
+      }
+    }).then((res) => {
+      let sum=[]
+        res.data.data.purchaseItem.map((v,k)=>{
+          console.log(v.subtotal)
+          sum.push(v.subtotal)
+        })
+        console.log(sum)
+        let supplier = 0;
+        sum.forEach(item => {
+          supplier = Number(supplier) + parseFloat(item)
+        })
+        console.log(supplier)
+      this.setState({
+        supplier,
+        goods_num: res.data.data.purchaseItem.length,
+      })
+
+    })
     getProductCategoryAll({
       action: 'getProductCategoryAll', data: {
         uniacid: store.getState().uniacid,

@@ -4,7 +4,9 @@ import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import { Modal, Button, Toast } from 'antd-mobile';
 import { getProductCategoryAll, searchProduct, addPurchaseDetail } from 'network/Api'
-import Model from './Model'
+import  Model  from 'common/bulletFrame'
+
+// import Model from './Model'
 const prompt = Modal.prompt;
 
 
@@ -45,14 +47,14 @@ class CategoryRightgoods extends Component {
     console.log(num,price)
     this.props.parent.getChildrenMsg(this,num,price, this.props.goods)
     console.log('我是confirm回调')
-this.setState({
-  visible: false,
-  login: num
-
-})
+      this.setState({
+        visible: false,
+        login: num
+      })
   }
 
   
+
 
   render() {
     const { goods } = this.props
@@ -93,6 +95,7 @@ this.setState({
       </CategoryRightgoodsStyle>
     );
   }
+  
 }
 
 const CategoryRightgoodsStyle = styled.div`
