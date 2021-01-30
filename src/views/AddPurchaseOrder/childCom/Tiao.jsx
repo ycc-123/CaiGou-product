@@ -31,27 +31,33 @@ export default class Tiao extends Component {
       }
     
       confirms=(num,price)=> {
-        console.log(num,price)
-        // this.props.parent.getChildrenMsg(this,num,price, this.props.goods)
-        console.log('我是confirm回调')
-        editPurchaseDetail({
-            action: 'editPurchaseDetail', data: {
-              uniacid: store.getState().uniacid,
-              uid: store.getState().uid,
-              id: this.props.danid,
-              itemId: this.props.item.id,
-              price: price,
-              gnum: num,
-            }
-          }).then((res) => {
-            if (res.data.status === 4001) {
-                window.location.reload();
-              Toast.info("修改成功", 1)
-            } else {
-              Toast.info(res.data.msg, 2)
-            }
-          })
-    
+        if(num===""){
+          Toast.info("请输入数量",1.5)
+        }else{
+          if(price===""){
+            Toast.info("请输入数量",1.5)
+          }else{
+            console.log(num,price)
+            console.log('我是confirm回调')
+            editPurchaseDetail({
+                action: 'editPurchaseDetail', data: {
+                  uniacid: store.getState().uniacid,
+                  uid: store.getState().uid,
+                  id: this.props.danid,
+                  itemId: this.props.item.id,
+                  price: price,
+                  gnum: num,
+                }
+              }).then((res) => {
+                if (res.data.status === 4001) {
+                    window.location.reload();
+                  Toast.info("修改成功", 1)
+                } else {
+                  Toast.info(res.data.msg, 2)
+                }
+              })
+          }
+        }
       }
     componentDidMount = () => {
         let startX, newX, changeX, deleteW

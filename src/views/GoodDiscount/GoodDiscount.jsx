@@ -280,11 +280,14 @@ export default class LossReport extends Component {
         page: "1"
       }
     }).then((res) => {
+      this.isLoadMore = true
       if (res.data.status === 4001) {
         this.setState({
+          page:"2",
           GoodsList: res.data.data.data,
           Goodszong: res.data.data.total
         }, () => {
+          this.refs.scroll.BScroll.finishPullUp()
           this.refs.scroll.BScroll.refresh()
         })
       } else {
@@ -436,12 +439,13 @@ export default class LossReport extends Component {
           starttime: this.state.start_data,
           endtime: this.state.end_data,
           status: this.state.status,
+          search: this.state.inputSearch,
           store_id: this.state.cankuID,
           limit: "10",
           page: this.state.page
         }
       }).then((res) => {
-        let good = res.data.data.data.length
+        let good = res.data.data.data.length===0?0:res.data.data.data.length
         // 如果长度不等于得时候加载 那么是到底了
         if (good < this.state.limit) {
           this.isLoadMore = false
@@ -565,7 +569,7 @@ const LossReportStyle = styled.div`
 }
 .foot{
     box-shadow: -1px -1px 2px #ccc;
-    padding-left:.2rem;
+    // padding-left:.2rem;
     font-size:.38rem;
     display:flex;
     justify-content: space-between;

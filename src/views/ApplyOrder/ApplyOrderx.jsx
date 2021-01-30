@@ -154,7 +154,7 @@ export default class ApplyOrderx extends Component {
               <div className='tijiao' style={{ background: this.state.quan.statusname === "待提交" ?  '': "#B4B4B4" }}
                   onClick={(e) => { this.bianji(this.state.quan.statusname) }}>编辑</div>
                 <div className='tijiao' style={{ background: this.state.quan.statusname === "提交成功" ? "#B4B4B4" : '' }}
-                  onClick={(e) => { this.tijiao(this.state.quan.statusname) }}>提交</div>
+                  onClick={(e) => { this.tijiao(this.state.quan.statusname) }}>{this.state.quan.statusname === "提交成功"?"已提交":"提交"}</div>
               </div>
             </div>
           </div>

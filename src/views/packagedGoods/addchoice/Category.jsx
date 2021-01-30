@@ -135,22 +135,11 @@ class Category extends Component {
                       <div className='yuan'>{this.state.goods_num.length + this.state.num.length}</div>
                   </div>
                   <div style={{display:"flex",marginTop:".2rem"}}>
-                      <div className='tijiao' style={{display:Number(this.props.match.params.id)===9999?"none":"block"}} onClick={()=>{this.props.history.push('/choiceGoodsmx')}}>添加</div>
-                      {/* <div className='tijiao' onClick={()=>{this.bianji()}}>添加</div> */}
+                      {/* <div className='tijiao' style={{display:Number(this.props.match.params.id)===9999?"none":"block"}} onClick={()=>{this.props.history.push('/choiceGoodsmx')}}>添加</div> */}
+                      <div className='tijiao' onClick={()=>{this.bianji()}}>添加</div>
                   </div>
               </div>
-           <div style={{display:Number(this.props.match.params.id)===9999?"none":"block"}}>
-            <div
-              style={{ width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
-              className="btn_modal"
-              onClick={() =>
-                alert('提交', '是否确认提交', [
-                  { text: '取消', onPress: () => console.log('cancel') },
-                  { text: '确定', onPress: () => this.click() },
-                ])
-              }>
-              confirm
-                        </div></div></div>
+            </div>
         </Fragment>
       </CategoryStyle>
     )

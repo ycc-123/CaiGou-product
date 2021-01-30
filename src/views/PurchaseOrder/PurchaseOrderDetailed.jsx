@@ -289,19 +289,20 @@ export default class PurchaseOrderDetailed extends Component {
                 onClick={() => { this.shengHe() }}
               >{purchaseDetail.statusname === "待提交" ? (purchaseDetail.statusname=== "待提交" ? "提交" : "已提交") : (purchaseDetail.statusname=== "审核成功" ? "已审核" : "审核" )}
               </div>
-              
+              <div style={{display: purchaseDetail.statusname === "审核成功" ?  "none" : "block", width: "3rem", height: "2rem", position: "absolute", top: ".2rem", left: "7.8rem",}}
+              >
               <Button
-                style={{ display: purchaseDetail.statusname === "待提交" ? "none" : "block", width: "3rem", height: "2rem", position: "absolute", top: "0rem", left: "6.9rem", color: "transparent", background: "transparent" }}
+                style={{  color: "transparent", background: "transparent" }}
                 className="btn_modal"
                 onClick={() =>
-                  alert('审核', '是否确认审核采购单', [
+                  alert(purchaseDetail.statusname=== "待提交"?'提交':"审核", purchaseDetail.statusname=== "待提交"?'是否确认提交采购单':'是否确认审核采购单', [
                     { text: '取消', onPress: () => console.log('cancel') },
                     { text: '确定', onPress: () => this.shengHe() },
                   ])
                 }
               >
                 confirm
-                        </Button>
+                        </Button></div>
             </div>
           </div>
         </div>

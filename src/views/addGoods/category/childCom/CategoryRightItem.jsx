@@ -151,9 +151,9 @@ class CategoryRightgoods extends Component {
             <div className='price'>¥：{goods.posprice}元/{goods.unitname}</div>
           </div>
         </li>
-          <div className='del' onClick={() => { this.deleteGoods() }}>
+          {/* <div className='del' onClick={() => { this.deleteGoods() }}>
             <img src='https://res.lexiangpingou.cn/images/vip/delete.png' alt="''" />
-          </div>
+          </div> */}
         </div>
       </CategoryRightgoodsStyle>
     );

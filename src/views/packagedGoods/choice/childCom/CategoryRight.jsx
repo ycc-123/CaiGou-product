@@ -124,7 +124,7 @@ class CategoryRight extends Component {
     let aa=[]
     const modifyPrice = deleteModifyPrice(aa)
       store.dispatch(modifyPrice)
-    this.props.history.push('/PackagedGoods')
+    this.props.history.push('/home')
     Toast.success("新增打包成功商品",1.5)
   }
 

@@ -108,6 +108,7 @@ const Into = (props) => {
                   extra="选择商品分类"
                   value={goodCategory}
                   onChange={e => { setGoodCategory(e) }}
+                  onOk={v => setGoodCategory(v)}
                 >
                   <List.Item className='time' arrow="horizontal"></List.Item>
                 </Picker>
@@ -301,10 +302,7 @@ const Into = (props) => {
   )
   
   function check() {
-    var CategoryId = goodCategory.toString();
-
-    let id = CategoryId.substring(CategoryId.length-3) 
-       console.log(id)
+    let id =  goodCategory[ goodCategory.length-1]
     createProduct({
       action: 'createProduct', data: {
         uniacid: store.getState().uniacid,

@@ -6,6 +6,7 @@ import { Modal, Button, Toast } from 'antd-mobile';
 import { getProductCategoryAll, searchProduct, addPurchaseDetail } from 'network/Api'
 import  Model  from 'common/bulletFrame'
 
+const textInput = React.createRef();
 // import Model from './Model'
 const prompt = Modal.prompt;
 
@@ -40,17 +41,34 @@ class CategoryRightgoods extends Component {
 
   closeModal() {
     console.log('我是onClose回调')
-    this.setState({visible: false})
+    this.setState({
+
+    },()=>{
+      this.setState({
+        visible: false
+      })
+    })
   }
 
   confirms=(num,price)=> {
-    console.log(num,price)
-    this.props.parent.getChildrenMsg(this,num,price, this.props.goods)
-    console.log('我是confirm回调')
-      this.setState({
-        visible: false,
-        login: num
-      })
+    if(num===""){
+      Toast.info("请输入数量",1.5)
+    }else{
+      if(price===""){
+        Toast.info("请输入价格",1.5)
+      }else{
+        console.log(num,price)
+        this.props.parent.getChildrenMsg(this,num,price, this.props.goods)
+        console.log('我是confirm回调')
+          this.setState({
+          },()=>{
+            this.setState({
+              visible: false,
+              login: num
+            })
+          })
+      }
+    }
   }
 
   
@@ -87,7 +105,7 @@ class CategoryRightgoods extends Component {
               }
             </div>
          
-            <Model goods={goods} visible={this.state.visible} unitname={goods.unitname} confirms={this.confirms} models={this}
+            <Model ref={textInput} goods={goods} visible={this.state.visible} unitname={goods.unitname} confirms={this.confirms} models={this}
         onClose={this.closeModal}/>
              
           </div>

@@ -308,10 +308,7 @@ const Into = (props) => {
   }
   function check() {
 
-    var CategoryId = goodCategory.toString();
-
-    let id = CategoryId.substring(CategoryId.length-3) 
-       console.log(id)
+    let id =  goodCategory[ goodCategory.length-1]
     createProduct({
       action: 'createProduct', data: {
         uniacid: store.getState().uniacid,

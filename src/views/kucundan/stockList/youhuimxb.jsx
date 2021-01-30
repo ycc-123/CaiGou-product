@@ -168,10 +168,11 @@ export default class Youhuimxb extends Component {
         uniacid: store.getState().uniacid,
         uid: store.getState().uid,
         search: this.state.inputSearch,
-        limit: this.state.limit,
-        page: this.state.page
+        limit:10,
+        page: 1
       }
     }).then((res) => {
+      this.isLoadMore = false
       if (res.data.status === 4001) {
         this.setState({
           linshou: res.data.data.data
