@@ -42,6 +42,7 @@ export default class Shouyinmxb extends Component {
           data: res.data.data.data,
           order: res.data.data.order
         }, () => {
+          this.refs.scroll.BScroll.finishPullUp()
           this.refs.scroll.BScroll.refresh()
         })
       } else {
@@ -68,6 +69,7 @@ export default class Shouyinmxb extends Component {
           data: res.data.data.data,
           order: res.data.data.order
         }, () => {
+          this.refs.scroll.BScroll.finishPullUp()
           this.refs.scroll.BScroll.refresh()
         })
       } else {

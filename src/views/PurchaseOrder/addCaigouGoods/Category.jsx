@@ -126,7 +126,7 @@ class Category extends Component {
                 <div className='yuan'>{this.state.oldGoods.length ? this.state.oldGoods.length : 0}</div>
               </div>
               <div style={{ display: "flex", marginTop: ".2rem" }}>
-                <div className='baocun' onClick={() => { this.props.history.goBack(-1) }}>添加</div>
+                <div className='baocun' onClick={() => {this.tianjia() }}>添加</div>
                 {/* <div className='tijiao' >提交</div> */}
               </div>
             </div>
@@ -147,6 +147,10 @@ class Category extends Component {
         </Fragment>
       </CategoryStyle>
     )
+  }
+  tianjia(){
+    this.props.history.goBack(-1)
+    Toast.success("添加成功",1.5)
   }
   onRef = (ref) => {
     this.child = ref

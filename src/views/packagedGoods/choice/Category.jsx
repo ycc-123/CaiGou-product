@@ -177,7 +177,7 @@ class Category extends Component {
           goods_num: res.data.data.packgeList
         })
       } else {
-        Toast.info(res.data.msg, 2)
+        // Toast.info(res.data.msg, 2)
       }
     })
     // localStorage.clear()

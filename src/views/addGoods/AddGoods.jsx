@@ -330,7 +330,7 @@ const Into = (props) => {
     }).then((res) => {
       if (res.data.status === 4001) {
         history.push('/home')
-        Toast.success(res.data.msg, 1.5)
+        Toast.success("新增商品成功", 1.5)
       } else {
         Toast.info(res.data.msg, 1.5)
       }

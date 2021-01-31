@@ -10,8 +10,10 @@ import { store } from "store/index";
 import { LoadingMore } from 'common/loading'
 
 export default class Youhuimxb extends Component {
-  constructor() {
-    super()
+  constructor(props, ...args) {
+    super(props, ...args)
+    props.cacheLifecycles.didCache(this.componentDidCache)
+    props.cacheLifecycles.didRecover(this.componentDidRecover)
     this.state = {
       total: {},
       inputSearch: '',
@@ -31,6 +33,14 @@ export default class Youhuimxb extends Component {
       kongbj: true
     }
     this.isLoadMore = true
+  }
+  componentDidCache = () => {
+    console.log('List cached')
+  }
+
+  componentDidRecover = () => {
+    console.log('List recovered')
+    this.refs.scroll.BScroll.refresh()
   }
   componentDidMount() {
 

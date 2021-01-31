@@ -70,6 +70,7 @@ class Category extends Component {
     })
   }
   tianjia(){
+    Toast.success("添加成功",1.5)
     this.props.history.goBack(-1)
   }
   render() {

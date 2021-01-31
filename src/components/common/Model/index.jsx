@@ -1,8 +1,8 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components'
-import OldPortal from './oldPortal';
-export default class Model extends Component {
+import OldPortal from './newPortal';
+class Model extends Component {
     constructor(){
         super()
   
@@ -22,6 +22,7 @@ export default class Model extends Component {
     componentWillReceiveProps(props) {
       this.setState({ visible: props.visible })
     }
+
 
       /**
        * 隐藏模态对话框
@@ -113,6 +114,9 @@ export default class Model extends Component {
         
       }
     }
+
+    export default  Model
+
     
     const NewPortalStyle = styled.div`
     .showbtn {
@@ -204,9 +208,3 @@ export default class Model extends Component {
     
     
     `
-    
-    
-    
-    
-    
-

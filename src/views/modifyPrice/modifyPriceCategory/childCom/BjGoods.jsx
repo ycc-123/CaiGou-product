@@ -274,7 +274,7 @@ const Into = (props) => {
 
 
           history.goBack(-1)
-          Toast.success(res.data.msg, 2)
+          Toast.success("添加调价成功", 2)
         } else {
           Toast.info(res.data.msg, 2)
         }

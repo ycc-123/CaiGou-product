@@ -38,13 +38,8 @@ bianji(goods){
     const { goods } = this.props
     let memberprice=''
     let posprice=''
-    // if(store.getState().modifyPrice.length===0){
       posprice=goods.posprice
       memberprice=goods.memberprice
-    // }else{
-    //   posprice=goods.newposprice?goods.newposprice:goods.posprice
-    //   memberprice=goods.newmemberprice?goods.newmemberprice:goods.memberprice
-    // }
     if(goods){
 
     }
@@ -70,37 +65,6 @@ bianji(goods){
               <article ></article>
               <div style={{fontSize:".35rem"}}>{posprice}元/{goods.unitname}</div>
             </div>
-            {/* <Button
-              style={{ position: "absolute", top: ".3rem", left: "4.6rem", color: "transparent", background: "transparent" }}
-              className="btn_modal"
-              onClick={() => prompt(
-                '填写',
-                '请输入最新零售价和会员价',
-                (login, text) => this.zjian(login, text, goods),
-                'login-password',
-                null,
-                ['最新零售价', '最新会员价'],
-              )}
-              visible={false}
-            >111111</Button>
-            <div style={{display:goods.memberprice!=="0.00"?"none":"block"}}>
-            <Button 
-              style={{position:"absolute",top:".3rem",left:"4.6rem",color:"transparent",background:"transparent"}} 
-              className="btn_modal"
-              onClick={() => prompt('填写', '请输入商品最新零售价',
-              [
-                {
-                  text: '取消',
-                  onPress: value => console.log(`value:${value}`)
-                },
-                {
-                  text: '确定',
-                  onPress: value =>this.zjian(value,0,goods)
-                },
-              ]
-              )}
-            >111111</Button>
-            </div> */}
           </div>
         </li>
       </CategoryRightgoodsStyle>

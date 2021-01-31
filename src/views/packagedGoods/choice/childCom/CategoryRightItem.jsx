@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import { Modal, Button } from 'antd-mobile';
+import { Modal, Button ,Toast } from 'antd-mobile';
 const prompt = Modal.prompt;
 
 class CategoryRightgoods extends Component {
@@ -19,6 +19,38 @@ class CategoryRightgoods extends Component {
       login,
     })
     this.props.parent.getChildrenMsg(this, login, goods)
+  }
+
+  closeModal() {
+    console.log('我是onClose回调')
+    this.setState({
+
+    },()=>{
+      this.setState({
+        visible: false
+      })
+    })
+  }
+
+  confirms=(num,price)=> {
+    if(num===""){
+      Toast.info("请输入数量",1.5)
+    }else{
+      if(price===""){
+        Toast.info("请输入价格",1.5)
+      }else{
+        console.log(num,price)
+        this.props.parent.getChildrenMsg(this,num,price, this.props.goods)
+        console.log('我是confirm回调')
+          this.setState({
+          },()=>{
+            this.setState({
+              visible: false,
+              login: num
+            })
+          })
+      }
+    }
   }
 
   render() {
@@ -50,6 +82,7 @@ class CategoryRightgoods extends Component {
                     alt="" />
               }
             </div>
+  
             <Button
               style={{width:"7.2rem",height:"2rem", position: "absolute", top: "-.1rem", left: "-1.8rem", color: "transparent", background: "transparent" }}
               className="btn_modal"

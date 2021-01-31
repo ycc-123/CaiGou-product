@@ -52,7 +52,7 @@ class CategoryRight extends Component {
         goodsnum:login
       } }).then(res=>{
         if(res.data.status===4001){
-          Toast.success(res.data.msg, 1.5)
+          // Toast.success(res.data.msg, 1.5)
         }else{
           Toast.info(res.data.msg, 1.5)
         }
@@ -115,7 +115,11 @@ class CategoryRight extends Component {
       itemData:itemData,
     } }).then(res=>{
       if(res.data.status===4001){
-        Toast.success(res.data.msg, 1.5)
+        if(e===2){
+          Toast.success("提交成功", 1.5)
+        }else{
+          Toast.success("保存成功", 1.5)
+        }
         this.home()
       }else{
         Toast.info(res.data.msg, 1.5)

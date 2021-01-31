@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { editPurchaseDetail } from 'network/Api'
 import { store } from 'store/index'
-import Model from './Model'
+import  Model  from 'common/bulletFrame'
 import { delPurchaseDetail } from 'network/Api'
 import { Toast, Modal, Button } from 'antd-mobile';
 const prompt = Modal.prompt;

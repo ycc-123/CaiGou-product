@@ -106,7 +106,11 @@ class CategoryRight extends Component {
       // itemData:itemData,
     } }).then(res=>{
       if(res.data.status===4001){
-        Toast.success(res.data.msg, 2)
+        if(e===2){
+          Toast.success("提交成功", 2)
+        }else{
+          Toast.success("保存成功", 2)
+        }
         this.home()
       }else{
         Toast.info(res.data.msg, 2)

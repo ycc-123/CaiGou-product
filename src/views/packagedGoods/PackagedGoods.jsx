@@ -325,7 +325,7 @@ const Into = (props) => {
     }).then((res) => {
       if (res.data.status === 4001) {
         history.push(`/choiceGoods/${res.data.data}`)
-        Toast.success(res.data.msg, 2)
+        Toast.info("请选择要打包的商品", 2)
       } else {
         Toast.info(res.data.msg, 2)
       }
