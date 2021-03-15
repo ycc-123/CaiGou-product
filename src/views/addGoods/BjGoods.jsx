@@ -26,6 +26,7 @@ const Into = (props) => {
   const [memberPrice, setMemberPrice] = useState()
   const [matchGood, setMatchGood] = useState();
   const [zuoFei, setzuoFei] = useState();
+  const [Internationalcode, setInternationalcode] = useState('');
 
   const [matchCode, setMatchCode] = useState('')
   const [goodSort, setGoodSort] = useState('');
@@ -191,6 +192,23 @@ const Into = (props) => {
           </div>
         </TAddGoodsStyle>
         <AddGoodsStyle>
+        <div className="type flex-column">
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <p style={{ fontSize: ".35rem" }}>国际条形码: </p>
+              </div>
+              <div className="right">
+                <input
+                  value={Internationalcode}
+                  type="number"
+                  placeholder={morengoods.intercode}
+                  onChange={e => { setInternationalcode(e.target.value) }}
+                />
+              </div>
+            </div>
+          </div>
           <div className="type flex-column">
             <div className="item flex-row" style={{
               justifyContent: 'space-between'
@@ -202,7 +220,7 @@ const Into = (props) => {
               <div className="right">
                 <input
                   value={goodSort}
-                  type="text"
+                  type="number"
                   placeholder={morengoods.sequence}
                   onChange={e => { setGoodSort(e.target.value) }}
                 />
@@ -219,7 +237,7 @@ const Into = (props) => {
               <div className="right">
                 <input
                   value={retailPrice}
-                  type="text"
+                  type="number"
                   placeholder={morengoods.posprice}
                   onChange={e => { setRetailPrice(e.target.value) }}
                 />
@@ -269,7 +287,7 @@ const Into = (props) => {
                   <div className="right">
                     <input
                       value={setPrice}
-                      type="text"
+                      type="number"
                       placeholder={morengoods.memberprice}
                       onChange={e => { setSetPrice(e.target.value) }}
                     />
@@ -297,7 +315,7 @@ const Into = (props) => {
                   <div className="right">
                     <input
                       value={matchCode}
-                      type="text"
+                      type="number"
                       placeholder={morengoods.plu_goods_keyboard_id}
 
                       onChange={e => { setMatchCode(e.target.value) }}
@@ -397,6 +415,7 @@ const Into = (props) => {
           is_plu_goods: matchGood === true ? "2" : "1" ? matchGood === true ? "2" : "1" : morengoods.is_plu_goods,
           plu_goods_keyboard_id: matchCode ? matchCode : morengoods.plu_goods_keyboard_id,
           sequence: goodSort ? goodSort : morengoods.sequence,
+          intercode: Internationalcode ? Internationalcode : morengoods.intercode,
         }
       }).then((res) => {
         if (res.data.status === 4001) {

@@ -31,6 +31,7 @@ const Into = (props) => {
   const [unit, setUnit] = useState([]);
   const [classification, setClassification] = useState([]);
   const [morengoods, setMorengoods] = useState({});
+  const [Internationalcode, setInternationalcode] = useState('');
   const [zuoFei, setzuoFei] = useState();
 
   const scrollConfig = {
@@ -197,6 +198,23 @@ const Into = (props) => {
           </div>
         </TAddGoodsStyle>
         <AddGoodsStyle>
+        <div className="type flex-column">
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <p style={{ fontSize: ".35rem" }}>国际条形码: </p>
+              </div>
+              <div className="right">
+                <input
+                  value={Internationalcode}
+                  type="number"
+                  placeholder={morengoods.intercode}
+                  onChange={e => { setInternationalcode(e.target.value) }}
+                />
+              </div>
+            </div>
+          </div>
           <div className="type flex-column">
             <div className="item flex-row" style={{
               justifyContent: 'space-between'
@@ -395,6 +413,7 @@ const Into = (props) => {
           is_plu_goods: matchGood === true ? "2" : "1" ? matchGood === true ? "2" : "1" : morengoods.is_plu_goods,
           plu_goods_keyboard_id: matchCode ? matchCode : morengoods.plu_goods_keyboard_id,
           sequence: goodSort ? goodSort : morengoods.sequence,
+          intercode: Internationalcode ? Internationalcode : morengoods.intercode,
           packge_ids: "1"
         }
       }).then((res) => {

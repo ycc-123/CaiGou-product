@@ -26,6 +26,7 @@ const Into = (props) => {
   const [matchGood, setMatchGood] = useState(false);
   const [matchCode, setMatchCode] = useState('')
   const [goodSort, setGoodSort] = useState('');
+  const [Internationalcode, setInternationalcode] = useState('');
   const [unit, setUnit] = useState([]);
   const [classification, setClassification] = useState([]);
   const scrollConfig = {
@@ -178,6 +179,23 @@ const Into = (props) => {
           </div>
         </TAddGoodsStyle>
         <AddGoodsStyle>
+        <div className="type flex-column">
+            <div className="item flex-row" style={{
+              justifyContent: 'space-between'
+            }}>
+              <div className="left">
+                <p style={{ fontSize: ".35rem" }}>国际条形码: </p>
+              </div>
+              <div className="right">
+                <input
+                  value={Internationalcode}
+                  type="number"
+                  placeholder='请输入国际条形码'
+                  onChange={e => { setInternationalcode(e.target.value) }}
+                />
+              </div>
+            </div>
+          </div>
           <div className="type flex-column">
             <div className="item flex-row" style={{
               justifyContent: 'space-between'
@@ -188,7 +206,7 @@ const Into = (props) => {
               <div className="right">
                 <input
                   value={goodSort}
-                  type="text"
+                  type="number"
                   placeholder='数字越大越靠前'
                   onChange={e => { setGoodSort(e.target.value) }}
                 />
@@ -205,7 +223,7 @@ const Into = (props) => {
               <div className="right">
                 <input
                   value={retailPrice}
-                  type="text"
+                  type="number"
                   placeholder='收银端零售价'
                   onChange={e => { setRetailPrice(e.target.value) }}
                 />
@@ -254,7 +272,7 @@ const Into = (props) => {
                   <div className="right">
                     <input
                       value={setPrice}
-                      type="text"
+                      type="number"
                       placeholder='设置会员价'
                       onChange={e => { setSetPrice(e.target.value) }}
                     />
@@ -280,7 +298,7 @@ const Into = (props) => {
                   <div className="right">
                     <input
                       value={matchCode}
-                      type="text"
+                      type="number"
                       placeholder='设置分体称PLU编号'
                       onChange={e => { setMatchCode(e.target.value) }}
                     />
@@ -309,6 +327,7 @@ const Into = (props) => {
         uid: store.getState().uid,
         categoryid: id,
         code: goodCode,
+        intercode:Internationalcode,
         posprice: retailPrice,
         memberprice: setPrice,
         name: goodName,
