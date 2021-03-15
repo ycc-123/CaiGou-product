@@ -44,46 +44,48 @@ export default class Home extends Component {
   }
     return (
       <HomeStyle>
+        <DocumentTitle title={'进销存'} />
         <BetterScroll config={scrollConfig} style={{ height: "100vh" }} ref='scroll'>
         <div style={{height:".05rem",width:"100%"}}></div>
         <div className='top'>
         <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>基础资料</div>
-        <ul>
-          <li onClick={()=>{this.props.history.push('/bjsygoods')}}><img src="https://res.lexiangpingou.cn/images/applet/99992bianji.png" alt=""/></li>
-          <li onClick={()=>{this.props.history.push('/modifyPrice')}}><img src="https://res.lexiangpingou.cn/images/applet/99982tiaojia.png" alt=""/></li>
-          <li onClick={()=>{this.props.history.push('/PackagedGoods')}}><img src="https://res.lexiangpingou.cn/images/applet/99993dabao.png" alt=""/></li>
+        <ul style={{position:"relative"}}>
+          <li onClick={()=>{this.props.history.push('/modifyPrice')}}><img src="https://res.lexiangpingou.cn/images/53/2021/03/Kpy1AsS8jwA81PPjza4WyqpUAJayqF.png" alt=""/></li>
+          <p className="bjsygoods" onClick={()=>{this.props.history.push('/bjsygoods')}}></p>
+          <p className="modifyPrice" onClick={()=>{this.props.history.push('/modifyPrice')}}></p>
+          <p className="PackagedGoods" onClick={()=>{this.props.history.push('/PackagedGoods')}}></p>
         </ul>
       </div>
-        <DocumentTitle title={'进销存'} />
+
         <div className='conten'>
           <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>采购管理</div>
-          <ul>
-            <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/ApplyOrder') }}><img src="https://res.lexiangpingou.cn/images/applet/99979shengqing.png" alt="" /></li>
-            <li style={{ marginLeft: ".5rem" }} onClick={() => { this.props.history.push('/PurchaseOrder')} }><img src="https://res.lexiangpingou.cn/images/applet/99985caigoudan.png" alt="" /></li>
+          <ul style={{position:"relative"}}>
+          <li onClick={()=>{this.props.history.push('/modifyPrice')}}><img src="https://res.lexiangpingou.cn/images/53/2021/03/egInluXlioqLmzUIIlpt3PlpHlqMoL.png" alt=""/></li>
+              <p className="ApplyOrder" onClick={()=>{this.props.history.push('/ApplyOrder')}}></p>
+              <p className="PurchaseOrder" onClick={()=>{this.props.history.push('/PurchaseOrder')}}></p>
           </ul>
-
-
         </div>
+
         <div className='footer'>
           <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>仓储管理</div>
-          <ul>
-            <li style={{ marginLeft: ".6rem" }} onClick={() => { this.props.history.push('/stockCategory') }}><img src="https://res.lexiangpingou.cn/images/applet/99988kucundan.png" alt="" /></li>
-            <li style={{ height: "1.6rem", width: "1.95rem", marginLeft: ".2rem" }} onClick={() => { this.props.history.push('/WarehousingOrder') }}><img src="https://res.lexiangpingou.cn/images/applet/99981rkdan.png" alt="" /></li>
-            <li onClick={()=>{this.props.history.push('/Pandian')}} style={{marginLeft:".2rem"}}><img src="https://res.lexiangpingou.cn/images/applet/99990pandiandan.png" alt=""/></li>
-            <li onClick={()=>{this.props.history.push('/LossReportList')}} style={{marginLeft:".1rem"}}><img src="https://res.lexiangpingou.cn/images/applet/99995baosdan.png" alt=""/></li>
-            <li onClick={()=>{this.props.history.push('/allocationOrder')}} style={{marginLeft:".5rem",marginTop:".6rem"}}><img src="https://res.lexiangpingou.cn/images/applet/99987tiaobodan.png" alt=""/></li>
+          <ul style={{position:"relative"}}>
+          <li onClick={()=>{this.props.history.push('/modifyPrice')}}><img src="https://res.lexiangpingou.cn/images/53/2021/03/Cz308u9w8J28Z3u3j5N83OHN88J598.png" alt=""/></li>
+              <p className="stockCategory" onClick={()=>{this.props.history.push('/stockCategory')}}></p>
+              <p className="WarehousingOrder" onClick={()=>{this.props.history.push('/WarehousingOrder')}}></p>
+              <p className="Pandian" onClick={() => { this.props.history.push('/Pandian') }}></p>
+              <p className="LossReportList" onClick={() => { this.props.history.push('/LossReportList') }}></p>
+              <p className="allocationOrder" onClick={() => { this.props.history.push('/allocationOrder') }}></p>
           </ul>
         </div>
 
         <div className='sujubaobiao' >
           <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>数据报表</div>
-          <ul>
-            <li style={{ marginLeft: ".3rem" }} >
-              <img onClick={()=>{this.props.history.push('/youhuimxb')}} src="https://res.lexiangpingou.cn/images/applet/99989yhmxb.png" alt=""/>
-              <img style={{marginLeft:"0rem"}} onClick={()=>{this.props.history.push('/GoodDiscount')}} src="https://res.lexiangpingou.cn/images/applet/99978spyhhz.png" alt=""/>
-              <img onClick={() => { this.props.history.push('/LossReport') }} src="https://res.lexiangpingou.cn/images/applet/99991bshz.png" alt="" />
-              <img onClick={() => { this.props.history.push('/CashierOrder') }} src="https://res.lexiangpingou.cn/images/applet/99984cashier.png" alt="" />
-            </li>
+          <ul style={{position:"relative"}}>
+            <li onClick={()=>{this.props.history.push('/modifyPrice')}}><img src="https://res.lexiangpingou.cn/images/53/2021/03/dwT99ce2hHH2I2c2mmWMDt26TdCD6i.png" alt=""/></li>
+              <p className="youhuimxb" onClick={()=>{this.props.history.push('/youhuimxb')}}></p>
+              <p className="GoodDiscount" onClick={()=>{this.props.history.push('/GoodDiscount')}}></p>
+              <p className="LossReport" onClick={() => { this.props.history.push('/LossReport') }}></p>
+              <p className="CashierOrder" onClick={() => { this.props.history.push('/CashierOrder') }}></p>
           </ul>
         </div>
 
@@ -157,23 +159,128 @@ const HomeStyle = styled.div`
   margin-top: .6rem;
   height: 2.5rem;
   width:  100%;
-  // background-color: red;
 }
 .sujubaobiao ul li{
   // margin-left:.5rem;
   height: 1.6rem;
   width:  100%;
-  // background-color: yellow;
 }
+
+.youhuimxb{
+  position: absolute;
+  top: -.2rem;
+  left: .5rem;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+.GoodDiscount{
+  position: absolute;
+  top: -.2rem;
+  left: 2.7rem;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+.LossReport{
+  position: absolute;
+  top: -.2rem;
+  left: 4.9rem;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+.CashierOrder{
+  position: absolute;
+  top: -.2rem;
+  left: 7rem;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+
+// 仓储管理
+.stockCategory{
+  position: absolute;
+  top: -.2rem;
+  left: .5rem;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+.WarehousingOrder{
+  position: absolute;
+  top: -.2rem;
+  left: 2.7rem;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+.Pandian{
+  position: absolute;
+  top: -.2rem;
+  left: 4.9rem;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+.LossReportList{
+  position: absolute;
+  top: -.2rem;
+  left: 7rem;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+.allocationOrder{
+  position: absolute;
+  top: 1.9rem;
+  left: .5rem;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+
+// 采购管理
+.ApplyOrder{
+  position: absolute;
+  top: -.2rem;
+  left: .5rem;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+.PurchaseOrder{
+  position: absolute;
+  top: -.2rem;
+  left: 2.7rem;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+
 .sujubaobiao ul li img{
-  width: auto;  
+    width: auto;  
     height: auto;  
     max-width: 100%;  
     max-height: 100%;
 }
 
 
-
+// 基本资料
+.bjsygoods{
+  position: absolute;
+  top: -.2rem;
+  left: .5rem;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+.modifyPrice{
+  position: absolute;
+  top: -.2rem;
+  left: 2.7rem;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+.PackagedGoods{
+  position: absolute;
+  top: -.2rem;
+  left: 4.9rem;
+  width: 1.8rem;
+  height: 1.8rem;
+}
 
 
 .conten{
@@ -208,7 +315,7 @@ const HomeStyle = styled.div`
 .conten ul li{
   // margin-left:.5rem;
   height: 1.6rem;
-  width:  1.8rem;
+  width: 7.8rem;
   // background-color: yellow;
 }
 .conten ul li img{
@@ -251,8 +358,8 @@ const HomeStyle = styled.div`
 }
 .footer ul li{
   // margin-left:.4rem;
-  height: 1.6rem;
-  width:  1.8rem;
+  height: 3.6rem;
+  width:  11.8rem;
   // background-color: yellow;
 }
 .footer ul li img{
@@ -294,9 +401,8 @@ const HomeStyle = styled.div`
   // background-color: red;
 }
 .top ul li{
-  margin-left:.68rem;
-  height: 1.5rem;
-  width:  1.5rem;
+  height: 6.5rem;
+  width: 7.2rem;
   // background-color: yellow;
 }
 .top ul li img{
