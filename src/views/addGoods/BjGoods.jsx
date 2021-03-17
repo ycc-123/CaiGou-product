@@ -337,6 +337,7 @@ const Into = (props) => {
             >作废商品：</List.Item></List>
 
         </AddGoodsStyle>
+        <div style={{width:"10rem",height:"6rem",background:"transparent"}}></div>
       </BetterScroll>
       <FAddGoodsStyle>
         <div className='foot'>

@@ -526,7 +526,7 @@ module.exports = function (webpackEnv) {
       // Generates an `index.html` file with the <script> injected.
 
       isEnvProduction && new SentryWebpackPlugin({
-        release: 'v1.0.5',
+        release: 'v1.0.7',
         authToken: '7fb6553eda1b4cdbac4d25c02ca0b7420f03dc178beb419d88e7ba3a183fe447',
         org: "hd-0b",
         project: "caigou",

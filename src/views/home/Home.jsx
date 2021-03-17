@@ -44,13 +44,14 @@ export default class Home extends Component {
   }
     return (
       <HomeStyle>
-        <DocumentTitle title={'进销存'} />
+     <DocumentTitle title={'进销存'} />
+
         <BetterScroll config={scrollConfig} style={{ height: "100vh" }} ref='scroll'>
         <div style={{height:".05rem",width:"100%"}}></div>
         <div className='top'>
         <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>基础资料</div>
         <ul style={{position:"relative"}}>
-          <li onClick={()=>{this.props.history.push('/modifyPrice')}}><img src="https://res.lexiangpingou.cn/images/53/2021/03/Kpy1AsS8jwA81PPjza4WyqpUAJayqF.png" alt=""/></li>
+          <li ><img src="https://res.lexiangpingou.cn/images/53/2021/03/Kpy1AsS8jwA81PPjza4WyqpUAJayqF.png" alt=""/></li>
           <p className="bjsygoods" onClick={()=>{this.props.history.push('/bjsygoods')}}></p>
           <p className="modifyPrice" onClick={()=>{this.props.history.push('/modifyPrice')}}></p>
           <p className="PackagedGoods" onClick={()=>{this.props.history.push('/PackagedGoods')}}></p>
@@ -60,7 +61,7 @@ export default class Home extends Component {
         <div className='conten'>
           <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>采购管理</div>
           <ul style={{position:"relative"}}>
-          <li onClick={()=>{this.props.history.push('/modifyPrice')}}><img src="https://res.lexiangpingou.cn/images/53/2021/03/egInluXlioqLmzUIIlpt3PlpHlqMoL.png" alt=""/></li>
+          <li ><img src="https://res.lexiangpingou.cn/images/53/2021/03/egInluXlioqLmzUIIlpt3PlpHlqMoL.png" alt=""/></li>
               <p className="ApplyOrder" onClick={()=>{this.props.history.push('/ApplyOrder')}}></p>
               <p className="PurchaseOrder" onClick={()=>{this.props.history.push('/PurchaseOrder')}}></p>
           </ul>
@@ -69,7 +70,7 @@ export default class Home extends Component {
         <div className='footer'>
           <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>仓储管理</div>
           <ul style={{position:"relative"}}>
-          <li onClick={()=>{this.props.history.push('/modifyPrice')}}><img src="https://res.lexiangpingou.cn/images/53/2021/03/Cz308u9w8J28Z3u3j5N83OHN88J598.png" alt=""/></li>
+          <li><img src="https://res.lexiangpingou.cn/images/53/2021/03/Cz308u9w8J28Z3u3j5N83OHN88J598.png" alt=""/></li>
               <p className="stockCategory" onClick={()=>{this.props.history.push('/stockCategory')}}></p>
               <p className="WarehousingOrder" onClick={()=>{this.props.history.push('/WarehousingOrder')}}></p>
               <p className="Pandian" onClick={() => { this.props.history.push('/Pandian') }}></p>
@@ -81,7 +82,7 @@ export default class Home extends Component {
         <div className='sujubaobiao' >
           <div style={{ marginLeft: ".7rem" ,fontSize:".45rem",paddingTop:".4rem",fontWeight:"900"}}>数据报表</div>
           <ul style={{position:"relative"}}>
-            <li onClick={()=>{this.props.history.push('/modifyPrice')}}><img src="https://res.lexiangpingou.cn/images/53/2021/03/dwT99ce2hHH2I2c2mmWMDt26TdCD6i.png" alt=""/></li>
+            <li><img src="https://res.lexiangpingou.cn/images/53/2021/03/dwT99ce2hHH2I2c2mmWMDt26TdCD6i.png" alt=""/></li>
               <p className="youhuimxb" onClick={()=>{this.props.history.push('/youhuimxb')}}></p>
               <p className="GoodDiscount" onClick={()=>{this.props.history.push('/GoodDiscount')}}></p>
               <p className="LossReport" onClick={() => { this.props.history.push('/LossReport') }}></p>
@@ -98,7 +99,7 @@ export default class Home extends Component {
               </div>
               <div style={{position:"absolute",top:"2.2rem",left:".5rem"}}>版本信息</div>
               <div className="banben">
-                  v1.1.2.3.6
+                  v1.1.2.4.0
               </div>
               <p
               style={{ width: "3rem", height: "2rem", position: "absolute", top: "1rem", left: "0rem", color: "transparent", background: "transparent" }}

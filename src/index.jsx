@@ -19,16 +19,16 @@ import 'assets/css/basic.css'
 // let vConsole = new VConsole();
 // localStorage.clear()
 
-// let uniacid = getParamsString('uniacid')
-// let uid = getParamsString('uid')
+let uniacid = getParamsString('uniacid')
+let uid = getParamsString('uid')
 
 // // 正式站
 // let uid = "5372"
 // let uniacid = "826"
 
 // 测试站
-let uid ="2271"
-let uniacid = "53"
+// let uid ="2271"
+// let uniacid = "53"
 
 // 无开通收银服务用户
 // let  uid= "5664"
@@ -50,7 +50,7 @@ localStorage.setItem('user',environment);
  
 Sentry.init({
   dsn: "https://68ca9a6e14ad45a3b037ba24fd844e31@o501293.ingest.sentry.io/5593433",
-  release: 'v1.0.5', 
+  release: 'v1.0.7', 
   autoSessionTracking: true,
   integrations: [
     new Integrations.BrowserTracing()

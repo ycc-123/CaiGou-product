@@ -169,7 +169,7 @@ const Into = (props) => {
               <div className="right">
                 <input
                   value={retailPrice}
-                  type="text"
+                  type="number"
                   placeholder={morengoods.posprice}
                   onChange={e => { setRetailPrice(e.target.value) }}
                 />
@@ -197,7 +197,7 @@ const Into = (props) => {
                   <div className="right">
                     <input
                       value={setPrice}
-                      type="text"
+                      type="number"
                       placeholder={morengoods.memberprice}
                       onChange={e => { setSetPrice(e.target.value) }}
                     />

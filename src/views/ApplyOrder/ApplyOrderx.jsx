@@ -135,7 +135,6 @@ export default class ApplyOrderx extends Component {
             </div>
           </div>
           <BetterScroll config={scrollConfig} ref='scroll' style={{ height: "calc(100vh - 8.7rem)" }}>
-
             {
               this.state.tiao.map((v, k) => {
                 return (

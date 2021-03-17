@@ -308,6 +308,7 @@ const Into = (props) => {
             </div>
           </List>
         </AddGoodsStyle>
+        <div style={{width:"10rem",height:"6rem",background:"transparent"}}></div>
       </BetterScroll>
 
       <FAddGoodsStyle>

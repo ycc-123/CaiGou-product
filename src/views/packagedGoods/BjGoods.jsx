@@ -226,7 +226,7 @@ const Into = (props) => {
               <div className="right">
                 <input
                   value={goodSort}
-                  type="text"
+                  type="number"
                   placeholder={morengoods.sequence}
                   onChange={e => { setGoodSort(e.target.value) }}
                 />
@@ -243,7 +243,7 @@ const Into = (props) => {
               <div className="right">
                 <input
                   value={retailPrice}
-                  type="text"
+                  type="number"
                   placeholder={morengoods.posprice}
                   onChange={e => { setRetailPrice(e.target.value) }}
                 />
@@ -291,7 +291,7 @@ const Into = (props) => {
                   <div className="right">
                     <input
                       value={setPrice}
-                      type="text"
+                      type="number"
                       placeholder={morengoods.memberprice}
                       onChange={e => { setSetPrice(e.target.value) }}
                     />
@@ -336,6 +336,7 @@ const Into = (props) => {
               />}
             >作废商品：</List.Item></List>
         </AddGoodsStyle>
+        <div style={{width:"10rem",height:"6rem",background:"transparent"}}></div>
       </BetterScroll>
       <FAddGoodsStyle>
         <div className='foot'>

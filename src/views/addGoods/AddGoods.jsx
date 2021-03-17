@@ -270,7 +270,7 @@ const Into = (props) => {
                   <div className="right">
                     <input
                       value={setPrice}
-                      type="text"
+                      type="number"
                       placeholder='设置会员价'
                       onChange={e => { setSetPrice(e.target.value) }}
                     />
@@ -309,6 +309,7 @@ const Into = (props) => {
             </div>
           </List>
         </AddGoodsStyle>
+        <div style={{width:"10rem",height:"6rem",background:"transparent"}}></div>
       </BetterScroll>
 
       <FAddGoodsStyle>
